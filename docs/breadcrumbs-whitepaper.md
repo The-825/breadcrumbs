@@ -55,6 +55,72 @@ cues teeth. The moments are few and predictable: session start, finishing work,
 claiming certainty, and handing off. Discipline is encoded as refusals rather than
 reminders, because a reminder can be ignored and a refusal cannot.
 
+## 2.5 This is not folk wisdom: the science underneath the basket
+
+I arrived at the basket by irritation, but the pattern has names, and I found them
+after the fact, which I take as a good sign: the design converged on things that are
+known to be true about memory in general.
+
+**Cue-dependent memory.** The psychology of recall (Tulving's encoding specificity,
+decades old and well replicated) says retrieval works best when the context at recall
+matches the context at encoding. That is the literal mechanism behind the basket. Boot
+injection works because it recreates the working context, this repo, this branch,
+these open obligations, at the exact moment recall is needed, instead of asking the
+agent to fetch it cold from an archive it has to remember exists.
+
+**Distributed cognition.** Studies of ship crews and airline cockpits (Hutchins,
+*Cognition in the Wild*) found that the cognition of a working system does not live in
+any one head; it lives in the ensemble of people and instruments. A pilot does not
+remember the altitude. The altimeter holds it, and the pilot's competence is knowing
+where to look. That is the honest description of what this system is: I am not giving
+an agent a better memory. I am building a small cognitive system in which the memory
+does not have to live in the agent at all, and a competent session is one that knows
+where to look.
+
+**Prompts at the point of ability.** Behavior design (the Fogg model: behavior needs
+motivation, ability, and a prompt arriving together) explains why reminders fail and
+placed cues work. A reminder gambles that motivation will exist later, somewhere else.
+A cue at session start fires at the moment of maximum ability, before the agent has
+invested in any wrong path, which is why the door is the highest-leverage spot in the
+house. And a refusal removes motivation from the equation entirely.
+
+**Never trust, always verify.** Security engineering already has the vocabulary for
+my oracle rule: zero trust. No claim is trusted because of who makes it, including
+the system's own components; verification comes from an independent check or it is
+not verification. An agent marking its own work "verified" is a self-signed
+certificate, and it should be treated exactly the way you treat those.
+
+**Organizational memory.** The literature on how institutions retain knowledge (Walsh
+and Ungson's retention bins) observes that most knowledge loss happens because
+knowledge lives only in individuals, and individuals leave. An agent fleet is the
+pathological case: every individual leaves at the end of every session. So everything
+has to live in the other bins, the procedures, the roles, the archives, which is why
+the whole design keeps pushing memory out of the participants and into the structure.
+
+### The hierarchy, and what self-actualization means for a memory
+
+Reading the five mechanisms as a flat list undersells how they depend on each other.
+They stack, and the stack runs in the same direction Maslow ran human needs: each
+layer is only worth building once the one below it holds.
+
+1. **Existence.** The memory survives at all: append-only records, nothing silently
+   dropped. Without this, nothing above matters.
+2. **Safety.** The memory cannot corrupt itself unrecoverably: refusal at the point of
+   claim, supersession instead of editing in place, the wrong entry preserved under
+   the correction that killed it.
+3. **Belonging.** The memory is a shared grammar rather than a private diary: one join
+   protocol that humans, and models of any make, enter through the same way.
+4. **Esteem.** Standing in the memory is earned, never self-declared: the trust ladder,
+   verification gated on named oracles, quarantine for the unattributable.
+5. **Self-actualization.** The system becomes capable of maintaining its own
+   integrity: it can audit its own beliefs against reality, discover that one of them
+   is false, and correct the record while preserving the evidence of having been
+   wrong.
+
+The top of the hierarchy is not a feature I built. It is what the lower layers made
+possible, and the case study that follows is what it looked like the first time the
+system got there.
+
 ## 3. The five mechanisms
 
 **3.1 Boot injection.** Every session starts with a small injected packet it did not
@@ -94,6 +160,10 @@ wrong survives, which is what makes the system auditable, and what made the inci
 below tellable at all.
 
 ## 4. Case study: the day it caught itself
+
+This is the top of the hierarchy observed in the wild, once, in my one office: the
+system holding a false belief about itself, discovering it through its own machinery,
+and correcting the record without destroying the evidence.
 
 My memory files have a size cap and a guard that truncates runaway injections. One day
 I raised the cap and recorded, in the permanent decision ledger, that the guard was
@@ -169,5 +239,5 @@ more houses it runs in.
 
 ---
 
-*Written by the repository's maintainer. Feedback, failed replications, and
-improvements are all welcome as issues on this repository.*
+*Mr. Jovan Smith. Feedback, failed replications, and improvements are all welcome as
+issues on this repository.*
