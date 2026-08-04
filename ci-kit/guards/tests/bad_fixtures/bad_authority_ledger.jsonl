@@ -1,0 +1,5 @@
+{"id": "G-20260101-01", "date": "2026-01-01", "scope": "valid line so the defects below are unambiguous", "wording": null, "source": "bad fixture", "expiry": null, "status": "active", "issued_to": "fixture", "notes": ""}
+{this line is deliberately not JSON}
+{"id": "G-20260101-01", "date": "2026-01-01", "scope": "duplicate id of line 1", "wording": null, "source": "bad fixture", "expiry": null, "status": "active", "issued_to": "fixture", "notes": ""}
+{"id": "G-20260103-01", "date": "2026-01-03"}
+{"id": "G-20260104-01", "date": "2026-01-04", "scope": "bad status value", "wording": null, "source": "bad fixture", "expiry": null, "status": "granted", "issued_to": "fixture", "notes": ""}

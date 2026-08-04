@@ -1,0 +1,47 @@
+{
+  "_doc": "Enforcement manifest template: one object per floor rule, binding it to its honest enforcement point. Prose and rationale: docs/enforcement-manifest.md. Fill the angle-bracket placeholders, replace the example rules with your floor, and pair the file with a CI coverage gate that fails when a rule loses its mechanical check, flips to review without a reason, or drops its non_delegable flag.",
+  "_contract": "enforcement is honest, not aspirational: lint = universal static guard that sees whole files; test = dedicated test file; harness = behavioral coverage through the real path on representative routes; review = no viable low-false-positive static check exists, and reason names the compensating control. Rules marked non_delegable are NEVER approved by an LLM verify in place of the mechanical check; a model pass may run in addition to the gate, never instead of it.",
+  "non_delegable_zones": ["sql", "auth", "frontend", "migration"],
+  "rules": [
+    {
+      "id": "parameterized_queries",
+      "rules_file_rule": "<n>",
+      "zone": "sql",
+      "rule": "All queries are parameterized. Never an f-string with user input.",
+      "enforcement": "review",
+      "mechanical_check": null,
+      "reason": "No low-false-positive static check exists: interpolating trusted constants into query strings is idiomatic and indistinguishable from user-input interpolation without taint analysis, so a naive grep would drown real hits in false positives. Compensating controls: the in-process test harness records every query configuration so parameter usage is observable in tests, and this zone carries a higher human-audit rate than mechanically gated zones.",
+      "non_delegable": true
+    },
+    {
+      "id": "no_inline_style_script",
+      "rules_file_rule": "<n>",
+      "zone": "frontend",
+      "rule": "No new inline <style> or <script> blocks in the page shell; CSS and JS live in their own files.",
+      "enforcement": "lint",
+      "mechanical_check": "ci-kit/guards/guard_no_inline_style_script.py",
+      "reason": null,
+      "non_delegable": true
+    },
+    {
+      "id": "auth_at_boundary",
+      "rules_file_rule": "<n>",
+      "zone": "auth",
+      "rule": "Every endpoint that touches user data resolves the caller through the one shared auth helper first.",
+      "enforcement": "harness",
+      "mechanical_check": "<your-tests-dir>/test_routes.py",
+      "reason": "Anonymous requests get 401/403 and role-gated routes are exercised through the real auth path in the in-process harness, on representative routes. A universal static sweep over every route is deferred until an accurate public-route allowlist exists; the manifest states that honestly rather than claiming lint coverage that is not there.",
+      "non_delegable": true
+    },
+    {
+      "id": "forward_only_migrations",
+      "rules_file_rule": "<n>",
+      "zone": "migration",
+      "rule": "Migrations are forward-only. Never roll back schema; add new columns instead, and old columns stay with a deprecation note.",
+      "enforcement": "test",
+      "mechanical_check": "ci-kit/migrations/policy_checks.py",
+      "reason": null,
+      "non_delegable": true
+    }
+  ]
+}

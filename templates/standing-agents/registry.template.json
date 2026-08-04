@@ -1,0 +1,78 @@
+{
+  "registry_version": "1.0",
+  "last_updated": "<YYYY-MM-DD>",
+  "_doc": {
+    "what": "Durable specialist DEFINITIONS, not resident processes. A desk = this roster entry + a boot pack (boot-packs.template.yaml) + the accumulated conclusions your ledger keeps for its area + the summon contract (summon-protocol.md). Summon by default; stand a warm desk only when traffic justifies it (standing-desk-lifecycle.md).",
+    "scope": "areas is the prose boundary; paths are the repo prefixes the desk owns. Wake routing (wake-routing.md) and registry review both key off paths.",
+    "posture": "read-only is the default for every desk. A boot pack never grants writes; only the summoning task spec does, explicitly, naming the paths the grant covers.",
+    "fare_classes": "How urgent the call is and what that changes. routine = batched background work, run it async. priority = the caller is blocked, run it synchronously. emergency = live incident, interrupt semantics, and your incident playbook rides along.",
+    "boot_budget_tokens": "The ceiling for the desk's pack (estimated read cost). The summoner checks the pack against it; over budget means trim the pack, never tolerate the overrun.",
+    "standing_constraints": "Desk-specific rules that ride into every task spec for this desk, on top of your repo-wide rules.",
+    "status": "summonable | standing | retired. Retired entries stay in the roster with a note; never delete the history."
+  },
+  "roster": [
+    {
+      "id": "desk-data-pipeline",
+      "name": "Data Pipeline Desk",
+      "scope": {
+        "areas": "Ingestion jobs, transforms, warehouse schemas, data-quality checks, backfills.",
+        "paths": ["pipelines/", "warehouse/", "dq/"]
+      },
+      "posture": "read-only",
+      "boot_pack": "boot-packs.template.yaml#data_pipeline",
+      "boot_budget_tokens": 8000,
+      "fare_classes": {
+        "routine": "lineage questions, schema lookups, backfill prep",
+        "priority": "a pipeline read blocks a release or a stakeholder number",
+        "emergency": "bad rows reaching production, a failed nightly load"
+      },
+      "standing_constraints": [
+        "schema changes are forward-only; destructive DDL needs the operator's explicit confirmation",
+        "every reported figure cites the query or view that produced it"
+      ],
+      "status": "summonable"
+    },
+    {
+      "id": "desk-frontend",
+      "name": "Frontend Desk",
+      "scope": {
+        "areas": "The web client: markup, styles, client-side state, API consumption, accessibility.",
+        "paths": ["web/"]
+      },
+      "posture": "read-only",
+      "boot_pack": "boot-packs.template.yaml#frontend",
+      "boot_budget_tokens": 6000,
+      "fare_classes": {
+        "routine": "component research, UI audit prep",
+        "priority": "a rendering or client-state question blocks a fix",
+        "emergency": "the client is down or showing users wrong data"
+      },
+      "standing_constraints": [
+        "every displayed number traces to an API response, never a hardcoded literal",
+        "no new client dependency without a note in the task result"
+      ],
+      "status": "summonable"
+    },
+    {
+      "id": "desk-ops",
+      "name": "Ops Desk",
+      "scope": {
+        "areas": "CI workflows, deploy pipeline, environments, secrets handling, schedulers, runbooks.",
+        "paths": [".github/workflows/", "deploy/", "ops/"]
+      },
+      "posture": "read-only",
+      "boot_pack": "boot-packs.template.yaml#ops",
+      "boot_budget_tokens": 9000,
+      "fare_classes": {
+        "routine": "workflow research, deploy-cadence questions",
+        "priority": "a red pipeline blocks merges",
+        "emergency": "a bad deploy is live; cheapest-reversal-first applies"
+      },
+      "standing_constraints": [
+        "never print or echo a secret value; reference secrets by name only",
+        "rollback is config-first: prefer the cheapest reversal before any revert commit"
+      ],
+      "status": "summonable"
+    }
+  ]
+}

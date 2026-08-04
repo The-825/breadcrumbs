@@ -1,0 +1,193 @@
+# =============================================================
+# Auto-update agent PR branches when the base branch moves
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
+# How the set fits together: MERGE_LANE_COMPANIONS.md.
+#
+# Standing rule this automates: when the base branch advances, bring every
+# open agent PR branch up to date automatically, so checks re-run against
+# current reality and green PRs merge instead of going stale. On conflict,
+# skip and flag the PR for same-turn resolution by the owning session.
+#
+# WHAT THE JOB DOES (single cheap job, no builds, no deploys):
+#   1. List open PRs into the base branch whose head matches the agent
+#      prefix (same-repo heads only). Include ONLY long-lived,
+#      session-owned branch namespaces here. Namespaces that are
+#      regenerated from scratch on every run, or owned by a cron job,
+#      must stay excluded: merging the base into a branch its owner is
+#      about to force-recreate is wasted work at best and a race at worst.
+#   2. For each PR, compute behind_by via the compare API. Up-to-date PRs
+#      are skipped (a stale conflict label is removed if the PR is no
+#      longer conflicted).
+#   3. Behind + mergeable  -> PUT /pulls/{n}/update-branch (server-side
+#      merge of base into head; zero checkout cost).
+#   4. Behind + dirty, or a 422 "merge conflict" on the attempt -> add the
+#      conflict label (created on first use) and post ONE short comment
+#      naming the same-turn resolution rule. The comment is posted only
+#      when the label was not already present, so repeated firings never
+#      spam the PR.
+#   5. A successful update removes the label automatically.
+#
+# TOKEN CHOICE (a PAT preferred, GITHUB_TOKEN fallback):
+#   Pushes made with the default GITHUB_TOKEN do not create new workflow
+#   runs (GitHub's recursion guard). If update-branch runs under
+#   GITHUB_TOKEN, the merge commit it pushes to the PR head fires NO check
+#   runs, and a fail-closed merge gate ("zero check runs never merge")
+#   would strand the PR green-less until its next real event. Under a PAT
+#   (the same one your automerge uses, if it uses one) the push fires
+#   `synchronize` normally: checks re-run, the merge gate re-evaluates.
+#   With only GITHUB_TOKEN the job still updates branches correctly;
+#   checks then re-run on the next real event on the PR.
+#
+# LOOP-TERMINATION ARGUMENT (why this cannot run away):
+#   * This job pushes ONLY to PR head branches, never to the base branch.
+#     Its trigger is push-to-base, so its own pushes can never re-fire it
+#     directly.
+#   * Indirect cascade: updating a head branch -> checks -> your automerge
+#     may merge that PR into the base (landing as the PAT user) ->
+#     push-to-base re-fires this job. That cascade TERMINATES: each firing
+#     only acts on PRs that are still open AND behind; every merge
+#     strictly shrinks the finite set of open agent PRs; a firing that
+#     finds nothing behind is a no-op. So the cascade is bounded by the
+#     number of open PRs at wave start, then goes quiet.
+#   * NO actor guard (`github.actor != 'github-actions[bot]'`) on purpose.
+#     Automerges land as the PAT user, and we WANT those pushes to re-run
+#     this job so the remaining open PRs catch up. A bot-actor guard would
+#     be a no-op for GITHUB_TOKEN-caused pushes anyway (those never create
+#     runs) and would wrongly skip the PAT-user merges we depend on.
+#   * The concurrency group below coalesces merge bursts: a rapid series
+#     of pushes to the base cancels the in-flight run and keeps only the
+#     newest, which sees the freshest PR set.
+#
+# MERGE MACHINERY NOTE: a workflow with write access to every open PR
+# branch is part of the merge lane. If you use a protected-paths policy
+# that human-gates changes to your merge machinery, list this file in it.
+
+name: Auto-update agent PR branches
+
+on:
+  push:
+    branches: [main]   # EDIT ME: your base branch (keep in sync with BASE below)
+  workflow_dispatch: {}
+
+concurrency:
+  group: auto-update-branches
+  cancel-in-progress: true
+
+permissions:
+  contents: write        # update-branch pushes a merge commit to PR heads
+  pull-requests: write   # labels + comments on PRs
+  issues: write          # label creation + issue-API label removal
+
+jobs:
+  update-branches:
+    name: Merge base into open agent PR branches
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Update behind branches / flag conflicts
+        env:
+          # Prefer a PAT so the pushed merge commit re-fires checks (see
+          # TOKEN CHOICE above). Falls back to GITHUB_TOKEN.
+          # EDIT ME: your PAT secret name, or drop to GITHUB_TOKEN only.
+          GH_TOKEN: ${{ secrets.AUTOMERGE_PAT || secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BASE: main                          # EDIT ME: your base branch
+          AGENT_PREFIX: agent/                # EDIT ME: your agent branch namespace
+          LABEL: needs-conflict-resolution    # EDIT ME: your conflict flag label
+        run: |
+          set -euo pipefail
+
+          # --- Ensure the flag label exists (idempotent) -------------
+          if ! gh api "repos/$REPO/labels/$LABEL" --silent 2>/dev/null; then
+            gh api -X POST "repos/$REPO/labels" \
+              -f name="$LABEL" -f color="d93f0b" \
+              -f description="base could not be merged into this branch; owning session resolves same-turn on the feature branch" \
+              || true
+          fi
+
+          flag_conflict() {
+            local n="$1" already="$2"
+            if [ "$already" = "true" ]; then
+              echo "PR #$n: conflict (label already present, no comment)"
+              return 0
+            fi
+            gh api -X POST "repos/$REPO/issues/$n/labels" -f "labels[]=$LABEL" >/dev/null
+            body=$(printf '%s\n' \
+              "Automatic base update failed: \`$BASE\` could not be merged into this branch (merge conflict)." \
+              "" \
+              "Standing rule: conflicts are resolved SAME-TURN by the owning session, on the feature branch, never parked. Recipe:" \
+              "" \
+              "    git fetch origin $BASE" \
+              "    git merge origin/$BASE   # resolve; for append-only ledger files, union both sides so no entry is lost" \
+              '    git push' \
+              "" \
+              "The \`$LABEL\` label clears automatically on the next clean update.")
+            gh api -X POST "repos/$REPO/issues/$n/comments" -f body="$body" >/dev/null
+            echo "PR #$n: conflict -> labeled + commented"
+          }
+
+          clear_label() {
+            local n="$1" already="$2"
+            if [ "$already" = "true" ]; then
+              gh api -X DELETE "repos/$REPO/issues/$n/labels/$LABEL" >/dev/null 2>&1 || true
+              echo "PR #$n: cleared $LABEL"
+            fi
+          }
+
+          # --- Enumerate open agent PRs into the base (same-repo heads)
+          prs=$(gh api --paginate "repos/$REPO/pulls?state=open&base=$BASE&per_page=100" \
+            --jq ".[] | select(.head.repo.full_name == \"$REPO\")
+                      | select(.head.ref | startswith(\"$AGENT_PREFIX\"))
+                      | .number")
+
+          [ -z "$prs" ] && { echo "No open $AGENT_PREFIX* PRs into $BASE."; exit 0; }
+
+          for n in $prs; do
+            pr=$(gh api "repos/$REPO/pulls/$n")
+            head_ref=$(jq -r '.head.ref' <<<"$pr")
+            mstate=$(jq -r '.mergeable_state' <<<"$pr")
+            has_label=$(jq -r "[.labels[].name] | index(\"$LABEL\") != null | tostring" <<<"$pr")
+
+            behind=$(gh api "repos/$REPO/compare/$BASE...$head_ref" --jq '.behind_by' || echo "")
+            if [ -z "$behind" ]; then
+              echo "PR #$n ($head_ref): compare failed, skipping"
+              continue
+            fi
+
+            if [ "$behind" -eq 0 ]; then
+              echo "PR #$n ($head_ref): up to date"
+              # A previously-flagged PR whose owner resolved by merging the
+              # base is no longer behind; clear the stale flag unless GitHub
+              # still reports it dirty.
+              if [ "$mstate" != "dirty" ]; then
+                clear_label "$n" "$has_label"
+              fi
+              continue
+            fi
+
+            if [ "$mstate" = "dirty" ]; then
+              flag_conflict "$n" "$has_label"
+              continue
+            fi
+
+            # Behind and not known-dirty (clean/blocked/unstable/unknown):
+            # attempt the server-side update; let the API adjudicate.
+            err_file=$(mktemp)
+            if gh api -X PUT "repos/$REPO/pulls/$n/update-branch" >/dev/null 2>"$err_file"; then
+              echo "PR #$n ($head_ref): updated (was $behind behind)"
+              clear_label "$n" "$has_label"
+            else
+              # 422 "merge conflict between base and head"  -> conflict
+              # 422 "There are no new commits on the base..." -> race, fine
+              if grep -qi "no new commits" "$err_file"; then
+                echo "PR #$n ($head_ref): raced to up-to-date, skipping"
+              elif grep -qi "merge conflict" "$err_file"; then
+                flag_conflict "$n" "$has_label"
+              else
+                echo "PR #$n ($head_ref): update-branch failed:"
+                cat "$err_file"
+              fi
+            fi
+            rm -f "$err_file"
+          done

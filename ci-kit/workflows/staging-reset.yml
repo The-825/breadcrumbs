@@ -1,0 +1,159 @@
+# =============================================================
+# Reset the staging branch to main after a promotion (fail-closed)
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
+# Companion doc: docs/staging-promotion.md (the promotion model this serves).
+#
+# In a staging-first flow, promotions from staging into main squash-merge, so
+# main's new commit is not on staging and the two histories diverge even
+# though the content is identical. Before the next batch of feature PRs,
+# staging must be force-reset to main. This workflow is the button: manual
+# dispatch only, never scheduled, never PR-triggered, and it runs in CI so no
+# workstation needs a full clone or force-push rights.
+#
+# SAFETY GUARD (fail closed): a force-push discards staging-only commits, so
+# the job refuses to push unless one of these holds:
+#   1. staging is an ancestor of main (everything on staging is already
+#      reachable from main; nothing can be lost), or
+#   2. staging's TREE is byte-identical to main's tree (histories diverged,
+#      e.g. squash-merge lineage, but the content is the same), or
+#   3. the `override` input is true (the operator explicitly accepts
+#      discarding unpromoted staging-only work).
+# The normal post-promotion state satisfies 1 or 2, so routine resets run
+# with no input. Note what the guard verifies: not "did a PR with the right
+# title merge" but "does staging carry anything main does not." If the
+# promotion has not merged, or new work landed on staging after it, staging
+# carries unpromoted content and the guard refuses, printing exactly which
+# commits and what content delta would be discarded. Any failure to verify
+# state (unfetchable branches, unresolvable refs) also refuses: the job
+# errors out before the push step can run.
+#
+# EVENT SUPPRESSION: a push made with the default workflow token fires no
+# push-event workflows (the platform's recursion guard). If a workflow
+# deploys your staging branch on push, it will NOT see this reset and the
+# staging environment will serve stale content until the next merge. Either
+# set STAGING_DEPLOY_WORKFLOW below so this job dispatches the deploy
+# explicitly, or check out with a personal access token, whose pushes fire
+# events natively.
+#
+# LOOP TERMINATION: workflow_dispatch only, one push per run, and the
+# concurrency group serializes runs. The push targets the staging branch and
+# nothing here triggers on pushes, so this workflow cannot re-enter itself.
+
+name: Reset staging to main
+
+on:
+  workflow_dispatch:
+    inputs:
+      override:
+        description: >-
+          Discard unpromoted staging-only work. Leave false for routine
+          post-promotion resets; the guard passes on its own when staging is
+          an ancestor of main or the trees are identical.
+        type: boolean
+        default: false
+
+env:
+  MAIN_BRANCH: main       # EDIT ME: the branch production deploys from
+  STAGING_BRANCH: staging # EDIT ME: the branch agent feature PRs merge into
+  # EDIT ME (optional): the workflow file that deploys your staging branch,
+  # e.g. deploy-staging.yml. Leave empty if staging has no deploy automation;
+  # the dispatch step then skips itself.
+  STAGING_DEPLOY_WORKFLOW: ""
+
+concurrency:
+  group: staging-reset
+  cancel-in-progress: false
+
+permissions:
+  contents: write # force-push the staging ref
+  actions: write  # dispatch the staging deploy workflow, if configured
+
+jobs:
+  reset:
+    name: Force-reset staging to main
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Fails the run (and therefore the reset) if either branch is missing
+      # or unreachable: state that cannot be verified never gets pushed over.
+      - name: Fetch both branches
+        run: git fetch --no-tags origin "$MAIN_BRANCH" "$STAGING_BRANCH"
+
+      - name: Safety guard (no unpromoted staging work)
+        id: guard
+        env:
+          OVERRIDE: ${{ inputs.override }}
+        run: |
+          # Fail closed: any error below (unresolvable ref, failed command)
+          # aborts the run before the push step can execute.
+          set -euo pipefail
+          MAIN_SHA=$(git rev-parse --verify "origin/$MAIN_BRANCH")
+          STAGING_SHA=$(git rev-parse --verify "origin/$STAGING_BRANCH")
+          echo "$MAIN_BRANCH    = $MAIN_SHA"
+          echo "$STAGING_BRANCH = $STAGING_SHA"
+          echo "staging_sha=$STAGING_SHA" >> "$GITHUB_OUTPUT"
+
+          if [ "$MAIN_SHA" = "$STAGING_SHA" ]; then
+            echo "$STAGING_BRANCH already equals $MAIN_BRANCH; nothing to do"
+            echo "noop=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "noop=false" >> "$GITHUB_OUTPUT"
+
+          if git merge-base --is-ancestor "origin/$STAGING_BRANCH" "origin/$MAIN_BRANCH"; then
+            echo "guard pass: $STAGING_BRANCH is an ancestor of $MAIN_BRANCH (no staging-only commits)"
+            exit 0
+          fi
+          if [ "$(git rev-parse "origin/$STAGING_BRANCH^{tree}")" = "$(git rev-parse "origin/$MAIN_BRANCH^{tree}")" ]; then
+            echo "guard pass: histories diverged but the trees are identical (no content lost)"
+            exit 0
+          fi
+
+          # Print what a forced reset would discard, then refuse unless the
+          # operator overrode. -20 rather than "| head -20": with pipefail,
+          # head closing the pipe early would kill the job via SIGPIPE and
+          # turn an informational print into a spurious failure.
+          echo "$STAGING_BRANCH carries content not on $MAIN_BRANCH. Staging-only commits (up to 20):"
+          git log --oneline -20 "origin/$MAIN_BRANCH..origin/$STAGING_BRANCH"
+          echo "Content delta ($STAGING_BRANCH vs $MAIN_BRANCH):"
+          git diff --shortstat "origin/$MAIN_BRANCH" "origin/$STAGING_BRANCH"
+          if [ "$OVERRIDE" = "true" ]; then
+            echo "override=true: operator accepted discarding the above"
+            exit 0
+          fi
+          echo "::error::$STAGING_BRANCH carries unpromoted work and override is not set; refusing to reset (fail closed)"
+          exit 1
+
+      # Lease-pinned to the SHA the guard verified: if anything lands on
+      # staging between the guard and this push, the push fails instead of
+      # silently discarding it.
+      - name: Force-reset staging to main
+        if: steps.guard.outputs.noop != 'true'
+        run: |
+          set -euo pipefail
+          git push --force-with-lease="refs/heads/$STAGING_BRANCH:${{ steps.guard.outputs.staging_sha }}" \
+            origin "origin/$MAIN_BRANCH:refs/heads/$STAGING_BRANCH"
+          echo "$STAGING_BRANCH reset to $(git rev-parse "origin/$MAIN_BRANCH")"
+
+      # See EVENT SUPPRESSION in the header: default-token pushes fire no
+      # push-event workflows, so a push-triggered staging deploy must be
+      # dispatched by hand here. Skips itself when no workflow is configured
+      # (or when the guard found nothing to do).
+      - name: Dispatch the staging deploy, if configured
+        if: steps.guard.outputs.noop != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$STAGING_DEPLOY_WORKFLOW" ]; then
+            echo "no staging deploy workflow configured; skipping dispatch"
+            exit 0
+          fi
+          gh workflow run "$STAGING_DEPLOY_WORKFLOW" --ref "$STAGING_BRANCH" --repo "$GITHUB_REPOSITORY"
+          echo "dispatched $STAGING_DEPLOY_WORKFLOW on $STAGING_BRANCH"

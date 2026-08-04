@@ -1,0 +1,102 @@
+# =============================================================
+# Greenlight command: apply the approval label from a PR comment
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
+# Companion to the operator-label gate described in AUTOMERGE_GOTCHAS.md
+# ("The operator-label gate"). How the set fits together: MERGE_LANE_COMPANIONS.md.
+#
+# What it does: the operator comments the approval word ("greenlight", or the
+# short form "gl") on a PR, from any device, and this workflow applies the
+# approval label. Useful when the operator is reviewing from a phone, where
+# the label UI takes four taps and a comment takes one line.
+#
+# Human in the loop: this workflow only APPLIES the label. It never merges.
+# The merge gate evaluates separately, with its own fail-closed guards. The
+# comment is the operator's approval action, so authorization is the whole
+# point of this file:
+#
+#   * Authorization is checked against the VERIFIED event payload
+#     (github.event.comment.user.login), never against anything written in
+#     the comment text. Only logins on the allowlist in the job-level `if:`
+#     pass; every other commenter is ignored before any step runs. Comment
+#     text is attacker-controlled on a public repo; the payload login is
+#     GitHub's word for who really commented.
+#   * The comment body never reaches a run: block via ${{ }} interpolation
+#     (a classic script-injection vector). It flows through env, where the
+#     shell treats it as data, not code.
+#
+# LIMITATION (read before adopting): labels added with the default
+# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard). A
+# merge gate with a pull_request(labeled) trigger will NOT fire from this
+# workflow's label-add, and a gate that reads labels from the frozen event
+# payload sees the new label only on the PR's NEXT event: a new commit,
+# ready_for_review, or a manual label toggle in the UI. The label lands now;
+# the merge follows on the next event. Full explanation:
+# MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha".
+
+name: Greenlight comment command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  greenlight:
+    name: Apply approval label from comment
+    runs-on: ubuntu-latest
+    # EDIT ME: replace the allowlist with the GitHub logins allowed to approve
+    # merges (typically the operator's account or two). Keep it an explicit
+    # list checked against the verified payload login; do not authorize from
+    # comment text, and be careful with author_association shortcuts
+    # (CONTRIBUTOR is earned by any merged PR).
+    if: |
+      github.event.issue.pull_request &&
+      contains(fromJSON('["your-github-login"]'), github.event.comment.user.login)
+    steps:
+      - name: Parse command
+        id: cmd
+        env:
+          BODY: ${{ github.event.comment.body }}
+        run: |
+          set -euo pipefail
+          # Exact-match the whole trimmed comment. A comment that merely
+          # mentions the word ("looks close to greenlight-able") must not
+          # trigger; the command is the entire body.
+          TRIMMED=$(printf '%s' "$BODY" | tr -d '\r' \
+            | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          # EDIT ME: the command words, if your approval label differs.
+          if [ "$TRIMMED" = "greenlight" ] || [ "$TRIMMED" = "gl" ]; then
+            echo "match=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Not an approval command; done."
+            echo "match=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Acknowledge with +1 reaction
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          CID: ${{ github.event.comment.id }}
+        run: gh api -X POST "repos/$REPO/issues/comments/$CID/reactions" -f content=+1
+
+      - name: Apply approval label
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          N: ${{ github.event.issue.number }}
+          APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
+        run: |
+          set -euo pipefail
+          # Remove-then-add so a stale label is refreshed cleanly.
+          gh pr edit "$N" --repo "$REPO" --remove-label "$APPROVAL_LABEL" 2>/dev/null || true
+          gh pr edit "$N" --repo "$REPO" --add-label "$APPROVAL_LABEL"
+          # Label applied; the merge gate evaluates it on the PR's next event
+          # (new commit, ready_for_review, or a manual label toggle in the
+          # UI). See the LIMITATION note at the top.

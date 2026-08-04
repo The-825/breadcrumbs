@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- Deliberately-bad fixture for guard_no_inline_style_script. Not served. -->
+<html>
+  <head>
+    <style>
+      body { color: rebeccapurple; }
+    </style>
+  </head>
+  <body>
+    <p>bad fixture</p>
+    <script>
+      console.log("inline script body, this must fail the guard");
+    </script>
+  </body>
+</html>

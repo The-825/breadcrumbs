@@ -1,0 +1,5 @@
+{
+  "_comment": "Clean fixture for guard_no_pii_in_fixtures: synthetic placeholders only.",
+  "email": "student@example.com",
+  "id": "ID-0001"
+}

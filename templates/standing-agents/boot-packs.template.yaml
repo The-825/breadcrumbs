@@ -1,0 +1,58 @@
+# Boot packs: per-desk ordered, budget-capped read playlists.
+#
+# The pack is the boot diet, not a suggestion. A summoned worker performs
+# the pack's reads IN ORDER before any task work, and reads nothing else
+# to "get oriented". Everything beyond the pack is task-driven: grep to
+# locate, read the narrow range, move on. Order matters because each read
+# assumes the mental model the earlier reads built.
+#
+# Fields per read:
+#   path        repo-relative file
+#   mode        full   = read the whole file
+#               anchor = grep the topic in play first, then read ONLY that
+#                        section; full_est records the whole-file size so
+#                        nobody "just reads it"
+#   est_tokens  what the read costs (a chars/4 estimate, not a measurement)
+#   why         one line: what this read arms the desk with
+#
+# Fields per pack:
+#   est_total_tokens  the pack's budget line. Keep it at or under the
+#                     desk's boot_budget_tokens in the registry; over
+#                     budget means trim the pack (demote a full read to an
+#                     anchor, cut a read), never "read it anyway".
+#   freshness         where verified-dates live, so the pack itself never
+#                     claims a file is current
+#   trim_note         optional: which read to skip when the task does not
+#                     need it, and what the pack drops to
+#
+# A pack never grants writes. Write grants come from the summoning task
+# spec, explicitly, or not at all.
+#
+# One worked example pack (data_pipeline) ships below. The other desks
+# referenced by registry.template.json (desk-frontend, desk-ops) are the
+# adopter's fill-in, same shape.
+
+packs:
+  data_pipeline:
+    freshness: "verified dates live in your catalog or doc headers, not in this pack"
+    est_total_tokens: 7800
+    trim_note: "skip the runbook read when the task is pure schema research (drops to ~5800)"
+    reads:
+      - path: docs/data-model.md
+        mode: full
+        est_tokens: 2600
+        why: "the warehouse mental model first: entities, grain, naming"
+      - path: pipelines/README.md
+        mode: full
+        est_tokens: 1400
+        why: "job inventory and run order; which jobs feed which tables"
+      - path: docs/data-quality.md
+        mode: anchor
+        est_tokens: 1800
+        full_est: 6200
+        why: "only the checks guarding the tables in play"
+      - path: ops/runbook.md
+        mode: anchor
+        est_tokens: 2000
+        full_est: 14000
+        why: "the operational section for the system in play: schedules, reruns, alerts"

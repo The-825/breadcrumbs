@@ -1,0 +1,117 @@
+# =============================================================
+# Required checks: the CI floor gate (one workflow, two jobs)
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the paths marked EDIT ME.
+#
+# The check names "Static checks" and "E2E checks" are load-bearing: the
+# automerge gate (automerge.yml, REQUIRED_CHECKS) and branch protection key on
+# them. If you rename a job here, rename it there in the same commit.
+#
+# Both required checks are jobs in ONE workflow on purpose. If the e2e job
+# lived in a separate workflow, automerge's workflow_run trigger would fire
+# when the first workflow finished, the head-SHA gate would (correctly,
+# fail-closed) skip because e2e was still pending, and nothing would ever
+# re-fire once e2e went green. Co-locating the jobs makes one workflow_run
+# completion cover both. See AUTOMERGE_GOTCHAS.md, gotcha 6.
+#
+# The static job runs every layer cheap enough for every PR: parse, lint
+# guards, guard self-tests, in-process harness boot, migration runner tests,
+# decision-gate tests.
+name: Required checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # EDIT ME: list your source trees.
+      - name: Compile all Python (parse gate)
+        run: python -m compileall backend scripts
+
+      - name: AST-parse every tracked .py
+        run: |
+          set -e
+          found=$(find backend scripts -name '*.py' -not -path '*/__pycache__/*')
+          if [ -z "$found" ]; then
+            echo "no .py sources found"; exit 1
+          fi
+          echo "$found" | while read -r f; do
+            python -m py_compile "$f"
+          done
+
+      - name: node --check every tracked .js
+        run: |
+          set -e
+          files=$(find . -name '*.js' -not -path './node_modules/*' -not -path '*/.git/*' || true)
+          if [ -z "$files" ]; then
+            echo "no .js files to check (ok for now)"
+          else
+            echo "$files" | while read -r f; do
+              node --check "$f"
+            done
+          fi
+
+      # EDIT ME: your dependency install.
+      - name: Install backend deps
+        run: pip install -r backend/requirements.txt
+
+      - name: Run lint guards
+        run: bash ci-kit/run_guards.sh
+
+      - name: Guard self-tests
+        run: python -m unittest discover -s ci-kit/guards/tests
+
+      # EDIT ME: your in-process test harness (real app factory, faked I/O edges).
+      - name: Harness boot
+        working-directory: backend
+        run: python -m unittest discover -s tests
+
+      - name: Migration runner tests
+        run: python -m unittest discover -s ci-kit/migrations/tests
+
+      - name: Decision-gate tests
+        run: python -m unittest discover -s ci-kit/workflows/tests
+
+  # The runtime layer. Same workflow as the static job on purpose (see header).
+  e2e:
+    name: E2E checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install e2e deps
+        run: npm ci
+
+      # EDIT ME: your browser test runner. Example shown: Playwright.
+      - name: Install Chromium (CI runner has no preinstalled browser)
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser smoke suite
+        run: npx playwright test

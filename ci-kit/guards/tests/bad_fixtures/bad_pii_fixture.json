@@ -1,0 +1,5 @@
+{
+  "_comment": "FAKE synthetic data for testing guard_no_pii_in_fixtures. NOT real PII. Both values are invented and must fail the guard.",
+  "email": "jdoe-test@example-institution.edu",
+  "id": "999000001"
+}

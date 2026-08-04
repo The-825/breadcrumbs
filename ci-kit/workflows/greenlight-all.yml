@@ -1,0 +1,117 @@
+# =============================================================
+# Greenlight all: batch-apply the approval label to green agent PRs
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
+# Companion to the operator-label gate described in AUTOMERGE_GOTCHAS.md
+# ("The operator-label gate"). How the set fits together: MERGE_LANE_COMPANIONS.md.
+#
+# What it does: on manual dispatch, apply the approval label to every open,
+# non-draft agent PR whose checks are all green on the head SHA. One click
+# from the Actions tab releases a whole wave of ready PRs instead of the
+# operator labeling each one by hand.
+#
+# Human in the loop: this workflow only APPLIES the label. It never merges.
+# The merge gate (your automerge workflow) evaluates separately, with its own
+# fail-closed guards, exactly as if the operator had clicked the label in the
+# UI. Dispatching this workflow IS the operator's approval action, which is
+# why the only trigger is workflow_dispatch and why this file should be
+# treated as merge machinery (human-gated) if you use a protected-paths
+# policy.
+#
+# LIMITATION (read before adopting): labels added with the default
+# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard). A
+# merge gate with a pull_request(labeled) trigger will NOT fire from this
+# workflow's label-add, and a gate that reads labels from the frozen event
+# payload sees the new label only on the PR's NEXT event: a new commit,
+# ready_for_review, or a manual label toggle in the UI. The label lands now;
+# the merge follows on the next event. For a same-instant merge, toggle the
+# label by hand in the UI (user-initiated label events do fire workflows).
+# Full explanation: MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha".
+
+name: Greenlight all green agent PRs
+
+on:
+  workflow_dispatch:
+
+# An explicit permissions block zeroes every unlisted scope. checks: read is
+# required; without it the check-runs read below fails, and the step is
+# written to fail LOUDLY in that case rather than sweep silently.
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+  checks: read
+
+jobs:
+  greenlight:
+    name: Label green agent PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sweep and label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
+          AGENT_PREFIX: agent/         # EDIT ME: your agent branch namespace
+        run: |
+          set -uo pipefail
+          {
+            echo "## Greenlight sweep"
+            echo ""
+            echo "| PR | Head | Verdict | Action |"
+            echo "|---|---|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          gh pr list --repo "$REPO" --state open \
+            --json number,isDraft,headRefName,headRefOid --limit 100 \
+            | jq -c --arg prefix "$AGENT_PREFIX" \
+                '.[] | select(.isDraft | not)
+                     | select(.headRefName | startswith($prefix))' \
+            | while read -r ROW; do
+              N=$(jq -r '.number' <<<"$ROW")
+              HEAD=$(jq -r '.headRefName' <<<"$ROW")
+              SHA=$(jq -r '.headRefOid' <<<"$ROW")
+
+              # Green = at least one check run on the head SHA, all completed,
+              # none concluded failure/cancelled/timed_out/action_required.
+              # Zero check runs is NOT green: a PR whose checks never started
+              # must not be labeled as ready (fail closed).
+              #
+              # Fail LOUDLY if the check-runs read itself fails (for example a
+              # token missing checks:read). An earlier production variant put
+              # 2>/dev/null on this call; combined with the default bash -e
+              # step shell, the sweep died silently, labeling nothing and
+              # reporting nothing. A gate helper that cannot read checks must
+              # say so, not no-op.
+              if ! RAW=$(gh api "repos/$REPO/commits/$SHA/check-runs" --paginate \
+                --jq '.check_runs[] | {status, conclusion}'); then
+                echo "::error::check-runs read failed for PR #$N (SHA $SHA); is checks:read granted?"
+                exit 1
+              fi
+              CHECKS=$(jq -s '.' <<<"$RAW")
+              GREEN=$(jq -r '
+                (length > 0)
+                and all(.status == "completed")
+                and all(
+                  (.conclusion // "") as $c
+                  | (["failure","cancelled","timed_out","action_required"]
+                     | index($c)) == null
+                )' <<<"$CHECKS")
+
+              if [ "$GREEN" != "true" ]; then
+                COUNT=$(jq 'length' <<<"$CHECKS")
+                if [ "$COUNT" = "0" ]; then
+                  REASON="no check runs on head SHA"
+                else
+                  REASON="checks pending or failing"
+                fi
+                echo "| #$N | $HEAD | not green | skipped ($REASON) |" >> "$GITHUB_STEP_SUMMARY"
+                continue
+              fi
+
+              # Remove-then-add so a stale label is refreshed cleanly.
+              gh pr edit "$N" --repo "$REPO" --remove-label "$APPROVAL_LABEL" 2>/dev/null || true
+              gh pr edit "$N" --repo "$REPO" --add-label "$APPROVAL_LABEL"
+
+              echo "| #$N | $HEAD | green | label applied; the merge gate evaluates it on the PR's next event |" >> "$GITHUB_STEP_SUMMARY"
+            done
