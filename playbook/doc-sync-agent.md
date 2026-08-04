@@ -1,7 +1,5 @@
 # The doc-sync agent
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Documentation rots on a schedule you can predict: true at commit 1, mostly true at commit 50, lies by commit 200. When the only sync mechanism is one person remembering to update the README after each merge, the docs decay exactly as fast as that person gets busy, and they are usually the same person whose absence the docs were supposed to survive. The fix is an agent that reads what actually merged and updates the docs on a cadence, with a hard contract limiting what it may touch. Below is the pattern as a pair: the workflow that schedules it and the prompt that constrains it.
 
 ## How it works

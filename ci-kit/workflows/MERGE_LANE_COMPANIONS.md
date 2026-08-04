@@ -1,7 +1,5 @@
 # Merge-lane companions: operator conveniences around the approval label
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The automerge template in this directory ships label-gated by default (`REQUIRE_LABEL` in
 `automerge.yml`; see `AUTOMERGE_GOTCHAS.md`, "The operator-label gate"): checks green is
 necessary, and an operator-applied approval label is the explicit merge instruction. That

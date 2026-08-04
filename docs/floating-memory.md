@@ -1,7 +1,6 @@
 # Floating memory: the airport model applied to agent memory
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint,
-> Book 1). Grows out of [the-airport-model.md](the-airport-model.md): that essay makes a
+> Grows out of [the-airport-model.md](the-airport-model.md): that essay makes a
 > system legible to a stranger; this one makes a fleet of agent sessions legible to each
 > other. Pairs with [multi-agent-hygiene.md](multi-agent-hygiene.md) and
 > [decision-capture.md](decision-capture.md).

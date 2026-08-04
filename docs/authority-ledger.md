@@ -1,7 +1,5 @@
 # The authority ledger: a durable record of what you may do
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 An agent session runs on two kinds of settled knowledge. The first kind is facts: what is true about the code, the data, the domain. The conclusions store carries those ([templates/CONCLUSIONS_TEMPLATE.md](../templates/CONCLUSIONS_TEMPLATE.md)), and the decisions ledger carries the operator rulings behind them ([decision-capture.md](decision-capture.md)). The second kind is permissions: what the operator has authorized sessions to DO. Merge lanes, write envelopes, production toggles, build mandates. Without a durable record, every session re-asks for the same permission, or worse, assumes it. The authority ledger is that record: one JSON line per standing grant, append-only, machine-checkable.
 
 The split is the whole idea. A ruling that says "the discount floor is 12 percent" is a fact and goes to the conclusions store. A ruling that says "you may apply forward-only DDL without asking" is a grant and goes here. When one statement carries both, capture both, each in its own file. Facts answer "what is true"; grants answer "what are we allowed to do"; conflating them is how a session quotes a fact as if it were permission.

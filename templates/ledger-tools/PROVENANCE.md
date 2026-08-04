@@ -1,7 +1,5 @@
 # Conclusions provenance fields
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 This extends the base line format in [CONCLUSIONS_TEMPLATE.md](../CONCLUSIONS_TEMPLATE.md). It does not replace it. The base format records what was concluded; these three optional fields record where the conclusion came from, when it was last checked against reality, and which surface wrote it down.
 
 Why bother: a conclusions store earns its keep only while its entries stay true. Code moves, data models change, and a fact verified in February can be quietly wrong by August. Without provenance, an old entry is unfalsifiable folklore: nobody can tell whether it was ever checked, or by what. With provenance, staleness becomes something a script can measure (see [conclusions_audit.py](conclusions_audit.py)).

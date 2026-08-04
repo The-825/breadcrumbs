@@ -1,7 +1,5 @@
 # Regression layering
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A production incident caused by a typo that a one-second syntax check would have caught is the most expensive possible way to find that typo. The failure this artifact prevents is layer inversion: expensive gates (human review, end-to-end suites, live incidents) catching what a cheap gate should have caught, while the cheap gate does not exist. The principle: catch each class of regression at the lowest layer that can catch it, because low layers run cheaply on every change forever. Paste the ladder into your agent rules file or CI standards doc.
 
 ```markdown

@@ -1,7 +1,5 @@
 # Command starter set
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Twenty-nine copy-paste slash-command definitions for Claude Code, extracted from a production agent-ops setup and generalized. Without a shared command set, every session re-derives its own procedure for branching, shipping, and closing out, and the write-authority boundary drifts with it. Each is a markdown file with YAML frontmatter; the body is the instruction the model follows when the command is invoked. They pair with the templates one directory up (the session-state and conclusions-store templates especially), but each works alone.
 
 Note: this location is provisional pending a repo-layout decision on how command artifacts are packaged; if they move, it is one `git mv` and the files themselves do not change.

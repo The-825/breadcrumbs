@@ -1,7 +1,5 @@
 # Agent-to-agent task bus
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Work that one agent discovers for another dies in transcripts: an audit finds a rotten skill, the wake router names the desk that should care, and the finding evaporates when the session ends. The bus fixes the handoff by making every task a plain tracker issue with a small state machine on labels, so tasks are readable, searchable, and commentable in the views you already use. Use it the moment two agents (or one agent and future-you) need to hand work across a session boundary.
 
 One issue per task. Title prefixed `[a2a]`, body opening with a fenced yaml block:

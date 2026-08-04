@@ -8,8 +8,9 @@ title says which.
 
 | Essay | Why read it |
 |---|---|
+| [breadcrumbs-whitepaper.md](breadcrumbs-whitepaper.md) | The working paper: cue-placement memory for agent fleets, the five mechanisms, the caught-itself case study, and the join protocol. Start here for the whole argument. |
 | [context-budget.md](context-budget.md) | Price what every session auto-loads, and enforce the budget in CI so it cannot silently regrow. |
-| [the-airport-model.md](the-airport-model.md) | The wayfinding idea grown up: one warehouse is a signed terminal, an institution is the airport, and the operation is reflected in code. The bridge to Book 2. |
+| [the-airport-model.md](the-airport-model.md) | The wayfinding idea grown up: one warehouse is a signed terminal, an institution is the airport, and the operation is reflected in code. |
 | [floating-memory.md](floating-memory.md) | The airport model applied to agent memory: a git-backed memory branch, a fold protocol where completion is asserted and oracle-gated, trust-ranked decay, and the operational sweeps (NOTAMs, MEL, orphan matching, mishandled-rate SLAs, single-threaded ownership). |
 | [composite-persona-method.md](composite-persona-method.md) | Tell true stories from protected data without exposing anyone: fictional people built pattern-first from verified aggregates, with receipts. |
 | [day-one-mandates.md](day-one-mandates.md) | Nine practices that are cheap at commit one and expensive as retrofits, with a starter checklist. |

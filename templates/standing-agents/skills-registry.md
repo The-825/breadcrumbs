@@ -1,7 +1,5 @@
 # Skills registry and staleness gate
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A command-skill library rots silently: a skill references a file that moved three refactors ago, nobody notices, and the failure surfaces as an agent mid-task following a dead pointer with full confidence. The registry makes the inventory explicit, and the staleness gate makes rot loud: a CI check that exits nonzero the moment the registry and the tree disagree. Use it once your skill library passes about ten files, the point where hand-auditing quietly stops happening. The fleet pieces the gate feeds (the task bus, the desks) are indexed in the [README](README.md).
 
 The registry, one entry per skill, kept as data (the readable table is rendered from it, never hand-edited):

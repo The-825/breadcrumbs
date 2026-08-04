@@ -1,7 +1,5 @@
 # Standing agents
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 This directory is the fleet-of-one kit: how one operator runs a fleet of standing specialist agents over one codebase. The failure it prevents is expensive and invisible: every new agent session re-derives the codebase from scratch, burns its context window on unscoped reading, and works without a contract, so quality and cost are both unmanaged. The fix is a small set of durable definitions: a registry of specialist desks with scopes and postures, a fixed read diet per desk, a task contract for every summon, and the plumbing (a task bus, wake routing, a skills registry) that keeps the fleet coherent. Use it when the same kinds of questions keep landing on the same parts of your repo and each one is paying full price.
 
 | File | What it covers |

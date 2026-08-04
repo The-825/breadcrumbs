@@ -1,7 +1,5 @@
 # CI kit
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The failure this kit prevents: an agent-written PR that quietly breaks an invariant no
 human re-checked, a raw view definition outside the versioned layer, a duplicate
 migration number, a merge nobody actually approved. Everything here is runnable

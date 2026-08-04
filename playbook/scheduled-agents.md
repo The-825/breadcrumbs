@@ -1,7 +1,5 @@
 # Scheduled headless agents
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The [doc-sync agent](doc-sync-agent.md) is one member of a family: agents that run on a
 schedule, headless, with no human in the loop while they work. That last clause is the
 design constraint for the whole family. When nobody is watching, authority gets

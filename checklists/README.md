@@ -1,7 +1,5 @@
 # Checklists
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Operational checklists, ready to run as-is. Each is tied to a moment in the work: run `pr-discipline.md` before opening a PR, `pre-push.md` before every push, and `continuity-sweep.md` after any change to a fact that other surfaces cite. Each one takes under two minutes; each one exists because skipping it has a documented cost.
 
 | File | What it is |

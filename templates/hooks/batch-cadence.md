@@ -1,7 +1,5 @@
 # The batch-cadence stop hook
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Two good rules collide at every turn end. Rule one: warn the agent when the tree holds uncommitted or unpushed work, because genuinely forgotten work is real and expensive to notice a day late. Rule two: batch your pushes, commit locally per change and push every few hours, so a dirty tree is the intended normal state for hours at a stretch. A stock always-warn stop hook cannot tell those states apart. It fires at every turn end for the whole batch window, and every false warning buys one wasted model turn (the agent stops, the hook objects, the agent spends a turn explaining that the batch is still open) while training the operator to ignore the alarm that was installed to be believed. Blanket silencing is worse: it deletes the forgotten-work alarm entirely. The fix is a window-aware hook, silent while work is fresh, loud only when work has gone stale. Install [stop-hook-batch-cadence.sh](stop-hook-batch-cadence.sh) the day you adopt a batch-push cadence.
 
 The whole contract:

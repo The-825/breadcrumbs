@@ -1,7 +1,5 @@
 # The decision-capture nudge hook
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The decision-capture rule ([docs/decision-capture.md](../../docs/decision-capture.md)) says a ruling gets written to the ledger the same turn it lands. The rule fails in one predictable way: the session is mid-task, the operator drops a ruling in passing, and the session keeps working. Nothing malfunctioned; the capture step just never fired. This hook makes that failure louder. When a submitted prompt contains ruling-shaped language, a reminder to capture lands in the session context alongside the ruling itself.
 
 ## What it is, mechanically

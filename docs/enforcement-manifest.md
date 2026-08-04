@@ -1,7 +1,5 @@
 # The enforcement manifest: every floor rule names its check
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The [rules spine](rules-spine.md) closes on the point that a rule with no enforcement
 is a request. The enforcement manifest is that point made machine-readable: one JSON
 object per floor rule, binding the rule to its honest enforcement point, checked into

@@ -1,7 +1,5 @@
 # Multi-agent hygiene: several agents, one repo, no trampling
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Running one agent against a repo is a discipline problem. Running several in parallel is a coordination problem, and the failure modes change: workers corrupt each other's checkouts, race each other to sequence numbers, launder second-hand instructions into direct ones, and conflict-storm the merge queue. Every rule below traces to a real failure in a production multi-agent setup. Adopt them before the second concurrent agent, not after the first collision.
 
 ## Isolate the working copies

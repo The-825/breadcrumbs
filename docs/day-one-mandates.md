@@ -1,7 +1,5 @@
 # Day-one mandates
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Every practice on this list is cheap on day one and expensive as a retrofit. The pattern behind all of them is the same: adopted early, the practice shapes everything that follows for free; adopted late, it has to fight everything that already exists, and usually arrives right after the incident that proves it was needed. A clean-slate repo adopts the whole list before the first feature.
 
 Each mandate names the retrofit pain it avoids. The phased version of this list, with exit criteria and gates, is [templates/BLUEPRINT_TEMPLATE.md](../templates/BLUEPRINT_TEMPLATE.md); the founding-docs version is [four-founding-docs.md](four-founding-docs.md).

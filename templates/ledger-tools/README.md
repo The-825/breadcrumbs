@@ -1,7 +1,5 @@
 # Ledger tools
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The capture habit gets a conclusions ledger written ([docs/decision-capture.md](../../docs/decision-capture.md), base line format in [CONCLUSIONS_TEMPLATE.md](../CONCLUSIONS_TEMPLATE.md)). This directory is about the harder half: keeping the ledger trustworthy after months of entries, several writing surfaces, and a codebase that keeps moving underneath it.
 
 | File | What it is |

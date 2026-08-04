@@ -1,7 +1,5 @@
 # ADR template for data platforms
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A year from now, someone will ask why the warehouse is laid out this way, and the answer will live in nobody's head. Architecture decision records are the cheap fix: one page per decision, written when the decision is made, filed in `docs/adr/` and never deleted. On a data platform the decisions most worth recording are the quiet ones: dataset layout, ingestion typing, where flags and config live, what counts as the canonical store. Those are exactly the calls a future rebuild pays to re-discover.
 
 ## The format

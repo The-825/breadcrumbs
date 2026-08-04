@@ -1,7 +1,5 @@
 # PR discipline checklist
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The failure this prevents: a 2,000-line PR that mixes a refactor with a feature, sits unreviewed for a week, and cannot be reverted without taking both down. Its cousin fails the same way from the other direction, a flurry of one-line PRs that chop a single concern into fragments nobody can review as a whole. Run this checklist before you open any PR.
 
 ## Before you open the PR

@@ -1,7 +1,5 @@
 # Continuity sweep checklist
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A change is not done when the file is saved. It is done when every surface that cites the changed thing agrees with it. Skip the sweep and a corrected figure, a renamed metric, or a changed policy gets updated in one place and stays stale in five, and the stale copy is the one leadership reads. Run this sweep after any change to a fact that other surfaces cite: a number, a name, a price, a status, a label, a definition.
 
 ## Part 1: drift check

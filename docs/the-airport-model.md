@@ -1,7 +1,6 @@
 # The airport model
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint,
-> Book 1). This essay is where the wayfinding idea grows up.
+> This essay is where the wayfinding idea grows up.
 
 An airport is the friendliest large system most people ever operate without a manual. You
 have never seen the whole building. You could not draw the terminal map from memory. And

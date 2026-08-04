@@ -1,7 +1,5 @@
 # Standing-desk lifecycle
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Two failure modes bracket a fleet. Keep every specialist warm and you pay standing cost for desks nobody calls; summon cold every time and a high-traffic desk pays full boot price per call, several times a day. This page is the dial between them: when to stand a desk, how to stand it, how to keep it honest, and how to retire it without losing what it knew. Use it the first time one desk starts taking several calls a day.
 
 Stand-a-desk checklist, copy and run:

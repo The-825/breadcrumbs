@@ -1,7 +1,5 @@
 # Parity inventory template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Rebuilds fail by silently dropping the feature nobody remembered. Not the big pages, the small stuff: the endpoint one report depends on, the Sunday job that renews a webhook, the permission rule that hides admin tools from regular users. The parity inventory is the zero-regression contract for any rebuild or migration: every capability of the old system appears here as a row, and parity is declared only when every row is checked with evidence. No row, no capability; unchecked row, not done.
 
 ## How to use this inventory

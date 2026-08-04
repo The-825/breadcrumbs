@@ -1,7 +1,5 @@
 # Feature flag lifecycle
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Shipping a feature to everyone at once leaves you one bad deploy away from a pressure revert: a rollback commit written at speed, entangled with unrelated changes that landed since, pushed while users are already seeing the breakage. The alternative is a graduation ladder. Every user-visible feature merges dark behind a flag, and rollout becomes a config change instead of a deploy. Paste the rules below into your agent rules file or engineering handbook.
 
 ```markdown

@@ -1,7 +1,5 @@
 # The context budget: price what every session auto-loads
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 An agent harness attaches your rules file to every session automatically. Claude Code loads CLAUDE.md at session start; session-start hooks inject more; tool schemas and command listings ride along. All of it sits in the context window for the life of the session, and in API terms it is re-sent with every request. That surface is not free documentation. It is a recurring tax on every turn of every session, and it grows one well-meaning paragraph at a time until sessions spend more of their window on boilerplate than on work.
 
 The fix is to treat context like money: price it, budget it, and enforce the budget in CI so it cannot silently regrow.

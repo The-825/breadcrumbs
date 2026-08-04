@@ -1,7 +1,5 @@
 # Summon protocol
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 An unscoped agent session boots by wandering: it reads whatever looks relevant, spends half its context window before the first useful step, and starts work with no agreed shape for "done", so you can judge neither the answer nor the cost. The summon protocol replaces the wander with a contract: pick the desk, hand it its boot pack, write the task as commander's intent, and require calibrated language in the report. Use it every time you spawn a specialist worker, even for small questions.
 
 The task spec, copy and fill:

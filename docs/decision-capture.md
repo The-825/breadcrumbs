@@ -1,7 +1,5 @@
 # Decision capture: persist a ruling the same turn it lands
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The rule: when the operator issues a durable ruling, the session appends it to the decisions ledger in the same turn, before moving on to the work the ruling unblocks. Not at the end of the session, not in a wrap-up pass, not "once the feature is in". The turn the ruling lands is the turn it gets written down.
 
 A durable ruling is any call a future session could plausibly re-open: a product name, a threshold, a policy line, a definition, a scope boundary. The test is durability, not importance. If the same debate could happen again, the answer belongs in the ledger.

@@ -1,7 +1,5 @@
 # Forward-only migrations
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Rolling a schema back sounds tidy until you meet the row that was written after the migration ran: drop the column and that data is gone, with no incident report, just a quiet hole someone finds months later. Forward-only migration discipline removes the whole category. Schema changes only move forward, history is append-only, and the migration folder becomes an audit trail you can trust. Paste the rules below into your agent rules file or data-engineering handbook.
 
 ```markdown

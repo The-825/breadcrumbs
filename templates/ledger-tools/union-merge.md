@@ -1,7 +1,5 @@
 # Union merges for append-only ledgers
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 ## The problem
 
 An append-only jsonl ledger has one hot spot: the end of the file. Two parallel sessions each append an entry on their own branch, and both PRs now touch the same final lines. Every pair of appending branches conflicts, even though both changes are legitimate and the correct resolution is always the same: keep both lines. On a repo where several agent sessions run at once, the conclusions ledger becomes the most-conflicted file in the tree for no real reason.

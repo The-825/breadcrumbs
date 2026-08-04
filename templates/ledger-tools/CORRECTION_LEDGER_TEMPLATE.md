@@ -1,7 +1,5 @@
 # Correction ledger template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The [self-improvement loop](../../docs/self-improvement-loop.md) feeds on corrections:
 things that were wrong and got caught. This ledger is where they land, with one
 admission rule that keeps the loop honest.

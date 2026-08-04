@@ -1,7 +1,5 @@
 # In-process test harness
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Boot the real app in your test process, fake only the edges, and prove route behavior
 on every PR in seconds.
 

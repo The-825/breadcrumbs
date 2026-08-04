@@ -1,7 +1,5 @@
 # Wake routing
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A merge changes files a specialist desk owns, and nobody tells the desk. The drift sits until the next summon stumbles over it mid-task, which is the most expensive possible moment to discover it. Wake routing closes the loop: after each merge, map the changed paths to the desks that own them and notify each one. Use it as soon as your registry has desks with real path scopes; the registry and the rest of the fleet kit are indexed in the [README](README.md).
 
 The route table and router, copy and adapt:

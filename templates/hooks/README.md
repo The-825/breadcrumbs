@@ -1,7 +1,5 @@
 # Hooks
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A rule that lives only in the rules file holds only while the model remembers it, and memory is the first thing context pressure takes. Hooks are the harness-side floor under those rules: small shell scripts the harness runs at fixed lifecycle events (turn end, session start, before compaction), so the check fires whether or not the model remembered, on the hundredth turn as reliably as on the first. Copy this directory the day one of your rules starts with "always" or "at the end of every turn" and compliance depends on the model remembering to comply.
 
 | File | What it covers |

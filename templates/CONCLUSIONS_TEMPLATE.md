@@ -1,7 +1,5 @@
 # Conclusions store template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Every session that re-derives a known fact pays for it twice: once in tokens, once in the risk of deriving it differently this time. The worst case is a session that contradicts a settled ruling because it never saw it. The conclusions store is a machine-readable file of settled knowledge (`CONCLUSIONS.jsonl`, one JSON object per line, keyed to the file or domain it concerns) that gets read or injected at session start, so future sessions inherit what this one proved. It is distinct from the decisions ledger: decisions are operator rulings; conclusions are anything a session discovered that would take real time to re-derive.
 
 ## The line format

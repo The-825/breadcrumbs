@@ -1,7 +1,5 @@
 # Decisions ledger template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A ruling that lives only in a transcript gets re-litigated. Worse, a session that never saw it ships work that quietly contradicts it. The decisions ledger is the counter: an append-only file where every durable ruling (a price, a name, a threshold, a policy call) lands the same turn it is made. Same turn, not end of session, because a session can end or compact before any summary gets written. Capture on the event beats capture on a schedule.
 
 ## The format

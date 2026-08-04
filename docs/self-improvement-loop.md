@@ -1,7 +1,5 @@
 # The self-improvement loop: refinement runs on evidence
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The rules file, the conclusions store, and the command set are static
 artifacts. What makes them compound is a loop that feeds real session
 exhaust back into them. Without the loop, the rules file grows only when

@@ -1,7 +1,5 @@
 # Migrations kit: numbering integrity, apply ledger, merge-time policy
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 A loose migrations folder fails in two predictable ways: two changes claim the same number,
 or a destructive statement rides in on a routine-looking PR. Adopt this kit as soon as more
 than one author, human or agent, cuts migrations against the same folder; the first collision

@@ -1,7 +1,5 @@
 # The chorus: freeze the facts a miss would make dangerous
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Most of a rules file is reference, and reference is allowed to move. Slimming passes
 relocate mechanics to satellite docs, reword sections for brevity, and replace
 restatements with lookups. That is correct maintenance, and it has one dangerous edge

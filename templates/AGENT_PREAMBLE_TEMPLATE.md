@@ -1,7 +1,5 @@
 # Agent preamble template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 One file of numbered binding blocks that every skill, slash command, and spawned-agent prompt REFERENCES instead of restating. The principle first, because it is the whole design: **reference, never restate.** Restating a rule inside each prompt forks the wording, and the forks drift until two prompts enforce two different rules. This file points at each rule's canonical source and never overrides it; prompts carry one line ("the binding blocks in `<preamble-file>` apply") and inherit the rest.
 
 The blocks below are the set that earns its keep in a production agent setup. Keep the ones that match rules your repo actually has, fill the angle-bracket placeholders, delete the rest. A block that points at a rule you do not enforce is worse than no block; agents learn quickly which pointers are dead. Adopt it once you maintain more than a couple of prompts restating the same rules; before that, the wording has nowhere to fork.

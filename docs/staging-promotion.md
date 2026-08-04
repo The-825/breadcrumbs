@@ -1,7 +1,5 @@
 # Staging-first promotion: a graduated lane for agent PRs
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 When autonomous agents open a handful of PRs a day, merge policy is a footnote. When they open
 dozens, it becomes the operating question: who stands between agent output and production, and
 how often? Two defaults present themselves, and both are bad. Gate every PR on the operator and

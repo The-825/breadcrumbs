@@ -42,13 +42,11 @@ PRICES = {
     "<deep-model-substring>": (15.00, 75.00, 18.75, 1.50),
 }
 
-
 def rate_for(model):
     for key, rates in PRICES.items():
         if key in model:
             return rates
     return None
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -86,7 +84,6 @@ def main():
             cost_text = "no rate"
         print(f"{model:<42} {inp:>10,} {out:>10,} {cache_w:>10,} {cache_r:>12,} {cost_text:>10}")
     print(f"{'TOTAL':<42} {'':>10} {'':>10} {'':>10} {'':>12} ${grand_total:,.2f}")
-
 
 if __name__ == "__main__":
     main()

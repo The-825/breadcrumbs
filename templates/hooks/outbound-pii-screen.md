@@ -1,7 +1,5 @@
 # One PII detector, three call sites
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The failure mode this pattern prevents: a repo grows a CI lint that catches PII in
 tracked files, then later someone notices agents can also leak PII through a Gmail
 draft, a cloud-drive upload, or a published artifact, none of which touch git. The

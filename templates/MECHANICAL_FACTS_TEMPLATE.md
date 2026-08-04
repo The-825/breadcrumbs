@@ -1,7 +1,5 @@
 # Mechanical Facts Template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Every hardcoded count in a prose doc rots the day after you write it. Line counts, endpoint counts, flag counts, test counts: they drift silently, readers trust them anyway, and a few stale numbers teach people to distrust the whole doc. This template gives those numbers one home, a MECHANICAL_FACTS.md that a script regenerates deterministically, so prose everywhere else can point at it instead of restating figures that will be wrong by Friday.
 
 ## The template
@@ -97,15 +95,12 @@ FACTS = [
      ("tests/**/*.py", r"^\s*def test_")),
 ]
 
-
 def count_lines(path):
     text = Path(path).read_text(encoding="utf-8")
     return len(text.splitlines())
 
-
 def count_files(pattern):
     return len(glob.glob(pattern, recursive=True))
-
 
 def count_regex(spec):
     pattern, line_re = spec
@@ -117,9 +112,7 @@ def count_regex(spec):
                 total += 1
     return total
 
-
 COUNTERS = {"lines": count_lines, "files": count_files, "regex": count_regex}
-
 
 def build_block():
     rows = ["| Fact | Value |", "| ---- | ----- |"]
@@ -133,7 +126,6 @@ def build_block():
     )
     return "\n".join(rows) + "\n\n" + footer
 
-
 def main():
     text = TARGET.read_text(encoding="utf-8")
     start = text.find(START)
@@ -144,7 +136,6 @@ def main():
     tail = text[end:]
     TARGET.write_text(head + "\n" + build_block() + "\n" + tail, encoding="utf-8")
     print(f"refreshed {TARGET}")
-
 
 if __name__ == "__main__":
     main()

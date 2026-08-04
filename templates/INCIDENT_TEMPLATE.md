@@ -1,7 +1,5 @@
 # Incident postmortem template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Outages happen. What separates a setup that improves from one that repeats itself is whether each incident leaves a written record: what broke, what it cost, what fixed it, and, the part most postmortems skip, where the diagnosis went WRONG along the way. Keep the records as dated files in one directory (`INCIDENTS/` or `docs/incidents/`, filename `YYYY-MM-DD-<slug>.md`), written while the evidence is still fresh, never deleted.
 
 The load-bearing section is **Misdiagnosis lessons**. Real incidents burn most of their hours on confident wrong theories, and those wrong turns are invisible in a root-cause-only writeup. Recording what was believed, what the evidence actually supported, and what check would have caught it sooner is what makes the NEXT incident shorter. Be honest there; the section only works if it names the wrong turns plainly.

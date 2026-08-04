@@ -1,7 +1,5 @@
 # Propose, confirm, execute
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The moment an agent command touches a real account (mail, files, calendar, a CRM), the blast radius stops being your codebase and starts being your life. A code mistake is a revert. A mail mistake is a message someone already read, or a folder of things you cannot get back.
 
 "Confirm before deleting" is the rule most teams write, and it is not enough on its own. It says nothing about batch size, nothing about which operation to reach for, and nothing about the outbound case where the damage is not deletion at all but a half-right message that actually sent. This is the fuller contract. Paste it into your agent rules file for any command that reaches a real account.

@@ -1,7 +1,5 @@
 # Model Playbook
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Treating every model tier as interchangeable fails in both directions. Cheap models silently apply prototype discipline to production repos (guessed figures, skipped verification, confident paraphrases that drop the one nuance that mattered), while strong models burn budget re-deriving lookups the repo already answers in a file. This playbook is the fix: a boot protocol every session follows, a pre-flight guardrails table, counter-rules per tier, and an operator cheat sheet for matching the task to the model. It is vendor-neutral on purpose; lineups change faster than the pattern does, so it speaks in tiers (strongest, middle, cheapest) and you map your provider's current models onto them.
 
 ## The core idea

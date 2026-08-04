@@ -1,7 +1,5 @@
 # SESSION_STATE.md template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Sessions die. They hit context limits and compact, they get closed mid-task, they get picked up the next morning by a different agent on a different model. In-flight state that lives only in a transcript is gone the moment any of that happens, and the next session either re-derives it (slow, error-prone) or trusts a lossy auto-summary. The fix is a living handoff file at repo root, refreshed on an explicit trigger: the operator says "checkpoint" and the agent rewrites this file to reflect where things actually stand.
 
 Two properties make it work. It is rolling and short by design (not a changelog, not a roadmap, only what is in flight, decided, or blocked right now), and the refresh is event-driven, so it happens before a risky handoff instead of never.

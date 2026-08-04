@@ -1,7 +1,5 @@
 # Reuse first
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The fastest code to maintain is the code you did not write. An agent asked to "add X" will, left alone, write X from scratch even when a helper three files over already does it, because generating is what it does. Multiply that across a year of sessions and the repo grows fifty near-duplicate ways to do one thing, each its own bug surface. The reuse-first ladder makes "does this already exist" the first move, not an afterthought. Paste it into your agent rules file.
 
 ```markdown

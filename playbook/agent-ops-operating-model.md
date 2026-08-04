@@ -1,7 +1,5 @@
 # The agent-ops operating model
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 Agent-assisted development has a default failure mode, and it is not bad code.
 It is fast, plausible, inconsistent work where every session is a cold start,
 discipline decays under velocity, and everything the agent learned lives in

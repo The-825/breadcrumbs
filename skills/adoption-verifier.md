@@ -1,6 +1,6 @@
 # Adoption verifier
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1). Pairs with [docs/day-one-mandates.md](../docs/day-one-mandates.md).
+> Pairs with [docs/day-one-mandates.md](../docs/day-one-mandates.md).
 
 A rules file makes claims about its own repo: "env vars live in the config registry", "the deploy workflow is deploy.yml", "these connectors are wired", "there are twenty-four skills". Every one of those can rot, and a rules file that lies is worse than none, because an agent trusts it. This is doubly true when you COPY a kit like this one into your repo: the templates ship with placeholder paths and names you are meant to edit, and a missed edit is a silently mis-wired repo that passes every test until the day it does not. The adoption verifier is the check that a rules doc's claims still match reality. Paste it in as a periodic skill, and run it the moment you finish copying the kit in.
 

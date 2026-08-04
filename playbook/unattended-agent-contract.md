@@ -1,7 +1,5 @@
 # The unattended agent contract
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 An agent you watch is a different animal from an agent that fires at 6am on a cron while you sleep. When you are in the loop, your judgment is the backstop: you see the wrong file get touched and you stop it. Unattended, there is no backstop. Whatever the prompt permits, the agent eventually does, on a morning when the input it expected is missing and it improvises.
 
 The failure is rarely dramatic. It is a scheduled sweep that was supposed to update three files, hit an unreachable source, decided the right fix was broader, and quietly rewrote a fourth. Nobody notices for a week because the job went green.

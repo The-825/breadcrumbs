@@ -1,7 +1,5 @@
 # Authority ledger template
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1).
-
 The authority ledger is the permissions sibling of the conclusions store ([CONCLUSIONS_TEMPLATE.md](CONCLUSIONS_TEMPLATE.md)): conclusions record what is TRUE, the ledger records what sessions are ALLOWED TO DO. One JSON line per standing grant the operator has issued (merge lanes, write envelopes, production toggles, build mandates), append-only, validated in CI. Full pattern, rationale, and the merge-authority extension: [docs/authority-ledger.md](../docs/authority-ledger.md). A young pattern, adopted mid-July 2026; published early with its guard.
 
 Starter file to copy: [authority_ledger.jsonl](authority_ledger.jsonl). Capture command: [commands/grant.md](commands/grant.md). CI guard: [ci-kit/guards/guard_authority_citations.py](../ci-kit/guards/guard_authority_citations.py).

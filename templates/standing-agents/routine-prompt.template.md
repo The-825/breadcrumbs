@@ -1,6 +1,6 @@
 # Routine prompt template (scheduled, unattended agent)
 
-> Part of the companion kit for *From Archivist to Architect* (The Architect's Blueprint, Book 1). Pairs with [../../playbook/unattended-agent-contract.md](../../playbook/unattended-agent-contract.md).
+> Pairs with [../../playbook/unattended-agent-contract.md](../../playbook/unattended-agent-contract.md).
 
 Copy this file once per scheduled agent. Fill the bracketed slots, delete this header, and point your workflow at it. Pair it with a post-run guard in the job (below), because the write surface is only real if something other than the agent enforces it.
 
