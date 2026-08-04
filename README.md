@@ -1,91 +1,140 @@
 # breadcrumbs
 
-Your coding agent starts every session with no idea what the last one did.
+*One person's working answer to a specific problem: how do I get the most out of AI
+coding models without re-explaining everything at the start of every session? Not a
+product, not a framework launch. A pattern I built for my own work that I think you can
+steal, with any model, in an afternoon. I'm sharing it because the parts that worked
+surprised me and the part that failed surprised me more.*
 
-You feel it as a tax before any real work happens. The session re-reads files to guess
-what is in flight. It re-derives a decision you already made and sometimes lands on a
-different answer. You open a file, think "who changed this," and realize it was your own
-agent, in a session you closed yesterday, for a reason nobody wrote down. Compact a long
-session and the same thing happens from the inside: an idea from an hour ago quietly
-does not survive the summary, and gets redone next week.
+## The clothes pile
 
-None of that is a model problem. It is a memory problem, and it lives in your repo, not
-in the tool.
+There is a spot in every house where the clothes pile forms. You can demand better
+memory of yourself, or you can notice where the pile forms and put a basket there. Then
+a light above the basket. Then move the basket closer to the laundry. You never trained
+your memory. You placed cues where the behavior already happens, and the environment
+started doing the remembering.
 
-**breadcrumbs** is the trail one session leaves so the next one finds its way back:
-copy-and-adapt templates, a CI kit whose guards are tested to actually bite, command
-skills, and the pattern docs behind each piece. MIT licensed. No signup, no service, no
-dependency on any particular agent product.
+That is the whole idea. AI agents forget everything between sessions, and the industry's
+answer has mostly been bigger recall: vector stores, knowledge graphs, retrieval layers.
+Those answer "what should the agent remember?" My problem was different. I run many
+agent sessions a week against one production system, and what kept breaking was not
+recall. It was that one session would claim something was done when it wasn't, or redo
+work a yesterday-session already did, or act on a fact that had changed underneath it.
+And every fresh session opened with me re-framing, re-contextualizing, re-explaining,
+paying the same tax again before any real work happened.
 
-The premise underneath all of it: a rule that lives only in a doc gets violated
-silently. A rule with a guard, a gate, or a template becomes structurally hard to break.
-This repo ships the guards, the gates, and the templates.
+I did not need a smarter archive. I needed baskets: breadcrumbs left where the next
+session already walks.
 
-## Start here, one afternoon
+## The cues, at the moments they fire
 
-Three files and one gate give agent work a memory and a brake. Do these in order and
-stop when you have had enough for the day; each one stands on its own.
+My setup is ordinary on purpose: a git repo, some shell hooks, plain text and JSONL
+files. No memory vendor, no new database. The cues live at the moments where agent
+behavior already happens:
+
+- **At the door (session start).** Every session boots with a small injected packet:
+  the handful of facts that must never be wrong (frozen and test-pinned, so a missing
+  line fails a build), the open obligations nobody has finished, and what changed since
+  this session last acted. The agent does not go looking. The environment says it at
+  the door.
+- **At the claim (finishing work).** A session cannot just say "done." It records what
+  it finished, and the record is refused if obligations still dangle: an unshipped
+  follow-up, a "part 2 of 3" left hanging. It can park work with the leftovers named,
+  or formally defer an item with a deadline, the way aircraft defer an inoperative part
+  under a minimum equipment list. What it cannot do is quietly drop the leftover.
+- **At the boast (claiming certainty).** An agent never marks its own claim "verified."
+  Verified requires naming an objective check: a CI result, a data assertion, a human
+  ruling. Everything else is stamped "asserted," and every future reader sees
+  "re-verify before acting." Most memory systems let models grade their own homework.
+  Mine are not allowed to.
+- **At the handoff.** When one session hands work to the next, the handoff is a written
+  brief plus a replay guard: read what your predecessor actually did before you redo
+  it. Decisions get written down the same turn they land, because a ruling that lives
+  only in a transcript gets re-litigated by the next session, every time.
+- **Underneath everything.** Nothing is edited in place. A wrong entry is superseded by
+  a newer one that names what it kills. The record of being wrong survives.
+
+Total cost: a few scripts, git, and discipline encoded as refusals rather than
+reminders.
+
+## The day it caught itself
+
+Here is the part that made me want to publish, told plainly because it is more
+convincing than any benchmark.
+
+My memory files have a size cap, and a guard that truncates runaway injections. One day
+I raised the cap and recorded, in the permanent decision ledger, that the guard was
+raised in lockstep. Weeks later I ran an audit pass over the whole memory corpus,
+agent-driven, checking every documented claim against the actual code. The audit found
+the guard was never raised, and the ledger entry even named the wrong file. Worse:
+because the guard was still at the old size, every session's boot memory had been
+silently truncated mid-file for days, and the audit could point at that morning's own
+boot as the live evidence.
+
+The fix took an hour: the guard resized off measured data, a test that now fails if
+anyone shrinks it without re-measuring, and the false ledger entry superseded on the
+record by a correction that explains exactly what was wrong. Nothing was deleted. The
+system carries an honest scar: proof that a claim was made, believed, caught, and
+corrected.
+
+A memory system that can believe a false memory about itself, notice, and correct the
+record is worth more to me than one that promises never to be wrong.
+
+## Steal this: start in one afternoon
+
+Everything in this repo is a starting piece for the pattern above, extracted from the
+system I actually run, with the domain scrubbed out. Nothing depends on which model you
+use; a fleet member is anything that can read a file at start and append a line at the
+end. Do these in order and stop when you have had enough for the day:
 
 1. **A handoff file.** Copy [`templates/SESSION_STATE_TEMPLATE.md`](templates/SESSION_STATE_TEMPLATE.md)
-   to your repo root. It holds only what is in flight: branch, open PR, half-done edits,
-   next steps. Refresh it on a trigger word you say out loud, not on "keep it updated,"
+   to your repo root. Only what is in flight: branch, open PR, half-done edits, next
+   steps. Refresh it on a trigger word you say out loud, not on "keep it updated,"
    which means never.
 2. **A decisions ledger.** Copy [`templates/DECISIONS_TEMPLATE.md`](templates/DECISIONS_TEMPLATE.md).
-   Numbered entries, newest last. Write the entry the same turn you make the call, before
-   the work it unblocks. A ruling that lives only in a transcript gets re-litigated.
-3. **A rules file.** Copy [`templates/CLAUDE_TEMPLATE.md`](templates/CLAUDE_TEMPLATE.md)
-   and delete what does not apply to you. This is the file every session boots from, so
-   it is the highest-leverage thing in the repo.
-4. **A merge gate.** [`ci-kit/workflows/`](ci-kit/workflows/) ships a fail-closed
-   automerge that only merges when every required check is green on the exact head commit,
-   and only after you apply an approval label by hand. Read
-   [`AUTOMERGE_GOTCHAS.md`](ci-kit/workflows/AUTOMERGE_GOTCHAS.md) before adopting it; the
-   naive version of this workflow has about ten non-obvious ways to fail.
+   Numbered entries, newest last, written the same turn the call lands.
+3. **A settled-facts store.** Copy [`templates/CONCLUSIONS_TEMPLATE.md`](templates/CONCLUSIONS_TEMPLATE.md).
+   One fact per line, read at session start, so nothing already known gets re-derived.
+4. **A rules file.** Copy [`templates/CLAUDE_TEMPLATE.md`](templates/CLAUDE_TEMPLATE.md)
+   and delete what does not apply. This is the file every session boots from, the
+   highest-leverage basket in the house.
+5. **A merge gate with teeth.** [`ci-kit/workflows/`](ci-kit/workflows/) ships a
+   fail-closed automerge: merges happen only when every required check is green on the
+   exact head commit, and only after a human applies an approval label. Read
+   [`AUTOMERGE_GOTCHAS.md`](ci-kit/workflows/AUTOMERGE_GOTCHAS.md) first; the naive
+   version has about ten non-obvious ways to fail.
 
 ## What is in here
 
 | Directory | What it gives you |
 |---|---|
-| [`templates/`](templates/) | Copy-and-adapt working files: rules file, session handoff, decision and authority ledgers, incident and ADR templates, plus slash commands, a test-harness skeleton, ledger tools, and harness hooks |
-| [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, and CI workflow templates around a fail-closed merge gate |
-| [`skills/`](skills/) | Paste-able rule sets for your own rules file, from data-truth rules to forward-only migrations |
-| [`checklists/`](checklists/) | Two-minute operational checklists: PR discipline, pre-push verification, the continuity sweep |
-| [`docs/`](docs/) | The reasoning behind each artifact. Read one when you want to know why a piece is shaped the way it is |
-| [`playbook/`](playbook/) | How the pieces fit together, and the patterns for running more than one agent at a time |
+| [`templates/`](templates/) | Copy-and-adapt working files: rules file, session handoff, decision and authority ledgers, incident and ADR templates, slash commands, hooks, a test-harness skeleton |
+| [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, and the fail-closed merge gate |
+| [`skills/`](skills/) | Paste-able rule sets for your own rules file |
+| [`checklists/`](checklists/) | Two-minute operational checklists |
+| [`docs/`](docs/) | The reasoning behind each piece, including [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
+| [`playbook/`](playbook/) | How the pieces fit together, and patterns for running more than one agent at a time |
 
-## How to use this repo
+## What I have not proven
 
-Take the pieces, not the whole thing. Nothing here needs the rest of it to work, and
-adopting all of it at once is the fastest way to adopt none of it. Copy a file, fill in
-the placeholders, delete the parts that do not match how you work.
+Honesty section. This runs in one office, mine, at one scale, a few hundred agent
+sessions a month. My evidence is incidents caught and work not redone, counted by hand;
+the instrumentation that will give me real usage numbers is new, and I would rather say
+"counted by hand" than dress it up. Structured handoffs help the site that designed
+them more than anyone else; that finding comes from hospital shift-change research and
+I assume it applies to me too. If you try this pattern and it fails somewhere, that is
+exactly the report I want.
 
-Some of it will not fit you. The guards assume a Python and JavaScript tree; the merge
-gate assumes GitHub Actions; the ledger formats assume you are the one making the calls.
-Where a piece assumes something, it says so in its own header. Adapt or skip.
+## Try it
 
-If a piece is unclear or broken, open an issue.
-[CONTRIBUTING.md](CONTRIBUTING.md) is the short read for sending a fix.
+Start with one basket, not the whole house: pick the single moment your agents most
+often act on stale state, and place one cue there that fires automatically. For me that
+was session start. Add the refusal second; it is the piece with teeth. Then open an
+issue here and tell me what happened, what worked, what broke, what you changed. I am
+one investigator with one data point, and the pattern gets better the more houses it
+runs in.
 
-## Where this came from
+Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
 
-These patterns were extracted from running coding agents daily against a production
-system that handles regulated data for real users, with every domain identifier removed.
-Templates here are authored fresh from documented skeletons rather than scrubbed from
-real instances, because scrubbing risks residue and fresh authoring does not. Where a
-real incident is what made a rule land, it appears as an anonymized note in a clearly
-labeled callout.
-
-No production content ships here: no schemas, no reports, no records, no operational
-state.
-
-## The book
-
-This repo is the practical companion to *From Archivist to Architect*, Book 1 of The
-Architect's Blueprint series, by Jovan Smith. The book tells the story; this repo is the
-working machinery, and it stands on its own without it.
-
-> Coming to Amazon.
-
-## License
-
-MIT. See [LICENSE](LICENSE). Take it, adapt it, ship it.
+*I'm also writing the longer story of the system this came from, From Archivist to
+Architect. More on that another day; the repo stands on its own.*
