@@ -1,0 +1,159 @@
+# =============================================================
+# Auto-merge agent PRs on green (fail-closed)
+# =============================================================
+# Installed from ci-kit/workflows/automerge.yml (KI #4). Adapted to this
+# repo's actual CI: one workflow named "CI" (.github/workflows/ci.yml) with
+# one required job, "Kit self-tests", rather than the template's two-job
+# Static/E2E split (this repo has no backend or browser suite to gate).
+#
+# Squash-merges a claude/* PR once "Kit self-tests" is green on the PR head
+# SHA and a human has applied the "greenlight" label. Gated hard on
+# draft == false, so a PR opened as a DRAFT never self-merges.
+#
+# Two trigger paths, one gate. The workflow_run trigger fires when the CI
+# workflow completes. The pull_request(ready_for_review, labeled) trigger
+# re-evaluates a PR when a draft is flipped to ready or a label is applied:
+# neither transition fires a new CI run, so without them a PR whose checks
+# went green before the operator applied the label would sit unmerged until
+# a hand-merge. All paths run the SAME considerPR() gate. Read
+# ci-kit/workflows/AUTOMERGE_GOTCHAS.md before touching the constants below.
+name: Auto-merge agent PRs
+
+on:
+  workflow_run:
+    workflows: ["CI"]   # must match ci.yml `name:`
+    types: [completed]
+  pull_request:
+    types: [ready_for_review, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Squash-merge eligible non-draft PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Single source of truth for the required merge gate. Every name
+            // here must be completed + success on the PR head SHA to merge.
+            // Keep in sync with the job name(s) in ci.yml.
+            const REQUIRED_CHECKS = ["Kit self-tests"];
+
+            // This repo's agent branch namespace.
+            const ELIGIBLE_PREFIXES = ["claude/"];
+
+            // The operator-label gate (AUTOMERGE_GOTCHAS.md, "The operator-
+            // label gate"). With REQUIRE_LABEL true, a PR merges only when a
+            // human has applied APPROVAL_LABEL on top of green checks.
+            const REQUIRE_LABEL = true;
+            const APPROVAL_LABEL = "greenlight";
+
+            const eligible = (ref) =>
+              ELIGIBLE_PREFIXES.some((p) => ref.startsWith(p));
+
+            // Verify every required check is present + completed + success on
+            // the head SHA. Fail closed: a missing, pending, or non-success
+            // required check returns false. Verifies check runs explicitly
+            // rather than trusting the workflow_run conclusion, so every
+            // required check is a real gate on every path.
+            const requiredChecksGreen = async (sha) => {
+              for (const name of REQUIRED_CHECKS) {
+                const { data } = await github.rest.checks.listForRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: sha,
+                  check_name: name,
+                });
+                const runs = data.check_runs || [];
+                // Judge only the NEWEST run of this check name. Duplicate
+                // workflow events create separate check suites, so a
+                // superseded run's `cancelled` stays attached to the SHA
+                // next to the newer `success`; ids are creation-ordered.
+                const latest = runs.reduce(
+                  (a, r) => (!a || (r.id || 0) > (a.id || 0) ? r : a),
+                  null
+                );
+                const green =
+                  !!latest &&
+                  latest.status === "completed" &&
+                  latest.conclusion === "success";
+                if (!green) {
+                  core.info(`Required check "${name}" not green on ${sha}.`);
+                  return false;
+                }
+              }
+              return true;
+            };
+
+            // Apply the same guards (non-draft, open, agent branch, operator
+            // label when required, all required checks green on head SHA)
+            // and merge. Shared by both event paths so the gate stays
+            // identical. Labels are read from this fresh pulls.get response,
+            // never from the triggering event's frozen payload.
+            const considerPR = async (number) => {
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: number,
+              });
+              if (pr.draft === true) {
+                core.info(`PR #${pr.number} is a draft; skipping.`);
+                return;
+              }
+              if (pr.state !== "open") {
+                core.info(`PR #${pr.number} is not open; skipping.`);
+                return;
+              }
+              if (!eligible(pr.head.ref)) {
+                core.info(`PR #${pr.number} head ${pr.head.ref} not an agent branch; skipping.`);
+                return;
+              }
+              if (REQUIRE_LABEL) {
+                // A missing labels array counts as unlabeled: fail closed.
+                const labels = (pr.labels || []).map((l) => l.name);
+                if (!labels.includes(APPROVAL_LABEL)) {
+                  core.info(
+                    `PR #${pr.number} lacks the "${APPROVAL_LABEL}" label; skipping.`
+                  );
+                  return;
+                }
+              }
+              if (!(await requiredChecksGreen(pr.head.sha))) {
+                core.info(
+                  `PR #${pr.number} required checks not all green on ${pr.head.sha}; skipping.`
+                );
+                return;
+              }
+              core.info(`Squash-merging PR #${pr.number} (${pr.head.ref}).`);
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                merge_method: "squash",
+              });
+            };
+
+            if (context.eventName === "workflow_run") {
+              const run = context.payload.workflow_run;
+              const prs = run.pull_requests || [];
+              if (prs.length === 0) {
+                core.info("No PRs associated with this run; nothing to merge.");
+                return;
+              }
+              for (const prRef of prs) {
+                await considerPR(prRef.number);
+              }
+              return;
+            }
+
+            if (context.eventName === "pull_request") {
+              const pr = context.payload.pull_request;
+              await considerPR(pr.number);
+              return;
+            }

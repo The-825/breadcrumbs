@@ -1,0 +1,38 @@
+# This repo's own CI: the kit proves its own discipline point.
+# Runs the guard self-tests (every guard bites its bad fixture and passes its
+# good fixture), the migration runner tests, the decision-gate tests, and the
+# shipped PII guard over the repo tree itself (excluding the deliberately-bad
+# fixtures, which exist precisely to fail).
+#
+# Distinct from ci-kit/workflows/: those are templates for adopters to copy;
+# this file is live here.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  self-tests:
+    name: Kit self-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Guard self-tests
+        run: python3 -m unittest discover -s ci-kit/guards/tests
+
+      - name: Migration runner tests
+        run: python3 -m unittest discover -s ci-kit/migrations/tests
+
+      - name: Decision-gate tests
+        run: python3 -m unittest discover -s ci-kit/workflows/tests
+
+      - name: PII guard over the repo tree
+        run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py

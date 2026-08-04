@@ -57,6 +57,19 @@ behavior already happens:
 Total cost: a few scripts, git, and discipline encoded as refusals rather than
 reminders.
 
+## The token angle
+
+I am a heavy user paying for my own usage, so this is also an economics project. A
+well-signed airport lets a first-time traveler move like a frequent flyer; that is the
+designer's doing, not the traveler's. Same here: good cue placement is what lets a
+smaller, cheaper model navigate the repo as surely as the expensive one, and what
+stops the expensive one from burning its budget re-reading the house to find out
+where things are. The boot packet is budgeted in bytes because injection is a tax
+every session pays. And instead of letting one long session silt up, I clear early
+and often: checkpoint the handoff file, wipe the context, boot clean off the cues. A
+clean sheet plus good breadcrumbs beats a full context window that is mostly
+archaeology.
+
 ## The day it caught itself
 
 Here is the part that made me want to publish, told plainly because it is more
