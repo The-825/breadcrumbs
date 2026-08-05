@@ -6,25 +6,46 @@ product, not a framework launch. A pattern I built for my own work that I think 
 steal, with any model, in an afternoon. I'm sharing it because the parts that worked
 surprised me and the part that failed surprised me more.*
 
-## The clothes pile
+## The frequent flyer and the first-timer
 
-There is a spot in every house where the clothes pile forms. You can demand better
-memory of yourself, or you can notice where the pile forms and put a basket there. Then
-a light above the basket. Then move the basket closer to the laundry. You never trained
-your memory. You placed cues where the behavior already happens, and the environment
-started doing the remembering.
+Drop a frequent flyer into an airport they have never set foot in and they still move
+through it almost as fast as their home airport. Drop a first-time flyer into that same
+building and they are anxious and slow, reading every sign twice, asking someone at
+every junction. Same building. Same signage. Wildly different experience. The frequent
+flyer is not fast because they memorized this particular airport, they have never been
+here. They are fast because they learned how airports work as a system: what a sign
+means, what to ignore, what to trust, where the pattern holds regardless of which
+building they are standing in.
 
-That is the whole idea. AI agents forget everything between sessions, and the industry's
-answer has mostly been bigger recall: vector stores, knowledge graphs, retrieval layers.
-Those answer "what should the agent remember?" My problem was different. I run many
-agent sessions a week against one production system, and what kept breaking was not
-recall. It was that one session would claim something was done when it wasn't, or redo
-work a yesterday-session already did, or act on a fact that had changed underneath it.
-And every fresh session opened with me re-framing, re-contextualizing, re-explaining,
-paying the same tax again before any real work happened.
+Here is the part that actually convinced me this was the right lens: even that anxious
+first-timer has a completely different experience by their second airport of the same
+trip. Nobody handed them a manual between layovers. They did it once, noticed the
+pattern underneath the specific signs, and carried it forward. The second airport is not
+easier because it is a simpler building. It is easier because they stopped treating the
+first one as a one-off and started treating it as an instance of a system they now
+understand.
 
-I did not need a smarter archive. I needed baskets: breadcrumbs left where the next
-session already walks.
+That gap, not the map, is what I think agent memory is missing. AI agents forget
+everything between sessions, and the industry's answer has mostly been bigger recall:
+vector stores, knowledge graphs, retrieval layers. Those answer "what should the agent
+remember?" My problem was different. I run many agent sessions a week against one
+production system, and what kept breaking was not recall. It was that one session would
+claim something was done when it wasn't, or redo work a yesterday-session already did,
+or act on a fact that had changed underneath it. And every fresh session opened with me
+re-framing, re-contextualizing, re-explaining, paying the same tax again before any real
+work happened. I did not need a smarter archive. I needed the system itself to teach
+every session, cheap model or expensive one, first visit or hundredth, to move like the
+experienced traveler.
+
+And underneath the terminal, neither traveler ever has to think about how much
+complexity the building is actually running. Security only screens, they do not route
+luggage. Ground crew only turns planes around, they do not handle reservations. Someone
+is planning gate assignments hours before a plane lands; someone else is tracking a bag
+through three connections. Nobody up there needs the whole picture. The complexity does
+not disappear, it gets distributed, so the traveler on top only ever sees the one clean
+sign relevant to them right now. That is the actual design target here: not a bigger
+memory, but a structure that hands off just enough, at the moment it is needed, so
+competence lives in the system instead of in what any one session managed to remember.
 
 ## The cues, at the moments they fire
 
@@ -110,7 +131,7 @@ end. Do these in order and stop when you have had enough for the day:
    One fact per line, read at session start, so nothing already known gets re-derived.
 4. **A rules file.** Copy [`templates/CLAUDE_TEMPLATE.md`](templates/CLAUDE_TEMPLATE.md)
    and delete what does not apply. This is the file every session boots from, the
-   highest-leverage basket in the house.
+   first sign every traveler reads.
 5. **A merge gate with teeth.** [`ci-kit/workflows/`](ci-kit/workflows/) ships a
    fail-closed automerge: merges happen only when every required check is green on the
    exact head commit, and only after a human applies an approval label. Read
@@ -140,11 +161,11 @@ exactly the report I want.
 
 ## Try it
 
-Start with one basket, not the whole house: pick the single moment your agents most
+Start with one sign, not the whole terminal: pick the single moment your agents most
 often act on stale state, and place one cue there that fires automatically. For me that
 was session start. Add the refusal second; it is the piece with teeth. Then open an
 issue here and tell me what happened, what worked, what broke, what you changed. I am
-one investigator with one data point, and the pattern gets better the more houses it
+one investigator with one data point, and the pattern gets better the more airports it
 runs in.
 
 Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
