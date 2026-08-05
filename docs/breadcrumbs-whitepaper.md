@@ -15,9 +15,10 @@ the agent remember?" Running many agent sessions a week against one production s
 I found retrieval was not my failure mode. My failures were governance failures: a
 session claiming work was done when it was not, redoing work a previous session had
 finished, or acting confidently on a fact that had changed underneath it. This paper
-describes a different approach, borrowed from how humans actually fix household
-forgetting: place cues where the behavior already happens, and let the environment do
-the remembering. Five mechanisms, all implementable with git, shell hooks, and plain
+describes a different approach, borrowed from why an experienced traveler moves through
+an unfamiliar airport almost as fast as a familiar one: place cues where the behavior
+already happens, and let the environment do the remembering. Five mechanisms, all
+implementable with git, shell hooks, and plain
 text files: boot-time injection, refusal at the point of claim, oracle-gated
 verification, versioned handoffs, and append-only supersession. I include the incident
 that convinced me to publish, in which the system caught a false memory about itself,
@@ -44,45 +45,63 @@ liability with a timestamp.
 
 ## 2. The design stance: cues, not archives
 
-There is a spot in every house where the clothes pile forms. You can demand better
-memory of yourself, or you can put a basket where the pile forms, then a light above
-the basket. You never train your memory; you place cues where the behavior already
-happens, and the environment starts doing the remembering.
+Drop a frequent flyer into an airport they have never set foot in and they still move
+through it almost as fast as their home airport. Drop a first-time flyer into that same
+building and they are anxious and slow, reading every sign twice, asking someone at
+every junction. Same building, same signage, wildly different experience. The frequent
+flyer is not fast because they memorized this particular airport. They are fast because
+they learned how airports work as a system: what a sign means, what to ignore, what to
+trust, where the pattern holds regardless of which building they are standing in.
+
+The more useful observation is what happens to the first-timer by their second airport
+of the same trip. Nobody hands them a manual between layovers. They do it once, notice
+the pattern underneath the specific signs, and carry it forward. The second airport is
+not easier because it is a simpler building; it is easier because they stopped treating
+the first one as a one-off and started treating it as an instance of a system they now
+understand. That gap, not a bigger map, is the design target here: not "give the agent
+more to remember," but give the environment enough structure that any session, on its
+first visit, moves like the experienced traveler.
 
 Applied to agents: instead of building a smarter archive the agent must remember to
-consult, place cues at the moments where agent behavior already happens, and give the
-cues teeth. The moments are few and predictable: session start, finishing work,
-claiming certainty, and handing off. Discipline is encoded as refusals rather than
-reminders, because a reminder can be ignored and a refusal cannot.
+consult, place cues at the moments where agent behavior already happens, the way an
+airport signs the next decision only, at the exact spot the decision gets made, and
+gives the cues teeth. The moments are few and predictable: session start, finishing
+work, claiming certainty, and handing off. Discipline is encoded as refusals rather
+than reminders, because a reminder can be ignored and a refusal cannot.
 
-## 2.5 This is not folk wisdom: the science underneath the basket
+## 2.5 This is not folk wisdom: the science underneath the signage
 
-I arrived at the basket by irritation, but the pattern has names, and I found them
+I arrived at cue placement by irritation, but the pattern has names, and I found them
 after the fact, which I take as a good sign: the design converged on things that are
 known to be true about memory in general.
 
 **Cue-dependent memory.** The psychology of recall (Tulving's encoding specificity,
 decades old and well replicated) says retrieval works best when the context at recall
-matches the context at encoding. That is the literal mechanism behind the basket. Boot
-injection works because it recreates the working context, this repo, this branch,
-these open obligations, at the exact moment recall is needed, instead of asking the
-agent to fetch it cold from an archive it has to remember exists.
+matches the context at encoding. That is the literal mechanism behind the sign at the
+gate rather than the map at the entrance. Boot injection works because it recreates the
+working context, this repo, this branch, these open obligations, at the exact moment
+recall is needed, instead of asking the agent to fetch it cold from an archive it has
+to remember exists.
 
 **Distributed cognition.** Studies of ship crews and airline cockpits (Hutchins,
 *Cognition in the Wild*) found that the cognition of a working system does not live in
 any one head; it lives in the ensemble of people and instruments. A pilot does not
 remember the altitude. The altimeter holds it, and the pilot's competence is knowing
-where to look. That is the honest description of what this system is: I am not giving
-an agent a better memory. I am building a small cognitive system in which the memory
-does not have to live in the agent at all, and a competent session is one that knows
-where to look.
+where to look. Underneath any terminal, the same distribution holds among the people
+who run it: security only screens, they do not route luggage; ground crew only turns
+planes around, they do not handle reservations; someone plans gate assignments hours
+before a plane lands while someone else tracks a bag through three connections, and
+none of them needs the whole picture to do their job well. That is the honest
+description of what this system is: I am not giving an agent a better memory. I am
+building a small cognitive system in which the memory does not have to live in the
+agent at all, and a competent session is one that knows where to look.
 
 **Prompts at the point of ability.** Behavior design (the Fogg model: behavior needs
 motivation, ability, and a prompt arriving together) explains why reminders fail and
 placed cues work. A reminder gambles that motivation will exist later, somewhere else.
 A cue at session start fires at the moment of maximum ability, before the agent has
-invested in any wrong path, which is why the door is the highest-leverage spot in the
-house. And a refusal removes motivation from the equation entirely.
+invested in any wrong path, which is why the door is the highest-leverage sign in the
+terminal. And a refusal removes motivation from the equation entirely.
 
 **Never trust, always verify.** Security engineering already has the vocabulary for
 my oracle rule: zero trust. No claim is trusted because of who makes it, including
@@ -228,14 +247,14 @@ append-only forensic trail, and deserve fuller treatment.
 
 ## 8. Try it
 
-Start with one basket, not the whole house. Pick the single moment your agents most
+Start with one sign, not the whole terminal. Pick the single moment your agents most
 often act on stale state and place one cue there that fires automatically; for me that
 was session start. Add the refusal second, because it is the piece with teeth. The
 copy-and-adapt artifacts (a session handoff file, a decisions ledger, a settled-facts
 store, a bootable rules file, and a fail-closed merge gate) are in this repository,
 MIT licensed. If you try the pattern and it breaks somewhere, open an issue and tell
 me how: I am one investigator with one data point, and the pattern gets better the
-more houses it runs in.
+more airports it runs in.
 
 ---
 
