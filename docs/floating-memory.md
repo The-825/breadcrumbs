@@ -104,6 +104,16 @@ postdates the claim means *re-verify*. That second signal is the highest-value c
 the whole design, because "the file changed after you understood it" is precisely the
 memory that misleads a future session, and it is invisible without the check.
 
+**A third signal, later: decay by use, not just by rank or age.** Rank and age both
+decide trust from the outside, what asserted it and how long ago. A newer signal
+decides from the inside: does anyone actually rely on this entry. Stamp an entry each
+time a session reads it and then genuinely acts on it, not just loads it. An entry
+nobody has used in a long while becomes an archive candidate regardless of its rank; an
+entry that keeps getting used earns another look even past its normal age-out horizon.
+This catches what rank and age both miss: a high-ranked, recent entry that nobody has
+actually needed since the day it landed is dead weight the same as a stale one, it just
+hasn't been caught yet.
+
 ## The airport waves
 
 The metaphor kept paying. Each of these is a discipline the aviation industry built for
