@@ -38,4 +38,4 @@ The discipline that makes this safe is "file, do not silently fix." A verifier t
 
 Rung 6 is the one that pays for the whole skill when you adopt a kit. The templates here ship with names you are meant to point at your own repo. A missed edit does not fail loudly; it fails the first time a workflow runs against a path that is not there. The verifier turns that into a finding at copy time, not a broken run three weeks later.
 
-The companion to this skill is a `doctor` script in the CI kit that automates the mechanical rungs (paths, hooks, placeholders) and runs on every PR. The skill is the human-and-agent checklist; the script is the machine floor. Roadmap item, tracked in `planning/ROADMAP.md`.
+The obvious companion to this skill is a `doctor` script that automates the mechanical rungs (paths, hooks, placeholders) and runs on every PR, so the machine holds the floor and the checklist covers only what needs judgment. That script is not built yet. Until it is, this skill is the whole of it, which means it runs when someone remembers to run it. Worth knowing before you rely on it.
