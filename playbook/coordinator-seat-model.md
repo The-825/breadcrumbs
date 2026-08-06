@@ -31,6 +31,38 @@ charter file on every wake. The coordinator delegates; it doesn't do the work it
   session memory, a seat that goes idle for a week costs nothing and comes back exactly
   where it left off.
 
+## Four things I got wrong before this settled
+
+These came out of reviewing a long archive of my own multi-agent sessions, looking for
+what actually predicted a useful run versus a wasted one.
+
+- **Split on structural difference, not on topic.** The instinct is to give each seat a
+  subject: one for the front end, one for reports, one for docs. What actually produces
+  non-overlapping output is splitting where the *work* differs: different file trees,
+  different tools, different failure modes. Two seats on adjacent topics that read the
+  same files will hand you the same findings twice and each will believe it found them
+  independently. If you cannot name what one seat can reach that the other cannot, you
+  have one seat.
+- **The coordinator should synthesize, not just dispatch.** Handing out assignments is
+  the easy half and the low-value half. The expensive judgment is reading several seats'
+  output together and noticing that two of them contradict each other, or that a finding
+  only matters in light of another seat's finding. A coordinator that only routes work
+  leaves that step to you, which puts you right back in the bottleneck the model was
+  supposed to remove. Budget the coordinator's attention for the read-back, not the
+  handout.
+- **A seat that is holding, not working, is still a seat.** The useful state I did not
+  build at first: dormant but prepared. Work that is blocked on something external
+  (an approval, a dependency, a decision you have not made) does not want a session
+  spun up to re-derive the blockage every time. It wants a seat whose charter says what
+  it will do the moment the block clears, sitting cold until then. Without that state,
+  blocked work either burns sessions rediscovering it is blocked or falls out of the
+  roster entirely.
+- **Keep the roster small.** Every seat is a thing you have to read. The coordination
+  overhead is superlinear in seats and the marginal seat is usually the least
+  differentiated one, which means it costs the most attention and returns the most
+  duplicate output. Add a seat when a piece of work is genuinely unreachable from the
+  existing ones, not because a topic exists.
+
 ## When to use it
 
 Worth the overhead once you're running enough concurrent agent work that you personally
