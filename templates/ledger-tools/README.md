@@ -9,6 +9,8 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [sample_conclusions.jsonl](sample_conclusions.jsonl) | Synthetic six-line fixture that demonstrates every verdict |
 | [capture_nudge.py](capture_nudge.py) + [capture-nudge.md](capture-nudge.md) | UserPromptSubmit hook that injects a same-turn capture reminder when a prompt contains ruling-shaped language |
 | [union-merge.md](union-merge.md) | The `merge=union` gitattributes setting for parallel appenders, with the cases where it is unsafe |
+| [retrieval_exam.py](retrieval_exam.py) | Retrieval exam: per-entry reachability verdicts against your real tree, an injection-lane probe, a use-stamp readout, and a ratchetable baseline. Asks whether entries can be SEEN, where the auditor asks whether they are still TRUE |
+| [sample_probes.json](sample_probes.json) | Four session-start conditions for the exam's lane probe, written against the sample ledger |
 | [SEARCH_MISSES.md](SEARCH_MISSES.md) | Append-only ledger of lookups that found nothing, each carrying the repo path where the answer should live, so a gap becomes a scoped task instead of evaporating with the session |
 | [CORRECTION_LEDGER_TEMPLATE.md](CORRECTION_LEDGER_TEMPLATE.md) | Append-only corrections ledger admitting only entries anchored to an objective oracle (red CI check, tripped data assertion, operator ruling, reverted PR), so the self-improvement loop cannot optimize a proxy |
 
@@ -27,7 +29,22 @@ python3 templates/ledger-tools/conclusions_audit.py templates/ledger-tools/sampl
 python3 templates/ledger-tools/conclusions_audit.py --selftest
 ```
 
-The first command audits the sample fixture against this repo's tree. By design it reports the retired-path entry as STALE, the never-reverified entry as AGING (other sample entries age into AGING too once their pinned dates fall outside the re-verification window), one skipped special path, and one dangling `obsoleted_by` pointer. The second runs the auditor's offline fixture tests.
+And the retrieval exam over the same fixture:
+
+```
+python3 templates/ledger-tools/retrieval_exam.py templates/ledger-tools/sample_conclusions.jsonl \
+    --root . --probes templates/ledger-tools/sample_probes.json
+python3 templates/ledger-tools/retrieval_exam.py --selftest
+```
+
+On the sample that reports one unreachable entry (the retired path, which the auditor
+separately calls STALE, the same entry failing both ways), a lane that varies across all
+four probes, and one entry injected on every probe with no use stamp. Drop the `--probes`
+flag and the exam derives probes from the tree instead, which is a smoke test rather than
+an answer: the derived probes never touch the ledger's keyed files, so it reports
+`UNEXERCISED` instead of pretending to a verdict.
+
+The first auditor command audits the sample fixture against this repo's tree. By design it reports the retired-path entry as STALE, the never-reverified entry as AGING (other sample entries age into AGING too once their pinned dates fall outside the re-verification window), one skipped special path, and one dangling `obsoleted_by` pointer. The second runs the auditor's offline fixture tests.
 
 ## Adopting
 

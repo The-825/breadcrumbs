@@ -70,6 +70,11 @@ Ratchet the result. Store the current counts as a baseline file and fail the che
 reachability gets worse, the same way [context-budget.md](context-budget.md) ratchets what
 every session loads. Without the ratchet you get one good cleanup and slow regrowth.
 
+Two regressions are worth catching, and the second is the one people miss. More
+unreachable entries is obvious. Fewer precise entries at the same total is the subtle one,
+because re-keying a specific entry to something broad reads as tidying up and is a
+downgrade.
+
 *Anonymized from the operator's own system:* the exam was written after three unrelated
 questions converged on the same missing thing, and the first run found entries keyed to
 bare nouns that could never have fired. One of them had been written earlier the same day,
@@ -145,11 +150,47 @@ and **propose rather than apply.** A wrong supersession pointer silently deletes
 fact from every future injection, and the failure mode is invisible, so the default has to
 be a human ruling on a cheap proposal.
 
+## Running it
+
+The first three instruments ship as one script,
+[templates/ledger-tools/retrieval_exam.py](../templates/ledger-tools/retrieval_exam.py).
+Stdlib only, no dependencies, exits 0 unless you ask it to gate.
+
+```
+python3 templates/ledger-tools/retrieval_exam.py <your-ledger.jsonl> --root .
+python3 templates/ledger-tools/retrieval_exam.py --selftest
+```
+
+**The matcher is the honest catch, so read this before trusting a number.** The script
+cannot read your session-start hook. It ships a model of the common matcher shape (entries
+keyed by repo path, a cap on how many get injected, most specific and most recent win) and
+you correct it with a small `--matcher` config: your special keys, your real cap, which
+date field you rank on, where you draw the line between precise and broad. Get that config
+wrong and the report describes the model instead of your system, which is worse than
+having no report, because it looks like evidence.
+
+The cap is the number to check first. It is what turns "reachable" into "actually seen,"
+and it is almost always smaller than people remember.
+
+Probes are the other input worth an honest look. With no probes file the script derives one
+per top-level directory so it runs on any repo immediately, but derived probes are a smoke
+test, not an answer. Write probes that mirror the session shapes you actually run. If no
+probe touches a file any entry keys on, the script says `UNEXERCISED` and refuses to draw a
+conclusion about the lane rather than reporting a stuck one, because a confident verdict
+about a lane that was never exercised is the same mistake the exam exists to catch.
+
+In CI, store a baseline and gate on it:
+
+```
+python3 templates/ledger-tools/retrieval_exam.py <ledger> --root . \
+    --baseline .retrieval-baseline.json --fail-on-regression
+```
+
 ## Sizing it
 
-Start with reachability. It is one script, it costs no sessions, and on a corpus that has
-never been tested it will find something on the first run. Add the search-miss ledger next,
-because it is a text file and a habit, and it starts paying the moment anyone uses it.
+Start with reachability. It costs no sessions, and on a corpus that has never been tested
+it will find something on the first run. Add the search-miss ledger next, because it is a
+text file and a habit, and it starts paying the moment anyone uses it.
 
 The lane probe and the use-stamp readout both need the first two to be worth anything, so
 they come after. Do not build all four before running any of them. The point of this doc
