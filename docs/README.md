@@ -21,9 +21,7 @@ the piece.
 | [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
 | [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
 | [authority-ledger.md](authority-ledger.md) | Who is allowed to say yes, written down: standing grants with scope and expiry, so authority is not a hallway rule. |
-| [specification-debt.md](specification-debt.md) | A correction you keep re-issuing means your spec is missing a rule: count across sessions, patch past three, route by correction type. |
-| [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
-| [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
+| [memory-measurement.md](memory-measurement.md) | Test whether your memory layer actually surfaces: reachability verdicts, a lane probe, use-stamp readout, and a search-miss ledger. Writing is instrumented; retrieval usually is not. |
 | [decision-capture.md](decision-capture.md) | Why rulings get written down the same turn they land, not at end of session. |
 | [four-founding-docs.md](four-founding-docs.md) | The four files a disciplined repo is born with: rules, build order, parity, decisions. |
 | [model-playbook.md](model-playbook.md) | Match the task to the model tier without losing accuracy: boot protocol, guardrails, counter-rules. |
