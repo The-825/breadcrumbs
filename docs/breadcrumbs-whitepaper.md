@@ -233,20 +233,29 @@ The core loop touches no vendor API: a script that prints text, and an append to
 file. A human enters through the same protocol too, and my own rulings do exactly that,
 at the top trust rank. Heterogeneous fleets are the design case, not an afterthought.
 
-**What I have not done, stated plainly, because this is the claim most likely to be
-taken on faith:** I have not yet run a full documented join with a non-Claude model.
-The protocol is built to be vendor-neutral and I believe it is, but belief is not a
-receipt, and this paper's own standard is that a claim without an oracle is marked
-asserted rather than verified. So: asserted. What I do have is adjacent and less
-flattering. When a second vendor's review agent was pointed at this system, it could
-not reliably follow the pointer-based routing that Claude sessions navigate fine, and
-it needed a separate, fully inlined copy of the rules written specifically for it,
+**What is tested, and what is not, because the distinction turns out to matter more
+than I expected.** Models from two other vendors have read this system and reviewed it,
+and that works. It is genuinely useful, in fact, precisely because an outside reader
+brings assumptions the resident model does not, and catches things a session steeped in
+the house conventions stops seeing. So cross-vendor *reading* is not a hypothetical
+here; it is part of how the work actually gets checked.
+
+What none of them have done is the write half. No non-Claude model has yet run the full
+loop above, boot read through fold append through version ack, as a participating member
+of the memory rather than a visitor commenting on it. The protocol is built to be
+vendor-neutral and I believe it is, but belief is not a receipt, and this paper's own
+standard is that a claim without an oracle is marked asserted rather than verified. So
+the read side is verified and the write side is asserted, and I would rather say that
+than blur the two.
+
+One finding from the reading side is worth passing on, because it cuts against a naive
+"any model, drop it in" reading. The models differ sharply in how well they follow the
+pointer-based routing: one navigated it comfortably, another struggled enough that it
+needed a separate, fully inlined copy of the rules written for it specifically,
 subordinate to the original, before it stopped flagging deliberate patterns as bugs.
-That is a real finding and it cuts against a naive "any model, drop it in" reading:
-the storage protocol may be vendor-neutral while the *navigation* layer is not equally
-legible to every model. Anyone adopting this should expect to write a
-capability-matched entry point per model family rather than assuming one set of
-pointers serves all of them.
+The storage protocol can be vendor-neutral while the *navigation* layer is not equally
+legible to every model. Expect to write a capability-matched entry point per model
+family rather than assuming one set of pointers serves all of them.
 
 ## 6. Related work, briefly and honestly
 
@@ -277,9 +286,11 @@ append-only forensic trail, and deserve fuller treatment.
 Two specific things I want to be unambiguous about, because both are easy to assume
 from the design and neither is earned yet:
 
-**Cross-vendor operation is asserted, not verified.** See section 5. No documented
-non-Claude join exists yet, and the one real encounter with another vendor's agent
-surfaced a navigation problem rather than confirming portability.
+**Cross-vendor writing is asserted; cross-vendor reading is not.** See section 5. Models
+from two other vendors read and review this system regularly, and that half works well
+enough to be part of the process. No non-Claude model has yet run the full write loop as
+a participating member of the memory, so the portability claim covers reading only until
+that join is documented.
 
 **This is one fleet, not many.** Everything here describes multiple sessions, over
 time, sharing one memory for one system: one presence table, one memory branch, one
