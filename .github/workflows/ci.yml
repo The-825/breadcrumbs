@@ -12,6 +12,19 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Manual lever, and the reason is worth writing down because it is not
+  # obvious until it happens to you.
+  #
+  # GitHub sometimes drops workflow-triggering events. When a pull_request
+  # event is dropped, CI does not fail, it never runs at all, and the two
+  # obvious recoveries both miss: a run that was never created cannot be
+  # re-run, and re-running an older run replays that run's head sha, so it
+  # returns a verdict about a commit that is no longer the PR head.
+  #
+  # The automerge gate here chains off `workflow_run` from this workflow, so a
+  # dropped event does not just delay a merge, it removes the only thing that
+  # can start one. Dispatch is the recovery path.
+  workflow_dispatch:
 
 jobs:
   self-tests:
