@@ -154,7 +154,7 @@ half is proven. Do these in order and stop when you have had enough for the day:
 | Directory | What it gives you |
 |---|---|
 | [`templates/`](templates/) | Copy-and-adapt working files: rules file, session handoff, decision and authority ledgers, incident and ADR templates, slash commands, hooks, a test-harness skeleton |
-| [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, and the fail-closed merge gate |
+| [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, a preflight that catches branch collisions before you push, and the fail-closed merge gate |
 | [`skills/`](skills/) | Paste-able rule sets for your own rules file |
 | [`checklists/`](checklists/) | Two-minute operational checklists |
 | [`docs/`](docs/) | The reasoning behind each piece, including [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
