@@ -204,8 +204,8 @@ also difficult to fake, because the entire history sits in version control.
 
 ## 5. The join protocol
 
-Nothing above depends on which model you run. A fleet member is anything that can read
-a file at start and append a line at the end:
+Nothing above depends, *by design*, on which model you run. A fleet member is anything
+that can read a file at start and append a line at the end:
 
 1. Read the boot packet. Mine is printed by a script; yours might be a `git show` plus
    a few greps.
@@ -215,9 +215,24 @@ a file at start and append a line at the end:
    refuse you if obligations dangle.
 4. Read back the memory version you booted on, so staleness is visible.
 
-A Claude session can do this, a Gemini or GPT session can do this, and a human can do
-this; my own rulings enter through the same protocol at the top trust rank.
-Heterogeneous fleets are the design case, not an afterthought.
+The core loop touches no vendor API: a script that prints text, and an append to a
+file. A human enters through the same protocol too, and my own rulings do exactly that,
+at the top trust rank. Heterogeneous fleets are the design case, not an afterthought.
+
+**What I have not done, stated plainly, because this is the claim most likely to be
+taken on faith:** I have not yet run a full documented join with a non-Claude model.
+The protocol is built to be vendor-neutral and I believe it is, but belief is not a
+receipt, and this paper's own standard is that a claim without an oracle is marked
+asserted rather than verified. So: asserted. What I do have is adjacent and less
+flattering. When a second vendor's review agent was pointed at this system, it could
+not reliably follow the pointer-based routing that Claude sessions navigate fine, and
+it needed a separate, fully inlined copy of the rules written specifically for it,
+subordinate to the original, before it stopped flagging deliberate patterns as bugs.
+That is a real finding and it cuts against a naive "any model, drop it in" reading:
+the storage protocol may be vendor-neutral while the *navigation* layer is not equally
+legible to every model. Anyone adopting this should expect to write a
+capability-matched entry point per model family rather than assuming one set of
+pointers serves all of them.
 
 ## 6. Related work, briefly and honestly
 
@@ -244,6 +259,19 @@ shift-change research to help the site that designed them more than adopting sit
 assume that applies to me. Adversarial settings (a malicious fleet member poisoning
 the shared record) are addressed only by the trust ladder's quarantine rank and the
 append-only forensic trail, and deserve fuller treatment.
+
+Two specific things I want to be unambiguous about, because both are easy to assume
+from the design and neither is earned yet:
+
+**Cross-vendor operation is asserted, not verified.** See section 5. No documented
+non-Claude join exists yet, and the one real encounter with another vendor's agent
+surfaced a navigation problem rather than confirming portability.
+
+**This is one fleet, not many.** Everything here describes multiple sessions, over
+time, sharing one memory for one system: one presence table, one memory branch, one
+coordinator. It says nothing about two independently owned fleets staying continuous
+with each other across a trust boundary. That is a genuinely harder problem, it is
+not what I built, and I do not want the single-fleet result read as evidence for it.
 
 ## 8. Try it
 

@@ -3,8 +3,8 @@
 *One person's working answer to a specific problem: how do I get the most out of AI
 coding models without re-explaining everything at the start of every session? Not a
 product, not a framework launch. A pattern I built for my own work that I think you can
-steal, with any model, in an afternoon. I'm sharing it because the parts that worked
-surprised me and the part that failed surprised me more.*
+steal in an afternoon. I'm sharing it because the parts that worked surprised me and
+the part that failed surprised me more.*
 
 ## The frequent flyer and the first-timer
 
@@ -84,7 +84,7 @@ I am a heavy user paying for my own usage, so this is also an economics project.
 well-signed airport lets a first-time traveler move like a frequent flyer; that is the
 designer's doing, not the traveler's. Same here: good cue placement is what lets a
 smaller, cheaper model navigate the repo as surely as the expensive one, and what
-stops the expensive one from burning its budget re-reading the house to find out
+stops the expensive one from burning its budget re-reading the building to find out
 where things are. The boot packet is budgeted in bytes because injection is a tax
 every session pays. And instead of letting one long session silt up, I clear early
 and often: checkpoint the handoff file, wipe the context, boot clean off the cues. A
@@ -117,9 +117,11 @@ record is worth more to me than one that promises never to be wrong.
 ## Steal this: start in one afternoon
 
 Everything in this repo is a starting piece for the pattern above, extracted from the
-system I actually run, with the domain scrubbed out. Nothing depends on which model you
-use; a fleet member is anything that can read a file at start and append a line at the
-end. Do these in order and stop when you have had enough for the day:
+system I actually run, with the domain scrubbed out. Nothing here depends *by design* on
+which model you use; a fleet member is anything that can read a file at start and append
+a line at the end. I have run it across model tiers, not yet across vendors, and the
+white paper is explicit about where that claim is asserted rather than proven. Do these
+in order and stop when you have had enough for the day:
 
 1. **A handoff file.** Copy [`templates/SESSION_STATE_TEMPLATE.md`](templates/SESSION_STATE_TEMPLATE.md)
    to your repo root. Only what is in flight: branch, open PR, half-done edits, next
