@@ -351,7 +351,9 @@ This runs in one office, mine, at one scale, a few hundred agent sessions a mont
 one regulated domain, operated by the person who designed it. Evidence so far is
 incidents caught and work not redone, counted by hand; instrumentation for measuring
 which injected memories actually change behavior is new, and numbers from it will
-follow rather than be promised. Structured handoffs are known from hospital
+follow rather than be promised. The instruments themselves are written up in
+[memory-measurement.md](memory-measurement.md), so the method can be reviewed and run
+elsewhere while the results are still owed. Structured handoffs are known from hospital
 shift-change research to help the site that designed them more than adopting sites; I
 assume that applies to me. Adversarial settings (a malicious fleet member poisoning
 the shared record) are addressed only by the trust ladder's quarantine rank and the

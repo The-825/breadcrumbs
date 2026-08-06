@@ -49,3 +49,15 @@ stories, one of them still pitching the book in a way this repo deliberately doe
 A continuity sweep flagged it as the largest open item on the public surface. Archived
 rather than deleted, so the history survives and the decision is reversible.
 Source: Jovan, session 2026-08-06.
+
+## D-8 · 2026-08-06 · Memory measurement ships as a doc first, tooling later
+
+Ruling: the retrieval-measurement layer (reachability exam, injection-lane probe,
+use-stamp readout, search-miss ledger) enters this repo as a pattern essay plus a ledger
+schema, not as a runnable checker. A generalized reachability script has to replay the
+adopter's own matcher against the adopter's own tree, so a copy of one repo's version
+would be a demo rather than a tool.
+Why: the concept transfers cleanly and is what readers are missing; the implementation
+does not transfer without knowing the reader's boot path. Naming that boundary is
+honest, and it keeps the repo's no-unbuilt-claims rule intact.
+Source: session 2026-08-06.

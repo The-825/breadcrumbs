@@ -9,11 +9,14 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [sample_conclusions.jsonl](sample_conclusions.jsonl) | Synthetic six-line fixture that demonstrates every verdict |
 | [capture_nudge.py](capture_nudge.py) + [capture-nudge.md](capture-nudge.md) | UserPromptSubmit hook that injects a same-turn capture reminder when a prompt contains ruling-shaped language |
 | [union-merge.md](union-merge.md) | The `merge=union` gitattributes setting for parallel appenders, with the cases where it is unsafe |
+| [SEARCH_MISSES.md](SEARCH_MISSES.md) | Append-only ledger of lookups that found nothing, each carrying the repo path where the answer should live, so a gap becomes a scoped task instead of evaporating with the session |
 | [CORRECTION_LEDGER_TEMPLATE.md](CORRECTION_LEDGER_TEMPLATE.md) | Append-only corrections ledger admitting only entries anchored to an objective oracle (red CI check, tripped data assertion, operator ruling, reverted PR), so the self-improvement loop cannot optimize a proxy |
 
 One known gap: the auditor predates the dated `obsoleted_by` grammar (`path@date` / `path@date#n`, CONCLUSIONS_TEMPLATE.md v3.1) and reports those pointers as unresolved; a curation pass or a future auditor update handles them.
 
 The four pieces cover a ledger entry's whole life: it gets written at all (the nudge), it carries its origin and last-checked date (provenance), its decay gets measured instead of discovered (the auditor), and parallel writers stop fighting over the end of the file (union merge).
+
+The search-miss ledger covers the case none of those reach: the entry that was never written, discovered by somebody going to look for it. Its readout, and the three other instruments that tell you whether your memory layer surfaces at all, are in [docs/memory-measurement.md](../../docs/memory-measurement.md).
 
 ## Try it
 
