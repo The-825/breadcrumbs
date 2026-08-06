@@ -179,6 +179,21 @@ issue here and tell me what happened, what worked, what broke, what you changed.
 one investigator with one data point, and the pattern gets better the more airports it
 runs in.
 
+Want to send a fix rather than a report? [CONTRIBUTING.md](CONTRIBUTING.md) is short.
+
+Curious what your own repo looks like from an agent's side before you change anything?
+[`templates/ledger-tools/retrieval_exam.py`](templates/ledger-tools/retrieval_exam.py)
+has a survey mode that needs nothing installed and no adoption first:
+
+```
+python3 retrieval_exam.py --survey --root /path/to/your/repo
+```
+
+It reports what your sessions are handed automatically, what they pay for it, and which
+of your documents nothing links to, so a session never opens them on its own. Run it
+here first if you want to see the shape of the output; this repo's own run is in
+[docs/memory-measurement.md](docs/memory-measurement.md).
+
 Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
 
 *I'm also writing the longer story of the system this came from, From Archivist to
