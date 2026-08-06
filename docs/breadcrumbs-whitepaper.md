@@ -184,23 +184,37 @@ This is the top of the hierarchy observed in the wild, once, in my one office: t
 system holding a false belief about itself, discovering it through its own machinery,
 and correcting the record without destroying the evidence.
 
-My memory files have a size cap and a guard that truncates runaway injections. One day
-I raised the cap and recorded, in the permanent decision ledger, that the guard was
-raised in lockstep. Weeks later an agent-driven audit pass over the memory corpus
-checked every documented claim against the actual code. It found the guard had never
-been raised, and that the ledger entry named the wrong file. Because the guard still
-held the old size, every session's boot packet had been silently truncated mid-file
-for days, and the audit could point to that morning's own boot as live evidence.
+In plain terms first, because the mechanics obscure how ordinary the failure was: I
+wrote down that I had done something. I had not done it. Because my own written record
+was wrong, every session had been quietly starting with less than half the memory it
+was supposed to have, for days, and nothing complained.
+
+The detail. There is a limit on how much of the memory files get loaded into each
+session at startup, and a separate check that enforces that limit. I raised the limit
+so sessions could carry more. In the permanent record I wrote that I had raised the
+enforcing check to match. I had not. The check stayed at the old, smaller number, so
+every session began loading its memory, hit the old limit, and was cut off partway
+through. Nothing failed loudly; sessions simply started knowing less than they should
+have.
+
+Weeks later, a pass that reads every claim in the written record and compares it
+against what the code actually does found the entry, checked it, and reported it false.
+The entry had even pointed at the wrong file. That morning's own session startup was
+the live evidence.
 
 The fix took an hour: the guard resized from measured data, a test added that fails if
 anyone shrinks the cap without re-measuring, and the false ledger entry superseded on
 the record by a correction explaining exactly what was wrong. Nothing was deleted.
 
 I offer this instead of a benchmark. The practical fear with agent memory is not
-forgetting; it is confident false state. A system that can hold a false memory about
-itself, notice it through its own audit machinery, and correct the record while
-preserving the evidence, answers that fear in a way a retrieval score cannot. It is
-also difficult to fake, because the entire history sits in version control.
+forgetting; it is confident false state. And the specific thing worth noticing is that
+this was not a bug in code. It was a false entry in the documentation, which is a
+harder problem, because a wrong note does not look wrong. Nothing normally checks a
+written record against reality, which is exactly why bad documentation survives in
+organizations for years. A system that can hold a false belief about itself, notice it
+through its own machinery, and correct the record while keeping the evidence of having
+been wrong, answers the real fear in a way a retrieval score cannot. It is also
+difficult to fake, because the entire history sits in version control.
 
 ## 5. The join protocol
 
@@ -272,6 +286,18 @@ time, sharing one memory for one system: one presence table, one memory branch, 
 coordinator. It says nothing about two independently owned fleets staying continuous
 with each other across a trust boundary. That is a genuinely harder problem, it is
 not what I built, and I do not want the single-fleet result read as evidence for it.
+
+**Nothing here internalizes anything, and that ceiling looks structural.** The whole
+design gets a standard in front of every session, in identical words, without fail.
+That is the stating half of a shared understanding, and it is more reliable than most
+human teams manage, because it never gets skipped on a busy week. It buys nothing past
+that. A person repeated at often enough eventually makes a principle their own and
+starts applying it to cases nobody wrote down, including telling you when you are the
+one getting it wrong. A session complies exactly and ends knowing nothing; the next one
+starts from the same cold beginning. Total compliance and zero internalization are
+different things, and only the first is on offer here. Plan the rest of the system
+accordingly, because compliance covers the cases you already anticipated and nothing
+else.
 
 ## 8. Try it
 
