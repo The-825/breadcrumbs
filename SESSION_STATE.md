@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-06
+Last refreshed: 2026-08-06 (repo-split ruling closed, D-4)
 
 ## Current state
 
@@ -34,17 +34,12 @@ chat. Three new docs, one whitepaper section, and a set of continuity fixes.
 
 ## Next steps
 
-1. Decide what happens to the retired `agent-ops-playbook` repo. It is still
-   public and still carries a near-duplicate of this kit plus a book pitch this
-   repo deliberately does not have. Two public repos telling different stories
-   is the single largest open item. Recommendation: archive it on GitHub with a
-   README pointer here, which is reversible. This needs the operator's call.
-2. Name a known-issues ledger for this repo in `CLAUDE.md` and start it.
-3. The `doctor` script from `skills/adoption-verifier.md` is still unbuilt.
+1. The `doctor` script from `skills/adoption-verifier.md` is still unbuilt. It is
+   named as unbuilt in the skill, so this is a gap, not a false claim.
+2. Nothing else open on the public surface.
 
 ## Pending decisions
 
-- The retired public repo, above.
 - Whether the airport and caught-itself framing that anchors this repo's public
   narrative should also appear in the book, which currently does not use it.
   Deliberate split or drift, the operator's call either way.

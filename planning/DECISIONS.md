@@ -39,3 +39,13 @@ CI kit and "runs on every PR." Neither was true, and the same paragraph
 contradicted itself by calling it a roadmap item. A public kit that overstates
 its own coverage is the one defect readers cannot verify around.
 Source: cross-repo continuity sweep, 2026-08-06 session.
+
+## D-4 · 2026-08-06 · The predecessor repo is private and archived; breadcrumbs is the only public companion
+
+Ruling: `agent-ops-playbook` has been made private and archived. `The-825/breadcrumbs`
+is the sole public companion repo, and every reader-facing pointer resolves here.
+Why: two public repos carried near-duplicate copies of the kit and told different
+stories, one of them still pitching the book in a way this repo deliberately does not.
+A continuity sweep flagged it as the largest open item on the public surface. Archived
+rather than deleted, so the history survives and the decision is reversible.
+Source: Jovan, session 2026-08-06.
