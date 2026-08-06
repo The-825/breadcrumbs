@@ -49,3 +49,16 @@ stories, one of them still pitching the book in a way this repo deliberately doe
 A continuity sweep flagged it as the largest open item on the public surface. Archived
 rather than deleted, so the history survives and the decision is reversible.
 Source: Jovan, session 2026-08-06.
+
+## D-7 · 2026-08-06 · Commits and PRs here carry the flight metaphor
+
+Ruling: public-facing writing in this repo, including commit messages and PR titles and
+bodies, keeps a light aviation or flight reference where one fits naturally. The repo
+already runs on the airport and wayfinding model: signage that tells you the next hop
+rather than the whole map. The history should sound like it belongs to the same building.
+Why: theme consistency is a credibility signal on a public repo, and it costs nothing when
+the metaphor is already load-bearing in the docs. Light is the operative word. One
+image per message, chosen because it actually describes the mechanism, never a pun
+stapled to the front of a technical sentence. If the metaphor does not fit the change,
+skip it rather than force it.
+Source: Jovan, session 2026-08-06.
