@@ -1,0 +1,15 @@
+# Wordlist template for guard_no_provenance_leak.py.
+#
+# Copy this to .provenance-terms and keep THAT file out of version control.
+# This example is committed; your real list must not be, because a public file
+# listing the names you are keeping out of public view defeats the point.
+#
+# One term per line. Blank lines and # comments are ignored. Each entry is
+# matched case-insensitively as a whole word, so a term will not fire on a
+# longer word that merely contains it.
+#
+# Real entries are the proper nouns you must not publish: employers, clients,
+# internal system names, private repo names, project codenames.
+
+Acme
+Northwind

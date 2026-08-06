@@ -22,13 +22,21 @@ GUARDS=(
   guard_no_pii_in_fixtures.py
 )
 
-# Deliberate exception: guard_authority_citations.py is not a file-scan guard,
-# so it is not in the array above. Its default mode reads the PR body from the
-# GitHub event payload (GITHUB_EVENT_PATH) and it fails closed when the
-# authority ledger file is missing, so registering it here would fail this
-# aggregate run in any repo that has not adopted the ledger, this one included.
-# Wire it as its own PR-workflow step per docs/authority-ledger.md; its
-# self-tests already run with the other guard tests in ci-kit/guards/tests/.
+# Deliberate exceptions: two guards on the shelf do not scan files, so they are
+# not in the array above.
+#
+# guard_authority_citations.py reads the PR body from the GitHub event payload
+# (GITHUB_EVENT_PATH) and fails closed when the authority ledger file is
+# missing, so registering it here would fail this aggregate run in any repo that
+# has not adopted the ledger, this one included. Wire it as its own PR-workflow
+# step per docs/authority-ledger.md.
+#
+# guard_no_provenance_leak.py scans commit messages and PR bodies rather than
+# the tree, and takes a wordlist that is deliberately kept out of version
+# control, so it has nothing to walk here. Wire it as its own step; see its
+# module docstring.
+#
+# Both have self-tests running with the rest in ci-kit/guards/tests/.
 
 status=0
 for g in "${GUARDS[@]}"; do

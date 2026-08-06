@@ -50,6 +50,35 @@ A continuity sweep flagged it as the largest open item on the public surface. Ar
 rather than deleted, so the history survives and the decision is reversible.
 Source: Jovan, session 2026-08-06.
 
+## D-5 · 2026-08-06 · Silent about provenance, plain about the artifact
+
+Ruling: public commit messages, PR bodies, and docs in this repo never reference the
+private origin of anything here. No employer, no client, no private repo, no book, no
+business strategy, and no narration of a scrub ("de-identified", "removed the internal
+example", "generalized from"). Technical defects in the kit itself ARE described plainly:
+a fix says what was wrong and what now holds.
+Why: the two halves are often confused and they pull in opposite directions. Not
+publishing your private context is ordinary discretion. Concealing a defect in a public
+kit is not, and it would cost more than it saves here, because this repo's whole argument
+is that a system which catches itself and keeps the evidence beats one that claims never
+to be wrong. The white paper's case study IS an admitted failure, and it is the most
+persuasive thing in it. A history that never admits one would sit oddly beside it, and a
+reader who later finds a papered-over defect loses the one claim the kit cannot prove any
+other way. D-3 already rules that unbuilt things are named as unbuilt; this is the same
+principle applied to history rather than to features.
+Source: Jovan, session 2026-08-06, answering the (a)/(b) question directly with "a".
+
+## D-6 · 2026-08-06 · The guard ships, the wordlist does not
+
+Ruling: `ci-kit/guards/guard_no_provenance_leak.py` enforces D-5. The forbidden-term list
+is local and gitignored (`.provenance-terms`); the repo ships only
+`provenance-terms.example` with placeholder names.
+Why: a public guard containing the literal list of names you are keeping out of public
+view is a leak with extra steps, and precisely the mistake the guard exists to prevent.
+The scrub-narration patterns are safe to ship because they name the ACT rather than the
+subject. The general form is worth stating: ship the check, keep the sensitive parameter
+out of the artifact.
+Source: session 2026-08-06, design constraint found while writing the guard.
 ## D-7 · 2026-08-06 · Commits and PRs here carry the flight metaphor
 
 Ruling: public-facing writing in this repo, including commit messages and PR titles and
