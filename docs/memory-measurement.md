@@ -179,6 +179,38 @@ probe touches a file any entry keys on, the script says `UNEXERCISED` and refuse
 conclusion about the lane rather than reporting a stuck one, because a confident verdict
 about a lane that was never exercised is the same mistake the exam exists to catch.
 
+### Survey mode: before you have a ledger at all
+
+Everything above needs a conclusions store in this kit's schema, which means it runs only
+for people who already adopted the pattern, who are the people who need it least. Survey
+mode asks the same question of what a normal repo already has:
+
+```
+python3 templates/ledger-tools/retrieval_exam.py --survey --root /path/to/repo
+```
+
+With no ledger there is no injection cap to model. What loads automatically is the rules
+file, and every other document is reachable only if something the agent already read
+points at it. So reachability becomes link distance from that boot surface, and the
+finding is the orphan: a document nothing links, which a session never opens on its own
+no matter how good it is. Islands are the worse version, a cluster linked only from other
+unreachable documents, which is what an index page nobody points at produces.
+
+It also prints what every session pays before any work happens, which is the
+[context-budget.md](context-budget.md) number measured rather than estimated.
+
+Run against this repo on 2026-08-06: 117 markdown documents, 2 booted (CLAUDE.md and
+README.md, 376 lines and 20,052 bytes charged to every session), 115 linked, 0 islands,
+0 deep, 0 orphans. The first run had one orphan, CONTRIBUTING.md, which nothing in the
+repo linked; the README now does, which is what took the count to zero.
+
+**One caveat learned by getting it wrong here.** The first version of the resolver treated
+a link to `templates/` as a link to nothing, because a directory is not a document. That
+reported 87 islands and 6 orphans in this repo, which looked like a dramatic finding and
+was a bug in the tool: a forge renders a directory link as its README, so a reader
+following that link lands somewhere real. The resolver now does the same. If your tooling
+does not, your number is different from this one and you should say so.
+
 In CI, store a baseline and gate on it:
 
 ```

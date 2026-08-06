@@ -393,6 +393,215 @@ def build_report(results, probe_report, use_report, counts, ledger_rel, today,
     return "\n".join(lines) + "\n"
 
 
+# ---------------------------------------------------------------------------
+# SURVEY MODE: the exam for a repo that has no ledger yet.
+#
+# Everything above needs a conclusions store in this kit's schema, which means
+# it only runs for people who already adopted the pattern, who are exactly the
+# people who need it least. Survey mode asks the same question of what a normal
+# repo already has: a rules file and a pile of markdown.
+#
+# The mechanic is different because the lane is different. With no ledger there
+# is no injection cap to model. What loads automatically is the rules file, and
+# every other document is reachable only if something the agent already read
+# points at it. So reachability here is link distance from the boot surface,
+# and the finding is the orphan: a document nobody links, which a session will
+# never open on its own no matter how good it is.
+#
+# LIMITS, stated because overclaiming here would be the exact failure this kit
+# is about. This follows markdown links only. A file named in prose without a
+# link is invisible to it, and an agent that greps can still find an orphan.
+# "Orphan" means unsignposted, not unfindable. It is the difference between a
+# document the environment offers and one a human has to remember exists.
+# ---------------------------------------------------------------------------
+
+# Files a session is handed automatically, by convention across harnesses.
+# Order matters only for reporting; all of them are treated as boot surface.
+BOOT_FILES = [
+    "CLAUDE.md",
+    "AGENTS.md",
+    "GEMINI.md",
+    ".cursorrules",
+    ".github/copilot-instructions.md",
+    "README.md",
+]
+# Past this many hops from the boot surface, a document is not signposted in
+# any practical sense: nothing short of a deliberate hunt reaches it.
+DEEP_HOPS = 3
+
+BOOTED = "booted"
+LINKED = "linked"
+DEEP = "deep"
+ISLAND = "island"
+ORPHAN = "orphan"
+SURVEY_VERDICTS = (BOOTED, LINKED, DEEP, ISLAND, ORPHAN)
+
+_LINK_RE = None
+
+
+def _link_targets(text):
+    """Relative markdown link targets in a document, external links dropped."""
+    global _LINK_RE
+    if _LINK_RE is None:
+        import re
+        _LINK_RE = re.compile(r"\]\(\s*([^)\s]+?)\s*(?:\s+\"[^\"]*\")?\)")
+    out = []
+    for raw in _LINK_RE.findall(text):
+        if raw.startswith(("http://", "https://", "mailto:", "#")):
+            continue
+        out.append(raw.split("#", 1)[0].strip())
+
+    return [t for t in out if t]
+
+
+def _read_text(root, rel):
+    try:
+        with open(os.path.join(root, rel), encoding="utf-8", errors="replace") as fh:
+            return fh.read()
+    except OSError:
+        return ""
+
+
+def survey_repo(root, tree, deep_hops=DEEP_HOPS):
+    """Classify every markdown document by link distance from the boot surface."""
+    docs = [p for p in tree if p.lower().endswith(".md")]
+    doc_set = set(docs)
+    roots = [p for p in BOOT_FILES if p in doc_set]
+
+    # Link graph over documents only. A link to a non-markdown file is a real
+    # pointer but not a document that needs its own reachability verdict.
+    edges, inbound = {}, {p: 0 for p in docs}
+    for doc in docs:
+        base = os.path.dirname(doc)
+        targets = []
+        for raw in _link_targets(_read_text(root, doc)):
+            resolved = os.path.normpath(os.path.join(base, raw)).replace(os.sep, "/")
+            # A link to a directory resolves to its README, because that is
+            # what the forge renders and what a reader following the link
+            # lands on. Skipping this would report a whole repo as orphaned
+            # over a trailing slash, which is a dramatic finding and a wrong
+            # one.
+            if resolved not in doc_set:
+                as_index = f"{resolved.rstrip('/')}/README.md"
+                if as_index in doc_set:
+                    resolved = as_index
+            if resolved in doc_set and resolved != doc:
+                targets.append(resolved)
+        edges[doc] = sorted(set(targets))
+        for t in edges[doc]:
+            inbound[t] = inbound.get(t, 0) + 1
+
+    depth = {r: 0 for r in roots}
+    frontier = list(roots)
+    while frontier:
+        nxt = []
+        for node in frontier:
+            for t in edges.get(node, []):
+                if t not in depth:
+                    depth[t] = depth[node] + 1
+                    nxt.append(t)
+        frontier = nxt
+
+    results = []
+    for doc in docs:
+        d = depth.get(doc)
+        if doc in roots:
+            verdict, note = BOOTED, "loaded automatically at session start"
+        elif d is None and inbound.get(doc, 0) == 0:
+            verdict, note = ORPHAN, "nothing links here; a session never opens it on its own"
+        elif d is None:
+            verdict, note = ISLAND, (
+                f"linked only from documents that are themselves unreachable "
+                f"({inbound.get(doc, 0)} inbound)"
+            )
+        elif d > deep_hops:
+            verdict, note = DEEP, f"{d} hops from the boot surface"
+        else:
+            verdict, note = LINKED, f"{d} hop(s) from the boot surface"
+        results.append({
+            "path": doc,
+            "verdict": verdict,
+            "note": note,
+            "depth": d,
+            "inbound": inbound.get(doc, 0),
+        })
+    results.sort(key=lambda r: (SURVEY_VERDICTS.index(r["verdict"]), r["path"]))
+    return {"results": results, "roots": roots, "docs": len(docs)}
+
+
+def survey_counts(survey):
+    counts = {v: 0 for v in SURVEY_VERDICTS}
+    for r in survey["results"]:
+        counts[r["verdict"]] += 1
+    return counts
+
+
+def boot_weight(root, roots):
+    """What every session pays before doing any work."""
+    total_bytes = total_lines = 0
+    per_file = []
+    for rel in roots:
+        text = _read_text(root, rel)
+        b, l = len(text.encode("utf-8")), text.count("\n") + 1 if text else 0
+        per_file.append({"path": rel, "bytes": b, "lines": l})
+        total_bytes += b
+        total_lines += l
+    return {"per_file": per_file, "bytes": total_bytes, "lines": total_lines}
+
+
+def build_survey_report(survey, counts, weight, root_label, today, deep_hops):
+    r = survey["results"]
+    lines = []
+    lines.append(f"Retrieval exam, survey mode ({today.isoformat()})")
+    lines.append(f"Repo: {root_label}  markdown documents={survey['docs']}")
+    lines.append("")
+    lines.append("BOOT SURFACE  [what every session is handed automatically]")
+    if not survey["roots"]:
+        lines.append(
+            "  none found. No CLAUDE.md, AGENTS.md, or README.md at the root, so "
+            "nothing in this repo reaches a session unless a human pastes it."
+        )
+    for f in weight["per_file"]:
+        lines.append(f"  {f['path']}  {f['lines']} lines, {f['bytes']} bytes")
+    if survey["roots"]:
+        lines.append(
+            f"  Every session pays {weight['lines']} lines / {weight['bytes']} bytes "
+            "before any work happens."
+        )
+    lines.append("")
+    lines.append("REACHABILITY  [link distance from the boot surface]")
+    lines.append(
+        "  booted={booted}  linked={linked}  deep={deep}  island={island}  "
+        "orphan={orphan}".format(**counts)
+    )
+
+    for verdict, legend in (
+        (ORPHAN, "nothing links here; unsignposted"),
+        (ISLAND, "linked only from unreachable documents"),
+        (DEEP, f"more than {deep_hops} hops out"),
+    ):
+        rows = [x for x in r if x["verdict"] == verdict]
+        lines.append("")
+        lines.append(f"  {verdict.upper()} ({len(rows)})  [{legend}]")
+        if not rows:
+            lines.append("    none")
+        for x in rows:
+            lines.append(f"    {x['path']}  [{x['note']}]")
+
+    lines.append("")
+    lines.append("WHAT THIS DOES NOT MEASURE")
+    lines.append(
+        "  Markdown links only. A file named in prose without a link reads as an "
+        "orphan here, and an agent that greps can still find one. Orphan means "
+        "unsignposted, not unfindable."
+    )
+    lines.append(
+        "  Nothing about use. Whether a session acted on a document needs a "
+        "conclusions store with use stamps; run the full exam once you have one."
+    )
+    return "\n".join(lines) + "\n"
+
+
 def parse_ledger(lines):
     parsed, malformed = [], []
     for line_no, raw in enumerate(lines, start=1):
@@ -483,6 +692,40 @@ def selftest():
             ("matching baseline is clean",
              not compare_baseline(counts, {"counts": counts})),
         ]
+        # Survey mode fixtures: a boot file linking one doc, that doc linking
+        # a deeper one, an unlinked orphan, and an island pair reachable only
+        # from the orphan.
+        os.makedirs(os.path.join(tmp, "docs"))
+        files = {
+            "CLAUDE.md": "rules. see [one](docs/one.md) and [ext](https://x.test)\n",
+            "docs/one.md": "one. see [two](two.md)\n",
+            "docs/two.md": "two. see [three](three.md)\n",
+            "docs/three.md": "three, three hops out\n",
+            "docs/orphan.md": "nobody links me. i link [island](island.md)\n",
+            "docs/island.md": "linked, but only from an orphan\n",
+        }
+        for rel, body in files.items():
+            with open(os.path.join(tmp, rel), "w", encoding="utf-8") as fh:
+                fh.write(body)
+        stree = list_tree(tmp)
+        survey = survey_repo(tmp, stree, deep_hops=2)
+        by_path = {r["path"]: r for r in survey["results"]}
+        scounts = survey_counts(survey)
+        weight = boot_weight(tmp, survey["roots"])
+
+        checks += [
+            ("boot file classified booted", by_path["CLAUDE.md"]["verdict"] == BOOTED),
+            ("one hop classified linked", by_path["docs/one.md"]["verdict"] == LINKED),
+            ("depth counted correctly", by_path["docs/two.md"]["depth"] == 2),
+            ("past deep_hops classified deep", by_path["docs/three.md"]["verdict"] == DEEP),
+            ("unlinked doc classified orphan", by_path["docs/orphan.md"]["verdict"] == ORPHAN),
+            ("orphan-only inbound classified island",
+             by_path["docs/island.md"]["verdict"] == ISLAND),
+            ("external links ignored", by_path["CLAUDE.md"]["depth"] == 0),
+            ("survey counts add up", sum(scounts.values()) == len(survey["results"])),
+            ("boot weight measured", weight["bytes"] > 0 and weight["lines"] > 0),
+        ]
+
         failed = [name for name, ok in checks if not ok]
         for name, ok in checks:
             print(f"  {'PASS' if ok else 'FAIL'}  {name}")
@@ -518,12 +761,58 @@ def main(argv=None):
                     help="exit 1 when reachability got worse than --baseline")
     ap.add_argument("--json", action="store_true", dest="as_json",
                     help="emit machine-readable output")
+    ap.add_argument("--survey", action="store_true",
+                    help="no-ledger mode: classify the repo's markdown by link "
+                         "distance from the boot surface (see module header)")
+    ap.add_argument("--deep-hops", type=int, default=DEEP_HOPS, metavar="N",
+                    help=f"survey mode: hops past which a doc counts as deep "
+                         f"(default: {DEEP_HOPS})")
     ap.add_argument("--selftest", action="store_true",
                     help="run offline fixture tests and exit")
     args = ap.parse_args(argv)
 
     if args.selftest:
         return selftest()
+
+    if not os.path.isdir(args.root):
+        print(f"ERROR: root is not a directory: {args.root}", file=sys.stderr)
+        return 1
+
+    if args.survey:
+        today = dt.date.today()
+        tree = list_tree(args.root)
+        survey = survey_repo(args.root, tree, args.deep_hops)
+        counts = survey_counts(survey)
+        weight = boot_weight(args.root, survey["roots"])
+        if args.write_baseline:
+            with open(args.write_baseline, "w", encoding="utf-8") as fh:
+                json.dump({"date": today.isoformat(), "mode": "survey",
+                           "counts": counts}, fh, indent=2)
+                fh.write("\n")
+            print(f"Baseline written to {args.write_baseline}: {counts}")
+            return 0
+        regressions = []
+        if args.baseline and os.path.exists(args.baseline):
+            old = _load_json(args.baseline, "baseline").get("counts", {})
+            for key in (ORPHAN, ISLAND):
+                if counts[key] > old.get(key, 0):
+                    regressions.append(
+                        f"{key} rose from {old.get(key, 0)} to {counts[key]}"
+                    )
+        if args.as_json:
+            json.dump({"date": today.isoformat(), "mode": "survey",
+                       "counts": counts, "boot": weight,
+                       "results": survey["results"],
+                       "regressions": regressions}, sys.stdout, indent=2)
+            sys.stdout.write("\n")
+        else:
+            sys.stdout.write(build_survey_report(
+                survey, counts, weight, args.root, today, args.deep_hops))
+            if regressions:
+                print("\nBASELINE REGRESSION")
+                for reg in regressions:
+                    print(f"  {reg}")
+        return 1 if regressions and args.fail_on_regression else 0
 
     if not os.path.exists(args.ledger):
         print(f"ERROR: ledger not found at {args.ledger}", file=sys.stderr)
