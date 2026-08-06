@@ -3,8 +3,7 @@
 Pattern essays: the reasoning behind the kit's artifacts, in this repo's own words. Read
 the essay when you want to know why a piece is shaped the way it is; copy the matching
 artifact from `ci-kit/`, `skills/`, `templates/`, or `checklists/` when you just want
-the piece. Where an essay pairs with a chapter of the book, the pointer line under its
-title says which.
+the piece.
 
 | Essay | Why read it |
 |---|---|
@@ -18,6 +17,13 @@ title says which.
 | [composite-persona-method.md](composite-persona-method.md) | Tell true stories from protected data without exposing anyone: fictional people built pattern-first from verified aggregates, with receipts. |
 | [day-one-mandates.md](day-one-mandates.md) | Nine practices that are cheap at commit one and expensive as retrofits, with a starter checklist. |
 | [self-improvement-loop.md](self-improvement-loop.md) | The evidence-driven loop that makes the rules compound: instrument session exhaust, retro every arc, land each lesson as exactly one artifact. |
+| [specification-debt.md](specification-debt.md) | A correction you keep re-issuing means your spec is missing a rule: count across sessions, patch past three, route by correction type. |
+| [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
+| [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
+| [authority-ledger.md](authority-ledger.md) | Who is allowed to say yes, written down: standing grants with scope and expiry, so authority is not a hallway rule. |
+| [specification-debt.md](specification-debt.md) | A correction you keep re-issuing means your spec is missing a rule: count across sessions, patch past three, route by correction type. |
+| [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
+| [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
 | [decision-capture.md](decision-capture.md) | Why rulings get written down the same turn they land, not at end of session. |
 | [four-founding-docs.md](four-founding-docs.md) | The four files a disciplined repo is born with: rules, build order, parity, decisions. |
 | [model-playbook.md](model-playbook.md) | Match the task to the model tier without losing accuracy: boot protocol, guardrails, counter-rules. |

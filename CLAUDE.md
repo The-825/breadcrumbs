@@ -1,5 +1,11 @@
 # CLAUDE.md
 
+> Resuming work? Read [`SESSION_STATE.md`](SESSION_STATE.md) at the repo root FIRST: the
+> living handoff (active branch, in-flight edits, next steps, pending decisions). Refresh
+> it fully when the operator says "checkpoint". Durable rulings go in
+> [`planning/DECISIONS.md`](planning/DECISIONS.md) the same turn they land. Known issues
+> are tracked as GitHub issues on this repo, not in a file.
+
 This file is the behavioral contract for coding agents working in this repo. Read it top
 to bottom before touching anything.
 

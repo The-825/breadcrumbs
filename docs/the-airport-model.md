@@ -82,13 +82,12 @@ a picture of the future. It is the current parts, seen as one system.
 
 ## Where this goes next
 
-Book 1 hands you the wayfinding: number the datasets, sign the next decision, build one
-warehouse a stranger can run. That is a single terminal. Book 2, *The Architect's
-Operating Model*, is the airport: the operating model that coordinates many terminals into
-one institution that still navigates on day one. If Book 1 is how you make a system
-legible, Book 2 is how you make a legible system run at scale, tower and security and
-crews and all, reflected in code the whole way down.
+Everything above is a single terminal: one warehouse, numbered and signed well enough that
+a stranger can run it. The harder version is the whole airport, many terminals coordinated
+into one institution that a newcomer can still navigate on day one, tower and security and
+crews and all, reflected in code the whole way down. That is the problem I am working on
+now, and the longer story of how I got here is *From Archivist to Architect*.
 
-You do not need the second book to start. Number your datasets, hang your first signs, and
+You do not need any of that to start. Number your datasets, hang your first signs, and
 put a human at the one gate that matters. The airport begins as a single well-signed
 terminal that someone other than you can walk through.

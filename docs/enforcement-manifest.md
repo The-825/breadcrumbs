@@ -65,6 +65,48 @@ silently. The gate itself is a few dozen lines of stdlib Python in the shape of 
 [ci-kit guards](../ci-kit/README.md), and like every guard it should be proven to bite:
 break the manifest locally, watch it fail, revert.
 
+## The document output contract
+
+The manifest as described covers code. That is where I built it, and for a while I did not
+notice the hole: parse checks, lint guards, and CI gates all run on what the repo compiles,
+and nothing at all runs on what the repo writes. Generated documents leave with no gate in
+front of them.
+
+The archive is unambiguous about the cost. A no-em-dash rule was issued six separate times
+across three threads over three months, including one request to push the rule into the
+generating prompts rather than apply it per artifact. Months later I was still asking for it
+by hand. A single-pass voice rule, that a deliverable reads as a first and definitive draft
+with no changelog framing, no version stamps, and no "previously this said, now it says",
+was issued six times across five threads. A figure appeared on a slide with no source and
+had to be pulled twice.
+
+None of those are hard rules to check. They were re-issued because they lived in prompts,
+and a prompt is a request that gets re-made every time. So the document surface gets its own
+contract, three mechanical checks that run before a document is handed over, in the same
+position a lint guard occupies before a merge:
+
+- **No em-dashes.** A character scan. `lint` class, no judgment involved, and the one that
+  proves the point: I asked for it six times, and a fifteen-line check would have retired the
+  question after the first.
+- **No changelog or revision framing** in a deliverable meant to read as a first draft. A
+  pattern scan for version stamps, "updated", "previously", "now reads", and revision
+  headings. `lint`, with a narrow allowlist for documents whose job actually is a change
+  record.
+- **No number without inline provenance.** Every figure carries its source at the point of
+  claim, and an unstamped number is **refused rather than rendered**. That last clause is the
+  whole rule. A check that flags an unsourced figure and emits it anyway is a check whose
+  output still has to be reviewed by hand, which is the state it was supposed to replace.
+
+Each entry belongs in the manifest under the same honesty convention as the rest of the
+file. The em-dash and revision-framing rules earn `lint` cleanly. Provenance sits closer to
+`harness`: a scan can catch a bare numeral with no adjacent citation, but it cannot tell a
+correct source from a plausible one, so the entry says so and names its compensating control.
+
+The point to land is not the three checks, which are small and which you will adapt. It is
+where they sit. A rule that lives only in a prompt gets re-issued by hand forever, and the
+re-issuing feels like diligence rather than like the symptom it is. A rule bound to an honest
+enforcement point stops being your job.
+
 ## Adopting
 
 Copy the template, list your floor rules (start with the three to five from your rules

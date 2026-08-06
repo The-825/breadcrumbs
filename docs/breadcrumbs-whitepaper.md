@@ -216,6 +216,80 @@ through its own machinery, and correct the record while keeping the evidence of 
 been wrong, answers the real fear in a way a retrieval score cannot. It is also
 difficult to fake, because the entire history sits in version control.
 
+## 4.5 Auditing the archive: what eighteen months of my own sessions showed
+
+The case study above is one incident. It is fair to ask whether the mechanisms address
+anything more than the failure that produced them. So I did the obvious thing and had
+never done: I exported eighteen months of my own session history, 216 conversations and
+roughly 1,300 of my own turns, and read it as evidence rather than as nostalgia.
+
+I recommend this to anyone building a memory system, and I want to be precise about why
+it is not merely an interesting exercise. A memory design has two very different failure
+modes that look identical from the inside. Either the store you needed does not exist,
+or it exists and nobody used it. You cannot tell which from the design, and you cannot
+tell from a single session. You can tell from the archive, because the archive records
+what you actually asked for, over and over, and what you never once reached for. The
+audit is the only instrument I have found that distinguishes a missing mechanism from an
+unused one, and the two need opposite fixes.
+
+The counts below are turn and thread counts, not impressions. They are unflattering on
+purpose.
+
+**Re-derivation is the dominant cost, and most of it had a home already.** Nine separate
+threads across eight weeks re-derived the same question about how my tooling should be
+arranged, each producing a recommendation, none producing a record the next thread could
+read. The current version of a document corpus was re-established at least eleven times
+across five threads, and the tell was the escalation: I kept widening the search radius
+because the answer kept coming back incomplete. Basic identity facts were re-stated
+across nine and eleven threads respectively. Nearly all of this belonged in stores I had
+already built. The decisions ledger existed. The settled-facts store existed. Neither
+carried this class of fact, because nothing classified "where should this kind of work
+live" as ruling-shaped. That is an unused mechanism, and the fix is a trigger, not a new
+store.
+
+**Repeated corrections are specification bugs, and mine were legible.** One rule about
+document voice was issued six times across five threads. The no-em-dash rule was issued
+six times across three threads, including one explicit request to push it into the
+generating prompts rather than apply it per artifact. That request landed and the rule
+was still being applied by hand months later. My rules were enforced on code, by parse
+checks and lint guards and CI, and not at all on generated documents. This is the
+[specification debt](specification-debt.md) signal, and the archive is what made it
+countable.
+
+**A correction that does not survive regeneration is the single most expensive pattern
+I found.** In one thread the same two corrections appear five times each, four of them
+near-verbatim re-pastes with small clarifying additions. I was re-pasting because the
+artifact was being rebuilt and the correction was not carried into the rebuild. A
+project-scoped decisions ledger cannot catch this, because the correction is not
+project-shaped, it is artifact-shaped. That was a genuinely missing mechanism, and it
+became the [artifact correction ledger](artifact-correction-ledger.md).
+
+**Boundaries leak in ways nobody logs.** Thirty-four bare "Continue" turns across twelve
+threads, sixteen of them in a single thread. Every one is a resume from truncated state
+where a partial deliverable can drop an item unnoticed. Fifty-one turns carried an
+attachment and no text at all, so the intent lived only in the file and later
+reconstruction had nothing to grip. Neither of these shows up in any conventional
+measure of how a session went.
+
+**The most useful finding was positive, which I did not expect.** The sessions that went
+best all shared one structure: a numbered block of questions, each carrying a recommended
+answer, blocking on a single reply. Twenty-five questions resolved in twenty-one turns.
+Eighteen in fourteen. Twelve in nineteen. Seven in fourteen. Against that, the two worst
+sessions in the archive carried six and sixteen questions across two hundred eighty-five
+and one hundred six turns. Question density correlates with low turn count, which is the
+opposite of the intuition, and the reason is that a block front-loads ambiguity into one
+exchange instead of leaking it across fifty turns of rework. That pattern was emergent
+and unnamed. Naming it is the whole intervention. It is written up as
+[batched decision blocks](batched-decision-blocks.md).
+
+The honest limits of this evidence. It is a retrospective self-audit by the person being
+audited, on one operator's archive, and the counts measure how often I asked, not how
+much any single ask cost. Most of the archive predates most of the mechanisms above, so
+it measures the problem well and says almost nothing about the fix. What it establishes
+is narrower than a result and more useful than an anecdote: the failures a cue-placement
+design targets are real, frequent, and countable in ordinary work, and roughly half of
+them were failures of a mechanism I already had and never pointed at the right corpus.
+
 ## 5. The join protocol
 
 Nothing above depends, *by design*, on which model you run. A fleet member is anything
