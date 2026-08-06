@@ -23,6 +23,17 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Keep this. GitHub sometimes drops workflow-triggering events, and when a
+  # pull_request event is dropped this workflow does not fail, it never runs.
+  # Both obvious recoveries miss: a run that was never created cannot be
+  # re-run, and re-running an older run replays that run's head sha, so the
+  # verdict describes a commit that is no longer the PR head.
+  #
+  # That is worse here than in most workflows, because automerge.yml chains off
+  # this one's workflow_run. A dropped event does not delay the merge, it
+  # removes the only thing that can start one, and the PR sits green-looking
+  # and unmergeable with no failure to point at. Dispatch is the way back.
+  workflow_dispatch:
 
 jobs:
   static-checks:
