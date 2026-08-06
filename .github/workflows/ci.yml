@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the provenance guard reads a commit range
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -36,3 +38,9 @@ jobs:
 
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py
+
+      # The commit messages on a PR are as public as the code and get reviewed
+      # far less. No wordlist is supplied here, so only the shipped patterns run.
+      - name: Provenance guard over this PR's commits
+        if: github.event_name == 'pull_request'
+        run: python3 ci-kit/guards/guard_no_provenance_leak.py --range origin/${{ github.base_ref }}..HEAD
