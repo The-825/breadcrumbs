@@ -96,23 +96,31 @@ archaeology.
 Here is the part that made me want to publish, told plainly because it is more
 convincing than any benchmark.
 
-My memory files have a size cap, and a guard that truncates runaway injections. One day
-I raised the cap and recorded, in the permanent decision ledger, that the guard was
-raised in lockstep. Weeks later I ran an audit pass over the whole memory corpus,
-agent-driven, checking every documented claim against the actual code. The audit found
-the guard was never raised, and the ledger entry even named the wrong file. Worse:
-because the guard was still at the old size, every session's boot memory had been
-silently truncated mid-file for days, and the audit could point at that morning's own
-boot as the live evidence.
+I wrote down that I had done something. I had not done it. And because my own written
+record was wrong, every session had been quietly starting with less than half the
+memory it should have had, for days, while nothing complained.
 
-The fix took an hour: the guard resized off measured data, a test that now fails if
-anyone shrinks it without re-measuring, and the false ledger entry superseded on the
-record by a correction that explains exactly what was wrong. Nothing was deleted. The
-system carries an honest scar: proof that a claim was made, believed, caught, and
-corrected.
+The specifics: there is a limit on how much of my notes get loaded into a session at
+startup, and a separate check that enforces that limit. I raised the limit so sessions
+could carry more, and I wrote in my permanent record that I had raised the enforcing
+check to match. I had not. The check stayed at the old, smaller number, so every session
+started loading its memory, hit the old limit, and got cut off partway through. Nothing
+broke loudly. Sessions just started knowing less than they were supposed to.
 
-A memory system that can believe a false memory about itself, notice, and correct the
-record is worth more to me than one that promises never to be wrong.
+What caught it, weeks later, was a pass that reads every claim in my written record and
+checks it against what the code actually does. It found the entry, compared it, and
+reported it false. The entry had even named the wrong file. That morning's own startup
+was the evidence.
+
+The fix took an hour, and the false entry was corrected on the record rather than
+deleted, so the mistake is still visible next to its correction.
+
+Here is why I keep telling this one. It was not a bug in code. It was a lie in the
+paperwork, which is harder, because a wrong note does not look wrong. Nothing normally
+checks documentation against reality, which is why bad documentation survives in
+organizations for years. A system that can hold a false belief about itself, catch it,
+and correct the record without hiding the evidence is worth more to me than one that
+promises never to be wrong.
 
 ## Steal this: start in one afternoon
 
