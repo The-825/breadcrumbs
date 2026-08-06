@@ -127,9 +127,10 @@ promises never to be wrong.
 Everything in this repo is a starting piece for the pattern above, extracted from the
 system I actually run, with the domain scrubbed out. Nothing here depends *by design* on
 which model you use; a fleet member is anything that can read a file at start and append
-a line at the end. I have run it across model tiers, not yet across vendors, and the
-white paper is explicit about where that claim is asserted rather than proven. Do these
-in order and stop when you have had enough for the day:
+a line at the end. Models from other vendors already read and review this system, which
+works and is useful; what none of them has done yet is the write half, joining the
+memory as a participant rather than a visitor. The white paper is explicit about which
+half is proven. Do these in order and stop when you have had enough for the day:
 
 1. **A handoff file.** Copy [`templates/SESSION_STATE_TEMPLATE.md`](templates/SESSION_STATE_TEMPLATE.md)
    to your repo root. Only what is in flight: branch, open PR, half-done edits, next
