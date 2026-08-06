@@ -61,4 +61,29 @@ the metaphor is already load-bearing in the docs. Light is the operative word. O
 image per message, chosen because it actually describes the mechanism, never a pun
 stapled to the front of a technical sentence. If the metaphor does not fit the change,
 skip it rather than force it.
+
+## D-8 · 2026-08-06 · Memory measurement ships as a doc first, tooling later
+
+Ruling: the retrieval-measurement layer (reachability exam, injection-lane probe,
+use-stamp readout, search-miss ledger) enters this repo as a pattern essay plus a ledger
+schema, not as a runnable checker. A generalized reachability script has to replay the
+adopter's own matcher against the adopter's own tree, so a copy of one repo's version
+would be a demo rather than a tool.
+Why: the concept transfers cleanly and is what readers are missing; the implementation
+does not transfer without knowing the reader's boot path. Naming that boundary is
+honest, and it keeps the repo's no-unbuilt-claims rule intact.
+Source: session 2026-08-06.
+Superseded by D-9.
+
+## D-9 · 2026-08-06 · The retrieval exam ships runnable after all
+
+Ruling: D-8 is reversed. `templates/ledger-tools/retrieval_exam.py` ships as a working,
+self-tested checker covering reachability, the injection-lane probe, and the use-stamp
+readout, with a ratchetable baseline. The matcher stays configurable rather than read
+from the adopter's hook, and the script says so in its own header.
+Why: D-8 treated "cannot read your hook" as a reason not to ship, which leaves the reader
+with an essay and no way to act on it. The matcher shape is common enough to model and
+correct with a small config, and a tool that names its own assumption is more useful than
+a doc that names the same assumption and stops. The operator asked for something people
+can run.
 Source: Jovan, session 2026-08-06.

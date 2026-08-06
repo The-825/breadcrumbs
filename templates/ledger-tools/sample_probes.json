@@ -1,0 +1,18 @@
+[
+  {
+    "name": "session editing the auditor",
+    "touched": ["templates/ledger-tools/conclusions_audit.py"]
+  },
+  {
+    "name": "session editing provenance docs",
+    "touched": ["templates/ledger-tools/PROVENANCE.md"]
+  },
+  {
+    "name": "session editing the merge-behavior note",
+    "touched": ["templates/ledger-tools/union-merge.md"]
+  },
+  {
+    "name": "session nowhere near the ledger tools",
+    "touched": ["README.md"]
+  }
+]
