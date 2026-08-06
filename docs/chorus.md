@@ -103,3 +103,24 @@ The [rules spine](rules-spine.md) routes every rule to the cheapest mechanism th
 hold it: guards, the merge gate, the ledgers, and operator judgment for the rest. The
 chorus test is the missing last rung of that enforcement story: the mechanism that
 holds the rules file itself.
+
+## What the chorus does not buy you
+
+Worth stating plainly, because the pattern works well enough to be mistaken for more
+than it is. A chorus gets a fact in front of every session, in identical words, without
+fail. That is the stating half of a shared standard, and it is genuinely better than
+most teams manage with their own principles, because it never gets skipped on a busy
+week.
+
+It buys nothing past that. On a human team, a principle repeated often enough
+eventually stops needing repetition: someone internalizes it, makes it theirs, and
+starts applying it to cases nobody wrote down, including pushing back when you get it
+wrong yourself. A session never arrives there. It reads the chorus, complies exactly,
+and ends knowing nothing. The next one starts from the same cold beginning.
+
+The honest description is total compliance and zero internalization, and those are
+different things. Compliance covers the cases you already thought of, which is exactly
+why the admission test above is "what does a miss cost" and not "what matters most."
+Extrapolation to the case you did not anticipate is the part a chorus cannot give you,
+and as far as I can tell that gap is structural rather than a tuning problem. Design the
+rest of the system on the assumption that nothing in it will ever internalize anything.
