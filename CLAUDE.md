@@ -41,7 +41,13 @@ the maintainer first.
 
 1. **No private, production, or personal content, ever.** No schemas, records, reports,
    credentials, operational state, internal planning, or identifying detail about any
-   organization or individual. Anonymized war stories are fine and are labeled as such.
+   organization or individual. War stories are welcome and are the most persuasive thing
+   here, but tell them as what the artifact IS, never as an account of what was taken out
+   to publish it. "The guard missed underscored names" ships. A sentence announcing that
+   private detail was stripped does not, because announcing it tells a reader there was
+   something private there, which is the disclosure the removal was meant to prevent
+   (D-5, enforced by `ci-kit/guards/guard_no_provenance_leak.py`, whose blocked phrasings
+   are the tell).
 2. **No plagiarized or unattributed content.** Quotes and data carry their source at the
    point of claim.
 3. **No unsourced numbers.** If a figure appears in a doc, it traces to something real in

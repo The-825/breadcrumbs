@@ -124,8 +124,9 @@ promises never to be wrong.
 
 ## Steal this: start in one afternoon
 
-Everything in this repo is a starting piece for the pattern above, extracted from the
-system I actually run, with the domain scrubbed out. Nothing here depends *by design* on
+Everything in this repo is a starting piece for the pattern above, and every piece of it
+runs in production somewhere. What you get here is the mechanism, stated generally enough
+to drop into whatever you work on. Nothing here depends *by design* on
 which model you use; a fleet member is anything that can read a file at start and append
 a line at the end. Models from other vendors already read and review this system, which
 works and is useful; what none of them has done yet is the write half, joining the
