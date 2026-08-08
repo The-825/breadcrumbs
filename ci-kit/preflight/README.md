@@ -26,6 +26,7 @@ This runs at that moment.
 | `overlap` | Another open branch touches a file this one touches | This is the stacked-PR problem stated plainly. Whichever merges first makes the rest stale. |
 | `commit_hygiene` | A commit subject is a placeholder like `wip` or `fix` | A batched branch is only reviewable if each commit says what it did. |
 | `base_merges` | Base has been merged in more than twice | The branch keeps going stale, which usually means it should have shipped smaller or sooner. |
+| `stale_state` | A `SESSION_STATE*.md` handoff file has gone over a week without a commit | A crashed or abandoned session leaves its handoff narrating a present that ended. The next session boots on it as current, which is worse than no handoff, because no file prompts a fresh look and a stale one gets believed. The check names the rot; a human refreshes or retires the file. Ages come from git history, not mtime, so a fresh clone does not reset them. |
 
 ## Usage
 
