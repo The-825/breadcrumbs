@@ -120,6 +120,9 @@ class MemoryEngine:
     def note(self, key, value):
         """Record working state. Triggers compaction at the cap."""
         state = self._read(self.working)
+        # Re-inserting moves an updated key to the end, so compaction's
+        # oldest-first flush is ordered by last update, not first insertion.
+        state["scratchpad"].pop(key, None)
         state["scratchpad"][key] = value
         self._write(self.working, state)
         if len(state["scratchpad"]) >= self.max_working:
