@@ -11,6 +11,7 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [union-merge.md](union-merge.md) | The `merge=union` gitattributes setting for parallel appenders, with the cases where it is unsafe |
 | [retrieval_exam.py](retrieval_exam.py) | Retrieval exam: per-entry reachability verdicts against your real tree, an injection-lane probe, a use-stamp readout, and a ratchetable baseline. Asks whether entries can be SEEN, where the auditor asks whether they are still TRUE |
 | [sample_probes.json](sample_probes.json) | Four session-start conditions for the exam's lane probe, written against the sample ledger |
+| [memory_engine.py](memory_engine.py) | Three-tier runnable memory (working state, append-only episodes, semantic facts with asserted-vs-verified status): compaction flushes down instead of deleting, verification refuses an empty oracle, retrieval is deterministic and names its own limit |
 | [SEARCH_MISSES.md](SEARCH_MISSES.md) | Append-only ledger of lookups that found nothing, each carrying the repo path where the answer should live, so a gap becomes a scoped task instead of evaporating with the session |
 | [CORRECTION_LEDGER_TEMPLATE.md](CORRECTION_LEDGER_TEMPLATE.md) | Append-only corrections ledger admitting only entries anchored to an objective oracle (red CI check, tripped data assertion, operator ruling, reverted PR), so the self-improvement loop cannot optimize a proxy |
 
