@@ -40,6 +40,7 @@ cannot run must never look like a check that passed.
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -212,19 +213,31 @@ def gather(base):
     files = [f for f in git("diff", "--name-only", f"{upstream}...HEAD").splitlines() if f]
     subjects = [s for s in git("log", "--format=%s", f"{upstream}..HEAD").splitlines() if s]
     merges = git("log", "--merges", "--format=%s", f"{upstream}..HEAD").splitlines()
-    merge_count = sum(1 for m in merges if base in m)
+    # Match git's quoted merge-subject forms ("Merge branch 'main' ..." /
+    # "Merge remote-tracking branch 'origin/main' ..."), not a bare substring:
+    # base "main" must not count a merge of a branch named "maintenance".
+    base_forms = (f"'{base}'", f"'origin/{base}'")
+    merge_count = sum(1 for m in merges if any(f in m for f in base_forms))
 
     # Session-state staleness: age in days since the file's last commit. Uses
     # git history rather than mtime, because a fresh clone resets every mtime
     # and would report the whole repo as edited today.
     import glob as _glob
     import time as _time
+    # Glob from the repo root, not the cwd: run from a subdirectory, a
+    # cwd-relative glob finds nothing and the check would report "0 files
+    # fresh" as a pass, which is the could-not-run-looking-green failure the
+    # module header forbids. No resolvable root -> None -> the check SKIPs.
+    toplevel = git("rev-parse", "--show-toplevel")
+    if not toplevel:
+        return behind, files, subjects, merge_count, None
     state_ages = {}
     for pattern in STATE_FILE_PATTERNS:
-        for path in _glob.glob(pattern):
-            ts = git("log", "-1", "--format=%ct", "--", path)
+        for path in _glob.glob(os.path.join(toplevel, pattern)):
+            rel = os.path.relpath(path, toplevel)
+            ts = git("log", "-1", "--format=%ct", "--", rel, cwd=toplevel)
             if ts.isdigit():
-                state_ages[path] = int((_time.time() - int(ts)) // 86400)
+                state_ages[rel] = int((_time.time() - int(ts)) // 86400)
     return behind, files, subjects, merge_count, state_ages
 
 

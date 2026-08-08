@@ -542,7 +542,7 @@ def boot_weight(root, roots):
     per_file = []
     for rel in roots:
         text = _read_text(root, rel)
-        b, l = len(text.encode("utf-8")), text.count("\n") + 1 if text else 0
+        b, l = len(text.encode("utf-8")), len(text.splitlines())
         per_file.append({"path": rel, "bytes": b, "lines": l})
         total_bytes += b
         total_lines += l
@@ -816,9 +816,6 @@ def main(argv=None):
 
     if not os.path.exists(args.ledger):
         print(f"ERROR: ledger not found at {args.ledger}", file=sys.stderr)
-        return 1
-    if not os.path.isdir(args.root):
-        print(f"ERROR: root is not a directory: {args.root}", file=sys.stderr)
         return 1
 
     matcher = Matcher(_load_json(args.matcher, "matcher") if args.matcher else None)
