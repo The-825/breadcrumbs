@@ -116,3 +116,16 @@ correct with a small config, and a tool that names its own assumption is more us
 a doc that names the same assumption and stops. The operator asked for something people
 can run.
 Source: Jovan, session 2026-08-06.
+
+## D-10 · 2026-08-06 · D-5 wins over the old rule 1 wording; war stories say what a thing is
+
+Ruling: where D-5 (never narrate a removal) and the original rule 1 wording ("anonymized
+war stories are fine and are labeled as such") conflicted, D-5 wins. Rule 1 is rewritten:
+war stories stay welcome and are told as what the artifact IS, never as an account of
+what was taken out to publish it. Three surfaces were corrected to match: the README
+landing page, this rules file, and docs/memory-measurement.md.
+Why: the two rules were both live after #13 merged and they contradicted, since the label
+rule 1 demanded was the exact phrasing D-5 forbids. Announcing a removal tells a reader
+there was something private to remove, which is the disclosure the removal was meant to
+prevent, so the label defeats its own purpose. The guard already encoded D-5's side.
+Source: Jovan, session 2026-08-06.

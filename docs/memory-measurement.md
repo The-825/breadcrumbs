@@ -75,7 +75,7 @@ unreachable entries is obvious. Fewer precise entries at the same total is the s
 because re-keying a specific entry to something broad reads as tidying up and is a
 downgrade.
 
-*Anonymized from the operator's own system:* the exam was written after three unrelated
+*From the system this pattern came out of:* the exam was written after three unrelated
 questions converged on the same missing thing, and the first run found entries keyed to
 bare nouns that could never have fired. One of them had been written earlier the same day,
 by a session that believed it had captured a ruling.
