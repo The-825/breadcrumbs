@@ -129,3 +129,15 @@ rule 1 demanded was the exact phrasing D-5 forbids. Announcing a removal tells a
 there was something private to remove, which is the disclosure the removal was meant to
 prevent, so the label defeats its own purpose. The guard already encoded D-5's side.
 Source: Jovan, session 2026-08-06.
+
+## D-11 · 2026-08-08 · The memory desk ships as the read-side refinement
+
+Ruling: retrieval gets one mechanical door, `templates/memory-desk/`: a flat,
+tool-queried fact index with a raw-capture journal, a scheduled gardener contract, and
+a push-hook trio, designed so the lightest model tier on lowest effort navigates by
+exact match instead of judgment. Catalog routing stays right for essay-shaped corpora;
+the desk fronts it, and the two docs cross-reference rather than compete.
+Why: the operator asked what a refined version of this memory system would look like,
+and the honest answer is that weak sessions fail at retrieval judgment, not execution,
+so judgment moves out of the session and into the index's maintenance loop.
+Source: operator request, session 2026-08-08.

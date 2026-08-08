@@ -49,6 +49,11 @@ jobs:
       - name: Decision-gate tests
         run: python3 -m unittest discover -s ci-kit/workflows/tests
 
+      - name: Memory-desk tests and integrity gate
+        run: |
+          python3 templates/memory-desk/tests/test_mem.py
+          python3 templates/memory-desk/mem check
+
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py
 

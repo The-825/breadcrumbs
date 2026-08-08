@@ -36,6 +36,14 @@ remember to add. The three-hop version distributes that maintenance: the catalog
 only tracks class-to-file, and each file tracks its own neighbors, so no single file
 has to know about the whole tree.
 
+One deliberate exception: [memory-desk.md](memory-desk.md) revisits this tradeoff
+for fact-shaped questions. A flat index that rots as a document holds up as a
+database, when sessions query it through a tool instead of reading it, a scheduled
+gardener maintains it instead of goodwill, and an integrity gate fails the build
+when it rots. The three hops here stay the right shape for essay-shaped corpora,
+where the answer is a document rather than a line; the desk fronts them for
+everything row-sized.
+
 ## Adopting it
 
 1. Name your destination classes first, before you have a catalog. If you can't

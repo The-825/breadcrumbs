@@ -1,0 +1,67 @@
+# gardener.yml · scheduled curation trigger for the memory desk (template).
+#
+# Copy into .github/workflows/. Out of the box it does the zero-dependency
+# thing: on a weekly clock it counts journal entries newer than the last
+# gardening marker and opens (or refreshes) a "memory gardening due" issue,
+# so the pass arrives on a schedule instead of waiting to be remembered.
+#
+# If you run an agent in CI, replace the issue step with your agent step and
+# have it follow memory/gardener/GARDENER.md; its changes go up as a PR that
+# waits for your approval label, like any other agent PR.
+#
+# Assumes: GitHub Actions, desk at memory/ in the repo root.
+
+name: Memory gardener
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # weekly; shift to your quiet hours
+  workflow_dispatch:
+
+jobs:
+  due-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count journal entries since the last gardening marker
+        id: delta
+        run: |
+          f=memory/journal.jsonl
+          if [ ! -f "$f" ]; then echo "count=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          last=$(grep -n '"gardened through' "$f" | tail -1 | cut -d: -f1)
+          total=$(grep -c . "$f" || true)
+          if [ -z "$last" ]; then count=$total; else count=$((total - last)); fi
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: Open or refresh the gardening issue
+        if: steps.delta.outputs.count != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const count = "${{ steps.delta.outputs.count }}";
+            const title = "memory gardening due";
+            const body = [
+              `The desk journal has ${count} entr${count === "1" ? "y" : "ies"} newer than the last gardening marker.`,
+              "",
+              "Run the pass in memory/gardener/GARDENER.md: promote, dedupe, refresh",
+              "checked dates, retire with reasons, trim the kernel, run mem check.",
+              "Land the result as one PR and append the gardening marker last.",
+            ].join("\n");
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, state: "open", per_page: 100,
+            });
+            const existing = open.data.find(i => i.title === title);
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title, body,
+              });
+            }

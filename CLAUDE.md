@@ -169,6 +169,7 @@ templates/         Copy-and-adapt working files
   test-harness/    In-process test harness skeleton
   ledger-tools/    Ledger hygiene tools
   standing-agents/ The standing-agent fleet kit
+  memory-desk/     The one-door memory kit: fact index, mem CLI, journal, gardener, push hooks
 ci-kit/            The runnable enforcement kit
   guards/          Lint guards plus the fixtures that prove they bite
   migrations/      Migration runner and policy checks, with tests
