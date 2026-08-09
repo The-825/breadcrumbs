@@ -5,41 +5,39 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-06 (repo-split ruling closed, D-4)
+Last refreshed: 2026-08-09 (Atlas round-2 day; tiered gate live)
 
 ## Current state
 
-- Active branch: `claude/archive-audit-findings`
-- Open PR: none at the time of writing. PR #9 (specification debt, three more
-  data truth rules, multi-agent lessons) merged 2026-08-06.
-- In-flight, uncommitted edits: none. See "What just landed" below.
+- Active branch: none in flight; PRs #27 through #33 all merged 2026-08-09.
+- Open PR: none.
+- In-flight, uncommitted edits: none.
 
-## What just landed
+## What just landed (2026-08-09, all merged)
 
-An audit of eighteen months of the operator's own session archive, mined for
-where the memory system failed, then landed as repo content rather than left in
-chat. Three new docs, one whitepaper section, and a set of continuity fixes.
+- Memory desk kit (#27, `templates/memory-desk/`), with its CI gate step.
+- Agent Memory Atlas round-2 fixes (#28): same-value `store_fact()` no longer
+  demotes verified; `kit_manifest_check` fails when a manifest-listed selftest
+  is absent from ci.yml.
+- Rejected-value tombstones + as-of (learned-at) replay in the memory engine
+  (#29), closing two rubric gaps the Atlas named.
+- Tiered merge gate (#30, D-12): docs-class PRs (docs/, checklists/, README,
+  decisions ledger; no deletions/renames) merge on green with NO label;
+  everything else keeps `greenlight`. Policy `ci-kit/workflows/greenlight_tiers.py`;
+  the gate runs the base branch's copy. First live proof: #33 merged unlabeled.
+- README: banner (#31, arrow fix #32), the doing-over-thinking second goal in
+  "The token angle" (#31), and the concurrent-sessions collision story (#33).
 
-- `docs/specification-debt.md`, `docs/artifact-correction-ledger.md`, and
-  `docs/batched-decision-blocks.md` are new. The third is the unusual one: it
-  is a positive finding, a structure that made sessions go well, with real
-  counts behind it.
-- `docs/breadcrumbs-whitepaper.md` gained section 4.5, the archive audit, with
-  the counts and an explicit statement of what that evidence does and does not
-  establish.
-- `docs/enforcement-manifest.md` gained the document output contract.
-- Continuity fixes: the book reference in `docs/the-airport-model.md` cut back
-  to a pointer, the unbuilt `doctor` script in `skills/adoption-verifier.md`
-  named as unbuilt, and `docs/README.md` brought current.
+## Next steps / watch
 
-## Next steps
-
-1. The `doctor` script from `skills/adoption-verifier.md` is still unbuilt. It is
-   named as unbuilt in the skill, so this is a gap, not a false claim.
-2. Nothing else open on the public surface.
+- The operator POSTED the reply to the Atlas author's r/AIMemory thread
+  (2026-08-09). Watch the thread; the open question put to the author is what
+  an honest anonymized real-shape fixture for the forbidden check looks like.
+- Issue ledger still carries: scope-enforced retrieval (declined with reasons)
+  and the synthetic-fixtures limitation.
+- Obsolete remote branch for the operator to delete in the GitHub UI:
+  `claude/preflight-overlap-check` (content fully contained in main).
 
 ## Pending decisions
 
-- Whether the airport and caught-itself framing that anchors this repo's public
-  narrative should also appear in the book, which currently does not use it.
-  Deliberate split or drift, the operator's call either way.
+- None. D-12 was the day's ruling and is in the ledger.
