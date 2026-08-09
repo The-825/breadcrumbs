@@ -14,7 +14,7 @@ lets CI-proven low-risk changes merge on green alone.
 Policy (fail closed, gated unless proven safe):
 - AUTO (merge on green, no label): every changed file is additive or a
   modification inside the safe set: pattern essays (docs/), checklists/,
-  the top-level README, and the decisions ledger.
+  the top-level README, the decisions ledger, and the SESSION_STATE handoff.
 - GATED (label required): everything else. Explicitly always gated: any
   deletion or rename anywhere; workflows; guards; the manifest (kit.json)
   and agent map (llms.txt); CLAUDE.md; templates/ and skills/ (in this repo
