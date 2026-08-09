@@ -53,6 +53,25 @@ def check(manifest_path: Path, root: Path):
     for name in ("llms.txt", "README.md"):
         if not (root / name).exists():
             failures.append(f"companion file missing: {name}")
+
+    # The manifest also may not lie about CI. kit.json tells adopters the
+    # selftests run in this repo's own gate; without this check the manifest
+    # and the workflow agree only because someone edited both (Atlas round 2,
+    # 2026-08-09). Every selftest script named in the manifest must appear in
+    # the CI workflow.
+    ci = root / ".github" / "workflows" / "ci.yml"
+    if ci.exists():
+        ci_text = ci.read_text(encoding="utf-8")
+        for art in manifest.get("artifacts", []):
+            selftest = art.get("selftest")
+            if not selftest:
+                continue
+            script = next((tok for tok in selftest.split()
+                           if tok.endswith(".py") or tok.endswith(".sh")), None)
+            if script and script not in ci_text:
+                failures.append(
+                    f"selftest not wired into CI: {script} "
+                    f"(manifest claims it, ci.yml never runs it)")
     return failures
 
 
@@ -81,6 +100,17 @@ def selftest() -> int:
                        any("selftest script missing" in f for f in fails)))
         checks.append(("a missing problem route fails",
                        any("problem route missing" in f for f in fails)))
+
+        (root / "kit.json").write_text(json.dumps(good))
+        wf = root / ".github" / "workflows"
+        wf.mkdir(parents=True)
+        (wf / "ci.yml").write_text("steps:\n  run: echo no selftests here\n")
+        fails = check(root / "kit.json", root)
+        checks.append(("a manifest selftest absent from ci.yml fails",
+                       any("not wired into CI" in f for f in fails)))
+        (wf / "ci.yml").write_text("steps:\n  run: python3 tool.py --selftest\n")
+        checks.append(("a manifest selftest present in ci.yml is clean",
+                       check(root / "kit.json", root) == []))
 
         (root / "kit.json").write_text("{not json")
         checks.append(("unreadable json fails loudly, never passes",

@@ -167,11 +167,19 @@ class MemoryEngine:
         the overwrite, so a verified fact cannot vanish without a trace and
         the new value starts back at asserted. (Write-tier gap named by the
         Agent Memory Atlas analysis, 2026-08-09: an in-place overwrite inside
-        a kit whose rule is that nothing is edited in place.)
+        a kit whose rule is that nothing is edited in place.) Restating the
+        SAME value is a no-op: status and evidence are untouched, so a
+        verified fact is never demoted by repetition.
         """
         facts = self._read(self.facts)
         prior = facts.get(category, {}).get(key)
-        if prior is not None and prior.get("value") != value:
+        if prior is not None and prior.get("value") == value:
+            # Restating the same value is a no-op, not a demotion: a verified
+            # fact keeps its status and evidence. (Atlas round 2, 2026-08-09:
+            # the same-value path silently reset verified to asserted with
+            # evidence None, an untraceable demotion the docstring denied.)
+            return
+        if prior is not None:
             self.log_episode(
                 "SUPERSEDED",
                 json.dumps({"category": category, "key": key,
@@ -315,6 +323,11 @@ def selftest():
         eps2 = [json.loads(l) for l in mem.episodes.read_text().splitlines() if l.strip()]
         ok("restating the same value is not a supersession",
            len([e for e in eps2 if e["action"] == "SUPERSEDED"]) == 1)
+        mem.verify_fact("env", "python", "CI run 42")
+        mem.store_fact("env", "python", ">=3.11")
+        kept = mem._read(mem.facts)["env"]["python"]
+        ok("restating the same value keeps verified status and evidence",
+           kept["status"] == "verified" and kept["evidence"] == "CI run 42")
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
