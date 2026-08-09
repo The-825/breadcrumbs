@@ -163,6 +163,8 @@ README.md          Landing page: the problem, the one-afternoon path, the map
 CLAUDE.md          This file
 CONTRIBUTING.md    How to send a fix
 LICENSE            MIT
+kit.json           Machine-readable inventory (paths, assumptions, selftests); CI-verified
+llms.txt           The agent-facing map: route by problem
 templates/         Copy-and-adapt working files
   commands/        Slash-command definitions
   hooks/           Harness-side hooks
