@@ -80,3 +80,5 @@ assumptions in its header, and every runnable tool ships an offline selftest.
   retro, checkpoint, promote, model-check) for harnesses that support them.
 - [templates/hooks/](templates/hooks/): harness hooks (pre-compact save,
   PII screen, batch cadence).
+- [ci-kit/workflows/greenlight_tiers.py](ci-kit/workflows/greenlight_tiers.py):
+  diff-tiered merge gate; docs-class merges on green, the rest waits for the label.

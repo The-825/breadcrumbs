@@ -141,3 +141,8 @@ Why: the operator asked what a refined version of this memory system would look 
 and the honest answer is that weak sessions fail at retrieval judgment, not execution,
 so judgment moves out of the session and into the index's maintenance loop.
 Source: operator request, session 2026-08-08.
+
+## D-12 · 2026-08-09 · Tiered merge gate
+Ruling: The approval label gates by diff, not blanket. Safe set (docs/, checklists/, README.md, planning/DECISIONS.md, additive or modified only) merges on green unlabeled; deletions, renames, workflows, guards, templates, skills, kit.json, llms.txt, CLAUDE.md, and everything else keep the label. Policy lives in ci-kit/workflows/greenlight_tiers.py; the gate runs the base branch's copy.
+Why: A blanket label past a few PRs a day becomes a batch rubber stamp that still looks like review; tiering keeps the human where a miss costs something.
+Source: Operator directive, session 2026-08-09 ("automate the merge gate and place the human review at a more intentional component").

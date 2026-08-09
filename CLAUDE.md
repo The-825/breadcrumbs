@@ -77,8 +77,12 @@ the maintainer first.
 - PR body template: **Summary / Test plan / What's NOT in scope.** The last section is
   what keeps scope honest.
 - One concern per PR: a content addition OR repo infrastructure, not both.
-- **The approval label is the merge instruction.** Without it a PR waits, no matter how
-  green. Never merge by hand; the gate in `.github/workflows/` does the merging.
+- **The approval label is the merge instruction, tiered by diff.** A PR whose changed
+  files are ALL in the safe set (`docs/`, `checklists/`, `README.md`, the decisions
+  ledger; no deletions or renames) merges on green with no label. Everything else waits
+  for the label, no matter how green. The policy is
+  `ci-kit/workflows/greenlight_tiers.py` (the gate runs the base branch's copy). Never
+  merge by hand; the gate in `.github/workflows/` does the merging.
 - **Verify before you push.** Re-read the full diff, run the cheapest check that covers
   the change, and confirm the diff matches the PR's stated scope. No "push then clean up."
 

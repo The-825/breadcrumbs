@@ -54,6 +54,12 @@ jobs:
       || github.event_name == 'workflow_dispatch'
       || github.event.workflow_run.conclusion == 'success'
     steps:
+      # The gate reads the BASE branch's copy of the tier policy, so a PR
+      # editing greenlight_tiers.py cannot loosen the gate on itself.
+      - name: Check out base branch (tier policy source)
+        uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Squash-merge eligible non-draft PRs
         uses: actions/github-script@v7
         with:
@@ -136,10 +142,47 @@ jobs:
                 // A missing labels array counts as unlabeled: fail closed.
                 const labels = (pr.labels || []).map((l) => l.name);
                 if (!labels.includes(APPROVAL_LABEL)) {
-                  core.info(
-                    `PR #${pr.number} lacks the "${APPROVAL_LABEL}" label; skipping.`
+                  // Tiered gate: an unlabeled PR may still merge when EVERY
+                  // changed file sits in the safe set defined by the base
+                  // branch's ci-kit/workflows/greenlight_tiers.py (docs,
+                  // checklists, README, decisions ledger; no deletions or
+                  // renames). The script fails closed: any error gates.
+                  const { execFileSync } = require("child_process");
+                  const fs = require("fs");
+                  const files = await github.paginate(
+                    github.rest.pulls.listFiles,
+                    {
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      pull_number: pr.number,
+                      per_page: 100,
+                    }
                   );
-                  return;
+                  fs.writeFileSync(
+                    "changed_files.json",
+                    JSON.stringify(
+                      files.map((f) => ({ filename: f.filename, status: f.status }))
+                    )
+                  );
+                  let verdict = "GATED";
+                  try {
+                    const out = execFileSync(
+                      "python3",
+                      ["ci-kit/workflows/greenlight_tiers.py",
+                       "--files-json", "changed_files.json"],
+                      { encoding: "utf-8" }
+                    );
+                    core.info(out.trim());
+                    verdict = "AUTO";
+                  } catch (e) {
+                    core.info(String(e.stdout || e.message).trim());
+                  }
+                  if (verdict !== "AUTO") {
+                    core.info(
+                      `PR #${pr.number} lacks the "${APPROVAL_LABEL}" label and is not tier-safe; skipping.`
+                    );
+                    return;
+                  }
                 }
               }
               if (!(await requiredChecksGreen(pr.head.sha))) {
