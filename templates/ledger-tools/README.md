@@ -40,7 +40,11 @@ python3 templates/ledger-tools/retrieval_exam.py --selftest
 
 On the sample that reports one unreachable entry (the retired path, which the auditor
 separately calls STALE, the same entry failing both ways), a lane that varies across all
-four probes, and one entry injected on every probe with no use stamp. Drop the `--probes`
+four probes, one entry injected on every probe with no use stamp, and one FORBIDDEN HIT:
+the superseded entry (line 6, `obsoleted_by` a note that no longer exists) still wins
+retrieval on the probe touching its file, so the model would see the old ruling.
+Correction that stops at the ledger row and never reaches the lane is not correction;
+`--fail-on-forbidden` turns that finding into a red exit for CI. Drop the `--probes`
 flag and the exam derives probes from the tree instead, which is a smoke test rather than
 an answer: the derived probes never touch the ledger's keyed files, so it reports
 `UNEXERCISED` instead of pretending to a verdict.

@@ -156,6 +156,15 @@ The first three instruments ship as one script,
 [templates/ledger-tools/retrieval_exam.py](../templates/ledger-tools/retrieval_exam.py).
 Stdlib only, no dependencies, exits 0 unless you ask it to gate.
 
+The script also runs a forbidden-hit check alongside the lane probe: any entry
+marked `obsoleted_by` that still wins injection gets named, probe and all,
+because a model that sees the old ruling answers from it with full confidence.
+Correction that stops at the ledger row and never reaches the retrieval lane is
+not correction. `--fail-on-forbidden` turns a hit into a red exit for CI, and
+when every superseded entry is unreachable the check reports UNEXERCISED rather
+than clean, since a lane that never had the chance to make the mistake proves
+nothing.
+
 ```
 python3 templates/ledger-tools/retrieval_exam.py <your-ledger.jsonl> --root .
 python3 templates/ledger-tools/retrieval_exam.py --selftest
