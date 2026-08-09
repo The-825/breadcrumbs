@@ -87,7 +87,17 @@ well-signed airport lets a first-time traveler move like a frequent flyer; that 
 designer's doing, not the traveler's. Same here: good cue placement is what lets a
 smaller, cheaper model navigate the repo as surely as the expensive one, and what
 stops the expensive one from burning its budget re-reading the building to find out
-where things are. The boot packet is budgeted in bytes because injection is a tax
+where things are.
+
+There is a second goal folded into that one: I want every model, from the lightest
+tier on low effort to the heaviest on max, spending its budget doing and using its
+tools, not thinking its way to information it could have been handed. Different
+tiers will produce different work, and that is expected. What should NOT differ is
+how fast any of them gets to the right file, the right threshold, the right
+predicate. Signage is what equalizes the trip; the model's horsepower then goes to
+the actual job. When I probe this with planted-trap questions, the light tier
+answers the traps the system carries as well as the heavy one does, and the misses
+that remain are routing misses, which is exactly where another sign goes. The boot packet is budgeted in bytes because injection is a tax
 every session pays. And instead of letting one long session silt up, I clear early
 and often: checkpoint the handoff file, wipe the context, boot clean off the cues. A
 clean sheet plus good breadcrumbs beats a full context window that is mostly
