@@ -1,0 +1,297 @@
+#!/usr/bin/env python3
+"""mem: the one door to a repo's settled facts.
+
+Usage:
+  mem                        print the cheat card
+  mem <words>                look up a fact (exact key or alias first, then ranked)
+  mem --stdin                read the query from stdin; print hits or nothing
+  mem add "<text>" [flags]   append raw capture to the journal
+      --type fact|decision|gotcha|todo|state   (default: fact)
+      --key <index key>      the key you looked up and missed
+      --source <path|PR|D-n> where the fact lives or was proven
+  mem check                  integrity gate; non-zero exit on any defect
+
+Design contract (the docs cite these constants; change them here and nowhere
+else): the kernel stays at or under KERNEL_MAX_LINES lines, a query prints at
+most MAX_HITS rows, a row unchecked for more than STALE_DAYS gets a stale flag,
+and --stdin (hook mode) stays silent unless a hit scores MIN_HOOK_SCORE or
+better, so prompt injection never rides a weak match.
+
+Reserved first words: `add` and `check` are subcommands, so index keys must not
+begin with either word. `mem check` enforces that.
+
+Exit codes: 0 hit or success, 1 miss, 2 usage error or integrity failure.
+Stdlib only, python3.8+. Paths resolve relative to this file, so the desk works
+wherever the directory is copied.
+"""
+
+import json
+import re
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+KERNEL_MAX_LINES = 60
+MAX_HITS = 3
+STALE_DAYS = 90
+MIN_HOOK_SCORE = 3   # one key/alias token of overlap; answer-only matches stay out of hooks
+STDIN_CAP = 400      # chars of stdin considered in hook mode; prompts are long, keys are not
+
+BASE = Path(__file__).resolve().parent
+INDEX = BASE / "index.tsv"
+JOURNAL = BASE / "journal.jsonl"
+# In-template the kernel keeps its template name; adoption renames it to MEMORY.md.
+KERNEL = next(
+    (p for p in (BASE / "MEMORY.md", BASE / "MEMORY_TEMPLATE.md") if p.exists()),
+    BASE / "MEMORY.md",
+)
+
+TYPES = {"fact", "decision", "gotcha", "todo", "state"}
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+STOPWORDS = {
+    "a", "an", "and", "are", "can", "do", "does", "for", "how", "i", "in",
+    "is", "it", "my", "of", "on", "or", "our", "the", "this", "to", "we",
+    "what", "when", "where", "which", "who", "why", "you", "your",
+}
+
+CARD = f"""the memory desk · one door to this repo's settled facts
+  look up   memory/mem <words>          exact key or alias first, ranked fallback
+  capture   memory/mem add "<fact>" --type fact|decision|gotcha [--key k] [--source p]
+  health    memory/mem check            duplicate keys, dead sources, oversized kernel
+  stores    {KERNEL.name} (kernel, read at boot) · index.tsv (facts) · journal.jsonl (raw)
+  no shell  grep -i '<word>' memory/index.tsv reads the same rows
+a miss prints your next command; run it rather than answering from recall."""
+
+
+def tokens(s):
+    return [t for t in re.findall(r"[a-z0-9]+", s.lower()) if t not in STOPWORDS]
+
+
+def norm(s):
+    return " ".join(re.findall(r"[a-z0-9]+", s.lower()))
+
+
+def repo_root():
+    p = BASE
+    while p != p.parent:
+        if (p / ".git").exists():
+            return p
+        p = p.parent
+    return None
+
+
+def load_rows():
+    """Parse index.tsv. Returns (rows, defects); a defective line is skipped
+    here and reported by check(), so a typo never breaks every lookup."""
+    rows, defects = [], []
+    if not INDEX.exists():
+        return rows, [f"index missing: {INDEX.name}"]
+    for n, line in enumerate(INDEX.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) != 5:
+            defects.append(
+                f"line {n}: {len(parts)} fields, want 5 (key, aliases, answer, source, checked)"
+            )
+            continue
+        key, aliases, answer, source, checked = (p.strip() for p in parts)
+        rows.append({
+            "line": n,
+            "key": key,
+            "answer": answer,
+            "source": source,
+            "checked": checked,
+            "aliases": [a.strip() for a in aliases.split("|") if a.strip()],
+        })
+    return rows, defects
+
+
+def age_note(checked):
+    if checked in ("", "-"):
+        return "unchecked"
+    if not DATE_RE.match(checked):
+        return f"checked {checked}"
+    try:
+        d = datetime.strptime(checked, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return f"checked {checked}"
+    if (datetime.now(timezone.utc) - d).days > STALE_DAYS:
+        return f"checked {checked} · STALE, re-verify at the source"
+    return f"checked {checked}"
+
+
+def show(row):
+    print(f"{row['key']}  ({age_note(row['checked'])})")
+    print(f"  {row['answer']}")
+    print(f"  source: {row['source']}")
+
+
+def score(row, q, qtoks):
+    rtoks = set(tokens(row["key"]))
+    for a in row["aliases"]:
+        rtoks.update(tokens(a))
+    s = 3 * len(qtoks & rtoks) + len(qtoks & set(tokens(row["answer"])))
+    if q and (q in norm(row["key"]) or any(q in norm(a) for a in row["aliases"])):
+        s += 2
+    return s
+
+
+def lookup(words, hook_mode=False):
+    rows, _ = load_rows()
+    q = norm(" ".join(words))
+    qtoks = set(tokens(" ".join(words)))
+    if not q and not qtoks:
+        return 1
+    exact = [r for r in rows if norm(r["key"]) == q or q in [norm(a) for a in r["aliases"]]]
+    if exact:
+        show(exact[0])
+        return 0
+    ranked = sorted(((score(r, q, qtoks), r) for r in rows), key=lambda t: (-t[0], t[1]["key"]))
+    floor = MIN_HOOK_SCORE if hook_mode else 1
+    hits = [r for s, r in ranked if s >= floor][:MAX_HITS]
+    if hits:
+        for i, r in enumerate(hits):
+            if i:
+                print()
+            show(r)
+        return 0
+    if not hook_mode:
+        seed = sorted(qtoks)[0] if qtoks else words[0]
+        asked = " ".join(words)
+        print(f"mem: no index hit for '{asked}'")
+        print("do these in order; never answer from recall:")
+        print(f"  1. grep -ril '{seed}' . | head -5      (from the repo root)")
+        print("  2. read the narrow range the grep finds")
+        print(f'  3. memory/mem add "<the answer>" --key \'{asked}\' --source <path>')
+    return 1
+
+
+def add(argv):
+    text, typ, key, source = None, "fact", None, None
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--type":
+            i += 1
+            typ = argv[i] if i < len(argv) else ""
+        elif a == "--key":
+            i += 1
+            key = argv[i] if i < len(argv) else ""
+        elif a == "--source":
+            i += 1
+            source = argv[i] if i < len(argv) else ""
+        elif text is None:
+            text = a
+        else:
+            text += " " + a
+        i += 1
+    if not text or not text.strip():
+        print("mem add: nothing to journal; pass the fact as one quoted sentence", file=sys.stderr)
+        return 2
+    if typ not in TYPES:
+        print(f"mem add: --type must be one of {'|'.join(sorted(TYPES))}", file=sys.stderr)
+        return 2
+    entry = {
+        "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "type": typ,
+        "text": text.strip(),
+    }
+    if key:
+        entry["key"] = key
+    if source:
+        entry["source"] = source
+    with JOURNAL.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    print(f"journaled ({typ}). the gardener promotes durable entries to index.tsv on its next pass.")
+    return 0
+
+
+def looks_like_path(src):
+    return bool(src) and "://" not in src and " " not in src and not src.startswith(("PR", "D-", "#"))
+
+
+def check():
+    problems = []
+    rows, defects = load_rows()
+    problems += [f"index.tsv {d}" for d in defects]
+    seen = {}
+    root = repo_root()
+    for r in rows:
+        k = norm(r["key"])
+        if not k:
+            problems.append(f"index.tsv line {r['line']}: empty key")
+        if k.split(" ")[0] in ("add", "check"):
+            problems.append(
+                f"index.tsv line {r['line']}: key starts with a reserved subcommand word (add/check)"
+            )
+        if not r["answer"]:
+            problems.append(f"index.tsv line {r['line']}: empty answer")
+        if not r["source"]:
+            problems.append(f"index.tsv line {r['line']}: empty source")
+        if not (r["checked"] == "-" or DATE_RE.match(r["checked"])):
+            problems.append(f"index.tsv line {r['line']}: checked must be YYYY-MM-DD or '-'")
+        for name in [k] + [norm(a) for a in r["aliases"]]:
+            if not name:
+                continue
+            if name in seen and seen[name] != r["line"]:
+                problems.append(
+                    f"index.tsv line {r['line']}: '{name}' collides with line {seen[name]}; one key or alias, one row"
+                )
+            else:
+                seen.setdefault(name, r["line"])
+        src = r["source"]
+        if looks_like_path(src):
+            candidates = [BASE / src] + ([root / src] if root else [])
+            if not any(c.exists() for c in candidates):
+                problems.append(
+                    f"index.tsv line {r['line']}: source '{src}' resolves nowhere (tried the desk dir and the repo root)"
+                )
+    if not KERNEL.exists():
+        problems.append(f"kernel missing: {KERNEL.name}")
+    else:
+        n = len(KERNEL.read_text(encoding="utf-8").splitlines())
+        if n > KERNEL_MAX_LINES:
+            problems.append(
+                f"{KERNEL.name}: {n} lines, cap is {KERNEL_MAX_LINES}; move content into index rows"
+            )
+    if JOURNAL.exists():
+        for n, line in enumerate(JOURNAL.read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                e = json.loads(line)
+                ok = isinstance(e, dict) and e.get("ts") and e.get("type") in TYPES and e.get("text")
+            except ValueError:
+                ok = False
+            if not ok:
+                problems.append(f"journal.jsonl line {n}: not a valid entry (need ts, type, text)")
+    if problems:
+        for p in problems:
+            print(p)
+        print(f"mem check: {len(problems)} problem(s)")
+        return 2
+    kn = len(KERNEL.read_text(encoding="utf-8").splitlines())
+    print(f"memory ok: {len(rows)} rows, kernel {kn}/{KERNEL_MAX_LINES} lines")
+    return 0
+
+
+def main(argv):
+    if not argv:
+        print(CARD)
+        return 0
+    if argv[0] == "add":
+        return add(argv[1:])
+    if argv[0] == "check":
+        return check()
+    if argv[0] == "--stdin":
+        raw = sys.stdin.read()[:STDIN_CAP]
+        return lookup(raw.split(), hook_mode=True)
+    if argv[0] in ("-h", "--help"):
+        print(__doc__.strip())
+        return 0
+    return lookup(argv)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

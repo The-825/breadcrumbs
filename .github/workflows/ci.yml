@@ -49,6 +49,11 @@ jobs:
       - name: Decision-gate tests
         run: python3 -m unittest discover -s ci-kit/workflows/tests
 
+      - name: Memory-desk tests and integrity gate
+        run: |
+          python3 templates/memory-desk/tests/test_mem.py
+          python3 templates/memory-desk/mem check
+
       # The memory tools guard everything else, so they cannot live outside
       # the gate that guards everything else (a gap the Agent Memory Atlas
       # analysis named, 2026-08-09). A report that exists only when someone

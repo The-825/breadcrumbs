@@ -1,0 +1,26 @@
+# index.tsv · the memory desk's fact index. One row per settled fact.
+# Five tab-separated fields: key <TAB> aliases (| separated, may be empty)
+# <TAB> answer <TAB> source <TAB> checked (YYYY-MM-DD, or - for unchecked).
+# Keys and aliases match case-insensitively; write them the way a session
+# would ask. Keys must not begin with the reserved words add or check.
+# Keep every answer to one line; anything longer lives at the source and the
+# answer says what the reader will find there. A fact has one home: the row
+# either IS the home (a one-liner) or points to it, never both.
+# Lines starting with # and blank lines are ignored. memory/mem check is the
+# integrity gate; run it before committing an edit here.
+#
+# The rows below describe the desk itself. They are keepers, not demo data:
+# after adoption they answer the questions new sessions ask about the desk.
+look up a fact	how do i search memory|query the index|find a fact|lookup	run memory/mem <words>; exact key or alias first, ranked fallback, a miss prints your next command	README.md	2026-08-08
+capture a fact	journal|record a decision|remember this|save a ruling	run memory/mem add "<one sentence>" --type fact|decision|gotcha, with --key and --source when you have them	README.md	2026-08-08
+index row format	tsv format|row schema|index columns	key TAB aliases (| separated) TAB answer TAB source TAB checked (YYYY-MM-DD or -)	index.tsv	2026-08-08
+miss ladder	no hit|not found|lookup failed	a miss prints a scoped grep, a narrow read, then a mem add line; run them in order, never answer from recall	mem	2026-08-08
+kernel size cap	memory.md limit|kernel budget|boot file size	the kernel stays at or under 60 lines; mem check fails past the cap and overflow moves into index rows	mem	2026-08-08
+stale row horizon	checked date|freshness|stale flag	a row unchecked for more than 90 days prints a STALE flag; the gardener re-verifies or retires it	mem	2026-08-08
+gardener duties	curation|promote the journal|weekly maintenance	scheduled pass: promote journal entries to rows, dedupe, refresh checked dates, trim the kernel; lands as a PR	gardener/GARDENER.md	2026-08-08
+file scoped notes	path gotcha|edit warning|file note	give a row an alias file:<repo-relative-path>; the post-edit hook injects it when that file is first touched	hooks/path_note_guard.py	2026-08-08
+hook wiring	install hooks|settings.json|register hooks	three hooks: session-start kernel inject, prompt-time index hits, first-edit file notes; snippet in hooks/settings-snippet.json	hooks/settings-snippet.json	2026-08-08
+no shell fallback	grep the index|mem unavailable|tool missing	grep -i '<word>' memory/index.tsv reads the same rows; the tsv is the interface, mem is convenience	index.tsv	2026-08-08
+journal entry format	journal schema|jsonl entry|journal format	one JSON object per line with ts, type, text, optional key and source; written by mem add, curated weekly	mem	2026-08-08
+integrity gate	mem check|index health|ci gate	mem check fails on duplicate keys or aliases, malformed rows, dead sources, oversized kernel, bad journal lines	mem	2026-08-08
+seed the index	first rows|mine the rules file|adoption seeding	move every rules-file line that answers a question into a row; lines that command behavior stay rules	README.md	2026-08-08
