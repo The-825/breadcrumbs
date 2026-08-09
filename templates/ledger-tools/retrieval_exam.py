@@ -766,6 +766,30 @@ def selftest():
                           "obsoleted_by": "src/b.py"})])[0] + parsed,
                          tree, tmp, matcher),
                      [{"name": "b", "touched": ["src/b.py"]}], matcher))),
+            # The revert case: a value flips A -> B -> A. Both earlier entries
+            # carry obsoleted_by; the final entry RESTATES the original value
+            # as a new current entry. The check must inject the current entry
+            # and flag neither the revert (current despite its old value) nor
+            # report a hit when only the current entry wins the lane.
+            ("a revert chain injects the current entry and reports no hit",
+             (lambda rs, f: not f["forbidden_hits"] and not f["unexercised"]
+              and [i["line_no"] for i in injected_for(
+                  {"name": "a", "touched": ["src/a.py"]}, rs,
+                  Matcher({"injection_cap": 1, "broad_fanout": 2}))]
+              == [3])(
+                 *(lambda rs: (rs, run_forbidden_check(
+                     rs, [{"name": "a", "touched": ["src/a.py"]}],
+                     Matcher({"injection_cap": 1, "broad_fanout": 2}))))(
+                     classify_reachability(parse_ledger([
+                         json.dumps({"path": "src/a.py", "when": "2026-07-01",
+                                     "what": "value A",
+                                     "obsoleted_by": "src/a.py@2026-07-10"}),
+                         json.dumps({"path": "src/a.py", "when": "2026-07-10",
+                                     "what": "value B",
+                                     "obsoleted_by": "src/a.py@2026-07-20"}),
+                         json.dumps({"path": "src/a.py", "when": "2026-07-20",
+                                     "what": "value A, restated as current"}),
+                     ])[0], tree, tmp, matcher)))),
             ("unreachable superseded entry reports unexercised, never clean",
              (lambda f: f["unexercised"] and not f["forbidden_hits"])(
                  run_forbidden_check(
