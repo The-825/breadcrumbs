@@ -160,6 +160,8 @@ half is proven. Do these in order and stop when you have had enough for the day:
 | [`checklists/`](checklists/) | Two-minute operational checklists |
 | [`docs/`](docs/) | The reasoning behind each piece, including [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
 | [`playbook/`](playbook/) | How the pieces fit together, and patterns for running more than one agent at a time |
+| [`kit.json`](kit.json) | Machine-readable inventory: problem-to-artifact routing, per-artifact assumptions, and selftest commands, so you or your agent can adopt programmatically. CI verifies every path in it resolves |
+| [`llms.txt`](llms.txt) | The same map for an agent reading this repo: route by problem, one line per artifact |
 
 ## What I have not proven
 

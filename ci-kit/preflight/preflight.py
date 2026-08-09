@@ -12,13 +12,17 @@ the push. Which files this branch touches is knowable. Which files the other
 open branches touch is knowable. Whether this branch is already behind its base
 is knowable. Nothing checks any of it at the moment it would be cheap to fix.
 
-This runs at that moment. Four checks, exit 1 if any fails:
+This runs at that moment. Five checks, exit 1 if any fails:
 
   1. behind_base      This branch is behind its base and will merge stale.
   2. overlap          Another open branch touches a file this one touches.
   3. commit_hygiene   A commit message is a placeholder, so history reads as noise.
   4. base_merges      Base has been merged in repeatedly, which usually means
                       the branch has been open too long.
+  5. stale_state      A session-state handoff file has not been touched in over
+                      a week. A crashed or abandoned session leaves its handoff
+                      narrating a present that ended; the next session boots on
+                      it as current, which is worse than no handoff at all.
 
 Usage:
     python3 preflight.py --base main
@@ -36,6 +40,7 @@ cannot run must never look like a check that passed.
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -53,6 +58,14 @@ PLACEHOLDER_SUBJECTS = re.compile(
 # repeatedly means the branch has been open long enough to keep going stale,
 # which is the exact condition this tool exists to catch earlier.
 BASE_MERGE_LIMIT = 2
+
+# A session-state handoff file older than this many days is treated as an
+# abandoned narration rather than a live handoff. Crashed and abandoned
+# sessions leave these behind, and the next session boots on them as current.
+STALE_STATE_DAYS = 7
+# Files that carry the "where we are right now" handoff. Glob-matched from the
+# repo root; extend for your own state-file convention.
+STATE_FILE_PATTERNS = ("SESSION_STATE.md", "SESSION_STATE_*.md")
 
 
 def git(*args, cwd=None):
@@ -131,12 +144,45 @@ def check_base_merges(merge_count, base):
     return ("base_merges", True, f"{merge_count} merge(s) from {base}")
 
 
-def run_checks(behind, base, my_files, others, subjects, merge_count):
+def check_stale_state(state_ages, limit_days=STALE_STATE_DAYS):
+    """state_ages: {path: age_in_days} for session-state handoff files, or None.
+
+    A handoff file exists to describe RIGHT NOW. When a session crashes or a
+    workstream is abandoned, its state file keeps narrating a present that
+    ended weeks ago, and the next session boots on it as if it were current.
+    That is worse than no handoff: no file prompts a fresh look, a stale one
+    gets believed. This check does not delete anything (state files record
+    real work); it names the rot so a human refreshes or retires the file.
+    """
+    if state_ages is None:
+        return (
+            "stale_state",
+            None,
+            "no session-state data supplied, staleness not checked.",
+        )
+    stale = {p: d for p, d in state_ages.items() if d > limit_days}
+    if stale:
+        listing = ", ".join(f"{p} ({d}d)" for p, d in sorted(stale.items()))
+        return (
+            "stale_state",
+            False,
+            f"{len(stale)} session-state file(s) untouched for over "
+            f"{limit_days} days: {listing}. A handoff that describes a dead "
+            f"present gets believed by the next session. Refresh it or retire "
+            f"it; do not leave it narrating.",
+        )
+    return ("stale_state", True,
+            f"{len(state_ages)} session-state file(s) fresh within {limit_days} days")
+
+
+def run_checks(behind, base, my_files, others, subjects, merge_count,
+               state_ages=None):
     return [
         check_behind_base(behind, base),
         check_overlap(my_files, others),
         check_commit_hygiene(subjects),
         check_base_merges(merge_count, base),
+        check_stale_state(state_ages),
     ]
 
 
@@ -167,8 +213,32 @@ def gather(base):
     files = [f for f in git("diff", "--name-only", f"{upstream}...HEAD").splitlines() if f]
     subjects = [s for s in git("log", "--format=%s", f"{upstream}..HEAD").splitlines() if s]
     merges = git("log", "--merges", "--format=%s", f"{upstream}..HEAD").splitlines()
-    merge_count = sum(1 for m in merges if base in m)
-    return behind, files, subjects, merge_count
+    # Match git's quoted merge-subject forms ("Merge branch 'main' ..." /
+    # "Merge remote-tracking branch 'origin/main' ..."), not a bare substring:
+    # base "main" must not count a merge of a branch named "maintenance".
+    base_forms = (f"'{base}'", f"'origin/{base}'")
+    merge_count = sum(1 for m in merges if any(f in m for f in base_forms))
+
+    # Session-state staleness: age in days since the file's last commit. Uses
+    # git history rather than mtime, because a fresh clone resets every mtime
+    # and would report the whole repo as edited today.
+    import glob as _glob
+    import time as _time
+    # Glob from the repo root, not the cwd: run from a subdirectory, a
+    # cwd-relative glob finds nothing and the check would report "0 files
+    # fresh" as a pass, which is the could-not-run-looking-green failure the
+    # module header forbids. No resolvable root -> None -> the check SKIPs.
+    toplevel = git("rev-parse", "--show-toplevel")
+    if not toplevel:
+        return behind, files, subjects, merge_count, None
+    state_ages = {}
+    for pattern in STATE_FILE_PATTERNS:
+        for path in _glob.glob(os.path.join(toplevel, pattern)):
+            rel = os.path.relpath(path, toplevel)
+            ts = git("log", "-1", "--format=%ct", "--", rel, cwd=toplevel)
+            if ts.isdigit():
+                state_ages[rel] = int((_time.time() - int(ts)) // 86400)
+    return behind, files, subjects, merge_count, state_ages
 
 
 def selftest():
@@ -199,7 +269,18 @@ def selftest():
     ok("repeated base merges fail", check_base_merges(3, "main")[1] is False)
     ok("one base merge passes", check_base_merges(1, "main")[1] is True)
 
-    results = run_checks(0, "main", ["a.py"], [], ["feat: real"], 0)
+    ok("stale handoff fails", check_stale_state({"SESSION_STATE.md": 30})[1] is False)
+    ok("fresh handoff passes", check_stale_state({"SESSION_STATE.md": 2})[1] is True)
+    ok("missing state data SKIPS, never passes",
+       check_stale_state(None)[1] is None)
+    ok("the failure names the file",
+       "SESSION_STATE.md" in check_stale_state({"SESSION_STATE.md": 30})[2])
+    ok("mixed ages flag only the stale one",
+       "OLD.md" in check_stale_state({"OLD.md": 30, "NEW.md": 1})[2]
+       and "NEW.md" not in check_stale_state({"OLD.md": 30, "NEW.md": 1})[2])
+
+    results = run_checks(0, "main", ["a.py"], [], ["feat: real"], 0,
+                         {"SESSION_STATE.md": 1})
     ok("an all-clean run reports 0", report(results) == 0)
 
     failed = [n for n, c in checks if not c]
@@ -224,8 +305,9 @@ def main():
         with open(a.others, encoding="utf-8") as fh:
             others = json.load(fh)
 
-    behind, files, subjects, merge_count = gather(a.base)
-    return report(run_checks(behind, a.base, files, others, subjects, merge_count))
+    behind, files, subjects, merge_count, state_ages = gather(a.base)
+    return report(run_checks(behind, a.base, files, others, subjects,
+                             merge_count, state_ages))
 
 
 if __name__ == "__main__":

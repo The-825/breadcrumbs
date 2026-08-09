@@ -11,6 +11,7 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [union-merge.md](union-merge.md) | The `merge=union` gitattributes setting for parallel appenders, with the cases where it is unsafe |
 | [retrieval_exam.py](retrieval_exam.py) | Retrieval exam: per-entry reachability verdicts against your real tree, an injection-lane probe, a use-stamp readout, and a ratchetable baseline. Asks whether entries can be SEEN, where the auditor asks whether they are still TRUE |
 | [sample_probes.json](sample_probes.json) | Four session-start conditions for the exam's lane probe, written against the sample ledger |
+| [memory_engine.py](memory_engine.py) | Three-tier runnable memory (working state, append-only episodes, semantic facts with asserted-vs-verified status): compaction flushes down instead of deleting, verification refuses an empty oracle, retrieval is deterministic and names its own limit |
 | [SEARCH_MISSES.md](SEARCH_MISSES.md) | Append-only ledger of lookups that found nothing, each carrying the repo path where the answer should live, so a gap becomes a scoped task instead of evaporating with the session |
 | [CORRECTION_LEDGER_TEMPLATE.md](CORRECTION_LEDGER_TEMPLATE.md) | Append-only corrections ledger admitting only entries anchored to an objective oracle (red CI check, tripped data assertion, operator ruling, reverted PR), so the self-improvement loop cannot optimize a proxy |
 
@@ -39,7 +40,11 @@ python3 templates/ledger-tools/retrieval_exam.py --selftest
 
 On the sample that reports one unreachable entry (the retired path, which the auditor
 separately calls STALE, the same entry failing both ways), a lane that varies across all
-four probes, and one entry injected on every probe with no use stamp. Drop the `--probes`
+four probes, one entry injected on every probe with no use stamp, and one FORBIDDEN HIT:
+the superseded entry (line 6, `obsoleted_by` a note that no longer exists) still wins
+retrieval on the probe touching its file, so the model would see the old ruling.
+Correction that stops at the ledger row and never reaches the lane is not correction;
+`--fail-on-forbidden` turns that finding into a red exit for CI. Drop the `--probes`
 flag and the exam derives probes from the tree instead, which is a smoke test rather than
 an answer: the derived probes never touch the ledger's keyed files, so it reports
 `UNEXERCISED` instead of pretending to a verdict.

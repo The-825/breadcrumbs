@@ -54,6 +54,22 @@ jobs:
           python3 templates/memory-desk/tests/test_mem.py
           python3 templates/memory-desk/mem check
 
+      # The memory tools guard everything else, so they cannot live outside
+      # the gate that guards everything else (a gap the Agent Memory Atlas
+      # analysis named, 2026-08-09). A report that exists only when someone
+      # remembers to run it is not a safeguard, and neither is a selftest.
+      - name: Kit manifest check
+        run: |
+          python3 ci-kit/kit_manifest_check.py --selftest
+          python3 ci-kit/kit_manifest_check.py
+
+      - name: Ledger-tool self-tests
+        run: |
+          python3 templates/ledger-tools/retrieval_exam.py --selftest
+          python3 templates/ledger-tools/memory_engine.py --selftest
+          python3 templates/ledger-tools/conclusions_audit.py --selftest
+          python3 ci-kit/preflight/preflight.py --selftest
+
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py
 

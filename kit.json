@@ -1,0 +1,151 @@
+{
+  "name": "breadcrumbs",
+  "purpose": "Agent-operations machinery for a repo you cannot afford to break: memory ledgers, retrieval measurement, CI guards, merge-gate workflows, and the pattern docs behind them.",
+  "license": "MIT",
+  "distribution": "copy-and-adapt",
+  "distribution_note": "There is deliberately no pip/npm package. Every file is meant to be copied into your repo, owned, and edited; a package would make our release cadence your dependency and fight the adapt step. This manifest exists so a developer or their agent can adopt programmatically anyway: resolve a problem to artifacts, copy them, run their selftests.",
+  "requires": {
+    "python": ">=3.9, stdlib only (no dependencies anywhere in the kit)",
+    "shell": "POSIX (hooks and runner scripts)",
+    "platform_assumptions": "git repo; GitHub Actions for the workflow templates; Claude Code for the command/hook templates (adapt for other harnesses)"
+  },
+  "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. CI runs the same set (.github/workflows/ci.yml).",
+  "problems": {
+    "my agent forgets everything between sessions": ["templates/CLAUDE_TEMPLATE.md", "templates/CONCLUSIONS_TEMPLATE.md", "templates/SESSION_STATE_TEMPLATE.md", "templates/ledger-tools/capture_nudge.py"],
+    "I cannot tell whether my memory layer actually works": ["docs/memory-measurement.md", "templates/ledger-tools/retrieval_exam.py", "templates/ledger-tools/conclusions_audit.py", "templates/ledger-tools/SEARCH_MISSES.md"],
+    "corrections do not reach the model": ["templates/ledger-tools/retrieval_exam.py", "docs/memory-measurement.md"],
+    "the agent records its own guesses as facts": ["templates/ledger-tools/memory_engine.py", "templates/ledger-tools/PROVENANCE.md", "templates/ledger-tools/CORRECTION_LEDGER_TEMPLATE.md"],
+    "parallel branches keep colliding": ["ci-kit/preflight/preflight.py", "templates/ledger-tools/union-merge.md"],
+    "I need CI to enforce my rules, not prose": ["ci-kit/guards", "ci-kit/workflows", "ci-kit/migrations", "ci-kit/run_guards.sh"],
+    "decisions keep getting re-litigated": ["templates/DECISIONS_TEMPLATE.md", "docs/decision-capture.md", "templates/ledger-tools/capture_nudge.py"],
+    "I run many agent sessions and they step on each other": ["playbook", "templates/standing-agents", "docs/floating-memory.md", "docs/multi-agent-hygiene.md"]
+  },
+  "artifacts": [
+    {
+      "path": "templates/ledger-tools/retrieval_exam.py",
+      "kind": "tool",
+      "what": "Retrieval exam over a conclusions ledger: reachability verdicts, injection lane probe, use-stamp readout, forbidden-hit check (a superseded value must not win retrieval), ratchetable baseline, and a no-ledger survey mode for any repo.",
+      "assumes": "CONCLUSIONS.jsonl schema (see templates/CONCLUSIONS_TEMPLATE.md); survey mode assumes only markdown and a boot file.",
+      "selftest": "python3 templates/ledger-tools/retrieval_exam.py --selftest"
+    },
+    {
+      "path": "templates/ledger-tools/memory_engine.py",
+      "kind": "tool",
+      "what": "Three-tier runnable memory: working state, append-only episodes, semantic facts with asserted-vs-verified status. Verification refuses an empty oracle; compaction flushes down before shrinking; overwrites log the prior value as a supersession episode first.",
+      "assumes": "Local filesystem; single operator.",
+      "selftest": "python3 templates/ledger-tools/memory_engine.py --selftest"
+    },
+    {
+      "path": "templates/ledger-tools/conclusions_audit.py",
+      "kind": "tool",
+      "what": "Staleness auditor: classifies every ledger entry STALE / AGING / SPECIAL / OK against the live tree and checks supersession chains.",
+      "assumes": "CONCLUSIONS.jsonl schema.",
+      "selftest": "python3 templates/ledger-tools/conclusions_audit.py --selftest"
+    },
+    {
+      "path": "ci-kit/preflight/preflight.py",
+      "kind": "tool",
+      "what": "Pre-push collision check: behind-base, cross-branch file overlap, placeholder commit subjects, repeated base merges, stale session-state handoffs. A check that cannot run reports SKIPPED, never PASSED.",
+      "assumes": "git; other-branch data supplied as plain JSON.",
+      "selftest": "python3 ci-kit/preflight/preflight.py --selftest"
+    },
+    {
+      "path": "templates/ledger-tools/capture_nudge.py",
+      "kind": "hook",
+      "what": "UserPromptSubmit hook injecting a same-turn capture reminder when a prompt contains ruling-shaped language.",
+      "assumes": "Claude Code hooks; register per templates/ledger-tools/capture-nudge.md.",
+      "selftest": null
+    },
+    {
+      "path": "ci-kit/guards",
+      "kind": "guard-suite",
+      "what": "Lint guards (PII in fixtures, provenance narration, magic limits, raw view DDL, inline style/script, env vars outside config, unsourced authority citations) each shipped with fixtures proving it bites.",
+      "assumes": "Python repo conventions vary per guard; each guard's docstring states its own.",
+      "selftest": "python3 -m unittest discover -s ci-kit/guards/tests"
+    },
+    {
+      "path": "ci-kit/migrations",
+      "kind": "tool",
+      "what": "Forward-only migration runner with an applied-state ledger and policy checks, with tests.",
+      "assumes": "Numbered SQL migration files; adapt the runner's paths.",
+      "selftest": "python3 -m unittest discover -s ci-kit/migrations/tests"
+    },
+    {
+      "path": "ci-kit/workflows",
+      "kind": "workflow-suite",
+      "what": "GitHub Actions templates around a fail-closed merge gate: automerge with an approval label, greenlight helpers, staging reset, branch auto-update, plus the gotchas doc that cost real debugging time.",
+      "assumes": "GitHub Actions; branch protection on the default branch.",
+      "selftest": "python3 -m unittest discover -s ci-kit/workflows/tests"
+    },
+    {
+      "path": "templates/CLAUDE_TEMPLATE.md",
+      "kind": "template",
+      "what": "The rules-file skeleton: integrity floor, conventions, decision capture, continuity check, retro, writing rules. This repo's own CLAUDE.md is one filled-in instance.",
+      "assumes": "Any agent harness that loads a rules file.",
+      "selftest": null
+    },
+    {
+      "path": "templates/CONCLUSIONS_TEMPLATE.md",
+      "kind": "template",
+      "what": "The append-only conclusions ledger format: path-keyed one-line JSON entries with evidence, provenance fields, and the dated supersession grammar.",
+      "assumes": "Nothing beyond a text editor; the ledger tools read this schema.",
+      "selftest": null
+    },
+    {
+      "path": "templates/commands",
+      "kind": "template-suite",
+      "what": "Slash-command definitions (scout, retro, checkpoint, promote, ship, model-check, and more), each a workflow your agent runs on demand.",
+      "assumes": "Claude Code commands; adapt frontmatter for other harnesses.",
+      "selftest": null
+    },
+    {
+      "path": "templates/hooks",
+      "kind": "template-suite",
+      "what": "Harness-side hooks: pre-compact save, post-compact pointer, outbound PII screen, batch cadence, model routing.",
+      "assumes": "Claude Code hook events; each file names its own event.",
+      "selftest": null
+    },
+    {
+      "path": "templates/standing-agents",
+      "kind": "template-suite",
+      "what": "The standing-agent fleet kit: registry, boot packs, routine prompts, wake routing, the summon protocol, and the a2a task bus pattern.",
+      "assumes": "Scheduled agent runs (cron or platform routines); multi-session operation.",
+      "selftest": null
+    },
+    {
+      "path": "templates/test-harness",
+      "kind": "template",
+      "what": "In-process test harness skeleton for route-level tests without a server.",
+      "assumes": "Python web app; adapt app_example.py.",
+      "selftest": null
+    },
+    {
+      "path": "skills",
+      "kind": "skill-suite",
+      "what": "Paste-able rule sets for a rules file: session efficiency, data truth, flag lifecycle, regression layering, forward-only migrations, reuse-first, delivery protocol, propose-confirm-execute, adoption verifier.",
+      "assumes": "Each file states its own assumptions in its header.",
+      "selftest": null
+    },
+    {
+      "path": "checklists",
+      "kind": "checklist-suite",
+      "what": "Operational checklists: continuity sweep, PR discipline, pre-push.",
+      "assumes": "Nothing.",
+      "selftest": null
+    },
+    {
+      "path": "docs",
+      "kind": "doc-suite",
+      "what": "Pattern essays: the reasoning behind each artifact (memory measurement, floating memory, the chorus, context budgets, decision capture, the airport model, and more). Essays describe patterns; what ships is stated per essay.",
+      "assumes": "Nothing.",
+      "selftest": null
+    },
+    {
+      "path": "playbook",
+      "kind": "doc-suite",
+      "what": "How the pieces fit together: the operating model, coordinator seat model, scheduled agents, the unattended-agent contract.",
+      "assumes": "Multi-session operation.",
+      "selftest": null
+    }
+  ]
+}

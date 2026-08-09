@@ -18,6 +18,15 @@ airport metaphor is not decoration here; it turned out that the operational disc
 airports and carriers invented for exactly this problem class (many independent actors,
 shared state, no one person watching everything) port to agent memory almost one for one.
 
+**What this essay assumes, and what ships here.** This is a pattern essay, not a
+manual for code in this repository: the fleet machinery it describes (the memory
+branch, reaper, projections, per-session folds) runs in the system this pattern
+came out of and does NOT ship in this kit. What ships here is the single-repo
+half the pattern rests on: the ledger tools, the retrieval exam, the preflight
+and guards. Read this one for the architecture you would build toward, and the
+[ledger-tools](../templates/ledger-tools/) for the pieces you can copy today.
+(Gap named by an external analysis, 2026-08-09; this header is the fix.)
+
 ## The memory branch
 
 Cross-session memory lives on an orphan git branch that is never checked out, never
