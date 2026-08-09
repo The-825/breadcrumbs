@@ -11,14 +11,48 @@
   },
   "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. CI runs the same set (.github/workflows/ci.yml).",
   "problems": {
-    "my agent forgets everything between sessions": ["templates/CLAUDE_TEMPLATE.md", "templates/CONCLUSIONS_TEMPLATE.md", "templates/SESSION_STATE_TEMPLATE.md", "templates/ledger-tools/capture_nudge.py"],
-    "I cannot tell whether my memory layer actually works": ["docs/memory-measurement.md", "templates/ledger-tools/retrieval_exam.py", "templates/ledger-tools/conclusions_audit.py", "templates/ledger-tools/SEARCH_MISSES.md"],
-    "corrections do not reach the model": ["templates/ledger-tools/retrieval_exam.py", "docs/memory-measurement.md"],
-    "the agent records its own guesses as facts": ["templates/ledger-tools/memory_engine.py", "templates/ledger-tools/PROVENANCE.md", "templates/ledger-tools/CORRECTION_LEDGER_TEMPLATE.md"],
-    "parallel branches keep colliding": ["ci-kit/preflight/preflight.py", "templates/ledger-tools/union-merge.md"],
-    "I need CI to enforce my rules, not prose": ["ci-kit/guards", "ci-kit/workflows", "ci-kit/migrations", "ci-kit/run_guards.sh"],
-    "decisions keep getting re-litigated": ["templates/DECISIONS_TEMPLATE.md", "docs/decision-capture.md", "templates/ledger-tools/capture_nudge.py"],
-    "I run many agent sessions and they step on each other": ["playbook", "templates/standing-agents", "docs/floating-memory.md", "docs/multi-agent-hygiene.md"]
+    "my agent forgets everything between sessions": [
+      "templates/CLAUDE_TEMPLATE.md",
+      "templates/CONCLUSIONS_TEMPLATE.md",
+      "templates/SESSION_STATE_TEMPLATE.md",
+      "templates/ledger-tools/capture_nudge.py"
+    ],
+    "I cannot tell whether my memory layer actually works": [
+      "docs/memory-measurement.md",
+      "templates/ledger-tools/retrieval_exam.py",
+      "templates/ledger-tools/conclusions_audit.py",
+      "templates/ledger-tools/SEARCH_MISSES.md"
+    ],
+    "corrections do not reach the model": [
+      "templates/ledger-tools/retrieval_exam.py",
+      "docs/memory-measurement.md"
+    ],
+    "the agent records its own guesses as facts": [
+      "templates/ledger-tools/memory_engine.py",
+      "templates/ledger-tools/PROVENANCE.md",
+      "templates/ledger-tools/CORRECTION_LEDGER_TEMPLATE.md"
+    ],
+    "parallel branches keep colliding": [
+      "ci-kit/preflight/preflight.py",
+      "templates/ledger-tools/union-merge.md"
+    ],
+    "I need CI to enforce my rules, not prose": [
+      "ci-kit/guards",
+      "ci-kit/workflows",
+      "ci-kit/migrations",
+      "ci-kit/run_guards.sh"
+    ],
+    "decisions keep getting re-litigated": [
+      "templates/DECISIONS_TEMPLATE.md",
+      "docs/decision-capture.md",
+      "templates/ledger-tools/capture_nudge.py"
+    ],
+    "I run many agent sessions and they step on each other": [
+      "playbook",
+      "templates/standing-agents",
+      "docs/floating-memory.md",
+      "docs/multi-agent-hygiene.md"
+    ]
   },
   "artifacts": [
     {
@@ -146,6 +180,13 @@
       "what": "How the pieces fit together: the operating model, coordinator seat model, scheduled agents, the unattended-agent contract.",
       "assumes": "Multi-session operation.",
       "selftest": null
+    },
+    {
+      "path": "ci-kit/workflows/greenlight_tiers.py",
+      "kind": "tool",
+      "what": "Diff-tiered merge gate policy: docs-class changes merge on green with no label, everything else (and every deletion or rename) waits for the human approval label. Fail closed; the automerge workflow runs the base branch's copy.",
+      "assumes": "the fail-closed automerge workflow in the same directory; adapt SAFE_PREFIXES to your repo",
+      "selftest": "python3 ci-kit/workflows/greenlight_tiers.py --selftest"
     }
   ]
 }
