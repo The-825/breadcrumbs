@@ -1,0 +1,82 @@
+# breadcrumbs
+
+> Agent-operations machinery you copy into a repo you cannot afford to break:
+> memory ledgers, retrieval measurement, CI guards, merge-gate workflows, and
+> the pattern essays behind them. Everything is plain text, stdlib-only, and
+> meant to be owned and edited after copying; there is deliberately no package.
+> Machine-readable inventory with per-artifact assumptions and selftest
+> commands: kit.json.
+
+Route by the problem you arrived with. Every artifact states its own
+assumptions in its header, and every runnable tool ships an offline selftest.
+
+## Start here
+
+- [README.md](README.md): the problem, the one-afternoon adoption path, the map.
+- [templates/CLAUDE_TEMPLATE.md](templates/CLAUDE_TEMPLATE.md): the rules-file
+  skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
+- [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
+  selftest commands, for programmatic adoption.
+
+## Memory that survives the session
+
+- [templates/CONCLUSIONS_TEMPLATE.md](templates/CONCLUSIONS_TEMPLATE.md):
+  the append-only, path-keyed conclusions ledger format with supersession.
+- [templates/DECISIONS_TEMPLATE.md](templates/DECISIONS_TEMPLATE.md): the
+  decisions ledger; [docs/decision-capture.md](docs/decision-capture.md) is why.
+- [templates/SESSION_STATE_TEMPLATE.md](templates/SESSION_STATE_TEMPLATE.md):
+  the living handoff between sessions.
+- [templates/ledger-tools/memory_engine.py](templates/ledger-tools/memory_engine.py):
+  runnable three-tier memory; asserted vs verified, oracle-gated.
+- [templates/ledger-tools/capture_nudge.py](templates/ledger-tools/capture_nudge.py):
+  the hook that makes capture happen the turn a ruling lands.
+
+## Measuring whether memory works (most systems skip this)
+
+- [docs/memory-measurement.md](docs/memory-measurement.md): the four
+  instruments and why a memory entry nobody can reach is indistinguishable
+  from one never written.
+- [templates/ledger-tools/retrieval_exam.py](templates/ledger-tools/retrieval_exam.py):
+  reachability, injection probe, use stamps, the forbidden-hit check, and a
+  survey mode that runs against any repo with no adoption.
+- [templates/ledger-tools/conclusions_audit.py](templates/ledger-tools/conclusions_audit.py):
+  staleness verdicts against the live tree.
+- [templates/ledger-tools/SEARCH_MISSES.md](templates/ledger-tools/SEARCH_MISSES.md):
+  the ledger for the entry that was never written.
+
+## Enforcement (rules as CI, not prose)
+
+- [ci-kit/guards/](ci-kit/guards/): lint guards, each with fixtures proving it
+  bites; [ci-kit/run_guards.sh](ci-kit/run_guards.sh) runs the set.
+- [ci-kit/workflows/](ci-kit/workflows/): the fail-closed merge gate, automerge
+  with an approval label, and the gotchas that cost real debugging time.
+- [ci-kit/migrations/](ci-kit/migrations/): forward-only migration runner with
+  an applied-state ledger.
+- [ci-kit/preflight/preflight.py](ci-kit/preflight/preflight.py): catch the
+  branch collision before you push; SKIPPED is never PASSED.
+
+## Rules to paste into your own rules file
+
+- [skills/](skills/): session efficiency, data truth, flag lifecycle,
+  regression layering, reuse-first, delivery protocol, and more; each opens
+  with the failure it prevents.
+- [checklists/](checklists/): continuity sweep, PR discipline, pre-push.
+
+## Running many sessions (fleet patterns)
+
+- [docs/floating-memory.md](docs/floating-memory.md): the fleet memory
+  architecture as a pattern essay; its header states what ships here and what
+  does not.
+- [playbook/](playbook/): the operating model, coordinator seats, scheduled
+  agents, the unattended-agent contract.
+- [templates/standing-agents/](templates/standing-agents/): the standing-agent
+  fleet kit.
+
+## Optional
+
+- [docs/](docs/): the full pattern-essay shelf, one reasoning essay per
+  artifact class.
+- [templates/commands/](templates/commands/): slash-command workflows (scout,
+  retro, checkpoint, promote, model-check) for harnesses that support them.
+- [templates/hooks/](templates/hooks/): harness hooks (pre-compact save,
+  PII screen, batch cadence).
