@@ -160,8 +160,26 @@ class MemoryEngine:
     # -- semantic tier --------------------------------------------------------
 
     def store_fact(self, category, key, value):
-        """Record a fact as ASSERTED. Nothing an agent stores starts verified."""
+        """Record a fact as ASSERTED. Nothing an agent stores starts verified.
+
+        Restating an existing key is a supersession, not a silent edit: the
+        prior value and its status are logged to the episodic ledger BEFORE
+        the overwrite, so a verified fact cannot vanish without a trace and
+        the new value starts back at asserted. (Write-tier gap named by the
+        Agent Memory Atlas analysis, 2026-08-09: an in-place overwrite inside
+        a kit whose rule is that nothing is edited in place.)
+        """
         facts = self._read(self.facts)
+        prior = facts.get(category, {}).get(key)
+        if prior is not None and prior.get("value") != value:
+            self.log_episode(
+                "SUPERSEDED",
+                json.dumps({"category": category, "key": key,
+                            "prior_value": prior.get("value"),
+                            "prior_status": prior.get("status"),
+                            "new_value": value}),
+                ["supersession"],
+            )
         facts.setdefault(category, {})[key] = {
             "value": value, "status": "asserted", "evidence": None,
         }
@@ -281,6 +299,22 @@ def selftest():
 
         ctx2 = mem.build_context("latency pool")
         ok("retrieval is deterministic", ctx == ctx2)
+
+        # Overwrite discipline: restating a verified fact logs the prior
+        # value as a SUPERSEDED episode first, and the new value starts back
+        # at asserted. A verified status may never vanish without a trace.
+        mem.store_fact("env", "python", ">=3.11")
+        f = mem._read(mem.facts)["env"]["python"]
+        ok("an overwritten fact resets to asserted", f["status"] == "asserted")
+        eps = [json.loads(l) for l in mem.episodes.read_text().splitlines() if l.strip()]
+        sup = [e for e in eps if e["action"] == "SUPERSEDED"]
+        ok("the prior value and status are logged before the overwrite",
+           len(sup) == 1 and ">=3.8" in sup[0]["outcome"]
+           and "verified" in sup[0]["outcome"])
+        mem.store_fact("env", "python", ">=3.11")
+        eps2 = [json.loads(l) for l in mem.episodes.read_text().splitlines() if l.strip()]
+        ok("restating the same value is not a supersession",
+           len([e for e in eps2 if e["action"] == "SUPERSEDED"]) == 1)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
