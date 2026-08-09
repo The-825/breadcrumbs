@@ -103,6 +103,32 @@ and often: checkpoint the handoff file, wipe the context, boot clean off the cue
 clean sheet plus good breadcrumbs beats a full context window that is mostly
 archaeology.
 
+## Two of my own sessions, colliding
+
+The forgetting that actually costs money is not a session forgetting me. It is my
+sessions not knowing about each other.
+
+I run several agent sessions at once. One finishes a piece of work and commits it to a
+branch. Another session, started an hour earlier or on a different surface, has no idea
+that branch exists. It picks up the same task from the same to-do list, reasons its way
+through the same problem, and burns a real token budget rebuilding something that is
+already sitting in an unmerged commit. The worst version is when it discovers the
+duplicate only near the end, because the discovery costs almost as much as the work.
+And it is not only my sessions: main shifts underneath them too. A scheduled bot
+commits directly to main by design, a merge lands from another lane, and a session
+reasoning from an hours-old picture of the repo builds on ground that has already
+moved.
+
+No amount of model intelligence fixes this, because nothing was wrong with the
+reasoning. Each session acted correctly on the world it could see. The failure is that
+the world it could see was stale, and the fix is environmental, not cognitive: a
+preflight that checks the remote for sibling branches and in-flight work touching the
+same files before a session starts building; a handoff file that says what is already
+in motion, so picking up a task starts with "read what your predecessors did," not with
+a blank slate; and a boot packet that leads with what changed since this session last
+acted. The pattern's test for all three is blunt: could a second session, started cold
+right now, avoid redoing or colliding with the first one? If not, a sign is missing.
+
 ## The day it caught itself
 
 Here is the part that made me want to publish, told plainly because it is more
