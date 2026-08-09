@@ -35,7 +35,7 @@ import json
 import sys
 
 SAFE_PREFIXES = ("docs/", "checklists/")
-SAFE_EXACT = ("README.md", "planning/DECISIONS.md")
+SAFE_EXACT = ("README.md", "planning/DECISIONS.md", "SESSION_STATE.md")
 SAFE_STATUSES = ("added", "modified")
 
 
@@ -63,6 +63,10 @@ def selftest() -> int:
         ("README + decisions ledger is AUTO",
          [{"filename": "README.md", "status": "modified"},
           {"filename": "planning/DECISIONS.md", "status": "modified"}], "AUTO"),
+        ("a SESSION_STATE refresh is AUTO",
+         [{"filename": "SESSION_STATE.md", "status": "modified"}], "AUTO"),
+        ("deleting SESSION_STATE still gates",
+         [{"filename": "SESSION_STATE.md", "status": "removed"}], "GATED"),
         ("a doc deletion gates",
          [{"filename": "docs/memory-desk.md", "status": "removed"}], "GATED"),
         ("a doc rename gates",

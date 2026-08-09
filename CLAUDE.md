@@ -79,7 +79,7 @@ the maintainer first.
 - One concern per PR: a content addition OR repo infrastructure, not both.
 - **The approval label is the merge instruction, tiered by diff.** A PR whose changed
   files are ALL in the safe set (`docs/`, `checklists/`, `README.md`, the decisions
-  ledger; no deletions or renames) merges on green with no label. Everything else waits
+  ledger, `SESSION_STATE.md`; no deletions or renames) merges on green with no label. Everything else waits
   for the label, no matter how green. The policy is
   `ci-kit/workflows/greenlight_tiers.py` (the gate runs the base branch's copy). Never
   merge by hand; the gate in `.github/workflows/` does the merging.
