@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="breadcrumbs: agent memory as airport wayfinding">
+  <!-- Airport-signage motif: the repo's frequent-flyer thesis. Self-contained
+       colors so it reads the same on GitHub light and dark themes. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2a47"/>
+      <stop offset="1" stop-color="#123a5e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="320" rx="14" fill="url(#sky)"/>
+
+  <!-- dotted breadcrumb trail across the board -->
+  <g fill="#f5c518" opacity="0.9">
+    <circle cx="70"  cy="256" r="5"/>
+    <circle cx="130" cy="248" r="5"/>
+    <circle cx="190" cy="252" r="5"/>
+    <circle cx="250" cy="242" r="5"/>
+    <circle cx="310" cy="248" r="5"/>
+    <circle cx="370" cy="238" r="5"/>
+    <circle cx="430" cy="244" r="5"/>
+    <circle cx="490" cy="234" r="5"/>
+    <circle cx="550" cy="240" r="5"/>
+    <circle cx="610" cy="230" r="5"/>
+  </g>
+
+  <!-- overhead sign panel -->
+  <g>
+    <rect x="640" y="196" width="560" height="84" rx="10" fill="#1b4d3e"/>
+    <rect x="640" y="196" width="560" height="84" rx="10" fill="none" stroke="#f5c518" stroke-width="2"/>
+    <text x="668" y="230" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff">Session start</text>
+    <text x="668" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff">Decisions ledger</text>
+    <text x="1172" y="230" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">gate A</text>
+    <text x="1172" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">gate D</text>
+    <!-- plane glyph -->
+    <path d="M1105 218 l14 8 -14 8 3 -8 z" fill="#ffffff"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="64" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="84" fill="#ffffff">breadcrumbs</text>
+  <text x="66" y="176" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#cfe3f5">memory for agent sessions, built like airport wayfinding</text>
+</svg>
