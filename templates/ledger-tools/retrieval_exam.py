@@ -262,6 +262,42 @@ def run_lane_probe(results, probes, matcher):
     }
 
 
+def run_forbidden_check(results, probes, matcher):
+    """A superseded value must not win retrieval.
+
+    The failure this catches: an entry marked `obsoleted_by` still gets
+    injected, so the model sees the OLD ruling this turn and answers from it
+    with full confidence. Correction that stops at the ledger row and never
+    reaches the retrieval lane is not correction; the descent has to complete.
+
+    Verdicts, per the could-not-run-is-not-a-pass principle:
+    - forbidden_hits: superseded entries injected on at least one probe, each
+      named with the probe that surfaced it. These are real failures.
+    - clean: reachable superseded entries exist and no probe injected one.
+    - unexercised: superseded entries exist but none is reachable, so the
+      lane was never in a position to make the mistake. Says nothing yet.
+    """
+    superseded = [r for r in results if r["entry"].get("obsoleted_by")]
+    hits = []
+    for r in superseded:
+        for probe in probes:
+            injected = injected_for(probe, results, matcher)
+            if r["line_no"] in [i["line_no"] for i in injected]:
+                hits.append({
+                    "line_no": r["line_no"],
+                    "key": r["key"],
+                    "obsoleted_by": r["entry"]["obsoleted_by"],
+                    "probe": probe.get("name", "unnamed"),
+                })
+                break
+    reachable = [r for r in superseded if r["verdict"] != UNREACHABLE]
+    return {
+        "superseded": len(superseded),
+        "forbidden_hits": hits,
+        "unexercised": bool(superseded) and not reachable,
+    }
+
+
 def run_use_readout(results, probe_report, today, matcher):
     """Use stamps, read across the corpus rather than one entry at a time."""
     live = [r for r in results if r["verdict"] != UNREACHABLE]
@@ -313,7 +349,7 @@ def _short_what(entry, limit=100):
 
 
 def build_report(results, probe_report, use_report, counts, ledger_rel, today,
-                 matcher, regressions):
+                 matcher, regressions, forbidden=None):
     lines = []
     lines.append(f"Retrieval exam ({today.isoformat()})")
     lines.append(
@@ -384,6 +420,29 @@ def build_report(results, probe_report, use_report, counts, ledger_rel, today,
             "  No entry carries a use stamp. Either the stamping habit is not "
             "running or nothing is being used; the exam cannot tell which."
         )
+
+    if forbidden is not None:
+        lines.append("")
+        lines.append("PART 4  FORBIDDEN HITS")
+        lines.append(f"  superseded={forbidden['superseded']}  "
+                     f"forbidden_hits={len(forbidden['forbidden_hits'])}")
+        for hit in forbidden["forbidden_hits"]:
+            lines.append(
+                f"  FORBIDDEN: line {hit['line_no']} (key={hit['key']}) is "
+                f"obsoleted_by {hit['obsoleted_by']} and still injected on "
+                f"probe '{hit['probe']}'. The model sees the old ruling."
+            )
+        if forbidden["unexercised"]:
+            lines.append(
+                "  UNEXERCISED: superseded entries exist but none is "
+                "reachable, so the lane never had the chance to surface one. "
+                "Says nothing about the lane yet."
+            )
+        if (not forbidden["forbidden_hits"] and not forbidden["unexercised"]
+                and forbidden["superseded"]):
+            lines.append("  clean: no superseded entry won retrieval.")
+        if not forbidden["superseded"]:
+            lines.append("  no superseded entries in the ledger.")
 
     if regressions:
         lines.append("")
@@ -685,6 +744,37 @@ def selftest():
                  ], matcher))),
             ("use stamps counted", use["stamped"] == 1),
             ("dead weight found", len(use["dead_weight"]) == 1),
+            # Forbidden hits: a superseded entry keyed to a touched file wins
+            # injection (failure); one keyed to an untouched file stays out
+            # (clean); one that is unreachable cannot exercise the check.
+            ("superseded entry that wins retrieval is a forbidden hit",
+             (lambda f: len(f["forbidden_hits"]) == 1
+              and f["forbidden_hits"][0]["obsoleted_by"] == "src/b.py@2026-08-02")(
+                 run_forbidden_check(
+                     classify_reachability(parse_ledger([json.dumps(
+                         {"path": "src/a.py", "when": "2026-07-01",
+                          "what": "Old ruling, superseded.",
+                          "obsoleted_by": "src/b.py@2026-08-02"})])[0]
+                         + parsed, tree, tmp, matcher),
+                     [{"name": "a", "touched": ["src/a.py"]}], matcher))),
+            ("superseded entry never injected is clean",
+             (lambda f: not f["forbidden_hits"] and not f["unexercised"])(
+                 run_forbidden_check(
+                     classify_reachability(parse_ledger([json.dumps(
+                         {"path": "src/a.py", "when": "2026-07-01",
+                          "what": "Old ruling, superseded.",
+                          "obsoleted_by": "src/b.py"})])[0] + parsed,
+                         tree, tmp, matcher),
+                     [{"name": "b", "touched": ["src/b.py"]}], matcher))),
+            ("unreachable superseded entry reports unexercised, never clean",
+             (lambda f: f["unexercised"] and not f["forbidden_hits"])(
+                 run_forbidden_check(
+                     classify_reachability(parse_ledger([json.dumps(
+                         {"path": "a bare noun", "when": "2026-07-01",
+                          "what": "Old ruling, superseded, unreachable.",
+                          "obsoleted_by": "src/b.py"})])[0],
+                         tree, tmp, matcher),
+                     [{"name": "a", "touched": ["src/a.py"]}], matcher))),
             ("unreachable rise is a regression",
              bool(compare_baseline(counts, {"counts": {UNREACHABLE: 0, PRECISE: 2}}))),
             ("precise drop is a regression",
@@ -759,6 +849,8 @@ def main(argv=None):
                     help="write the current counts as a baseline and exit 0")
     ap.add_argument("--fail-on-regression", action="store_true",
                     help="exit 1 when reachability got worse than --baseline")
+    ap.add_argument("--fail-on-forbidden", action="store_true",
+                    help="exit 1 when a superseded entry wins retrieval")
     ap.add_argument("--json", action="store_true", dest="as_json",
                     help="emit machine-readable output")
     ap.add_argument("--survey", action="store_true",
@@ -829,6 +921,7 @@ def main(argv=None):
     probe_report = run_lane_probe(results, probes, matcher)
     today = dt.date.today()
     use_report = run_use_readout(results, probe_report, today, matcher)
+    forbidden = run_forbidden_check(results, probes, matcher)
 
     regressions = []
     if args.baseline and os.path.exists(args.baseline):
@@ -863,13 +956,18 @@ def main(argv=None):
                 "never_stamped": use_report["never_stamped"],
                 "dead_weight": [r["line_no"] for r in use_report["dead_weight"]],
             },
+            "forbidden": {
+                "superseded": forbidden["superseded"],
+                "hits": forbidden["forbidden_hits"],
+                "unexercised": forbidden["unexercised"],
+            },
             "regressions": regressions,
         }, sys.stdout, indent=2)
         sys.stdout.write("\n")
     else:
         sys.stdout.write(build_report(
             results, probe_report, use_report, counts, args.ledger, today,
-            matcher, regressions,
+            matcher, regressions, forbidden,
         ))
         if malformed:
             print(f"\nMalformed lines ({len(malformed)}):")
@@ -877,6 +975,8 @@ def main(argv=None):
                 print(f"  line {line_no}: {snippet}")
 
     if regressions and args.fail_on_regression:
+        return 1
+    if forbidden["forbidden_hits"] and args.fail_on_forbidden:
         return 1
     return 0
 
