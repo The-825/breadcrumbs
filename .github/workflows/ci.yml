@@ -70,6 +70,7 @@ jobs:
           python3 templates/ledger-tools/conclusions_audit.py --selftest
           python3 ci-kit/preflight/preflight.py --selftest
           python3 ci-kit/workflows/greenlight_tiers.py --selftest
+          python3 templates/ledger-tools/budget_loans.py --selftest
 
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py

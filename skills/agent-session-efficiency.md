@@ -24,6 +24,11 @@ One debugging session cost about twice what it should have, and the overage trac
 8. One research agent per question. Parallel agents on overlapping
    queries duplicate work and tokens.
 9. No "let me check X" preface before a tool call. Run the tool.
+10. Answer-first applies to the FIRST sentence, not only a closing line.
+    A reply that opens with the wrong call and corrects itself later will
+    be misread by anyone skimming the top, even when the ending is right.
+    (Observed in a planted-trap probe: a worker opened "Yes, flag it" and
+    closed correctly with the opposite answer.)
 ```
 
 ## Operator-side counterpart
