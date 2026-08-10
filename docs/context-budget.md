@@ -56,6 +56,20 @@ Session-start hooks that inject matched knowledge (settled conclusions for the f
 
 If more than one agent tool works in the repo, each reads its own instructions file by convention, and duplicated instructions fork. Ship a stub instead: a file of a dozen lines that says "this repo's agent instructions live in the rules file; read it completely, then the handoff file, then the catalog" and explicitly forbids adding content to itself, because content there would drift from the source of truth. The stub costs nothing and closes off an entire class of divergence.
 
+## A raise is a loan
+
+The manifest fails without this rule, slowly. Budgets only ever go up: each
+raise is reasonable in isolation, nobody ever lowers one, and the always-paid
+boot surface doubles with no single decision anyone can point to. So make a
+raise cost something durable: it files a loan record naming why (what could
+not fit and why nothing was evictable), the trim target it promises to return
+to, the trigger that will unblock the trim, and a reassess date. CI reads the
+ledger two ways: a raise with no open loan record fails the PR, and a loan
+past its reassess date goes red until it is honored (trimmed) or re-argued
+with a new date. Silent expiry is the thing being outlawed; a loan that just
+ages out is a ratchet with paperwork. The runnable version is
+[templates/ledger-tools/budget_loans.py](../templates/ledger-tools/budget_loans.py).
+
 ## The starter version
 
 The full shape is a kernel, a catalog, stamps, a manifest, and a guard test. The afternoon version is three steps:
