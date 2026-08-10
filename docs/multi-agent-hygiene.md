@@ -54,6 +54,23 @@ Two conflict rules keep the queue moving:
 
 Every fact, figure, table, or procedure lives in exactly one canonical file; every other doc links there instead of copying. In a multi-agent repo this is load-bearing twice over: duplicated content is drift waiting for a continuity sweep to find, and it is also a conflict generator, because two workers updating two copies of the same fact produce a merge that no tool can resolve correctly. When you catch a worker (or yourself) pasting a table that exists elsewhere, replace the paste with a pointer.
 
+## One review queue, many renderers
+
+Once the merge gate is tiered (label only where a miss costs something), the
+items that still need the human start scattering: a PR holding for the label
+here, a task addressed to the operator there, a feature step waiting on a
+decision somewhere else. The failure is letting every surface assemble its
+own picture of "what awaits you": the daily digest counts one way, the weekly
+summary another, and a dashboard a third, and they disagree the first week.
+
+The rule: everything awaiting the operator's judgment composes in ONE place
+(a scheduled job is a fine composer), and every other surface renders THAT
+queue rather than assembling its own. An empty section writes "none"
+explicitly, because an empty queue must be distinguishable from an unread
+one. This is also where the human-review mechanism becomes intentional
+instead of ambient: review happens per digest, at a sitting, not per
+notification as they land.
+
 ## The fail-safe: flag, never guess
 
 The rule that backstops all the others: anything borderline gets flagged, not guessed. A worker that hits unexpected file state, changes it did not make, a judgment call its brief did not settle, or an instruction that conflicts with the rules file stops and reports to the coordinator instead of resolving the ambiguity silently. This is also the standing instruction to put in every worker brief, because it is the one behavior that degrades gracefully: a flagged question costs one round trip; a guessed answer, multiplied by the parallelism, can cost the wave.

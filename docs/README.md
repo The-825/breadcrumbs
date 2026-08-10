@@ -22,6 +22,7 @@ the piece.
 | [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
 | [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
 | [authority-ledger.md](authority-ledger.md) | Who is allowed to say yes, written down: standing grants with scope and expiry, so authority is not a hallway rule. |
+| [trap-fixtures.md](trap-fixtures.md) | Plant the exact questions your system once got wrong and grade them deterministically across model tiers; routing-shaped traps discriminate, fact-shaped ones only confirm the kernel. |
 | [memory-measurement.md](memory-measurement.md) | Test whether your memory layer actually surfaces: reachability verdicts, a lane probe, use-stamp readout, and a search-miss ledger. Writing is instrumented; retrieval usually is not. |
 | [decision-capture.md](decision-capture.md) | Why rulings get written down the same turn they land, not at end of session. |
 | [four-founding-docs.md](four-founding-docs.md) | The four files a disciplined repo is born with: rules, build order, parity, decisions. |
