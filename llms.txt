@@ -82,3 +82,5 @@ assumptions in its header, and every runnable tool ships an offline selftest.
   PII screen, batch cadence).
 - [ci-kit/workflows/greenlight_tiers.py](ci-kit/workflows/greenlight_tiers.py):
   diff-tiered merge gate; docs-class merges on green, the rest waits for the label.
+- [templates/ledger-tools/budget_loans.py](templates/ledger-tools/budget_loans.py):
+  context-budget raises as loans; due loans go red, unrecorded raises fail the gate.
