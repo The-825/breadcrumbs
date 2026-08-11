@@ -184,11 +184,13 @@ class MemoryEngine:
         stones = self._read(self.tombstones)
         stone = stones.get(f"{category}/{key}", {}).get(str(value))
         if stone is not None:
+            redirect = (f" Use instead: {stone['alternative']}."
+                        if stone.get("alternative") else "")
             raise ValueError(
                 f"value rejected for {category}/{key}: {stone['reason']} "
                 f"(tombstoned {stone['when']}); a rejected value may not be "
                 "silently re-asserted. If the rejection no longer holds, "
-                "clear it deliberately with lift_tombstone()."
+                f"clear it deliberately with lift_tombstone().{redirect}"
             )
         facts = self._read(self.facts)
         prior = facts.get(category, {}).get(key)
@@ -221,7 +223,7 @@ class MemoryEngine:
         facts.setdefault(category, {})[key] = entry
         self._write(self.facts, facts)
 
-    def reject_fact(self, category, key, value, reason):
+    def reject_fact(self, category, key, value, reason, alternative=None):
         """Tombstone a value so it cannot be silently re-asserted.
 
         A correction that only overwrites is half a correction: the next
@@ -230,28 +232,36 @@ class MemoryEngine:
         record keyed on the REJECTED VALUE; store_fact() refuses it until
         lift_tombstone() clears it deliberately. Refuses an empty reason for
         the same cause verify_fact refuses empty evidence.
+
+        `alternative` is optional and answers the question the refusal
+        raises: not just "this value is wrong" but "use this instead". A
+        rejection that names the better value turns the next session's dead
+        end into a redirect; without it, the session that hits the tombstone
+        still has to re-derive what the right value is.
         """
         if not reason or not str(reason).strip():
             raise ValueError("a tombstone requires a reason; an unexplained "
                              "rejection is as unauditable as an unexplained "
                              "verification")
         stones = self._read(self.tombstones)
-        stones.setdefault(f"{category}/{key}", {})[str(value)] = {
+        stone = {
             "reason": str(reason),
             "when": time.strftime("%Y-%m-%d"),
         }
+        if alternative is not None and str(alternative).strip():
+            stone["alternative"] = str(alternative)
+        stones.setdefault(f"{category}/{key}", {})[str(value)] = stone
         self._write(self.tombstones, stones)
         facts = self._read(self.facts)
         entry = facts.get(category, {}).get(key)
         if entry is not None and entry.get("value") == value:
             del facts[category][key]
             self._write(self.facts, facts)
-        self.log_episode(
-            "REJECTED",
-            json.dumps({"category": category, "key": key, "value": value,
-                        "reason": str(reason)}),
-            ["tombstone"],
-        )
+        record = {"category": category, "key": key, "value": value,
+                  "reason": str(reason)}
+        if "alternative" in stone:
+            record["alternative"] = stone["alternative"]
+        self.log_episode("REJECTED", json.dumps(record), ["tombstone"])
 
     def lift_tombstone(self, category, key, value, reason):
         """Clear a tombstone, on the record. The lift logs an episode with
@@ -487,6 +497,22 @@ def selftest():
         except ValueError:
             empty_reason = True
         ok("a tombstone refuses an empty reason", empty_reason)
+
+        # the alternative field: a rejection that names the better value
+        # redirects the next session instead of dead-ending it
+        mem.store_fact("env", "region", "us-east1")
+        mem.reject_fact("env", "region", "us-east1",
+                        "project runs in us-west2", alternative="us-west2")
+        redirect_msg = ""
+        try:
+            mem.store_fact("env", "region", "us-east1")
+        except ValueError as exc:
+            redirect_msg = str(exc)
+        ok("a tombstone with an alternative names it in the refusal",
+           "Use instead: us-west2" in redirect_msg)
+        ok("the alternative survives in the tombstone record",
+           mem._read(mem.tombstones)["env/region"]["us-east1"]
+           .get("alternative") == "us-west2")
         mem.lift_tombstone("env", "db", "postgres 14",
                            "rejection superseded in test")
         mem.store_fact("env", "db2", "x")
