@@ -10,6 +10,12 @@ Reusable rule sets for agent-assisted repos. A skill here is a paste-able rule s
 | [regression-layering.md](regression-layering.md) | Catch each class of regression at the lowest layer that can catch it, from parse checks up to data-quality assertions. |
 | [forward-only-migrations.md](forward-only-migrations.md) | Schema changes that only move forward: immutable numbered files, a runner that tracks applied-state, deprecation notes instead of drops. |
 | [reuse-first.md](reuse-first.md) | The five-rung ladder that runs before you write new code: does it exist, is there a helper, does a dependency do it, can it be one line, then the minimum. |
+| [adoption-verifier.md](adoption-verifier.md) | The periodic check that a rules file's claims about its own repo still match reality, run first the moment you copy a kit in. |
+| [delivery-protocol.md](delivery-protocol.md) | How agent output lands: diffs first, tests attached in the same delivery, clarifying questions bounded to named options. |
+| [propose-confirm-execute.md](propose-confirm-execute.md) | The three-step gate for irreversible actions: state what will happen, get the confirm, then act. |
+
+[SKILL.md](SKILL.md) is the machine-readable entry point for skill indexes
+(name, description, the same table); this README is the human one.
 | [adoption-verifier.md](adoption-verifier.md) | Verify the rules doc's own claims against the live repo (config, paths, hooks, connectors, counts, copied-kit placeholders): file the drift, never silently fix it. |
 | [propose-confirm-execute.md](propose-confirm-execute.md) | The contract for any command touching real mail, files, or calendar: propose in batches, execute only what is confirmed, prefer the reversible operation, and leave the destructive tool unwired. |
 | [delivery-protocol.md](delivery-protocol.md) | Three rules about the shape of agent output: diffs for existing files, no code without its check in the same delivery, and clarifying questions bounded to 2-3 recommended options. |
