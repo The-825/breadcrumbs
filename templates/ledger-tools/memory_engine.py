@@ -162,8 +162,15 @@ class MemoryEngine:
 
     # -- semantic tier --------------------------------------------------------
 
-    def store_fact(self, category, key, value):
+    def store_fact(self, category, key, value, valid_from=None,
+                   valid_until=None, scope="internal"):
         """Record a fact as ASSERTED. Nothing an agent stores starts verified.
+
+        valid_from / valid_until (optional, unix timestamps) are the VALID-AT
+        axis: when the fact was true in the world, distinct from recorded_at
+        (when the memory learned it). scope is the AUDIENCE axis: "public",
+        "internal" (default; fail closed), or "regulated". Retrieval filters
+        on both; see build_context.
 
         Restating an existing key is a supersession, not a silent edit: the
         prior value and its status are logged to the episodic ledger BEFORE
@@ -200,10 +207,18 @@ class MemoryEngine:
                             "new_value": value}),
                 ["supersession"],
             )
-        facts.setdefault(category, {})[key] = {
+        if scope not in ("public", "internal", "regulated"):
+            raise ValueError(f"unknown scope {scope!r}: use public, internal, "
+                             "or regulated")
+        entry = {
             "value": value, "status": "asserted", "evidence": None,
-            "recorded_at": time.time(),
+            "recorded_at": time.time(), "scope": scope,
         }
+        if valid_from is not None:
+            entry["valid_from"] = valid_from
+        if valid_until is not None:
+            entry["valid_until"] = valid_until
+        facts.setdefault(category, {})[key] = entry
         self._write(self.facts, facts)
 
     def reject_fact(self, category, key, value, reason):
@@ -277,8 +292,10 @@ class MemoryEngine:
 
     # -- retrieval ------------------------------------------------------------
 
+    SCOPE_ORDER = {"public": 0, "internal": 1, "regulated": 2}
+
     def build_context(self, query="", max_episodes=MAX_EPISODES_IN_CONTEXT,
-                      as_of=None):
+                      as_of=None, valid_at=None, audience=None):
         """One deterministic context block: goal, scratchpad, facts, episodes.
 
         Episode selection is newest-first, with exact keyword overlap against
@@ -291,17 +308,35 @@ class MemoryEngine:
         question a stale-belief postmortem actually needs. Facts written
         before recorded_at existed carry no stamp and are always included,
         stated in the block header so the limit is visible, not silent. This
-        filters learned-at only; a valid-at axis (when the fact was true in
-        the world) is a schema decision for your ledger, not this engine.
+        filters learned-at.
+
+        valid_at (unix timestamp) filters the VALID-AT axis: facts whose
+        valid_from/valid_until window excludes that moment are dropped; facts
+        carrying no window are always included (stated in the header). The
+        two clocks compose: as_of + valid_at asks "what did we believe at T
+        about what was true at T2", the stale-belief postmortem query.
+
+        audience filters the SCOPE axis at the point of assembly, not at the
+        point of writing: audience="public" surfaces only public-scoped
+        facts; "internal" surfaces public + internal; None (default) applies
+        no scope filter. Pre-scope facts with no scope field count as
+        internal (fail closed against a public audience). This makes the
+        publication boundary mechanical: a public-bound context cannot carry
+        a regulated fact no matter what the composing session forgets.
         """
         state = self._read(self.working)
         facts = self._read(self.facts)
         qwords = {w for w in query.lower().split() if len(w) > 2}
 
         rows = []
-        for line in self.episodes.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                rows.append(json.loads(line))
+        # The episodic tier carries no scope field, and supersession episodes
+        # embed prior VALUES, so under any audience filter episodes are
+        # omitted entirely: fail closed rather than leak through the side door
+        # (found by this module's own selftest, 2026-08-10).
+        if audience is None:
+            for line in self.episodes.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    rows.append(json.loads(line))
         if as_of is not None:
             rows = [r for r in rows if r.get("ts", 0) <= as_of]
         rows.reverse()  # newest first
@@ -320,16 +355,33 @@ class MemoryEngine:
         if as_of is not None:
             header += (" | as-of replay: facts/episodes learned after the "
                        "cutoff excluded; unstamped facts always included")
+        if valid_at is not None:
+            header += (" | valid-at filter: facts windowed away from the "
+                       "moment excluded; unwindowed facts always included")
+        if audience is not None:
+            header += (f" | audience: {audience} (higher scopes excluded; "
+                       "episodes omitted: the episodic tier is unscoped)")
+
         out = [header + " ==="]
         if state.get("goal"):
             out.append(f"goal: {state['goal']}")
         for k, v in state.get("scratchpad", {}).items():
             out.append(f"working.{k}: {v}")
+        clearance = self.SCOPE_ORDER.get(audience) if audience else None
         for cat, entries in facts.items():
             for k, e in entries.items():
                 if as_of is not None and e.get("recorded_at") is not None \
                         and e["recorded_at"] > as_of:
                     continue
+                if valid_at is not None:
+                    vf, vu = e.get("valid_from"), e.get("valid_until")
+                    if (vf is not None and valid_at < vf) or \
+                            (vu is not None and valid_at > vu):
+                        continue
+                if clearance is not None:
+                    level = self.SCOPE_ORDER.get(e.get("scope", "internal"), 1)
+                    if level > clearance:
+                        continue
                 tag = e["status"]
                 if tag == "verified":
                     tag += f" ({e['evidence']})"
@@ -455,6 +507,44 @@ def selftest():
            "later" in ctx_now and "later" not in ctx_then)
         ok("as_of replay states its unstamped-facts limit in the header",
            "unstamped facts always included" in ctx_then.splitlines()[0])
+
+        # valid-at: the world-time axis, distinct from learned-at
+        mem.store_fact("policy", "gpa_floor", "3.5",
+                       valid_from=100.0, valid_until=200.0)
+        mem.store_fact("policy", "colors", "blue")  # unwindowed
+        ctx_in = mem.build_context(valid_at=150.0)
+        ctx_out = mem.build_context(valid_at=250.0)
+        ok("a windowed fact appears inside its validity window",
+           "gpa_floor" in ctx_in)
+        ok("a windowed fact is excluded outside its window",
+           "gpa_floor" not in ctx_out)
+        ok("unwindowed facts are always included under valid-at",
+           "colors" in ctx_out)
+        ok("the valid-at header states the unwindowed limit",
+           "unwindowed facts always included" in ctx_out.splitlines()[0])
+
+        # scope-audience: the publication boundary, enforced at assembly
+        mem.store_fact("kit", "license", "MIT", scope="public")
+        mem.store_fact("ops", "roster_note", "counselor split", scope="regulated")
+        pub = mem.build_context(audience="public")
+        internal = mem.build_context(audience="internal")
+        unfiltered = mem.build_context()
+        ok("a public audience sees only public facts",
+           "license" in pub and "roster_note" not in pub and "colors" not in pub)
+        ok("pre-scope facts count as internal against a public audience",
+           "fact.env.python" not in pub)
+        ok("an internal audience excludes regulated",
+           "roster_note" not in internal and "colors" in internal)
+        ok("no audience means no scope filter",
+           "roster_note" in unfiltered)
+        bad_scope = False
+        try:
+            mem.store_fact("x", "y", "z", scope="secret")
+        except ValueError:
+            bad_scope = True
+        ok("an unknown scope is refused", bad_scope)
+        ok("audience filtering omits the unscoped episodic tier entirely",
+           "episode:" not in pub and "episodes omitted" in pub.splitlines()[0])
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
