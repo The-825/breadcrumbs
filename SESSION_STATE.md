@@ -5,15 +5,30 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-09 (Atlas round-2 day; tiered gate live)
+Last refreshed: 2026-08-10 (rubric completions; engine at valid-at + audience scoping)
 
 ## Current state
 
-- Active branch: none in flight; PRs #27 through #33 all merged 2026-08-09.
+- Active branch: none in flight; #27 through #40 all merged (#34 checkpoint,
+  #36 SESSION_STATE safe-set, #37 budget loans + skills rule 10, #38 docs
+  ports, #40 rubric completions).
 - Open PR: none.
 - In-flight, uncommitted edits: none.
 
-## What just landed (2026-08-09, all merged)
+## What just landed (2026-08-10, merged)
+
+- Rubric completions (#40): valid-at windows (`build_context(valid_at=)`,
+  composing with `as_of` for the two-clock query) and audience scoping
+  (public/internal/regulated, fail closed at assembly). The selftest caught a
+  real leak (supersession episodes embed prior values), so any audience
+  filter omits the unscoped episodic tier entirely, stated in the header.
+  With #29's tombstones this closes every code-shaped Atlas rubric gap.
+- Cross-repo ports (#37/#38): budget loans tool + red-first skills rule;
+  trap-fixtures essay, raise-is-a-loan section, one-review-queue rule.
+- SESSION_STATE joined the tier safe set (#36, D-13): checkpoint refreshes
+  merge on green unlabeled (this PR is the proof).
+
+## Prior landing (2026-08-09, all merged)
 
 - Memory desk kit (#27, `templates/memory-desk/`), with its CI gate step.
 - Agent Memory Atlas round-2 fixes (#28): same-value `store_fact()` no longer
