@@ -75,7 +75,10 @@ behavior already happens:
   it. Decisions get written down the same turn they land, because a ruling that lives
   only in a transcript gets re-litigated by the next session, every time.
 - **Underneath everything.** Nothing is edited in place. A wrong entry is superseded by
-  a newer one that names what it kills. The record of being wrong survives.
+  a newer one that names what it kills, and a rejected value is tombstoned so it cannot
+  be quietly re-asserted; the tombstone can name the value to use instead, so hitting it
+  is a redirect rather than a dead end. The record of being wrong survives, and a
+  standing check asserts the dead value never wins retrieval again.
 
 Total cost: a few scripts, git, and discipline encoded as refusals rather than
 reminders.

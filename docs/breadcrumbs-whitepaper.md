@@ -1,6 +1,9 @@
 # Breadcrumbs: cue-placement memory for AI agent fleets
 
-*A working paper from one practitioner. Version 1.0, August 2026. This describes a
+*A working paper from one practitioner. Version 1.1, August 2026 (1.0 published earlier
+the same month; 1.1 extends section 3.5 with the tombstone, validity-window, and
+audience-scoping mechanics that landed after publication, and adds the Agent Memory
+Atlas to related work). This describes a
 pattern I run in production, generalized so you can run it too. The memory layer here
 is a personal insight project, built on my own time out of my own need to stop
 re-explaining context to my tools; it sits alongside the day job rather than being
@@ -178,6 +181,25 @@ killed by a newer entry that names it and explains the correction. The record of
 wrong survives, which is what makes the system auditable, and what made the incident
 below tellable at all.
 
+Three refinements landed after version 1.0 of this paper, all on the same principle:
+
+- **Tombstones with redirects.** A correction that only overwrites is half a
+  correction: the next session that re-derives the old value writes it right back.
+  A rejected value gets a tombstone keyed on the value itself, with a mandatory
+  reason; the store refuses to re-assert it until the tombstone is deliberately
+  lifted, on the record. The tombstone can also name the value to use instead, so
+  hitting it is a redirect rather than a dead end. And because a tombstone is only
+  as good as retrieval honoring it, a standing forbidden-hit check asserts that a
+  superseded value never wins the injection lane again; a hit is regression, not
+  correction.
+- **Validity windows.** A fact can be true for an era rather than forever. An entry
+  may carry an optional valid-from and valid-until, so a session reasoning about a
+  past period applies the rule that governed then, not today's, and asks the window
+  instead of inferring it from supersession order.
+- **Audience scoping.** Every fact carries a scope (public, internal, or regulated),
+  and context assembly filters by the audience it is being built for, failing closed:
+  an unscoped tier is omitted entirely rather than guessed at.
+
 ## 4. Case study: the day it caught itself
 
 This is the top of the hierarchy observed in the wild, once, in my one office: the
@@ -344,6 +366,22 @@ and append-only supersession, running together in one production system. Recent
 academic work has begun naming the failure modes this layer answers (stale
 propagation, contradiction persistence, provenance collapse), which I read as evidence
 the layer is real rather than a private habit of mine.
+
+The most useful single survey I have found is the
+[Agent Memory Atlas](https://neoneye.github.io/agent-memory-atlas/), a field guide
+analyzing 252 open-source agent memory systems and distilling them into named design
+patterns. Its central thesis, that correction rather than retrieval is where memory
+fails, is the same conclusion this paper's incident forced on me independently, and
+that convergence is worth more than either claim alone. I mined its full catalog
+programmatically and checked this system against it both ways: several of its
+patterns turned out to be things already running here under other names
+(evidence-before-belief, scope as a first-class key, correction reaching every
+derived artifact), and several were genuine deltas I borrowed and shipped, including
+the rejected-value tombstone's must-not-come-back test, keep-records so a reviewed
+curation proposal is not re-proposed forever, a deliberate search for contradicting
+evidence before asserting a positive, and a write guard under which a model-inferred
+entry cannot silently supersede a human-stated one. Borrowing on the record is part
+of the pattern too: each of those carries its source in the commit that landed it.
 
 ## 7. Limitations
 
