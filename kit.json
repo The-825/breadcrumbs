@@ -65,7 +65,7 @@
     {
       "path": "templates/ledger-tools/memory_engine.py",
       "kind": "tool",
-      "what": "Three-tier runnable memory: working state, append-only episodes, semantic facts with asserted-vs-verified status. Verification refuses an empty oracle; compaction flushes down before shrinking; overwrites log the prior value as a supersession episode first; rejected values leave tombstones that block silent re-assertion; build_context takes an as-of cutoff to replay what the memory knew at a past moment.",
+      "what": "Three-tier runnable memory: working state, append-only episodes, semantic facts with asserted-vs-verified status. Verification refuses an empty oracle; compaction flushes down before shrinking; overwrites log the prior value as a supersession episode first; rejected values leave tombstones that block silent re-assertion; build_context takes an as-of cutoff (learned-at replay), a valid-at moment (world-time windows), and an audience (public/internal/regulated scope filter at assembly; the unscoped episodic tier is omitted under any audience).",
       "assumes": "Local filesystem; single operator.",
       "selftest": "python3 templates/ledger-tools/memory_engine.py --selftest"
     },
