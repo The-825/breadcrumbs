@@ -1,9 +1,11 @@
 # Breadcrumbs: cue-placement memory for AI agent fleets
 
-*A working paper from one practitioner. Version 1.1, August 2026 (1.0 published earlier
-the same month; 1.1 extends section 3.5 with the tombstone, validity-window, and
-audience-scoping mechanics that landed after publication, and adds the Agent Memory
-Atlas to related work). This describes a
+*A working paper from one practitioner. Version 1.2, August 2026 (1.0 published earlier
+the same month; 1.1 extended section 3.5 with the tombstone, validity-window, and
+audience-scoping mechanics that landed after publication, and added the Agent Memory
+Atlas to related work; 1.2 adds the trust-timing fix the Atlas's own review of this
+paper's system found, and notes the companion memory-desk kit's tooling maturing past
+documented-but-not-executable). This describes a
 pattern I run in production, generalized so you can run it too. The memory layer here
 is a personal insight project, built on my own time out of my own need to stop
 re-explaining context to my tools; it sits alongside the day job rather than being
@@ -199,6 +201,24 @@ Three refinements landed after version 1.0 of this paper, all on the same princi
 - **Audience scoping.** Every fact carries a scope (public, internal, or regulated),
   and context assembly filters by the audience it is being built for, failing closed:
   an unscoped tier is omitted entirely rather than guessed at.
+- **Verification timing, distinct from recording timing.** The Atlas's review of this
+  system (section 6) found the sharpest gap in all of it here: a replay that asks
+  "what did the memory know as of time T" checked only when a fact was recorded,
+  never when it was verified, so a fact verified weeks later replayed as verified at
+  any T in between, an oracle the session at T did not actually have. Verification now
+  carries its own timestamp, and a replay before it shows the honest state, asserted,
+  not verified. Ledgers written before the fix get a one-time soft backfill rather
+  than a sudden, unearned trust drop: the best available signal stands in for the
+  missing timestamp, flagged as inferred rather than observed, so the two are never
+  confused later.
+
+Two mechanisms outside this list matured the same month, in the lighter companion kit
+this paper's own artifacts ship alongside (a settled-facts index rather than the full
+supersession ledger above): a promotion step that was documented intent became
+executable, and the staleness horizon stopped being one fixed number imposed on every
+ledger and started reading each ledger's own re-check cadence instead. Neither changes
+the five mechanisms; both close the gap between what the kit's own help text promised
+and what it actually did.
 
 ## 4. Case study: the day it caught itself
 
@@ -382,6 +402,13 @@ curation proposal is not re-proposed forever, a deliberate search for contradict
 evidence before asserting a positive, and a write guard under which a model-inferred
 entry cannot silently supersede a human-stated one. Borrowing on the record is part
 of the pattern too: each of those carries its source in the commit that landed it.
+Its review of this system also found a real defect, the verification-timing gap
+section 3.5 now describes, which is the useful kind of external review: not a score,
+a place to look. After that fix landed I ran the Atlas's own seven-mechanism rubric
+against this system myself rather than waiting for its next external pass, the same
+inspect-trace-separate-synthesize method, pinned to a commit, published alongside
+this paper. Self-review is not a substitute for the outside eye that found the gap in
+the first place, and the writeup says so.
 
 ## 7. Limitations
 
