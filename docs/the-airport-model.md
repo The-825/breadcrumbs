@@ -37,6 +37,27 @@ This is the same instinct as the three-hop routing in
 the file, each hop carrying next-hop signage only. Nobody loads the terminal map into
 their head. They follow signs, cheaply, one decision at a time.
 
+## Signs point forward; this repo is named for the other half
+
+A sign only ever answers "where do I go from here." It has no memory of where you have
+already been, and it does not need one: the traveler behind you gets the identical
+sign, whether this is their first trip through the terminal or their hundredth. That is
+exactly right for wayfinding, and exactly wrong for the other half of what an agent
+session needs, which is not where to go next but what already happened here.
+
+That other half is what gives this repo its name. A breadcrumb trail is not a sign. It
+is a trace left by someone who already walked the path, readable by whoever comes
+after: this is where I went, this is what I found, this is what I got wrong and
+corrected. Signage is stateless and forward-only, the same for every traveler.
+Breadcrumbs are stateful and backward-facing, specific to what actually happened. An
+airport needs both and keeps them separate on purpose, a gate sign does not also try to
+tell you which earlier flight got cancelled. So does this repo: the wayfinding stamps
+and the three-hop catalog are the signage, and the decisions ledger, the append-only
+supersession record, and the settled-facts store in
+[ledger-tools](../templates/ledger-tools/README.md) are the crumbs. A session that
+only has signage can find the gate; a session that also has the crumbs knows why the
+last session went a different way, and does not have to learn it the hard way twice.
+
 ## The airport is more than its signs
 
 Here is where the analogy earns its keep, and where it stops being about one warehouse.
@@ -69,9 +90,11 @@ parts, and every part has a code shape.
 - **The ground crew** is the automation: the syncs and watchers that move data on a
   schedule and alert a human when a run does not land on time.
 - **Wayfinding** is the numbering and the three-hop catalog, so a stranger navigates on
-  day one instead of interviewing whoever built it.
+  day one instead of interviewing whoever built it. This is the signage half.
 - **The flight log** is the decisions ledger and the CI guards: every ruling and every
-  check written down, so a scramble is a rebase and not an excavation.
+  check written down, so a scramble is a rebase and not an excavation. This, with the
+  baggage system below, is the breadcrumb half: not where to go, but what already
+  happened here.
 - **The baggage system** is agent memory: cross-session state routed, reconciled, and
   timed out the way an airline routes ten thousand bags, with claims matched against
   the manifest and an owner named on everything left on the carousel. That system got
