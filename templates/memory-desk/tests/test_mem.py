@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 KIT = Path(__file__).resolve().parents[1]
@@ -72,6 +73,60 @@ class TestLookup(DeskFixture):
         r = run(["log", "format"], self.dir)
         self.assertEqual(r.returncode, 0)
         self.assertIn("STALE", r.stdout)
+
+    def test_default_horizon_is_30_not_90(self):
+        # Fewer than STALE_SAMPLE_MIN dated rows, so this falls back to the
+        # default rather than adapting. A row checked 40 days ago is stale
+        # under the new 30-day default and would NOT have been under the
+        # old fixed 90-day one, this is the regression proof that the
+        # default actually moved.
+        checked_40d_ago = (datetime.now(timezone.utc) - timedelta(days=40)).strftime("%Y-%m-%d")
+        index = "\n".join([
+            "# fixture index",
+            f"only entry\t\tan answer\tREADME.md\t{checked_40d_ago}",
+        ]) + "\n"
+        (self.dir / "index.tsv").write_text(index, encoding="utf-8")
+        r = run(["only", "entry"], self.dir)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("STALE", r.stdout)
+        self.assertIn("30d horizon", r.stdout)
+
+    def test_adaptive_horizon_shortens_for_a_fast_moving_ledger(self):
+        # Several rows re-checked every ~5 days recently: median gap 5 * 3
+        # grace = 15, clamped to STALE_FLOOR (14). A target row checked 20
+        # days ago is stale under that 15-day adapted horizon, but would
+        # NOT be under the 30-day default, proving the horizon actually
+        # moved with the ledger's own cadence, not just a static fallback.
+        now = datetime.now(timezone.utc)
+        rows = ["# fixture index"]
+        for i, days_ago in enumerate([5, 10, 15, 20, 25]):
+            d = (now - timedelta(days=days_ago)).strftime("%Y-%m-%d")
+            rows.append(f"cadence row {i}\t\tan answer\tREADME.md\t{d}")
+        target_checked = (now - timedelta(days=20)).strftime("%Y-%m-%d")
+        rows.append(f"target row\t\tan answer\tREADME.md\t{target_checked}")
+        (self.dir / "index.tsv").write_text("\n".join(rows) + "\n", encoding="utf-8")
+        r = run(["target", "row"], self.dir)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("STALE", r.stdout)
+        self.assertIn("15d horizon", r.stdout)
+
+    def test_adaptive_horizon_lengthens_for_a_quiet_ledger_but_caps_at_ceiling(self):
+        # Rows re-checked every ~60 days: median gap 60 * 3 = 180, clamped
+        # to STALE_CEILING (90). A target row checked 50 days ago is NOT
+        # stale under the 90-day adapted horizon, though it WOULD be under
+        # the 30-day default, proving both the lengthening and the clamp.
+        now = datetime.now(timezone.utc)
+        rows = ["# fixture index"]
+        for i, days_ago in enumerate([60, 120, 180]):
+            d = (now - timedelta(days=days_ago)).strftime("%Y-%m-%d")
+            rows.append(f"quiet row {i}\t\tan answer\tREADME.md\t{d}")
+        target_checked = (now - timedelta(days=50)).strftime("%Y-%m-%d")
+        rows.append(f"target row\t\tan answer\tREADME.md\t{target_checked}")
+        (self.dir / "index.tsv").write_text("\n".join(rows) + "\n", encoding="utf-8")
+        r = run(["target", "row"], self.dir)
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn("STALE", r.stdout)
+        self.assertIn("90d horizon", r.stdout)
 
     def test_miss_exits_one_and_prints_the_ladder(self):
         r = run(["quantum", "router"], self.dir)

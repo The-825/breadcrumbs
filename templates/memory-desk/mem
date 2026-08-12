@@ -13,9 +13,12 @@ Usage:
 
 Design contract (the docs cite these constants; change them here and nowhere
 else): the kernel stays at or under KERNEL_MAX_LINES lines, a query prints at
-most MAX_HITS rows, a row unchecked for more than STALE_DAYS gets a stale flag,
-and --stdin (hook mode) stays silent unless a hit scores MIN_HOOK_SCORE or
-better, so prompt injection never rides a weak match.
+most MAX_HITS rows, and --stdin (hook mode) stays silent unless a hit scores
+MIN_HOOK_SCORE or better, so prompt injection never rides a weak match. The
+staleness horizon is adaptive (see adaptive_stale_days()): it reads from the
+ledger's own re-check cadence rather than one fixed number for every repo,
+STALE_DAYS is only the fallback for a ledger too new or too small to have a
+cadence yet, clamped between STALE_FLOOR and STALE_CEILING either way.
 
 Reserved first words: `add` and `check` are subcommands, so index keys must not
 begin with either word. `mem check` enforces that.
@@ -33,7 +36,10 @@ from pathlib import Path
 
 KERNEL_MAX_LINES = 60
 MAX_HITS = 3
-STALE_DAYS = 90
+STALE_DAYS = 30      # fallback when the ledger has too few checked dates to adapt from
+STALE_FLOOR = 14     # never call a row stale sooner than this, no matter how fast the ledger moves
+STALE_CEILING = 90   # never let a quiet ledger's rows go longer than this unquestioned
+STALE_SAMPLE_MIN = 3  # need at least this many dated rows before trusting the adaptive figure
 MIN_HOOK_SCORE = 3   # one key/alias token of overlap; answer-only matches stay out of hooks
 STDIN_CAP = 400      # chars of stdin considered in hook mode; prompts are long, keys are not
 
@@ -107,7 +113,40 @@ def load_rows():
     return rows, defects
 
 
-def age_note(checked):
+def adaptive_stale_days(rows):
+    """The ledger sets its own staleness horizon instead of one fixed number
+    for every repo. A ledger that gets re-checked every couple of weeks
+    should flag drift fast; a quiet one re-checked every few months would
+    have every row permanently flagged at a 30-day fixed threshold, which
+    trains people to ignore the flag. Median gap between consecutive
+    `checked` dates, times 3 (three check-cycles of grace before calling it
+    stale), clamped to [STALE_FLOOR, STALE_CEILING]. Falls back to
+    STALE_DAYS when there are too few dated rows to trust a median from
+    (STALE_SAMPLE_MIN), the same way a small sample shouldn't drive a
+    confident statistic anywhere else in this repo.
+    """
+    dates = []
+    for r in rows:
+        c = r.get("checked", "")
+        if DATE_RE.match(c):
+            try:
+                dates.append(datetime.strptime(c, "%Y-%m-%d").replace(tzinfo=timezone.utc))
+            except ValueError:
+                continue
+    if len(dates) < STALE_SAMPLE_MIN:
+        return STALE_DAYS
+    dates.sort()
+    gaps = [(b - a).days for a, b in zip(dates, dates[1:])]
+    gaps = [g for g in gaps if g > 0]
+    if not gaps:
+        return STALE_DAYS
+    gaps.sort()
+    mid = len(gaps) // 2
+    median_gap = gaps[mid] if len(gaps) % 2 else (gaps[mid - 1] + gaps[mid]) / 2
+    return max(STALE_FLOOR, min(STALE_CEILING, round(median_gap * 3)))
+
+
+def age_note(checked, stale_days=STALE_DAYS):
     if checked in ("", "-"):
         return "unchecked"
     if not DATE_RE.match(checked):
@@ -116,13 +155,13 @@ def age_note(checked):
         d = datetime.strptime(checked, "%Y-%m-%d").replace(tzinfo=timezone.utc)
     except ValueError:
         return f"checked {checked}"
-    if (datetime.now(timezone.utc) - d).days > STALE_DAYS:
-        return f"checked {checked} · STALE, re-verify at the source"
-    return f"checked {checked}"
+    if (datetime.now(timezone.utc) - d).days > stale_days:
+        return f"checked {checked} · STALE, re-verify at the source ({stale_days}d horizon)"
+    return f"checked {checked} ({stale_days}d horizon)"
 
 
-def show(row):
-    print(f"{row['key']}  ({age_note(row['checked'])})")
+def show(row, stale_days=STALE_DAYS):
+    print(f"{row['key']}  ({age_note(row['checked'], stale_days)})")
     print(f"  {row['answer']}")
     print(f"  source: {row['source']}")
 
@@ -139,13 +178,14 @@ def score(row, q, qtoks):
 
 def lookup(words, hook_mode=False):
     rows, _ = load_rows()
+    stale_days = adaptive_stale_days(rows)
     q = norm(" ".join(words))
     qtoks = set(tokens(" ".join(words)))
     if not q and not qtoks:
         return 1
     exact = [r for r in rows if norm(r["key"]) == q or q in [norm(a) for a in r["aliases"]]]
     if exact:
-        show(exact[0])
+        show(exact[0], stale_days)
         return 0
     ranked = sorted(((score(r, q, qtoks), r) for r in rows), key=lambda t: (-t[0], t[1]["key"]))
     floor = MIN_HOOK_SCORE if hook_mode else 1
@@ -154,7 +194,7 @@ def lookup(words, hook_mode=False):
         for i, r in enumerate(hits):
             if i:
                 print()
-            show(r)
+            show(r, stale_days)
         return 0
     if not hook_mode:
         seed = sorted(qtoks)[0] if qtoks else words[0]
