@@ -78,7 +78,8 @@ as of the 2026-08-12 fix, `verified_at` distinct from `recorded_at` so a
 correction's timing survives replay (`memory_engine.py:288-330`, the
 Atlas review's own prior finding, now closed). `mem` has no equivalent:
 `conclusions_audit.py` flags STALE (path no longer exists) and AGING
-(unchecked past 90 days per `mem:36`) entries, but flagging is not
+(unchecked past the ledger's own adaptive horizon, `mem:adaptive_stale_days()`,
+30-90 days depending on re-check cadence) entries, but flagging is not
 correcting, a human still has to act on the flag. This is the real gap
 this audit found: `mem`'s correction path is entirely human-driven, no
 automated re-verification, no tombstone equivalent.
@@ -125,7 +126,8 @@ something to inspect and trace, not something to take on faith:
    including confirming the promoted row was actually queryable via
    `mem` afterward.
 2. **`mem` has no correction mechanism, only a staleness flag.** A fact
-   that's wrong but not yet 90 days old surfaces nowhere; `conclusions_
+   that's wrong but not yet past its adaptive horizon (30-90 days,
+   `mem:adaptive_stale_days()`) surfaces nowhere; `conclusions_
    audit.py`'s AGING/STALE split is a forgetting-adjacent check, not a
    correction one. Whether this matters depends on scale: at
    single-operator, hand-curated volume (this kit's stated design point,
