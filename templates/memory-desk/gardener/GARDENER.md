@@ -28,6 +28,12 @@ are waiting, so the work arrives instead of waiting to be remembered.
    it is the best alias you will ever get). Point `source` at where the fact
    lives or was proven; set `checked` to today. Entries typed `todo` or
    `state` are not facts; route them to the repo's task or handoff surface.
+   `python3 gardener/promote.py --apply` does this step mechanically,
+   including the exact-key half of dedupe (step 2 below) and running
+   `mem check`; it flags anything needing judgment (a derived key, a
+   possible semantic duplicate) instead of guessing, and it writes nothing
+   on `--dry-run` (the default). It does NOT do steps 3-5, those stay
+   human calls, same as before.
 2. **Dedupe.** A new fact that restates an existing row updates that row
    (answer, source, checked date) rather than adding a twin. `mem check`
    catches literal key collisions; you catch semantic ones.

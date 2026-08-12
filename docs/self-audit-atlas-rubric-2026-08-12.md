@@ -114,11 +114,16 @@ checkable, cited claim, not a self-assessment.
 Two concrete gaps, stated the way the atlas states its own findings, as
 something to inspect and trace, not something to take on faith:
 
-1. **The gardener promotion step has no committed code.** `mem`'s help
-   text promises index promotion "on its next pass"; nothing in
-   `templates/memory-desk/gardener/` executes it. Either ship the
-   promotion script or reword the help text to say it's a manual step
-   until it does.
+1. **Resolved same day.** `mem`'s help text promised index promotion "on
+   its next pass"; nothing executed it. `gardener/promote.py` now does,
+   mechanically, for the exact-key promote/dedupe half of the pass, and
+   flags (never auto-applies) anything needing human judgment: a derived
+   key standing in for a real alias, a possible semantic duplicate. It
+   runs `mem check` after writing and refuses to report success if that
+   fails, matching the atlas's own bias toward evidence over claims: 13
+   selftests plus a live end-to-end smoke test against a real desk,
+   including confirming the promoted row was actually queryable via
+   `mem` afterward.
 2. **`mem` has no correction mechanism, only a staleness flag.** A fact
    that's wrong but not yet 90 days old surfaces nowhere; `conclusions_
    audit.py`'s AGING/STALE split is a forgetting-adjacent check, not a
