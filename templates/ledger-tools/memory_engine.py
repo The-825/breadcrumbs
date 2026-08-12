@@ -285,7 +285,16 @@ class MemoryEngine:
         )
 
     def verify_fact(self, category, key, evidence):
-        """Promote to verified, naming the oracle. Refuses empty evidence."""
+        """Promote to verified, naming the oracle. Refuses empty evidence.
+
+        Stamps verified_at (unix timestamp), distinct from recorded_at. This
+        is the trust-axis fix (Agent Memory Atlas, 2026-08-10 review): an
+        as-of replay used to ask only "did the memory KNOW this fact yet",
+        never "had it been VERIFIED yet", so a fact verified weeks after it
+        was recorded replayed as verified at any as-of between the two, an
+        oracle that did not exist at the replayed moment. build_context now
+        checks both timestamps.
+        """
         if not evidence or not str(evidence).strip():
             raise ValueError(
                 "verified requires naming the oracle (a CI run, a data "
@@ -298,7 +307,38 @@ class MemoryEngine:
             raise KeyError(f"no fact at {category}/{key} to verify")
         entry["status"] = "verified"
         entry["evidence"] = str(evidence)
+        entry["verified_at"] = time.time()
+        entry.pop("verified_at_inferred", None)
         self._write(self.facts, facts)
+
+    def backfill_verified_at(self):
+        """One-time migration: give existing verified facts a verified_at.
+
+        Ledgers written before this fix have verified facts with no
+        verified_at at all, the strict read (missing = unknown = always
+        downgrades under as_of) would make old data look LESS trustworthy
+        under replay than it did before this fix shipped, which is not an
+        improvement, it is a new, unearned regression. The soft backfill
+        instead sets verified_at = recorded_at (the best signal available:
+        we don't know exactly when verification happened, only that the
+        fact existed by then) and tags the entry verified_at_inferred: true
+        so the distinction between an OBSERVED and an INFERRED timestamp
+        survives for any code or audit that later needs to tell them apart.
+        Idempotent: does nothing to an entry that already carries a real
+        verified_at. Returns the count of entries backfilled.
+        """
+        facts = self._read(self.facts)
+        n = 0
+        for entries in facts.values():
+            for entry in entries.values():
+                if entry.get("status") == "verified" \
+                        and entry.get("verified_at") is None:
+                    entry["verified_at"] = entry.get("recorded_at", 0)
+                    entry["verified_at_inferred"] = True
+                    n += 1
+        if n:
+            self._write(self.facts, facts)
+        return n
 
     # -- retrieval ------------------------------------------------------------
 
@@ -318,7 +358,11 @@ class MemoryEngine:
         question a stale-belief postmortem actually needs. Facts written
         before recorded_at existed carry no stamp and are always included,
         stated in the block header so the limit is visible, not silent. This
-        filters learned-at.
+        filters learned-at. It ALSO replays the trust axis: a fact verified
+        after as_of shows as asserted, not verified, in the replayed view
+        (storage is untouched), because "the memory knew the value" and "the
+        value had been verified" are different claims and a replay that
+        conflates them lends a past belief an oracle it did not have yet.
 
         valid_at (unix timestamp) filters the VALID-AT axis: facts whose
         valid_from/valid_until window excludes that moment are dropped; facts
@@ -393,6 +437,17 @@ class MemoryEngine:
                     if level > clearance:
                         continue
                 tag = e["status"]
+                if tag == "verified" and as_of is not None:
+                    verified_at = e.get("verified_at")
+                    if verified_at is None or verified_at > as_of:
+                        # Trust-axis replay: the memory knew the VALUE by
+                        # as_of (it passed the recorded_at check above), but
+                        # verification either has no timestamp (unknown, so
+                        # never assume it) or happened after as_of. Replay
+                        # the honest state: asserted, not verified, no
+                        # oracle. Storage is untouched; this is a read-time
+                        # mask, same pattern as the audience scope filter.
+                        tag = "asserted"
                 if tag == "verified":
                     tag += f" ({e['evidence']})"
                 out.append(f"fact.{cat}.{k}: {e['value']} [{tag}]")
@@ -430,6 +485,7 @@ def selftest():
         mem.verify_fact("env", "python", evidence="ci run green on 3.8")
         f = mem._read(mem.facts)["env"]["python"]
         ok("verification names its oracle", f["evidence"] == "ci run green on 3.8")
+        ok("verify_fact stamps verified_at", f.get("verified_at") is not None)
 
         try:
             mem.verify_fact("env", "missing", evidence="x")
@@ -455,6 +511,75 @@ def selftest():
         ctx2 = mem.build_context("latency pool")
         ok("retrieval is deterministic", ctx == ctx2)
 
+        # Trust-axis replay: verification stamped after recorded_at must not
+        # replay as verified for an as_of between the two (Atlas review,
+        # 2026-08-10). Controlled timestamps, not real clock ticks, so the
+        # gap is deterministic.
+        mem.store_fact("trust", "claim", "v1")
+        facts = mem._read(mem.facts)
+        facts["trust"]["claim"]["recorded_at"] = 1000.0
+        mem._write(mem.facts, facts)
+        mem.verify_fact("trust", "claim", evidence="human ruling")
+        facts = mem._read(mem.facts)
+        facts["trust"]["claim"]["verified_at"] = 2000.0
+        mem._write(mem.facts, facts)
+
+        replay_before_recorded = mem.build_context(as_of=500.0)
+        ok("as_of before recorded_at excludes the fact entirely",
+           "fact.trust.claim" not in replay_before_recorded)
+
+        replay_mid = mem.build_context(as_of=1500.0)
+        ok("as_of between recorded_at and verified_at shows asserted, "
+           "not verified (the oracle didn't exist yet)",
+           "fact.trust.claim: v1 [asserted]" in replay_mid)
+        ok("the replayed-asserted view carries no evidence string",
+           "human ruling" not in replay_mid)
+
+        replay_after = mem.build_context(as_of=2500.0)
+        ok("as_of after verified_at shows the real verified status",
+           "fact.trust.claim: v1 [verified (human ruling)]" in replay_after)
+
+        current = mem.build_context()
+        ok("no as_of set: current status shown regardless of when verified",
+           "fact.trust.claim: v1 [verified (human ruling)]" in current)
+
+        # Soft backfill: a fact verified before this fix has no verified_at
+        # at all. The strict rule (missing = unknown = always downgrade)
+        # would make old data look LESS trustworthy than it did before this
+        # fix shipped. backfill_verified_at() sets verified_at = recorded_at
+        # (best available signal) and tags the inference so it stays honest
+        # about being an assumption, not an observation.
+        mem.store_fact("trust", "legacy", "v1")
+        facts = mem._read(mem.facts)
+        facts["trust"]["legacy"]["recorded_at"] = 3000.0
+        mem._write(mem.facts, facts)
+        mem.verify_fact("trust", "legacy", evidence="pre-fix ruling")
+        facts = mem._read(mem.facts)
+        del facts["trust"]["legacy"]["verified_at"]  # simulate pre-fix data
+        mem._write(mem.facts, facts)
+
+        replay_no_backfill = mem.build_context(as_of=3000.0)
+        ok("missing verified_at (unbackfilled) downgrades under any as_of",
+           "fact.trust.legacy: v1 [asserted]" in replay_no_backfill)
+
+        n = mem.backfill_verified_at()
+        ok("backfill reports the count it touched", n == 1)
+        f = mem._read(mem.facts)["trust"]["legacy"]
+        ok("backfill sets verified_at = recorded_at",
+           f["verified_at"] == f["recorded_at"] == 3000.0)
+        ok("backfill tags the timestamp as inferred, not observed",
+           f.get("verified_at_inferred") is True)
+
+        replay_backfilled = mem.build_context(as_of=3000.0)
+        ok("after backfill, old data replays verified at its own "
+           "recorded_at (soft/lenient: no unearned regression)",
+           "fact.trust.legacy: v1 [verified (pre-fix ruling)]"
+           in replay_backfilled)
+
+        n2 = mem.backfill_verified_at()
+        ok("backfill is idempotent (a real verified_at is never touched)",
+           n2 == 0)
+
         # Overwrite discipline: restating a verified fact logs the prior
         # value as a SUPERSEDED episode first, and the new value starts back
         # at asserted. A verified status may never vanish without a trace.
@@ -475,6 +600,8 @@ def selftest():
         kept = mem._read(mem.facts)["env"]["python"]
         ok("restating the same value keeps verified status and evidence",
            kept["status"] == "verified" and kept["evidence"] == "CI run 42")
+        ok("restating the same value also keeps verified_at",
+           kept.get("verified_at") is not None)
 
         # tombstones: a rejected value cannot be silently re-asserted
         mem.store_fact("env", "db", "postgres 14")
