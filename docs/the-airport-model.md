@@ -39,6 +39,13 @@ their head. They follow signs, cheaply, one decision at a time.
 
 ## Signs point forward; this repo is named for the other half
 
+The phrase comes from a fairy tale before it comes from software. Hansel and Gretel
+dropped crumbs through the forest so they could find their way home, and the crumbs
+failed for one specific reason: birds ate them, and the trail vanished with nothing
+durable behind it. That is the detail worth keeping. A trail only works if something
+durable is doing the leaving, which is the whole design argument for the rest of this
+essay.
+
 A sign only ever answers "where do I go from here." It has no memory of where you have
 already been, and it does not need one: the traveler behind you gets the identical
 sign, whether this is their first trip through the terminal or their hundredth. That is
