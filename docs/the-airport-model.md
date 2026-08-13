@@ -46,6 +46,33 @@ durable behind it. That is the detail worth keeping. A trail only works if somet
 durable is doing the leaving, which is the whole design argument for the rest of this
 essay.
 
+Even inside the story there is a second answer, easy to miss. Once enough crumbs draw
+enough birds, the birds themselves become visible from a distance, a flock moving
+through one part of the forest and not another. A search party who never sees a single
+crumb can still read that pattern and go the right direction. The signal survived the
+trail's failure by leaving a trace one level up. That is not a design to build on, you
+should never plan a memory system around hoping its failure gets noticed by somebody
+else, but it points at the real fix: leave more than one kind of marker, in more than
+one durable form, the way an actual trail through real woods gets marked. Not just
+crumbs, but blazes cut into bark, cairns stacked from stone, broken branches turned to
+point a direction, none of which a bird can eat and none of which depends on the others
+surviving.
+
+The fable maps onto the actual engineering problem closer than it first looks. An agent
+session that forgets everything between visits is not missing a map, it is standing
+where the crumbs used to be, the exact failure this repo exists to stop. A crumb that
+survives but misleads is its own failure mode, maybe worse than none at all: a stale
+fact sends the next session down the wrong path with full confidence, the same as a
+hunter following a trail that has since moved. That is why a marker here always carries
+a way to check itself, when it was left and whether anything since has superseded it,
+not just that it exists. And more than one search party can enter the same forest
+looking for the same thing, each unaware the other is already out there, duplicating
+the walk and the risk, the same as two agent sessions doing the same undocumented work
+at the same time. The fix for that is not faster searching. It is a trail both parties
+can actually read, and a way for either one to see that someone is already on it (see
+[multi-agent-hygiene.md](multi-agent-hygiene.md) and
+[issue-backed-task-bus.md](issue-backed-task-bus.md)).
+
 A sign only ever answers "where do I go from here." It has no memory of where you have
 already been, and it does not need one: the traveler behind you gets the identical
 sign, whether this is their first trip through the terminal or their hundredth. That is
