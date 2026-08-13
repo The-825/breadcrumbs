@@ -58,6 +58,51 @@ supersession record, and the settled-facts store in
 only has signage can find the gate; a session that also has the crumbs knows why the
 last session went a different way, and does not have to learn it the hard way twice.
 
+## The inexperienced traveler
+
+The signage and the crumbs meet in one figure: the first-time traveler. Watch
+what actually happens to someone new in a terminal, because it is the same thing
+that happens to a memory system, and to a new hire in their first week.
+
+On the first trip through, the traveler takes in everything, because they cannot
+yet tell what matters. The gate numbers, the coffee smell near security, the odd
+echo by baggage claim, which escalator was broken. All of it lands. That is not
+a failure of attention, it is the correct opening move when you do not yet know
+the terrain: capture first, judge later. A new staff member's first week works
+the same way, and so does this kit's journal. `mem add` is deliberately cheap
+and unfiltered for exactly this reason: the capture step must never be where
+judgment happens, because at capture time you do not yet have the experience to
+judge with.
+
+Discernment comes on the second pass, not the first. Back home, or on the next
+trip, the traveler's memory quietly sorts the haul: the gate-numbering scheme
+was worth keeping, the coffee smell turns out to be a landmark ("security is
+past the coffee"), the broken escalator was noise. Store, reference, skip. In
+this kit that sorting is a mechanical step, not a hope: the gardener's
+promotion pass reads the raw journal and decides row by row what graduates into
+the index, what gets flagged for a human call, and what stays behind. The
+filter is separate from the capture, and it runs later, with more context than
+the moment of capture had.
+
+And the third trip is where the system shows its value. The traveler walks in
+and the terminal is familiar, not because they memorized a map but because
+their own past left cues along the path: that smell means security is close,
+that echo means baggage claim. The crumbs their memory dropped on earlier trips
+now fire on contact with the place itself. That is what a lookup hit is, a cue
+left by a previous session firing for the current one. And the sharpening never
+stops: cues that keep proving useful stay fresh, cues that stop being checked
+go stale on a horizon that adapts to how fast the ledger actually moves, the
+way an unused landmark fades. The traveler does not just accumulate, they
+consolidate, and so does the desk.
+
+The arc, novice sweep to sorted landmarks to felt familiarity, is the whole
+memory lifecycle of this kit in one figure: capture everything (journal),
+discern later (gardener), retrieve on return (index lookup), and let disuse
+fade what stopped mattering (the staleness horizon). A system that skips the
+novice stage never captures the cue it later needs; a system that skips the
+discernment stage drowns in its own first trip forever. It takes both, in that
+order, every time the terrain is new.
+
 ## The airport is more than its signs
 
 Here is where the analogy earns its keep, and where it stops being about one warehouse.
