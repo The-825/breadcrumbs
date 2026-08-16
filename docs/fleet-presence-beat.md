@@ -37,11 +37,50 @@ it against independently observed activity.
   ladder. If nothing answers, the task bus's own expiry (see the task-bus doc) takes
   it from there.
 
+## The TCAS layer: pairwise deconfliction, no tower in the loop
+
+Presence tells you WHO is flying. The next failure it does not cover by itself: two
+live sessions editing the SAME FILE at the same moment, each about to hand the other
+a merge conflict. Routing that through the coordinator loop is too slow, since the
+coordinator runs on a cadence and the collision is happening now. Aviation solved
+this exact topology decades ago: the tower manages the airspace, but imminent
+collisions are resolved peer to peer by the aircraft themselves (TCAS), because the
+two parties closest to the conflict have the freshest data and the shortest loop.
+The same split works for agent fleets:
+
+- **Positions ride the beat.** Each presence upsert includes the files the session
+  is currently touching, self-reported at the same fixed moments as the beat itself.
+  No extra write path, no extra thing to forget.
+- **Bridge positions to where edits happen.** The moment of collision is an edit,
+  and edit-time hooks often cannot query the presence store directly. Have the
+  coordinator (or any store-connected pass) dump live positions to a small local
+  file the hook CAN read: one row per file and session, with the branch and the
+  beat's age. An absent or aging dump degrades to no warning, never to an error.
+- **The editing session resolves it, directly.** On a live-position hit, the
+  session about to edit sends ONE message to the other session (a one-shot
+  scheduled message bound to its session id works where no direct channel exists):
+  I am editing this file on this branch; you reported it in your last beat;
+  whoever is deeper keeps the file, the other scopes away or waits for the merge.
+- **One poke per pair and file, then escalate.** A repeat overlap goes to the
+  coordinator's digest, never to a second poke. This is the anti-spam rule that
+  keeps peer-to-peer resolution from becoming peer-to-peer noise.
+- **Quiet sky costs nothing.** Positions ride beats and beats ride events, so when
+  nothing is flying there are no writes, no pokes, and an aging positions file the
+  hook ignores. Nothing about this layer polls.
+
+The tower keeps its jobs: orphans, stale claims, digests, dead-claim release.
+Pairwise conflict just stops waiting for it. Staleness discipline carries over
+unchanged from the beat: a position older than the trust threshold is a trail, not
+a live aircraft, and a warning against a folded or dead session is silently
+dropped rather than poked.
+
 ## When to use it
 
 Worth building once you have enough concurrent sessions that "what's everyone doing"
 stops being answerable by scrolling a chat log, roughly three or more running at once.
-Below that, asking is cheaper than building a presence table.
+Below that, asking is cheaper than building a presence table. The TCAS layer earns
+its keep one step later: once concurrent sessions start colliding on the same files
+often enough that merge conflicts are a recurring tax rather than a rare accident.
 
 ## What it isn't
 
