@@ -121,7 +121,46 @@ nobody has used in a long while becomes an archive candidate regardless of its r
 entry that keeps getting used earns another look even past its normal age-out horizon.
 This catches what rank and age both miss: a high-ranked, recent entry that nobody has
 actually needed since the day it landed is dead weight the same as a stale one, it just
-hasn't been caught yet.
+hasn't been caught back yet.
+
+## Capture must pay for decay, at the write path
+
+Here is the failure that forced this rule. A memory head file carried a stated
+line cap and a boot-time guard that truncated an oversized head on READ, so a
+session never drowned loading it. Nothing guarded the WRITE. Capture was one
+cheap command, pruning was a judgment call nobody's turn demanded, so every
+session appended and none drained. The file reached five times its cap while
+session after session dutifully wrote "a drain pass is overdue" into the very
+file that was over budget. The read-side guard made it worse, not better: by
+truncating quietly, it hid the overage from the only readers who could have
+fixed it.
+
+That is Jevons's paradox running inside a memory system. Make a resource
+cheaper to use and total consumption rises: coal after efficient steam engines,
+compute after cheap inference, and memory writes after a one-command capture
+protocol. Efficiency in capture does not produce a lean store. It produces
+growth, unless decay is priced in at the same moment, by machinery rather than
+by intention.
+
+The fix is two mechanical pieces, neither of which asks anyone to remember
+anything:
+
+- **A write-side gate.** The write command refuses to push a head over the cap,
+  with an exit code and a message naming the drain rule. The session that wants
+  to write is exactly the session with the context to prune, and the refusal
+  arrives at the one moment pruning is cheapest. An escape hatch for a
+  deliberate one-time raise stays available, priced as an explicit override
+  rather than a silent default.
+- **A scheduled over-cap alarm.** A weekly job checks the head against the cap
+  and opens an issue when it is over, then closes the issue itself once a drain
+  lands. This covers the week nobody happens to write: a store can sit over
+  budget between sessions, and an overage that no surface reports is an overage
+  that persists.
+
+The general rule: a cap that only lives in prose is a comment, and a guard that
+only acts on the read side hides the problem it was built to surface. Enforce
+the budget where the growth happens, at the write, and give the overage a
+surface that does not depend on any session choosing to look.
 
 ## The airport waves
 
