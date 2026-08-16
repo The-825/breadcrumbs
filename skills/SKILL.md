@@ -27,6 +27,7 @@ prevent, then gives you the block to copy.
 | [adoption-verifier.md](adoption-verifier.md) | A rules file whose claims about its own repo have silently rotted |
 | [delivery-protocol.md](delivery-protocol.md) | Full-file re-prints, unverified code, and open-ended clarifying questions |
 | [propose-confirm-execute.md](propose-confirm-execute.md) | Irreversible actions taken before the operator saw what would happen |
+| [ecosystem-scout.md](ecosystem-scout.md) | External tools adopted on enthusiasm or dismissed on stack mismatch, with the transferable concept lost either way |
 
 ## How to adopt
 
