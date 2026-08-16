@@ -20,6 +20,7 @@ the piece.
 | [self-improvement-loop.md](self-improvement-loop.md) | The evidence-driven loop that makes the rules compound: instrument session exhaust, retro every arc, land each lesson as exactly one artifact. |
 | [specification-debt.md](specification-debt.md) | A correction you keep re-issuing means your spec is missing a rule: count across sessions, patch past three, route by correction type. |
 | [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
+| [figure-citation.md](figure-citation.md) | Numbers that cannot rot silently: a generated facts ledger plus inline fact citations on quoted figures, checked by CI on every PR so a stale number fails loudly instead of misleading a reader. |
 | [batched-decision-blocks.md](batched-decision-blocks.md) | Front-load ambiguity into one numbered block of questions with recommended picks. Question density correlates with low turn count, not high. |
 | [authority-ledger.md](authority-ledger.md) | Who is allowed to say yes, written down: standing grants with scope and expiry, so authority is not a hallway rule. |
 | [trap-fixtures.md](trap-fixtures.md) | Plant the exact questions your system once got wrong and grade them deterministically across model tiers; routing-shaped traps discriminate, fact-shaped ones only confirm the kernel. |
