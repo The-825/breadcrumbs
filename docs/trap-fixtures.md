@@ -53,6 +53,36 @@ conditions, 2 tiers) costs roughly what one long feature session costs. Run
 it on evidence of drift (a miss, a near-miss, a big kernel change), never on
 a schedule; a scheduled run that always passes trains you to stop reading it.
 
+## Drill the process, not just the recall
+
+Trap fixtures test what a session KNOWS. The same fire-drill logic applies to
+what the estate DOES, and the highest-value target is the machinery you have
+never seen fire: conflict handling, escalation paths, automated recovery. The
+failure mode is believing a doctrine works because it is written down. A
+merge-conflict recipe, an automatic conflict notice, a peer-deconfliction
+poke: each is machinery that sits dormant until the worst possible moment,
+which is a real conflict on real work, discovers whether it was ever wired.
+
+The conflict drill, the worked example: two branches edit the same line of a
+dedicated drill file with different content, both open PRs, the first merges,
+the second conflicts, deliberately. Then you watch, with a checklist rather
+than hope: did the conflict get detected and announced by the machinery
+(within what latency), did the announcement carry the resolution recipe the
+doctrine promises, and did the owning session resolve it the way the rules
+file says it must, without a human routing it. The drill file itself is the
+record: each run appends one dated row stating what fired, how fast, and
+what did not.
+
+Design rules carry over from the traps almost unchanged. Drill against a
+DEDICATED file, never real work, so the staged conflict costs nothing to
+resolve either way. Run on evidence, not on a schedule: the trigger is a
+change to the machinery being drilled (a new gate, a rewritten recipe, a new
+notification path), because that is exactly when the written doctrine and
+the wired behavior most plausibly disagree. And a drill that passes is not
+noise: it is the difference between "the doctrine says" and "the doctrine
+demonstrably does," which matters most on the machinery whose first real
+test would otherwise be an emergency.
+
 ## Relation to the other measurement pieces
 
 The forbidden-hit check in
@@ -60,5 +90,6 @@ The forbidden-hit check in
 asks "can the superseded value still win retrieval"; trap fixtures ask "does
 a live session, cold, land on the right answer to a question that once went
 wrong." One tests the store, the other tests the whole path from boot to
-answer. The measurement inventory around both is
+answer. The process drill above extends the same question to the estate's
+machinery. The measurement inventory around all of it is
 [memory-measurement.md](memory-measurement.md).
