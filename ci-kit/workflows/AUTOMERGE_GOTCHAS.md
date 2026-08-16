@@ -1,4 +1,4 @@
-# Automerge gotchas: twelve failure modes a naive automerge hits
+# Automerge gotchas: thirteen failure modes a naive automerge hits
 
 `automerge.yml` squash-merges an agent PR only when every required check is green on the PR
 head SHA, fail-closed. It stands in for GitHub's paid auto-merge feature on Free-plan private
@@ -167,6 +167,48 @@ staging exempted.
 > self-merge"); the staging lane just never implemented it. Fixed by routing the
 > staging lane through the identical protected-path check as main, with the same
 > fail-closed posture on an unlistable file set.
+
+## Gotcha 13: default squash bodies QUOTE constituent commit messages, and a commit-message lint guard will eat itself on them
+
+If you lint commit messages for banned content (a model-name trailer, a session
+URL, anything your rules file forbids in shared history), the guard and the
+default squash merge are on a collision course. `gh pr merge --squash` with no
+explicit `--body` lets the host compose the squash body from every constituent
+commit's FULL message. A promotion or batch merge therefore QUOTES whatever its
+constituents carried, verbatim, into one new commit on the base branch. One
+banned line anywhere in the wave and the squash commit itself now violates the
+guard.
+
+The blast radius is what makes this a gotcha rather than a nuisance: the guard
+scans the tree's recent history, so the moment the quoting squash lands on the
+base branch, EVERY downstream PR inherits the violation and goes red, no matter
+how clean its own commits are. A session cannot fix it by writing compliant
+commits, because the violation is in history it merged in, not history it wrote.
+The only unblock for already-merged history is re-anchoring the guard's
+grandfather cutoff past the offending commit, and each re-anchor invites the
+next one: the pattern repeats every time a batch quotes a violation.
+
+The mechanism fix is to stop letting the host compose the body. Have the merge
+step build an explicit squash body, subjects only (bodies are where trailers
+live, and each constituent's full message is already durable in its own branch
+history), filtered line by line through the SAME regexes the lint guard
+enforces, imported from the guard rather than copied so the two can never
+drift. Pass it on every merge path the workflow has, including any REST
+fallback, because a fallback that omits the body silently reverts to the
+quoting default. Make the composer fail SAFE to an empty body: an empty squash
+body is still guard-clean, and a body-composition bug must never block a merge.
+
+One circularity to expect on the day you ship this: the body-composer PR
+itself cannot merge while the base branch is red with the violations it
+prevents. Plan one final re-anchor to break the loop, then the class is closed.
+
+> **Incident.** In the production repo this pattern was extracted from, the
+> guard's grandfather cutoff was re-anchored five times in a single day. Two
+> of those were fresh violations from concurrent sessions, but the rest were
+> quoting squashes: each promotion embedded a banned trailer from some
+> constituent commit, went red repo-wide after the base reset onto it, and
+> forced another anchor. The re-anchors were correct individually and futile
+> collectively; only the explicit guard-filtered squash body ended the class.
 
 ## Design trade-offs from two generations of this workflow
 
