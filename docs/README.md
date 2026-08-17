@@ -17,7 +17,7 @@ the piece.
 | [memory-threat-model.md](memory-threat-model.md) | Write the threat model for a shared memory system separately from the mechanics: four failure modes, the mechanism that answers each, and an explicit extraction boundary. |
 | [composite-persona-method.md](composite-persona-method.md) | Tell true stories from protected data without exposing anyone: fictional people built pattern-first from verified aggregates, with receipts. |
 | [day-one-mandates.md](day-one-mandates.md) | Nine practices that are cheap at commit one and expensive as retrofits, with a starter checklist. |
-| [self-improvement-loop.md](self-improvement-loop.md) | The evidence-driven loop that makes the rules compound: instrument session exhaust, retro every arc, land each lesson as exactly one artifact. |
+| [self-improvement-loop.md](self-improvement-loop.md) | The evidence-driven loop that makes the rules compound: instrument session exhaust, retro every arc, land each lesson as exactly one artifact. Plus the inward-discovery rotation, so the system also learns by looking instead of only by breaking. |
 | [specification-debt.md](specification-debt.md) | A correction you keep re-issuing means your spec is missing a rule: count across sessions, patch past three, route by correction type. |
 | [artifact-correction-ledger.md](artifact-correction-ledger.md) | Bind corrections to the artifact, not the conversation, and replay them before every regeneration so an accepted fix survives being rebuilt. |
 | [figure-citation.md](figure-citation.md) | Numbers that cannot rot silently: a generated facts ledger plus inline fact citations on quoted figures, checked by CI on every PR so a stale number fails loudly instead of misleading a reader. |
