@@ -1,4 +1,4 @@
-# Automerge gotchas: thirteen failure modes a naive automerge hits
+# Automerge gotchas: fourteen failure modes a naive automerge hits
 
 `automerge.yml` squash-merges an agent PR only when every required check is green on the PR
 head SHA, fail-closed. It stands in for GitHub's paid auto-merge feature on Free-plan private
@@ -8,7 +8,8 @@ hit in production use of this pattern. Gotchas 1 through 6 are encoded in the sh
 operator label, the extracted decision script, the label-free lanes, and the
 staging-promotion model, documented in
 [docs/staging-promotion.md](../../docs/staging-promotion.md)) and bind any variant that
-grows those parts. Read
+grows those parts. Gotchas 13 and 14 are later additions from continued production use and
+bind any variant, first generation included. Read
 this before adapting the template, and re-read it before "simplifying" it.
 
 The reusable core is a single `requiredChecksGreen(headSha)` gate driven by an explicit
@@ -209,6 +210,24 @@ prevents. Plan one final re-anchor to break the loop, then the class is closed.
 > constituent commit, went red repo-wide after the base reset onto it, and
 > forced another anchor. The re-anchors were correct individually and futile
 > collectively; only the explicit guard-filtered squash body ended the class.
+
+## Gotcha 14: retargeting a PR's base branch emits `edited`, which your trigger list probably ignores
+
+A common shape: you open a child PR against a parent branch that is about to merge, the
+parent lands, and you retarget the child onto the integration branch. GitHub records that
+as a `pull_request` event with action `edited`.
+
+The usual trigger list is `opened`, `synchronize`, `labeled`, `ready_for_review`, and
+sometimes `reopened`. `edited` is not in it. So the gate never re-evaluates that PR, and it
+sits green and unmerged until some unrelated event nudges it back into the queue.
+
+It reads exactly like a stuck gate, which is the expensive part: you go looking at the
+decision logic, the check names, and the permissions block, and the actual gap is one
+missing word in the `types:` list.
+
+Add `edited` to the trigger list, and be aware it also fires on title and body edits, so
+the gate will run more often than before. That is fine if the gate is cheap and idempotent,
+which it should already be for Gotcha 11's reasons.
 
 ## Design trade-offs from two generations of this workflow
 

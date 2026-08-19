@@ -32,6 +32,53 @@ evaluated on a cheap recurring pass instead of held in anyone's head.
 - **An owner, always.** Same discipline as any deferred obligation: a watch with no
   owner is a watch nobody answers for when it fires.
 
+## Two things a first version gets wrong
+
+Both of these were found by running the pattern, not by thinking about it, and both are
+cheap to build in from the start and annoying to retrofit.
+
+### Overwriting state destroys the only question worth asking
+
+The obvious schema puts the watch's current state on the watch row: last checked, last
+result, fired at. Every re-check overwrites the previous one.
+
+That schema cannot answer "has this watch ever been worth interrupting someone for."
+After a month you have a table of watches, no idea which ones earned their keep, and no
+basis for retiring the noisy ones except a feeling.
+
+Make evaluations and outcomes append-only rows instead. Every check writes a row. Every
+delivered raise writes a row. Every human response to a raise, acted on it, dismissed it,
+it was wrong, writes a row that points at the specific raise it judges. The watch row keeps
+only what it needs to schedule the next check.
+
+Now retirement is a query rather than an argument. A watch that has raised eleven times and
+been dismissed eleven times is not a watch, it is a habit, and you can see it.
+
+One schema detail that matters more than it looks: **make the stored result three-valued.**
+True, false, and could-not-check. A two-state field forces a failed evaluation to be
+recorded as false, and a system that cannot distinguish "checked and it was false" from
+"the check itself did not run" will eventually act with total confidence on a check that
+never happened.
+
+### A tripped condition is not automatically a current fact
+
+A watch condition goes true. The raise gets queued. Something delays delivery: the session
+that would act was busy, the queue backed up, the person was asleep. The raise arrives
+later carrying a fact that was true when it was measured and may not be now.
+
+The failure is quiet and it costs trust in the whole notification layer the first time
+someone catches it, because a system that tells you a stale thing as though it were current
+has to be re-checked by hand from then on, which is the entire cost the watch was supposed
+to remove.
+
+**Gate delivery on the freshness of the evidence, not on the fact that the condition
+tripped.** If the reading is older than the watch's own check cadence, do not deliver.
+Re-evaluate silently and raise on the next pass with a fresh reading. A watch that checks
+hourly should never deliver a raise built on a reading from yesterday.
+
+This is worth stating as a hard rule rather than a nice-to-have, because the failure mode
+is not a missed raise, it is a confidently wrong one.
+
 ## When to use it
 
 Worth it for anything you'd otherwise handle by periodically remembering to check:

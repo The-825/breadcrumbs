@@ -20,6 +20,12 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 
 ## Memory that survives the session
 
+- [docs/cue-placement-ladder.md](docs/cue-placement-ladder.md): the rule is
+  written down and still gets missed. Which of five rungs it belongs on, and
+  what has to happen before it earns a promotion.
+- [docs/skill-invocation-gap.md](docs/skill-invocation-gap.md): your skill
+  library is healthy and unused. Making skills reachable, then measuring
+  whether anyone reached.
 - [docs/governing-agents-that-act.md](docs/governing-agents-that-act.md): read this
   if your agent takes actions and someone will eventually audit them. What to
   log, what it may never decide alone, and a self-assessment.
