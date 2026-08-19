@@ -151,3 +151,16 @@ Source: Operator directive, session 2026-08-09 ("automate the merge gate and pla
 Ruling: Checkpoint refreshes of SESSION_STATE.md merge on green with no label (modification/addition only; deleting it still gates).
 Why: The handoff refresh is routine, reviewed by its own next reader, and blocking it on the label defeats the checkpoint cadence.
 Source: Operator directive, session 2026-08-09.
+
+## D-14 · 2026-08-19 · The axis is auditable memory, not remembering at all
+Ruling: The whitepaper's framing sharpens from "agents forget between sessions" to
+"the question is whether what they remember is inspectable." Consumer assistants now
+ship cross-session memory by default; the differentiator is not recall but whether a
+stored fact can be read, dated, and verifiably corrected. Section 6 carries the
+contrast plus a three-test rubric readers can apply to any memory system, this one
+included, and states plainly that the automatic approach is the right choice for a
+reader whose problem is convenience.
+Why: The old framing was becoming false as products shipped memory, and it undersold
+the actual claim. Prompted by a first-party observation: an assistant asked to describe
+its own memory reported summarized impressions it could not show, diff, or date.
+Source: session 2026-08-19, operator-run probe of a consumer assistant's self-description

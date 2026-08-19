@@ -387,6 +387,38 @@ academic work has begun naming the failure modes this layer answers (stale
 propagation, contradiction persistence, provenance collapse), which I read as evidence
 the layer is real rather than a private habit of mine.
 
+There is a second comparison worth drawing, and it is not with a research system.
+Consumer assistant products now ship cross-session memory by default, and it is the
+version of this idea most readers have actually used. Asked to describe its own memory,
+one such assistant reported holding summarized impressions of past conversations rather
+than transcripts, updated in the background, with a search tool for retrieving older
+chats when the summary came up short. That is a reasonable design and it optimizes for
+the right thing for its use case: memory that costs the user nothing to maintain and
+requires no discipline to keep working.
+
+The trade it makes is visibility. A summarized impression cannot be diffed, dated, or
+corrected in place. You cannot ask when a fact entered, what it superseded, or whether
+it is still true, because the artifact holding it is not a document you can open. When
+such a system is wrong about you, the repair path is to say so and hope the next
+summarization pass absorbs it.
+
+That is the axis this paper is actually on, and it is worth stating more precisely than
+"agents forget between sessions." They increasingly do not forget. The question is
+whether what they remember is inspectable. Three tests separate the two, and they apply
+to any memory system including the one described here:
+
+1. **Can you read it?** Not a summary of it, the actual stored artifact.
+2. **Can you date it?** When did this enter, and what did it replace?
+3. **Can a correction be verified as landed?** Not "I told it," but a durable record
+   showing the old value retired and the new one in place.
+
+Every mechanism in section 3 exists to answer yes to those, and the cost is real: this
+approach requires maintenance that an automatic summarizer does not. A reader whose
+problem is convenience should use the automatic one. A reader who has been burned by an
+agent acting confidently on a fact that changed underneath it is reading the right
+paper, because that failure is invisible until you can audit the memory, and by then
+the wrong action has already been taken.
+
 The most useful single survey I have found is the
 [Agent Memory Atlas](https://neoneye.github.io/agent-memory-atlas/), a field guide
 analyzing 252 open-source agent memory systems and distilling them into named design
