@@ -8,6 +8,7 @@ the piece.
 | Essay | Why read it |
 |---|---|
 | [breadcrumbs-whitepaper.md](breadcrumbs-whitepaper.md) | The working paper: cue-placement memory for agent fleets, the five mechanisms, the caught-itself case study, and the join protocol. Start here for the whole argument. |
+| [governing-agents-that-act.md](governing-agents-that-act.md) | The operational half of the paper: what to log, what an agent may never decide alone, how to prove afterward that a correction landed, plus a ten-question self-assessment you can run on your own deployment. |
 | [versioning-is-not-governance.md](versioning-is-not-governance.md) | Git-backed agent memory is shipped by others now, so storage is the floor rather than the claim. What versioning answers, what it cannot, and how to tell which problem your last bad week actually was. |
 | [context-budget.md](context-budget.md) | Price what every session auto-loads, and enforce the budget in CI so it cannot silently regrow. |
 | [the-airport-model.md](the-airport-model.md) | The wayfinding idea grown up: one warehouse is a signed terminal, an institution is the airport, and the operation is reflected in code. |
