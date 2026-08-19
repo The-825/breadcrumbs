@@ -27,10 +27,11 @@ easier because it is a simpler building. It is easier because they stopped treat
 first one as a one-off and started treating it as an instance of a system they now
 understand.
 
-That gap, not the map, is what I think agent memory is missing. AI agents forget
-everything between sessions, and the industry's answer has mostly been bigger recall:
-vector stores, knowledge graphs, retrieval layers. Those answer "what should the agent
-remember?" My problem was different. I run many agent sessions a week against one
+That gap, not the map, is what I think agent memory is missing. Agents used to forget
+everything between sessions, and the answer has mostly been bigger recall: vector
+stores, knowledge graphs, retrieval layers, and now assistants that quietly summarize
+your past conversations for you. Those answer "what should the agent remember?" My
+problem was different. I run many agent sessions a week against one
 production system, and what kept breaking was not recall. It was that one session would
 claim something was done when it wasn't, or redo work a yesterday-session already did,
 or act on a fact that had changed underneath it. And every fresh session opened with me
