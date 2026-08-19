@@ -1,6 +1,9 @@
 # Breadcrumbs: cue-placement memory for AI agent fleets
 
-*A working paper from one practitioner. Version 1.2, August 2026 (1.0 published earlier
+*A working paper from one practitioner. Version 1.3, August 2026 (1.3 names Letta's
+Context Repositories in section 6 and sharpens the axis from inspectable memory to
+governed memory: git-backed storage is now shipped by others, which makes it the floor
+rather than the claim. 1.0 published earlier
 the same month; 1.1 extended section 3.5 with the tombstone, validity-window, and
 audience-scoping mechanics that landed after publication, and added the Agent Memory
 Atlas to related work; 1.2 adds the trust-timing fix the Atlas's own review of this
@@ -378,8 +381,26 @@ family rather than assuming one set of pointers serves all of them.
 The retrieval tier (episodic and semantic memory stores with ranked recall) is mature
 and well served by existing open-source and commercial systems; this paper takes no
 position on which to use, because the pattern here sits beside them, not in place of
-them. Using git as a memory substrate is likewise not novel, and I make no claim to
-it. What I have not found elsewhere, and what this paper is actually about, is the
+them.
+
+Using git as a memory substrate is likewise not novel, and I make no claim to it. The
+clearest instance is Letta's Context Repositories, shipped February 2026, which stores
+a coding agent's context as files and, in their words, is "git-backed, so every change
+to memory is automatically versioned with informative commit messages." That is the
+same substrate choice made here, made independently and shipped inside a real runtime.
+Anyone deciding between approaches on storage alone should look at theirs first: it is
+integrated, it is maintained by a team, and it costs a slash command to turn on, where
+this is a pattern you assemble yourself. Two open-source projects, Memoria and
+GitAgent, occupy the same ground.
+
+Which is the useful place to say what the substrate does and does not buy you.
+Versioning answers what changed and when. It does not answer who was allowed to write
+it, what had to be true before the write was accepted, or whether a correction actually
+landed rather than being merely asserted. A perfectly versioned memory can be
+confidently, durably wrong, and the commit log will faithfully record every step of it
+being wrong.
+
+What I have not found elsewhere, and what this paper is actually about, is the
 governance layer: write-time refusal, verification gated on named oracles rather than
 model confidence, obligation tracking with deadlines, versioned staleness signaling,
 and append-only supersession, running together in one production system. Recent
@@ -403,14 +424,24 @@ such a system is wrong about you, the repair path is to say so and hope the next
 summarization pass absorbs it.
 
 That is the axis this paper is actually on, and it is worth stating more precisely than
-"agents forget between sessions." They increasingly do not forget. The question is
-whether what they remember is inspectable. Three tests separate the two, and they apply
-to any memory system including the one described here:
+"agents forget between sessions." They increasingly do not forget, and increasingly they
+store what they remember somewhere you could read. The question that survives both is
+whether the memory is **governed**: whether a claim can be refused at the moment it is
+written, whether calling something verified requires an oracle outside the writer, and
+whether a correction is provably landed rather than merely announced. Inspectable is the
+floor. Governed is the claim.
+
+Three tests get you to the floor, and they apply to any memory system including the one
+described here:
 
 1. **Can you read it?** Not a summary of it, the actual stored artifact.
 2. **Can you date it?** When did this enter, and what did it replace?
 3. **Can a correction be verified as landed?** Not "I told it," but a durable record
    showing the old value retired and the new one in place.
+
+A git-backed store passes the first two by construction. The third is where storage
+stops helping, because it is not a question about the artifact, it is a question about
+the process that wrote to it. That is the whole of section 3.
 
 Every mechanism in section 3 exists to answer yes to those, and the cost is real: this
 approach requires maintenance that an automatic summarizer does not. A reader whose

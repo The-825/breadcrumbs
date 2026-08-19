@@ -164,3 +164,30 @@ Why: The old framing was becoming false as products shipped memory, and it under
 the actual claim. Prompted by a first-party observation: an assistant asked to describe
 its own memory reported summarized impressions it could not show, diff, or date.
 Source: session 2026-08-19, operator-run probe of a consumer assistant's self-description
+
+## D-15 · 2026-08-19 · The axis is governed memory · amends D-14
+
+Ruling: the positioning axis sharpens once more, from auditable memory to **governed**
+memory. Inspectable storage is the floor; governance is the claim. D-14 was right that
+recall is no longer the differentiator and wrong about what replaced it: it named the
+property that a git-backed store gives you for free, which several products now ship.
+
+Why: Letta shipped Context Repositories on 2026-02-12, storing a coding agent's context
+as files that are "git-backed, so every change to memory is automatically versioned with
+informative commit messages." Memoria and GitAgent occupy the same ground in open source.
+So "you can read it and date it" is no longer a position, it is table stakes, and D-14
+staked the paper on it the same week.
+
+What survives is narrower and was already in the paper's body: write-time refusal,
+verification gated on a named oracle rather than the writer's confidence, obligation
+tracking, versioned staleness, and append-only supersession. Versioning answers what
+changed. Governance answers who was allowed to write it, what had to be true first, and
+whether a correction actually landed. A perfectly versioned memory can be confidently,
+durably wrong, and the commit log will faithfully record every step of it being wrong.
+
+Section 6 already argued this; only the headline was behind. Whitepaper goes to 1.3,
+names Letta directly where it already disclaimed the git substrate, and adds the
+storage-versus-process distinction to the three-test rubric.
+
+Source: Jovan, 2026-08-19, on a market check that verified the Letta page directly.
+Analysis in the BetterMe repo, `825/agent-ops-lane-v1.md`, and logged there as AL-8.
