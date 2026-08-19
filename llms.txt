@@ -20,6 +20,9 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 
 ## Memory that survives the session
 
+- [docs/governing-agents-that-act.md](docs/governing-agents-that-act.md): read this
+  if your agent takes actions and someone will eventually audit them. What to
+  log, what it may never decide alone, and a self-assessment.
 - [docs/versioning-is-not-governance.md](docs/versioning-is-not-governance.md):
   read this first if you already store agent memory in git. What versioning
   answers, what it cannot, and which of the two problems you actually have.
