@@ -20,6 +20,10 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 
 ## Memory that survives the session
 
+- [docs/versioning-is-not-governance.md](docs/versioning-is-not-governance.md):
+  read this first if you already store agent memory in git. What versioning
+  answers, what it cannot, and which of the two problems you actually have.
+
 - [templates/CONCLUSIONS_TEMPLATE.md](templates/CONCLUSIONS_TEMPLATE.md):
   the append-only, path-keyed conclusions ledger format with supersession.
 - [templates/DECISIONS_TEMPLATE.md](templates/DECISIONS_TEMPLATE.md): the

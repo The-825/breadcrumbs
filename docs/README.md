@@ -8,6 +8,7 @@ the piece.
 | Essay | Why read it |
 |---|---|
 | [breadcrumbs-whitepaper.md](breadcrumbs-whitepaper.md) | The working paper: cue-placement memory for agent fleets, the five mechanisms, the caught-itself case study, and the join protocol. Start here for the whole argument. |
+| [versioning-is-not-governance.md](versioning-is-not-governance.md) | Git-backed agent memory is shipped by others now, so storage is the floor rather than the claim. What versioning answers, what it cannot, and how to tell which problem your last bad week actually was. |
 | [context-budget.md](context-budget.md) | Price what every session auto-loads, and enforce the budget in CI so it cannot silently regrow. |
 | [the-airport-model.md](the-airport-model.md) | The wayfinding idea grown up: one warehouse is a signed terminal, an institution is the airport, and the operation is reflected in code. |
 | [floating-memory.md](floating-memory.md) | The airport model applied to agent memory: a git-backed memory branch, a fold protocol where completion is asserted and oracle-gated, trust-ranked decay plus use-stamped decay, and the operational sweeps (NOTAMs, MEL, orphan matching, mishandled-rate SLAs, single-threaded ownership). |
