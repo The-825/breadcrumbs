@@ -15,7 +15,7 @@ The whole program is moving content from the first class to the second without l
 
 ## The budget manifest
 
-Put the budgets in one table, in one file, and make a CI test parse that table as its single source. An illustrative shape (the numbers are placeholders; fill in your own measurements):
+Put the budgets in one table, in one file, and make a CI test parse that table as its single source. An illustrative shape (the numbers are placeholders; fill in your own measurements, and see [CONTEXT_BUDGET.md](../CONTEXT_BUDGET.md) for this repo's real ones):
 
 | File | Class | budget_lines | Notes |
 |---|---|---:|---|
@@ -26,7 +26,7 @@ Put the budgets in one table, in one file, and make a CI test parse that table a
 
 Three conventions make the table enforceable rather than decorative:
 
-- **The guard test parses this table.** A plain unit test reads the manifest, runs `wc -l` on each file, and fails the build when any file exceeds its budget. Budget cells stay bare integers so the parse is trivial; commentary goes in the Notes column. Because the numbers live in exactly one place, nothing else in the repo restates them (one source of truth per fact).
+- **The guard test parses this table.** A test reads the manifest, counts lines in each file, and fails the build when any file exceeds its budget. Budget cells stay bare integers so the parse is trivial; commentary goes in the Notes column. Because the numbers live in exactly one place, nothing else in the repo restates them (one source of truth per fact). That guard ships here: [`ci-kit/guards/guard_context_budget.py`](../ci-kit/guards/guard_context_budget.py), registered in `run_guards.sh`, and this repo's own filled-in manifest is [CONTEXT_BUDGET.md](../CONTEXT_BUDGET.md).
 - **Raising a budget is allowed, in the same PR, with a reason.** Over budget means cut or relocate content first. If the growth is deliberate, the PR raises the number in the manifest and says why in one line. The point is not a frozen ceiling; it is that growth becomes a visible, reviewed decision instead of a drift.
 - **The budget is a ratchet.** When a restructure lands and a file shrinks, tighten its budget toward the new size in the same PR. Headroom you leave behind gets spent.
 
