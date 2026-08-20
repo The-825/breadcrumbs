@@ -33,6 +33,7 @@ the piece.
 | [four-founding-docs.md](four-founding-docs.md) | The four files a disciplined repo is born with: rules, build order, parity, decisions. |
 | [model-playbook.md](model-playbook.md) | Match the task to the model tier without losing accuracy: boot protocol, guardrails, counter-rules. |
 | [multi-agent-hygiene.md](multi-agent-hygiene.md) | Several agents in one repo without trampling: worktrees, disjoint file sets, pre-assigned numbers. |
+| [self-audit-atlas-rubric-2026-08-12.md](self-audit-atlas-rubric-2026-08-12.md) | This repo's two memory kits scored against an external rubric (the Agent Memory Atlas), pinned to a commit. A dated record, including the gaps it found in its own kits; read the ledger for what closed since. |
 | [rules-spine.md](rules-spine.md) | The long-form guide to writing a binding CLAUDE.md, the file every other doc defers to. |
 | [staging-promotion.md](staging-promotion.md) | The graduated merge lane: agent PRs flow to staging on green, one human switch in front of production. |
 | [chorus.md](chorus.md) | Freeze the handful of facts where a miss is dangerous, verbatim at the top of the rules file, held by a unit test. |

@@ -213,10 +213,14 @@ unreachable documents, which is what an index page nobody points at produces.
 It also prints what every session pays before any work happens, which is the
 [context-budget.md](context-budget.md) number measured rather than estimated.
 
-Run against this repo on 2026-08-06: 117 markdown documents, 2 booted (CLAUDE.md and
-README.md, 376 lines and 20,052 bytes charged to every session), 115 linked, 0 islands,
-0 deep, 0 orphans. The first run had one orphan, CONTRIBUTING.md, which nothing in the
-repo linked; the README now does, which is what took the count to zero.
+Run against this repo on 2026-08-20: 133 markdown documents, 2 booted (CLAUDE.md and
+README.md, charged to every session), 131 linked, 0 islands, 0 deep, 0 orphans. Two
+orphans have been caught this way and both were real. The first run found CONTRIBUTING.md,
+which nothing in the repo linked. A later run found the self-audit doc, which had shipped
+without a row in the docs index, meaning the file about honest self-assessment was the one
+file the index did not mention. Both are linked now. The lesson is not the zero: it is
+that the count went back above zero twice without anyone noticing, so the survey is worth
+re-running rather than citing.
 
 **One caveat learned by getting it wrong here.** The first version of the resolver treated
 a link to `templates/` as a link to nothing, because a directory is not a document. That

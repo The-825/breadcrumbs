@@ -2,6 +2,9 @@
 
 Telling true stories from protected data without exposing anyone.
 
+**Pattern only: a review method, nothing here ships as a script.** What it needs is a
+reader willing to check a draft against the rules below before it goes public.
+
 ## The problem
 
 The most persuasive artifact a data office produces is a story about one

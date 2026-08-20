@@ -1,5 +1,11 @@
 # The issue-backed task bus
 
+> **Pattern only. The CLI described here does not ship in this kit.** It is roughly six
+> hundred lines against your own issue tracker's API and does not compress into a
+> snippet, so what follows is the contract it has to satisfy and the failure modes it
+> has to survive. `templates/standing-agents/a2a-task-bus.md` covers the same ground
+> from the fleet side.
+
 ## The problem
 
 Several agent sessions, or several people plus agents, need a shared queue of

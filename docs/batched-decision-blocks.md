@@ -3,6 +3,7 @@
 > A companion to `decision-capture.md`. That doc covers writing a ruling down the turn it
 > lands. This one covers how to get the rulings issued in the first place, cheaply, and it
 > is the rare pattern I found by looking for what went right rather than what went wrong.
+> **A working habit, not a mechanism: nothing here ships as code.**
 
 ## The finding, which is a positive one
 

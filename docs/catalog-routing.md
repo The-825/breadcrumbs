@@ -2,6 +2,8 @@
 
 > Pairs with `context-budget.md`: that essay prices what a session auto-loads, this
 > one is how you keep the rest of a large doc corpus reachable without loading it.
+> **Pattern only: nothing here ships as a script.** The budget half does ship a guard
+> (`ci-kit/guards/guard_context_budget.py`); the routing half is conventions.
 
 ## The problem
 

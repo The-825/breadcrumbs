@@ -20,6 +20,7 @@ GUARDS=(
   guard_no_magic_limit.py
   guard_no_raw_create_view.py
   guard_no_pii_in_fixtures.py
+  guard_context_budget.py
 )
 
 # Deliberate exceptions: two guards on the shelf do not scan files, so they are

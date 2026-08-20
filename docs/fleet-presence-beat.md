@@ -3,6 +3,7 @@
 > Companion to `floating-memory.md`: that essay covers what a shared memory holds and
 > how it decays. This one covers a narrower question inside it: how do you know, right
 > now, who on the fleet is actually working, on what?
+> **Pattern only: no presence service ships in this kit.**
 
 ## The problem
 

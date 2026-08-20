@@ -60,9 +60,11 @@ the maintainer first.
 5. **Every artifact stands alone.** A reader landing on one file gets the whole point of
    it without reading four others first. Cross-links add depth; they never carry the
    load.
-6. **Say what a piece assumes.** Every artifact that assumes a language, platform, or
-   workflow states that in its own header so a reader can adapt or skip without
-   discovering the mismatch halfway through.
+6. **Say what a piece assumes, and whether it ships.** Every artifact that assumes a
+   language, platform, or workflow states that in its own header so a reader can adapt
+   or skip without discovering the mismatch halfway through. A doc that describes a
+   mechanism also says whether that mechanism ships in this kit: pattern-only is a fine
+   answer, silence is not, because a reader defaults to assuming it ships (D-3, D-16).
 7. **No "fix it next PR" TODOs.** Fix it in the change, or log it in the issue ledger.
 
 ---
@@ -169,6 +171,7 @@ CONTRIBUTING.md    How to send a fix
 LICENSE            MIT
 kit.json           Machine-readable inventory (paths, assumptions, selftests); CI-verified
 llms.txt           The agent-facing map: route by problem
+CONTEXT_BUDGET.md  Line budgets for the boot set; guard_context_budget.py parses it
 templates/         Copy-and-adapt working files
   commands/        Slash-command definitions
   hooks/           Harness-side hooks
