@@ -26,6 +26,9 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 - [docs/skill-invocation-gap.md](docs/skill-invocation-gap.md): your skill
   library is healthy and unused. Making skills reachable, then measuring
   whether anyone reached.
+- [docs/prospective-memory-watches.md](docs/prospective-memory-watches.md): the
+  fact you needed was recorded and nobody looked. Standing watches that fire on
+  a condition instead of waiting to be remembered. Pattern only, no code ships.
 - [docs/governing-agents-that-act.md](docs/governing-agents-that-act.md): read this
   if your agent takes actions and someone will eventually audit them. What to
   log, what it may never decide alone, and a self-assessment.

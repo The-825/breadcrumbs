@@ -3,7 +3,7 @@
 > Companion to `specification-debt.md`, and deliberately not the same pattern. That doc
 > handles corrections that recur across projects and prove your rules are incomplete.
 > This one handles a single correction that will not survive its own deliverable being
-> rebuilt.
+> rebuilt. **Pattern only: the ledger is a file you keep, not a tool that ships here.**
 
 ## The problem
 

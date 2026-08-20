@@ -191,3 +191,21 @@ storage-versus-process distinction to the three-test rubric.
 
 Source: Jovan, 2026-08-19, on a market check that verified the Letta page directly.
 Analysis in the BetterMe repo, `825/agent-ops-lane-v1.md`, and logged there as AL-8.
+
+## D-16 · 2026-08-20 · D-3 gets a mechanical check and a stated default
+
+Ruling: D-3 stands and gains two things. Where a doc claims a check exists, the
+check gets built rather than the claim softened, when building it is cheap
+(`docs/context-budget.md` claimed a budget guard; the guard now ships as
+`ci-kit/guards/guard_context_budget.py` with `CONTEXT_BUDGET.md` as this repo's
+real manifest). And every doc describing a mechanism now states, in its own
+header, whether that mechanism ships here. Pattern-only is a fine answer; silence
+is not, because a reader defaults to assuming it ships.
+Why: an audit against the whole docs tree found one flat D-3 violation and seven
+docs that made no false claim but never said which side of the line they were on.
+The kit's own best examples (`floating-memory.md`, `cue-placement-ladder.md`) had
+the label; the rest just never got it, which means the rule was being followed by
+habit rather than by contract.
+Source: claim-to-code audit of the docs tree, 2026-08-20, and the branch
+`claude/context-budget-guard`.
+

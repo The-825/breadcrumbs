@@ -1,5 +1,9 @@
 # The report catalog: safe self-service data access
 
+> **Pattern only. No endpoint ships in this kit.** The catalog described here is a few
+> hundred lines against your own data layer, and the shape of it depends entirely on
+> that layer, so what follows is the design and the failure modes, not code to copy.
+
 ## The problem
 
 Non-technical staff need answers out of the data, and the two default paths both fail.
