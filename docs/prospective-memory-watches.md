@@ -4,6 +4,14 @@
 > a minimum-equipment list). This is for the other half of "remember to do this later":
 > not later on the calendar, but later when something specific becomes true.
 
+**What this assumes:** somewhere to store rows (a table, a file, an issue tracker), and
+something that can run a cheap recurring pass. No particular scheduler or database.
+
+**Pattern only. None of this ships as code in this kit.** The watch table, the event log,
+and the freshness gate are each a schema plus a scheduled job against your own store, and
+writing them for you would mean guessing at both. The doc is specific about the schema
+because that is where the two failure modes below actually live.
+
 ## The problem
 
 Scheduled triggers (cron, a send-later reminder) cover "do this at a known future
