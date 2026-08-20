@@ -235,5 +235,101 @@ class TestShippedKit(unittest.TestCase):
         self.assertIn("grep -i", r.stdout)
 
 
+class TestReject(DeskFixture):
+    """The must-not-come-back test: retiring an answer has to actually stop it."""
+
+    def retire(self, key="deploy gate", reason="the label rule changed"):
+        return run(["reject", key, "--reason", reason], self.dir)
+
+    def test_reject_removes_the_row_and_writes_a_tombstone(self):
+        r = self.retire()
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("retired", r.stdout)
+        self.assertNotIn("deploy gate", (self.dir / "index.tsv").read_text(encoding="utf-8"))
+        tomb = (self.dir / "tombstones.tsv").read_text(encoding="utf-8")
+        self.assertIn("deploy gate", tomb)
+        self.assertIn("the label rule changed", tomb)
+
+    def test_reject_requires_a_reason(self):
+        r = run(["reject", "deploy gate"], self.dir)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("--reason", r.stderr)
+
+    def test_reject_on_a_missing_key_is_a_miss_not_a_crash(self):
+        r = run(["reject", "no such key", "--reason", "x"], self.dir)
+        self.assertEqual(r.returncode, 1)
+
+    def test_same_answer_returning_fails_check(self):
+        self.retire()
+        self.append_row(
+            "deploy gate\t\tmerges wait for the approval label; CI green is not enough"
+            "\tREADME.md\t2026-08-20"
+        )
+        r = run(["check"], self.dir)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("is back carrying the answer retired", r.stdout)
+
+    def test_a_different_answer_for_the_same_key_passes(self):
+        """A correction is the whole point; only the retired VALUE is barred."""
+        self.retire()
+        self.append_row("deploy gate\t\ttwo approvals now, not one\tREADME.md\t2026-08-20")
+        r = run(["check"], self.dir)
+        self.assertEqual(r.returncode, 0)
+
+    def test_looking_up_a_retired_key_reports_the_retirement(self):
+        self.retire()
+        r = run(["deploy", "gate"], self.dir)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("RETIRED", r.stdout)
+        self.assertIn("the label rule changed", r.stdout)
+
+    def test_retirement_does_not_preempt_an_unrelated_query(self):
+        """A tombstone answers its own key only, never a fuzzy neighbour."""
+        self.retire()
+        r = run(["retry", "budget"], self.dir)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("exponential backoff", r.stdout)
+        self.assertNotIn("RETIRED", r.stdout)
+
+    def test_hook_mode_never_emits_a_retirement(self):
+        """Hook mode stays silent on misses; a retirement is still a miss."""
+        self.retire()
+        r = run(["--stdin"], self.dir, stdin="deploy gate")
+        self.assertNotIn("RETIRED", r.stdout)
+
+
+class TestRecheck(DeskFixture):
+    """Drift by evidence rather than by calendar."""
+
+    def test_source_changed_after_check_is_reported(self):
+        self.append_row("stale row\t\tan answer whose source moved\tREADME.md\t2020-01-01")
+        r = run(["recheck"], self.dir)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("stale row", r.stdout)
+
+    def test_reports_suspicion_not_a_verdict(self):
+        """The wording matters: a moved source is a prompt to look, not a failure."""
+        self.append_row("stale row\t\tan answer whose source moved\tREADME.md\t2020-01-01")
+        r = run(["recheck"], self.dir)
+        self.assertIn("re-read the source", r.stdout)
+
+    def test_recheck_never_fails_the_build(self):
+        r = run(["recheck"], self.dir)
+        self.assertEqual(r.returncode, 0)
+
+    def test_undated_rows_are_not_reported_as_drifted(self):
+        """A row checked '-' has no baseline to drift from."""
+        r = run(["recheck"], self.dir)
+        self.assertNotIn("retry budget", r.stdout)
+
+
+class TestReservedWords(DeskFixture):
+    def test_new_subcommands_are_reserved_as_key_prefixes(self):
+        self.append_row("reject a thing\t\tsome answer\tREADME.md\t2026-08-20")
+        r = run(["check"], self.dir)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("reserved subcommand word", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

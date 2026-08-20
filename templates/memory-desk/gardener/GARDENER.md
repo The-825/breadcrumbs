@@ -39,9 +39,18 @@ are waiting, so the work arrives instead of waiting to be remembered.
    catches literal key collisions; you catch semantic ones.
 3. **Refresh.** For rows past the stale horizon (mem prints the flag), re-read
    the source. Still true: bump `checked`. Changed: fix the answer. Gone:
-   retire the row.
-4. **Retire, never silently.** A retired row is listed in the PR body with one
-   line of reason. Deleting a fact is a reviewed act, not a side effect.
+   retire the row. `memory/mem recheck` narrows this queue for you: it lists
+   the rows whose source actually moved since the row was last checked, which
+   is a much shorter list than everything the calendar calls aging. It reports
+   suspicion, never a verdict, so the re-read is still yours.
+4. **Retire, never silently.** Use `memory/mem reject "<key>" --reason "<why>"`
+   rather than deleting the line by hand. It removes the row, records the
+   retired answer in `tombstones.tsv`, and journals the correction, which means
+   `mem check` will fail if that same answer ever comes back under that key. A
+   different answer for the same key passes, because that is a correction and
+   correcting is the point. The reason is mandatory: a tombstone with no reason
+   is just a deletion. List the retirement in the PR body too. Deleting a fact
+   is a reviewed act, not a side effect.
 5. **Trim the kernel.** If `MEMORY.md` is near its line cap, move anything
    that answers a question into a row. The floor section is not yours to
    touch: it is frozen, test-pinned, and edited only by the operator.

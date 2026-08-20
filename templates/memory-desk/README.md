@@ -30,10 +30,11 @@ does know the building.
 
 | File | What it is |
 |---|---|
-| [`mem`](mem) | The one door: lookup, capture, and integrity check in one stdlib-only CLI. Exit codes are the interface: 0 hit, 1 miss, 2 defect. |
+| [`mem`](mem) | The one door: lookup, capture, correction, drift and integrity check in one stdlib-only CLI. Exit codes are the interface: 0 hit, 1 miss, 2 defect. |
 | [`index.tsv`](index.tsv) | The fact index: key, aliases, answer, source, checked date, one row per settled fact. Ships seeded with rows that describe the desk itself. |
 | [`MEMORY_TEMPLATE.md`](MEMORY_TEMPLATE.md) | The kernel: the one file a session reads whole. The one move, the frozen floor, the capture habit. `mem check` fails it past 60 lines. |
 | `journal.jsonl` | Raw capture, append-only, created by the first `mem add`. Nothing edits it; the gardener promotes from it. |
+| `tombstones.tsv` | Retired answers, created by the first `mem reject`. Four columns: key, value, reason, date. `mem check` fails if a retired value comes back under its own key. |
 | [`hooks/`](hooks/) | The push layer: kernel at session start, index hits at prompt time, file-scoped notes at first edit. Registration snippet included. |
 | [`gardener/`](gardener/) | The curation contract and a scheduled trigger, so index quality is a job with a cadence, not goodwill. |
 | [`tests/`](tests/) | Subprocess self-tests for the CLI, ending with the shipped kit passing its own `mem check`. |
@@ -81,8 +82,14 @@ row's key, which is why keys stay phrased the way sessions actually ask.
 
 ## Pitfalls
 
-- **Keys must not begin with `add` or `check`**; those are subcommands, and
-  `mem check` refuses such keys so the collision cannot lurk.
+- **Keys must not begin with `add`, `check`, `reject` or `recheck`**; those are
+  subcommands, and `mem check` refuses such keys so the collision cannot lurk.
+- **Correcting is two commands, and neither one guesses.** `mem reject "<key>"
+  --reason "<why>"` retires a wrong answer and tombstones it, so `check` fails
+  if that same value returns under that key while a different answer passes as a
+  correction. `mem recheck` lists rows whose source changed after the row was
+  last checked, which is drift by evidence rather than by calendar. Neither
+  re-verifies anything: a moved source means look, not that the fact is false.
 - **One line per answer.** An answer that wants a paragraph is a doc; write
   the doc, point the row's source at it, and let the answer say what is there.
 - **A fact has one home.** The row either is the home (a one-liner) or points
