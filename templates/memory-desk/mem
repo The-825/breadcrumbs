@@ -9,6 +9,11 @@ Usage:
       --type fact|decision|gotcha|todo|state   (default: fact)
       --key <index key>      the key you looked up and missed
       --source <path|PR|D-n> where the fact lives or was proven
+  mem reject "<key>" --reason "<why>"
+                             retire a wrong answer and tombstone it, so the
+                             same value cannot come back silently
+  mem recheck                list rows whose SOURCE changed after the row was
+                             last checked; evidence-based drift, not a calendar
   mem check                  integrity gate; non-zero exit on any defect
 
 Design contract (the docs cite these constants; change them here and nowhere
@@ -20,8 +25,17 @@ ledger's own re-check cadence rather than one fixed number for every repo,
 STALE_DAYS is only the fallback for a ledger too new or too small to have a
 cadence yet, clamped between STALE_FLOOR and STALE_CEILING either way.
 
-Reserved first words: `add` and `check` are subcommands, so index keys must not
-begin with either word. `mem check` enforces that.
+Correction, and what it does and does not do. `reject` is the must-not-come-back
+test: the retired answer is recorded in tombstones.tsv and `check` fails if that
+same key comes back carrying that same answer. A key returning with a DIFFERENT
+answer is a correction and passes, which is the point. `recheck` compares each
+row's source against its checked date and reports the ones whose ground moved.
+It detects that the source changed, NOT that the fact became false; a human
+still decides. Neither command re-verifies a fact automatically, because nothing
+mechanical can read a source and know whether the claim still holds.
+
+Reserved first words: `add`, `check`, `reject` and `recheck` are subcommands, so
+index keys must not begin with any of them. `mem check` enforces that.
 
 Exit codes: 0 hit or success, 1 miss, 2 usage error or integrity failure.
 Stdlib only, python3.8+. Paths resolve relative to this file, so the desk works
@@ -30,6 +44,7 @@ wherever the directory is copied.
 
 import json
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -46,6 +61,7 @@ STDIN_CAP = 400      # chars of stdin considered in hook mode; prompts are long,
 BASE = Path(__file__).resolve().parent
 INDEX = BASE / "index.tsv"
 JOURNAL = BASE / "journal.jsonl"
+TOMBSTONES = BASE / "tombstones.tsv"  # retired answers; 4 cols: key, value, reason, date
 # In-template the kernel keeps its template name; adoption renames it to MEMORY.md.
 KERNEL = next(
     (p for p in (BASE / "MEMORY.md", BASE / "MEMORY_TEMPLATE.md") if p.exists()),
@@ -53,6 +69,7 @@ KERNEL = next(
 )
 
 TYPES = {"fact", "decision", "gotcha", "todo", "state"}
+SUBCOMMANDS = ("add", "check", "reject", "recheck")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOPWORDS = {
     "a", "an", "and", "are", "can", "do", "does", "for", "how", "i", "in",
@@ -63,6 +80,8 @@ STOPWORDS = {
 CARD = f"""the memory desk · one door to this repo's settled facts
   look up   memory/mem <words>          exact key or alias first, ranked fallback
   capture   memory/mem add "<fact>" --type fact|decision|gotcha [--key k] [--source p]
+  correct   memory/mem reject "<key>" --reason "<why>"   retire a wrong answer
+  drift     memory/mem recheck          rows whose source moved since last check
   health    memory/mem check            duplicate keys, dead sources, oversized kernel
   stores    {KERNEL.name} (kernel, read at boot) · index.tsv (facts) · journal.jsonl (raw)
   no shell  grep -i '<word>' memory/index.tsv reads the same rows
@@ -187,6 +206,22 @@ def lookup(words, hook_mode=False):
     if exact:
         show(exact[0], stale_days)
         return 0
+    # No live row owns this key. Before falling back to fuzzy neighbours, check
+    # whether the desk already retired it: a known-wrong answer beats a ranked
+    # guess, and without this the ladder sends someone off to re-derive the
+    # exact value the tombstone exists to stop coming back. Exact key match
+    # only, so a retirement never preempts an unrelated query that merely
+    # shares a word.
+    if not hook_mode:
+        tombs, _ = load_tombstones()
+        retired = [t for t in tombs if norm(t["key"]) == q]
+        if retired:
+            for t in retired[:MAX_HITS]:
+                print(f"{t['key']}: RETIRED {t['date']}")
+                print(f"  was: {t['value']}")
+                print(f"  why: {t['reason']}")
+            print("\nno live row replaced it. find the current answer and 'mem add' it.")
+            return 1
     ranked = sorted(((score(r, q, qtoks), r) for r in rows), key=lambda t: (-t[0], t[1]["key"]))
     floor = MIN_HOOK_SCORE if hook_mode else 1
     hits = [r for s, r in ranked if s >= floor][:MAX_HITS]
@@ -247,8 +282,156 @@ def add(argv):
     return 0
 
 
+def load_tombstones():
+    """Parse tombstones.tsv. Returns (entries, defects). A retired answer lives
+    here forever; the file is append-only by convention and diffable on purpose,
+    so the record of what was wrong survives being right about it later."""
+    out, defects = [], []
+    if not TOMBSTONES.exists():
+        return out, defects
+    for n, line in enumerate(TOMBSTONES.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) != 4:
+            defects.append(f"line {n}: {len(parts)} fields, want 4 (key, value, reason, date)")
+            continue
+        key, value, reason, date = (x.strip() for x in parts)
+        out.append({"line": n, "key": key, "value": value, "reason": reason, "date": date})
+    return out, defects
+
+
+def source_changed_on(src):
+    """Last date the source actually moved, as YYYY-MM-DD, or None.
+
+    Prefers the file's last git commit date over its mtime, because mtime is
+    checkout time on a fresh clone and would flag every row in the ledger the
+    first time someone ran this on a new machine. Falls back to mtime only when
+    git cannot answer, and returns None when neither can.
+    """
+    root = repo_root()
+    for base in [BASE] + ([root] if root else []):
+        f = base / src
+        if not f.exists():
+            continue
+        try:
+            r = subprocess.run(
+                ["git", "-C", str(f.parent), "log", "-1", "--format=%cs", "--", f.name],
+                capture_output=True, text=True, timeout=10,
+            )
+            out = r.stdout.strip()
+            if r.returncode == 0 and DATE_RE.match(out):
+                return out
+        except (OSError, subprocess.SubprocessError):
+            pass
+        try:
+            return datetime.fromtimestamp(f.stat().st_mtime, timezone.utc).strftime("%Y-%m-%d")
+        except OSError:
+            return None
+    return None
+
+
 def looks_like_path(src):
     return bool(src) and "://" not in src and " " not in src and not src.startswith(("PR", "D-", "#"))
+
+
+def reject(argv):
+    """Retire a wrong answer and tombstone it.
+
+    Removes the row from index.tsv, records key, the rejected answer, the reason
+    and the date in tombstones.tsv, and journals the correction so the raw trail
+    keeps it too. The value of the tombstone is not the deletion, which a text
+    editor could do; it is that check() now fails if that key comes back with
+    that same answer.
+    """
+    key, reason = None, None
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--reason":
+            i += 1
+            reason = argv[i] if i < len(argv) else ""
+        elif key is None:
+            key = a
+        else:
+            key += " " + a
+        i += 1
+    if not key or not key.strip():
+        print('mem reject: name the key, quoted', file=sys.stderr)
+        return 2
+    if not reason or not reason.strip():
+        print("mem reject: --reason is required; a tombstone with no reason is a deletion",
+              file=sys.stderr)
+        return 2
+
+    rows, _ = load_rows()
+    target = None
+    for r in rows:
+        if norm(r["key"]) == norm(key) or norm(key) in [norm(a) for a in r["aliases"]]:
+            target = r
+            break
+    if not target:
+        print(f"mem reject: no row for '{key}'; nothing to retire")
+        return 1
+
+    lines = INDEX.read_text(encoding="utf-8").splitlines()
+    kept = [ln for n, ln in enumerate(lines, 1) if n != target["line"]]
+    INDEX.write_text("\n".join(kept) + ("\n" if kept else ""), encoding="utf-8")
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    new_file = not TOMBSTONES.exists()
+    with TOMBSTONES.open("a", encoding="utf-8") as f:
+        if new_file:
+            f.write("# key\tvalue\treason\tdate  (retired answers; append only)\n")
+        f.write("\t".join([target["key"], target["answer"], reason.strip(), today]) + "\n")
+
+    with JOURNAL.open("a", encoding="utf-8") as f:
+        f.write(json.dumps({
+            "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "type": "decision",
+            "text": f"rejected '{target['key']}': {reason.strip()}",
+            "key": target["key"],
+        }, ensure_ascii=False) + "\n")
+
+    print(f"retired '{target['key']}' and tombstoned its answer.")
+    print("check() will now fail if that key returns carrying the same answer.")
+    print("a different answer for the same key is a correction and passes.")
+    return 0
+
+
+def recheck():
+    """Rows whose source moved after the row was last checked.
+
+    This is drift by evidence rather than by calendar: the adaptive staleness
+    horizon asks how long it has been, this asks whether the ground actually
+    shifted. It reports suspicion, never a verdict. A changed source does not
+    make a fact false, and an unchanged source does not make it true.
+    """
+    rows, defects = load_rows()
+    if defects:
+        print("index.tsv has defects; run 'mem check' first")
+        return 2
+    drifted, unknown = [], []
+    for r in rows:
+        if not looks_like_path(r["source"]):
+            continue
+        moved = source_changed_on(r["source"])
+        if moved is None:
+            unknown.append(r)
+        elif r["checked"] != "-" and DATE_RE.match(r["checked"]) and moved > r["checked"]:
+            drifted.append((r, moved))
+    if drifted:
+        print(f"{len(drifted)} row(s) whose source moved after the last check:\n")
+        for r, moved in sorted(drifted, key=lambda x: x[1], reverse=True):
+            print(f"  {r['key']}")
+            print(f"    checked {r['checked']}, source {r['source']} changed {moved}")
+        print("\nre-read the source and either re-date the row or 'mem reject' it.")
+    else:
+        print("no source has moved since its row was checked.")
+    if unknown:
+        print(f"\n{len(unknown)} row(s) whose source date could not be read "
+              f"(not tracked by git and no readable mtime); check those by hand.")
+    return 0
 
 
 def check():
@@ -261,9 +444,10 @@ def check():
         k = norm(r["key"])
         if not k:
             problems.append(f"index.tsv line {r['line']}: empty key")
-        if k.split(" ")[0] in ("add", "check"):
+        if k.split(" ")[0] in SUBCOMMANDS:
             problems.append(
-                f"index.tsv line {r['line']}: key starts with a reserved subcommand word (add/check)"
+                f"index.tsv line {r['line']}: key starts with a reserved subcommand word "
+                f"({'/'.join(SUBCOMMANDS)})"
             )
         if not r["answer"]:
             problems.append(f"index.tsv line {r['line']}: empty answer")
@@ -287,6 +471,17 @@ def check():
                 problems.append(
                     f"index.tsv line {r['line']}: source '{src}' resolves nowhere (tried the desk dir and the repo root)"
                 )
+    tombs, tdefects = load_tombstones()
+    problems += [f"tombstones.tsv {d}" for d in tdefects]
+    retired = {(norm(t["key"]), norm(t["value"])): t for t in tombs}
+    for r in rows:
+        hit = retired.get((norm(r["key"]), norm(r["answer"])))
+        if hit:
+            problems.append(
+                f"index.tsv line {r['line']}: '{r['key']}' is back carrying the answer retired "
+                f"on {hit['date']} ({hit['reason']}); a different answer would be a correction, "
+                f"this one is the same value returning"
+            )
     if not KERNEL.exists():
         problems.append(f"kernel missing: {KERNEL.name}")
     else:
@@ -324,6 +519,10 @@ def main(argv):
         return add(argv[1:])
     if argv[0] == "check":
         return check()
+    if argv[0] == "reject":
+        return reject(argv[1:])
+    if argv[0] == "recheck":
+        return recheck()
     if argv[0] == "--stdin":
         raw = sys.stdin.read()[:STDIN_CAP]
         return lookup(raw.split(), hook_mode=True)

@@ -48,7 +48,9 @@ Five parts, each with one job:
   database that happens to be greppable text, not a document anyone reads.
 - **The door** (`mem`): a stdlib-only CLI. `mem <words>` answers by exact key
   or alias, then by ranked token overlap, capped at three rows. `mem add`
-  appends raw capture to the journal. `mem check` is the integrity gate:
+  appends raw capture to the journal. `mem reject` retires a wrong answer into
+  a tombstone that `check` then enforces against, and `mem recheck` reports rows
+  whose source moved after they were last checked. `mem check` is the integrity gate:
   duplicate keys, dead sources, oversized kernel, malformed rows, all CI-able.
 - **The journal** (`journal.jsonl`): append-only capture. Any session records
   a durable fact in one command, unpolished, and moves on.
