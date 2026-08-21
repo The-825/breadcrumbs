@@ -1,4 +1,4 @@
-# SESSION_STATE.md � living handoff
+# SESSION_STATE.md · living handoff
 
 > How to use this file: read it FIRST at session start. Refresh it fully when
 > the operator says "checkpoint". Move finished work out so this file never
@@ -43,4 +43,3 @@ review rather than changing facts or tombstones.
 - The figure-citation checker: build or label. See above.
 - D-18 is the latest ruling (2026-08-21, contradictions are proposals before
   they are mutations).
-

@@ -1,4 +1,4 @@
-# DECISIONS.md � decisions ledger
+# DECISIONS.md · decisions ledger
 
 One entry per durable ruling, newest last. Append the entry the SAME turn the
 ruling lands, before moving on to the work it unblocks. Superseded entries stay
@@ -8,7 +8,7 @@ an entry.
 This repo teaches the pattern in [`templates/DECISIONS_TEMPLATE.md`](../templates/DECISIONS_TEMPLATE.md)
 and now runs it on itself. It should have from commit one.
 
-## D-1 � 2026-08-06 � This repo runs its own memory pattern
+## D-1 · 2026-08-06 · This repo runs its own memory pattern
 
 Ruling: `breadcrumbs` keeps a `SESSION_STATE.md` handoff at repo root and this
 decisions ledger, both built from its own templates, and its `CLAUDE.md` names
@@ -18,7 +18,7 @@ none of it, so a fresh session here booted blind. Publishing a pattern you do
 not run on yourself is the cheapest kind of drift and the easiest to catch.
 Source: cross-repo continuity sweep, 2026-08-06 session.
 
-## D-2 � 2026-08-06 � Book references are pointers, never summaries
+## D-2 · 2026-08-06 · Book references are pointers, never summaries
 
 Ruling: public docs may point at *From Archivist to Architect* by title in one
 line. They may not summarize its content, describe what a chapter argues, or
@@ -29,7 +29,7 @@ public repo and stale on top of it. The pointer-only convention already existed
 and needed a place where it binds.
 Source: cross-repo continuity sweep, 2026-08-06 session.
 
-## D-3 � 2026-08-06 � Unbuilt tooling is named as unbuilt
+## D-3 · 2026-08-06 · Unbuilt tooling is named as unbuilt
 
 Ruling: no doc in this repo describes a script, check, or CI step as existing
 unless it exists in the tree. Planned work is written as planned, with the
@@ -40,7 +40,7 @@ contradicted itself by calling it a roadmap item. A public kit that overstates
 its own coverage is the one defect readers cannot verify around.
 Source: cross-repo continuity sweep, 2026-08-06 session.
 
-## D-4 � 2026-08-06 � The predecessor repo is private and archived; breadcrumbs is the only public companion
+## D-4 · 2026-08-06 · The predecessor repo is private and archived; breadcrumbs is the only public companion
 
 Ruling: `agent-ops-playbook` has been made private and archived. `The-825/breadcrumbs`
 is the sole public companion repo, and every reader-facing pointer resolves here.
@@ -50,7 +50,7 @@ A continuity sweep flagged it as the largest open item on the public surface. Ar
 rather than deleted, so the history survives and the decision is reversible.
 Source: Jovan, session 2026-08-06.
 
-## D-5 � 2026-08-06 � Silent about provenance, plain about the artifact
+## D-5 · 2026-08-06 · Silent about provenance, plain about the artifact
 
 Ruling: public commit messages, PR bodies, and docs in this repo never reference the
 private origin of anything here. No employer, no client, no private repo, no book, no
@@ -68,7 +68,7 @@ other way. D-3 already rules that unbuilt things are named as unbuilt; this is t
 principle applied to history rather than to features.
 Source: Jovan, session 2026-08-06, answering the (a)/(b) question directly with "a".
 
-## D-6 � 2026-08-06 � The guard ships, the wordlist does not
+## D-6 · 2026-08-06 · The guard ships, the wordlist does not
 
 Ruling: `ci-kit/guards/guard_no_provenance_leak.py` enforces D-5. The forbidden-term list
 is local and gitignored (`.provenance-terms`); the repo ships only
@@ -79,7 +79,7 @@ The scrub-narration patterns are safe to ship because they name the ACT rather t
 subject. The general form is worth stating: ship the check, keep the sensitive parameter
 out of the artifact.
 Source: session 2026-08-06, design constraint found while writing the guard.
-## D-7 � 2026-08-06 � Commits and PRs here carry the flight metaphor
+## D-7 · 2026-08-06 · Commits and PRs here carry the flight metaphor
 
 Ruling: public-facing writing in this repo, including commit messages and PR titles and
 bodies, keeps a light aviation or flight reference where one fits naturally. The repo
@@ -91,7 +91,7 @@ image per message, chosen because it actually describes the mechanism, never a p
 stapled to the front of a technical sentence. If the metaphor does not fit the change,
 skip it rather than force it.
 
-## D-8 � 2026-08-06 � Memory measurement ships as a doc first, tooling later
+## D-8 · 2026-08-06 · Memory measurement ships as a doc first, tooling later
 
 Ruling: the retrieval-measurement layer (reachability exam, injection-lane probe,
 use-stamp readout, search-miss ledger) enters this repo as a pattern essay plus a ledger
@@ -104,7 +104,7 @@ honest, and it keeps the repo's no-unbuilt-claims rule intact.
 Source: session 2026-08-06.
 Superseded by D-9.
 
-## D-9 � 2026-08-06 � The retrieval exam ships runnable after all
+## D-9 · 2026-08-06 · The retrieval exam ships runnable after all
 
 Ruling: D-8 is reversed. `templates/ledger-tools/retrieval_exam.py` ships as a working,
 self-tested checker covering reachability, the injection-lane probe, and the use-stamp
@@ -117,7 +117,7 @@ a doc that names the same assumption and stops. The operator asked for something
 can run.
 Source: Jovan, session 2026-08-06.
 
-## D-10 � 2026-08-06 � D-5 wins over the old rule 1 wording; war stories say what a thing is
+## D-10 · 2026-08-06 · D-5 wins over the old rule 1 wording; war stories say what a thing is
 
 Ruling: where D-5 (never narrate a removal) and the original rule 1 wording ("anonymized
 war stories are fine and are labeled as such") conflicted, D-5 wins. Rule 1 is rewritten:
@@ -130,7 +130,7 @@ there was something private to remove, which is the disclosure the removal was m
 prevent, so the label defeats its own purpose. The guard already encoded D-5's side.
 Source: Jovan, session 2026-08-06.
 
-## D-11 � 2026-08-08 � The memory desk ships as the read-side refinement
+## D-11 · 2026-08-08 · The memory desk ships as the read-side refinement
 
 Ruling: retrieval gets one mechanical door, `templates/memory-desk/`: a flat,
 tool-queried fact index with a raw-capture journal, a scheduled gardener contract, and
@@ -142,17 +142,17 @@ and the honest answer is that weak sessions fail at retrieval judgment, not exec
 so judgment moves out of the session and into the index's maintenance loop.
 Source: operator request, session 2026-08-08.
 
-## D-12 � 2026-08-09 � Tiered merge gate
+## D-12 · 2026-08-09 · Tiered merge gate
 Ruling: The approval label gates by diff, not blanket. Safe set (docs/, checklists/, README.md, planning/DECISIONS.md, additive or modified only) merges on green unlabeled; deletions, renames, workflows, guards, templates, skills, kit.json, llms.txt, CLAUDE.md, and everything else keep the label. Policy lives in ci-kit/workflows/greenlight_tiers.py; the gate runs the base branch's copy.
 Why: A blanket label past a few PRs a day becomes a batch rubber stamp that still looks like review; tiering keeps the human where a miss costs something.
 Source: Operator directive, session 2026-08-09 ("automate the merge gate and place the human review at a more intentional component").
 
-## D-13 � 2026-08-09 � SESSION_STATE.md joins the tier safe set
+## D-13 · 2026-08-09 · SESSION_STATE.md joins the tier safe set
 Ruling: Checkpoint refreshes of SESSION_STATE.md merge on green with no label (modification/addition only; deleting it still gates).
 Why: The handoff refresh is routine, reviewed by its own next reader, and blocking it on the label defeats the checkpoint cadence.
 Source: Operator directive, session 2026-08-09.
 
-## D-14 � 2026-08-19 � The axis is auditable memory, not remembering at all
+## D-14 · 2026-08-19 · The axis is auditable memory, not remembering at all
 Ruling: The whitepaper's framing sharpens from "agents forget between sessions" to
 "the question is whether what they remember is inspectable." Consumer assistants now
 ship cross-session memory by default; the differentiator is not recall but whether a
@@ -165,7 +165,7 @@ the actual claim. Prompted by a first-party observation: an assistant asked to d
 its own memory reported summarized impressions it could not show, diff, or date.
 Source: session 2026-08-19, operator-run probe of a consumer assistant's self-description
 
-## D-15 � 2026-08-19 � The axis is governed memory � amends D-14
+## D-15 · 2026-08-19 · The axis is governed memory · amends D-14
 
 Ruling: the positioning axis sharpens once more, from auditable memory to **governed**
 memory. Inspectable storage is the floor; governance is the claim. D-14 was right that
@@ -192,7 +192,7 @@ storage-versus-process distinction to the three-test rubric.
 Source: Jovan, 2026-08-19, on a market check that verified the Letta page directly.
 Analysis in the BetterMe repo, `825/agent-ops-lane-v1.md`, and logged there as AL-8.
 
-## D-16 � 2026-08-20 � D-3 gets a mechanical check and a stated default
+## D-16 · 2026-08-20 · D-3 gets a mechanical check and a stated default
 
 Ruling: D-3 stands and gains two things. Where a doc claims a check exists, the
 check gets built rather than the claim softened, when building it is cheap
@@ -209,7 +209,7 @@ habit rather than by contract.
 Source: claim-to-code audit of the docs tree, 2026-08-20, and the branch
 `claude/context-budget-guard`.
 
-## D-17 � 2026-08-20 � Borrow mechanisms, not a memory platform
+## D-17 · 2026-08-20 · Borrow mechanisms, not a memory platform
 
 Ruling: the runnable memory engine adds two focused mechanisms from the wider
 agent-memory field: facts may cite the exact source episodes that produced them,
@@ -222,7 +222,7 @@ platform while weakening the governance distinction; provenance-linked writes an
 deterministic fusion close real gaps without changing the storage model.
 Source: operator-approved GitHub memory-system benchmark, 2026-08-20.
 
-## D-18 ? 2026-08-21 ? Contradictions are proposals before they are mutations
+## D-18 � 2026-08-21 � Contradictions are proposals before they are mutations
 
 Ruling: the runnable memory engine classifies normalized exact matches and
 fully bounded non-overlapping validity windows deterministically, then returns
@@ -232,5 +232,4 @@ default, and the proposal path never mutates facts or tombstones.
 Why: contradiction resolution can improve correction quality only if a failed
 probe cannot erase evidence or quietly authorize a write.
 Source: operator-approved GitHub memory-system audit, 2026-08-21.
-
 

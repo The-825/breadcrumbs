@@ -55,4 +55,3 @@ The first auditor command audits the sample fixture against this repo's tree. By
 ## Adopting
 
 Copy `conclusions_audit.py` anywhere in your repo (it takes the ledger path as an argument and resolves entry paths against `--root`), copy `capture_nudge.py` into `.claude/hooks/` and register it per [capture-nudge.md](capture-nudge.md), and add the one-line `.gitattributes` entry once your ledger has parallel writers. The auditor is a report, not a gate: it exits 0 whatever it finds, so it fits a scheduled job or a manual sweep without blocking anything. Its `--file-tasks` flag is a stub seam for wiring findings into your issue tracker.
-
