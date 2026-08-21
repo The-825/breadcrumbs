@@ -32,8 +32,8 @@ THE TWO RULES THIS ENCODES, which are the point:
 
 HONEST LIMITS, so you do not trust it past what it does:
 
-- Retrieval is recency plus exact keyword overlap. It is deterministic and
-  inspectable with cat and grep, and it will miss a paraphrase. If you need
+- Retrieval fuses lexical, action/tag, and recency ranks. It is deterministic
+  and inspectable with cat and grep, and it will miss a paraphrase. If you need
   semantic recall, add it as a separate layer; do not pretend this one has it.
 - Atomic per-file writes (temp file + rename) protect against a crash mid-
   write. They do NOT make concurrent read-modify-write safe: two agents
@@ -43,6 +43,14 @@ HONEST LIMITS, so you do not trust it past what it does:
 - No decay, no use-stamps, no reachability scoring. Those are the measurement
   layer (docs/memory-measurement.md, conclusions_audit.py, retrieval_exam.py)
   and they run OVER stores like this one rather than inside it.
+
+DESIGN REFERENCES. The episode-to-fact provenance shape follows Graphiti's
+public episode lineage model, and the multi-signal read path follows the same
+semantic-plus-lexical fusion direction described by Mem0. This implementation
+is independent, stdlib-only, and uses no code from either project:
+
+  https://github.com/getzep/graphiti
+  https://github.com/mem0ai/mem0
 
 Usage:
     python3 memory_engine.py --selftest
@@ -63,9 +71,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import tempfile
 import time
+import uuid
 from pathlib import Path
 
 # Scratchpad entries kept resident before the overflow flushes to the episodic
@@ -155,22 +165,26 @@ class MemoryEngine:
     # -- episodic tier --------------------------------------------------------
 
     def log_episode(self, action, outcome, tags=None):
-        row = {"ts": time.time(), "action": action, "outcome": outcome,
-               "tags": tags or []}
+        """Append an event and return its stable provenance handle."""
+        row = {"episode_id": str(uuid.uuid4()), "ts": time.time(),
+               "action": action, "outcome": outcome, "tags": tags or []}
         with open(self.episodes, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
+        return row["episode_id"]
 
     # -- semantic tier --------------------------------------------------------
 
     def store_fact(self, category, key, value, valid_from=None,
-                   valid_until=None, scope="internal"):
+                   valid_until=None, scope="internal", source_episode_ids=None):
         """Record a fact as ASSERTED. Nothing an agent stores starts verified.
 
         valid_from / valid_until (optional, unix timestamps) are the VALID-AT
         axis: when the fact was true in the world, distinct from recorded_at
         (when the memory learned it). scope is the AUDIENCE axis: "public",
         "internal" (default; fail closed), or "regulated". Retrieval filters
-        on both; see build_context.
+        on both; see build_context. source_episode_ids optionally links the
+        derived fact to the exact append-only events that produced it. Unknown
+        episode ids are refused rather than stored as decorative provenance.
 
         Restating an existing key is a supersession, not a silent edit: the
         prior value and its status are logged to the episodic ledger BEFORE
@@ -181,6 +195,18 @@ class MemoryEngine:
         SAME value is a no-op: status and evidence are untouched, so a
         verified fact is never demoted by repetition.
         """
+        sources = list(dict.fromkeys(source_episode_ids or []))
+        if sources:
+            known = {
+                row.get("episode_id")
+                for row in self._load_episodes()
+                if row.get("episode_id")
+            }
+            missing = [source for source in sources if source not in known]
+            if missing:
+                raise ValueError(
+                    "unknown source episode id(s): " + ", ".join(missing)
+                )
         stones = self._read(self.tombstones)
         stone = stones.get(f"{category}/{key}", {}).get(str(value))
         if stone is not None:
@@ -196,9 +222,21 @@ class MemoryEngine:
         prior = facts.get(category, {}).get(key)
         if prior is not None and prior.get("value") == value:
             # Restating the same value is a no-op, not a demotion: a verified
-            # fact keeps its status and evidence. (Atlas round 2, 2026-08-09:
-            # the same-value path silently reset verified to asserted with
-            # evidence None, an untraceable demotion the docstring denied.)
+            # fact keeps its status and evidence. New source links still
+            # accumulate, because a second independent observation is useful
+            # provenance even when it does not change the answer.
+            existing_sources = prior.get("source_episode_ids", [])
+            merged_sources = list(dict.fromkeys(existing_sources + sources))
+            if merged_sources != existing_sources:
+                self.log_episode(
+                    "PROVENANCE_LINKED",
+                    json.dumps({"category": category, "key": key,
+                                "value": value,
+                                "source_episode_ids": sources}),
+                    ["provenance"],
+                )
+                prior["source_episode_ids"] = merged_sources
+                self._write(self.facts, facts)
             return
         if prior is not None:
             self.log_episode(
@@ -206,7 +244,10 @@ class MemoryEngine:
                 json.dumps({"category": category, "key": key,
                             "prior_value": prior.get("value"),
                             "prior_status": prior.get("status"),
-                            "new_value": value}),
+                            "prior_source_episode_ids":
+                                prior.get("source_episode_ids", []),
+                            "new_value": value,
+                            "new_source_episode_ids": sources}),
                 ["supersession"],
             )
         if scope not in ("public", "internal", "regulated"):
@@ -216,6 +257,8 @@ class MemoryEngine:
             "value": value, "status": "asserted", "evidence": None,
             "recorded_at": time.time(), "scope": scope,
         }
+        if sources:
+            entry["source_episode_ids"] = sources
         if valid_from is not None:
             entry["valid_from"] = valid_from
         if valid_until is not None:
@@ -344,13 +387,66 @@ class MemoryEngine:
 
     SCOPE_ORDER = {"public": 0, "internal": 1, "regulated": 2}
 
+    @staticmethod
+    def _tokens(text):
+        return set(re.findall(r"[a-z0-9_]+", str(text).lower()))
+
+    def _load_episodes(self):
+        rows = []
+        for line in self.episodes.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                rows.append(json.loads(line))
+        return rows
+
+    def _rank_episodes(self, rows, query):
+        """Fuse lexical, action/tag, and recency ranks deterministically.
+
+        Reciprocal rank fusion combines ordinal ranks instead of incomparable
+        raw scores. A query-less read remains newest-first. Stable list indexes
+        break exact ties, so identical inputs always produce identical output.
+        """
+        if not rows:
+            return []
+        newest = list(reversed(rows))
+        qtokens = self._tokens(query)
+        if not qtokens:
+            return newest
+
+        lexical = sorted(
+            newest,
+            key=lambda row: len(
+                qtokens & self._tokens(row.get("outcome", ""))
+            ),
+            reverse=True,
+        )
+        action_tag = sorted(
+            newest,
+            key=lambda row: len(
+                qtokens & self._tokens(
+                    row.get("action", "") + " "
+                    + " ".join(row.get("tags", []))
+                )
+            ),
+            reverse=True,
+        )
+        signals = ((lexical, 3.0), (action_tag, 2.0), (newest, 1.0))
+        scores = {id(row): 0.0 for row in rows}
+        for ranked, weight in signals:
+            for rank, row in enumerate(ranked, start=1):
+                scores[id(row)] += weight / (60 + rank)
+        positions = {id(row): index for index, row in enumerate(newest)}
+        return sorted(
+            newest,
+            key=lambda row: (-scores[id(row)], positions[id(row)]),
+        )
+
     def build_context(self, query="", max_episodes=MAX_EPISODES_IN_CONTEXT,
                       as_of=None, valid_at=None, audience=None):
         """One deterministic context block: goal, scratchpad, facts, episodes.
 
-        Episode selection is newest-first, with exact keyword overlap against
-        the query promoting matches ahead of mere recency. Deterministic and
-        greppable; it will not catch a paraphrase, and says so in the header.
+        Episode selection uses deterministic reciprocal rank fusion over three
+        inspectable signals: lexical overlap in the outcome, action/tag overlap,
+        and recency. It will not catch a paraphrase, and says so in the header.
 
         as_of (unix timestamp) replays the learned-at axis: facts recorded
         after that moment are excluded and episodes are cut at it, so you can
@@ -380,7 +476,6 @@ class MemoryEngine:
         """
         state = self._read(self.working)
         facts = self._read(self.facts)
-        qwords = {w for w in query.lower().split() if len(w) > 2}
 
         rows = []
         # The episodic tier carries no scope field, and supersession episodes
@@ -388,24 +483,13 @@ class MemoryEngine:
         # omitted entirely: fail closed rather than leak through the side door
         # (found by this module's own selftest, 2026-08-10).
         if audience is None:
-            for line in self.episodes.read_text(encoding="utf-8").splitlines():
-                if line.strip():
-                    rows.append(json.loads(line))
+            rows = self._load_episodes()
         if as_of is not None:
             rows = [r for r in rows if r.get("ts", 0) <= as_of]
-        rows.reverse()  # newest first
-        matched = [r for r in rows if qwords and (
-            qwords & set((r["action"] + " " + r["outcome"]).lower().split()))]
-        picked, seen = [], set()
-        for r in matched + rows:
-            rid = id(r)
-            if rid not in seen:
-                picked.append(r)
-                seen.add(rid)
-            if len(picked) >= max_episodes:
-                break
+        picked = self._rank_episodes(rows, query)[:max_episodes]
 
-        header = "=== MEMORY (retrieval: recency + exact keyword; no paraphrase match)"
+        header = ("=== MEMORY (retrieval: reciprocal-rank fusion over lexical, "
+                  "action/tag, and recency signals; no paraphrase match)")
         if as_of is not None:
             header += (" | as-of replay: facts/episodes learned after the "
                        "cutoff excluded; unstamped facts always included")
@@ -450,7 +534,9 @@ class MemoryEngine:
                         tag = "asserted"
                 if tag == "verified":
                     tag += f" ({e['evidence']})"
-                out.append(f"fact.{cat}.{k}: {e['value']} [{tag}]")
+                sources = e.get("source_episode_ids", [])
+                source_note = (f" sources={','.join(sources)}" if sources else "")
+                out.append(f"fact.{cat}.{k}: {e['value']} [{tag}]{source_note}")
         for r in picked:
             out.append(f"episode: [{r['action']}] {r['outcome']}")
         out.append("=== END MEMORY ===")
@@ -510,6 +596,41 @@ def selftest():
 
         ctx2 = mem.build_context("latency pool")
         ok("retrieval is deterministic", ctx == ctx2)
+
+        # Provenance links: a derived fact can name the exact append-only
+        # event that produced it, and a made-up handle is refused.
+        source_id = mem.log_episode(
+            "OBSERVED", "runtime reports Python 3.11", ["runtime"]
+        )
+        mem.store_fact(
+            "env", "observed_python", "3.11",
+            source_episode_ids=[source_id, source_id],
+        )
+        linked = mem._read(mem.facts)["env"]["observed_python"]
+        ok("fact provenance keeps one stable source episode id",
+           linked["source_episode_ids"] == [source_id])
+        ok("context exposes the fact-to-episode provenance link",
+           f"sources={source_id}" in mem.build_context())
+        unknown_source_refused = False
+        try:
+            mem.store_fact(
+                "env", "invented_source", "x",
+                source_episode_ids=["episode-that-does-not-exist"],
+            )
+        except ValueError:
+            unknown_source_refused = True
+        ok("unknown source episode ids are refused",
+           unknown_source_refused)
+
+        # Retrieval fusion: a relevant older event must beat an irrelevant
+        # newer one when the prompt budget admits only one episode. Both the
+        # outcome and the action/tag lane point to the older event.
+        mem.log_episode("MIGRATION", "schema flight completed", ["database"])
+        mem.log_episode("CHAT", "unrelated newest event", ["general"])
+        fused = mem.build_context("database migration schema", max_episodes=1)
+        ok("multi-signal fusion beats recency-only retrieval",
+           "schema flight completed" in fused
+           and "unrelated newest event" not in fused)
 
         # Trust-axis replay: verification stamped after recorded_at must not
         # replay as verified for an as_of between the two (Atlas review,
@@ -602,6 +723,36 @@ def selftest():
            kept["status"] == "verified" and kept["evidence"] == "CI run 42")
         ok("restating the same value also keeps verified_at",
            kept.get("verified_at") is not None)
+        corroborating = mem.log_episode(
+            "OBSERVED", "second runtime check reports Python 3.11", ["runtime"]
+        )
+        mem.store_fact(
+            "env", "python", ">=3.11",
+            source_episode_ids=[corroborating],
+        )
+        enriched = mem._read(mem.facts)["env"]["python"]
+        ok("same-value evidence accumulates without demoting the fact",
+           enriched["status"] == "verified"
+           and enriched["evidence"] == "CI run 42"
+           and enriched["source_episode_ids"] == [corroborating])
+        replacement_source = mem.log_episode(
+            "OBSERVED", "runtime check reports Python 3.12", ["runtime"]
+        )
+        mem.store_fact(
+            "env", "python", ">=3.12",
+            source_episode_ids=[replacement_source],
+        )
+        eps4 = [json.loads(line) for line in
+                mem.episodes.read_text().splitlines() if line.strip()]
+        latest_supersession = [
+            episode for episode in eps4
+            if episode["action"] == "SUPERSEDED"
+        ][-1]
+        supersession_record = json.loads(latest_supersession["outcome"])
+        ok("supersession preserves old and new provenance links",
+           supersession_record["prior_source_episode_ids"] == [corroborating]
+           and supersession_record["new_source_episode_ids"]
+           == [replacement_source])
 
         # tombstones: a rejected value cannot be silently re-asserted
         mem.store_fact("env", "db", "postgres 14")
@@ -725,3 +876,4 @@ if __name__ == "__main__":
     ap.add_argument("--demo", action="store_true")
     a = ap.parse_args()
     sys.exit(selftest() if a.selftest else demo() if a.demo else 0)
+
