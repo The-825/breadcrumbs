@@ -59,6 +59,10 @@ def validate(assessment: Mapping[str, Any]) -> None:
         raise AssessmentError("public-ready status requires human_reviewed=true")
     if status == "published" and not _nonempty(assessment.get("publication_approval")):
         raise AssessmentError("published status requires publication_approval")
+    if status == "superseded" and not _nonempty(assessment.get("supersedes")):
+        raise AssessmentError("superseded status requires supersedes")
+    if status == "withdrawn" and not _nonempty(assessment.get("withdrawal_reason")):
+        raise AssessmentError("withdrawn status requires withdrawal_reason")
 
     dimensions = assessment.get("dimensions")
     if not isinstance(dimensions, Mapping):
