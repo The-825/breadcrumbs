@@ -42,6 +42,8 @@ def fixture(scored=5):
         "human_reviewed": False,
         "assessed_at": "2026-08-21",
         "publication_approval": None,
+        "supersedes": None,
+        "withdrawal_reason": None,
         "dimensions": dimensions,
     }
 
@@ -83,6 +85,22 @@ class BreadcrumbScoreTests(unittest.TestCase):
         assessment["owner_opt_in"] = False
         with self.assertRaisesRegex(AssessmentError, "owner_opt_in"):
             score(assessment)
+
+    def test_superseded_assessment_links_to_the_prior_digest(self):
+        assessment = fixture()
+        assessment["status"] = "superseded"
+        with self.assertRaisesRegex(AssessmentError, "supersedes"):
+            score(assessment)
+        assessment["supersedes"] = "sha256:prior-assessment"
+        self.assertEqual(score(assessment)["status"], "superseded")
+
+    def test_withdrawal_preserves_a_reason(self):
+        assessment = fixture()
+        assessment["status"] = "withdrawn"
+        with self.assertRaisesRegex(AssessmentError, "withdrawal_reason"):
+            score(assessment)
+        assessment["withdrawal_reason"] = "Owner withdrew the card from discovery"
+        self.assertEqual(score(assessment)["status"], "withdrawn")
 
     def test_digest_is_deterministic(self):
         assessment = fixture(scored=8)
