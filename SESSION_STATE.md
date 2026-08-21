@@ -5,27 +5,27 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (forgetting-closure branch in progress)
+Last refreshed: 2026-08-21 (consolidation-proposal branch in progress)
 
 ## Current state
 
-- Active branch: `claude/forgetting-closure`.
-- In-flight edits: the memory-desk gardener consults rejected-value tombstones
-  before promotion, with negative tests proving a re-derived rejected answer
-  never changes the index. This branch touches templates and waits for the
-  approval label after CI.
-- Everything through PR #71 is merged on `main`.
+- Active branch: `claude/consolidation-proposals`.
+- In-flight edits: possible semantic duplicates become stable, typed,
+  idempotent proposal records preserving candidate and existing lineage. The
+  proposal queue is review-only and no memory is merged automatically.
+- Everything through PR #72 is merged on `main`.
 
 ## What just landed
 
-**The forgetting-closure layer (D-19, current branch).** The gardener now treats
-negative memory as a pre-write guard. A retained source or fresh capture cannot
-re-promote the same normalized key and answer after the operator rejected it;
-the index remains byte-for-byte unchanged and the refusal is reported.
+**The consolidation-proposal layer (D-20, current branch).** The gardener's
+semantic-overlap warning now has a durable, machine-readable review surface.
+Stable ids make retries idempotent, both source rows remain inspectable, and
+proposal creation carries an explicit `mutates: false` contract.
 
 ## Next steps / watch
 
-- Run the gardener and full repo suites, inspect the diff, then publish and
+- Run the gardener and full repo suites, inspect the diff, restore the
+  executable bit lost during the prior connector publish, then publish and
   greenlight under the operator's standing instruction.
 - Atlas thread (r/AIMemory): a round-3 reply is drafted and unposted. It opens by
   conceding the correction gap and says what #67 did and did not close. Check
@@ -40,5 +40,5 @@ the index remains byte-for-byte unchanged and the refusal is reported.
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-19 is the latest ruling (2026-08-21, negative memory guards derivation
-  before it guards CI).
+- D-20 is the latest ruling (2026-08-21, consolidation starts as a durable
+  proposal).

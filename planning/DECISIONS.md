@@ -244,3 +244,14 @@ store wrong even though the failure was reported. Forgetting is incomplete until
 retained evidence cannot launder the rejected answer back into ordinary recall.
 Source: operator-approved Atlas lifecycle-strengthening pass, 2026-08-21.
 
+## D-20 ? 2026-08-21 ? Consolidation starts as a durable proposal
+
+Ruling: possible semantic duplicates found during gardening become stable,
+typed, idempotent proposal records carrying both candidate and existing
+lineage. Proposal creation never merges, hides, promotes, or rewrites memory;
+durable mutation still requires human review through a later explicit path.
+Why: an ephemeral warning cannot support headless review, while an autonomous
+rewrite can silently discard nuance or evidence. A durable proposal preserves
+both the work queue and the authorization boundary.
+Source: operator-approved Atlas extraction-strengthening pass, 2026-08-21.
+

@@ -29,12 +29,16 @@ What it DOES do, mechanically, safely:
   - Reads tombstones.tsv before proposing rows and refuses any candidate whose
     normalized key and answer match a rejected value. Negative memory is a
     write guard, not a defect discovered after the write.
+  - Turns possible semantic duplicates into stable, typed, review-only objects
+    in consolidation-proposals.jsonl. Re-running the pass does not enqueue the
+    same pair twice, and no proposal mutates either memory.
   - Runs mem's own `check()` after writing, so a gardening pass that breaks
     the index never gets written silently (step 6).
   - Appends the watermark last (step 7), so nothing is double-processed.
 
 Default is --dry-run: prints the proposed diff and the review queue,
-writes nothing. --apply writes index.tsv and the watermark. Either way,
+writes nothing. --apply writes index.tsv, the durable proposal queue, and the
+watermark. Either way,
 the human-judgment items (refresh candidates, retire candidates, semantic-
 duplicate flags) print to a review queue and are never auto-applied,
 matching GARDENER.md's "the gardener proposes; a human merges."
@@ -44,6 +48,7 @@ Usage:
   promote.py --selftest
 """
 import json
+import hashlib
 import re
 import sys
 from datetime import datetime, timezone
@@ -140,6 +145,50 @@ def word_overlap(a, b):
     return len(wa & wb) / len(wa | wb)
 
 
+def consolidation_proposal(candidate_key, candidate_text, candidate_source,
+                           existing):
+    """Build a stable review object. Creating it never changes either row."""
+    identity = json.dumps({
+        "candidate_key": norm(candidate_key),
+        "candidate_text": norm(candidate_text),
+        "existing_key": norm(existing["key"]),
+        "existing_answer": norm(existing["answer"]),
+    }, sort_keys=True, separators=(",", ":"))
+    return {
+        "proposal_id": "consolidate-" + hashlib.sha256(
+            identity.encode("utf-8")
+        ).hexdigest()[:16],
+        "kind": "possible_duplicate",
+        "status": "pending",
+        "mutates": False,
+        "candidate": {"key": candidate_key, "answer": candidate_text,
+                      "source": candidate_source},
+        "existing": {"key": existing["key"],
+                     "answer": existing["answer"],
+                     "source": existing["source"]},
+    }
+
+
+def append_proposals(path, proposals):
+    """Append only unseen proposal ids. Returns the number appended."""
+    seen = set()
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if row.get("proposal_id"):
+                seen.add(row["proposal_id"])
+    fresh = [proposal for proposal in proposals
+             if proposal["proposal_id"] not in seen]
+    if fresh:
+        with path.open("a", encoding="utf-8") as handle:
+            for proposal in fresh:
+                handle.write(json.dumps(proposal, ensure_ascii=False) + "\n")
+    return len(fresh)
+
+
 def promote(entries, rows, today, tombstones=None):
     """Mutates rows in place for exact-key updates; returns (new_rows,
     unkeyed_flags, duplicate_flags, skipped, rejected_flags)."""
@@ -178,10 +227,9 @@ def promote(entries, rows, today, tombstones=None):
         else:
             for r in rows:
                 if word_overlap(r["answer"], text) >= DUPLICATE_OVERLAP_THRESHOLD:
-                    duplicate_flags.append({
-                        "candidate_key": key, "candidate_text": text,
-                        "existing_key": r["key"], "existing_answer": r["answer"],
-                    })
+                    duplicate_flags.append(consolidation_proposal(
+                        key, text, source, r
+                    ))
             row = {"key": key, "aliases": "", "answer": text,
                    "source": source, "checked": today}
             rows.append(row)
@@ -274,9 +322,10 @@ def main(argv):
         print(f"  REVIEW: {len(unkeyed)} entr{'y' if len(unkeyed) == 1 else 'ies'} promoted "
               "with a derived key, not a real alias; a human should give it one")
     if dupes:
-        print(f"  REVIEW: {len(dupes)} possible semantic duplicate(s), not auto-merged:")
+        print(f"  REVIEW: {len(dupes)} consolidation proposal(s), not auto-merged:")
         for d in dupes:
-            print(f"    '{d['candidate_key']}' overlaps existing '{d['existing_key']}'")
+            print(f"    {d['proposal_id']}: '{d['candidate']['key']}' overlaps "
+                  f"existing '{d['existing']['key']}'")
     if rejected:
         print(f"  REFUSED: {len(rejected)} tombstoned answer(s) were not promoted:")
         for item in rejected:
@@ -295,6 +344,10 @@ def main(argv):
         write_index(index_path, header, rows)
     else:
         print("index unchanged; no index rewrite needed")
+    appended = append_proposals(desk / "consolidation-proposals.jsonl", dupes)
+    if dupes:
+        print(f"consolidation queue: {appended} new proposal(s), "
+              f"{len(dupes) - appended} already queued")
     newest_ts = entries[-1].get("ts", datetime.now(timezone.utc).isoformat())
     append_watermark(journal_path, newest_ts)
 
@@ -392,9 +445,21 @@ def selftest():
         entries3, _ = load_journal(desk / "journal2.jsonl")
         rows3 = [dict(r) for r in rows2]
         _, _, dupes3, _, _ = promote(entries3, rows3, today)
-        ok("near-duplicate text under a different key is flagged", len(dupes3) == 1)
+        ok("near-duplicate text under a different key is proposed", len(dupes3) == 1)
+        ok("consolidation proposal is typed and review-only",
+           dupes3[0]["kind"] == "possible_duplicate"
+           and dupes3[0]["status"] == "pending"
+           and dupes3[0]["mutates"] is False
+           and dupes3[0]["candidate"]["source"] == "x")
         ok("a flagged duplicate is NOT auto-merged into the existing row",
            any(r["key"] == "a totally different key" for r in rows3))
+        proposal_path = desk / "consolidation-proposals.jsonl"
+        first_append = append_proposals(proposal_path, dupes3)
+        second_append = append_proposals(proposal_path, dupes3)
+        queued = [json.loads(line) for line in
+                  proposal_path.read_text(encoding="utf-8").splitlines()]
+        ok("proposal queue is idempotent by stable id",
+           first_append == 1 and second_append == 0 and len(queued) == 1)
 
         # A fresh capture may repeat a value the operator already rejected.
         # The tombstone must stop it before index.tsv is changed, not merely
