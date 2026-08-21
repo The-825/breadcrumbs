@@ -56,6 +56,11 @@
       "templates/standing-agents",
       "docs/floating-memory.md",
       "docs/multi-agent-hygiene.md"
+    ],
+    "I cannot tell whether an agent is ready for delegation": [
+      "templates/breadcrumb-score/README.md",
+      "templates/breadcrumb-score/breadcrumb_score.py",
+      "templates/breadcrumb-score/assessment.schema.json"
     ]
   },
   "artifacts": [
@@ -226,6 +231,13 @@
       "what": "Context-budget raises as loans: every cap raise files a record with why, a trim target, a trim trigger, and a reassess date; a due loan is a red check and an unrecorded raise fails the gate.",
       "assumes": "a budget manifest of always-loaded files and their line caps (CONTEXT_BUDGET.md in this repo, shape in docs/context-budget.md); stdlib only",
       "selftest": "python3 templates/ledger-tools/budget_loans.py --selftest"
+    },
+    {
+      "path": "templates/breadcrumb-score/breadcrumb_score.py",
+      "kind": "tool",
+      "what": "Evidence-scoped readiness calculator for agents and repositories: unknown dimensions reduce coverage without becoming failures, every scored claim cites evidence, and public-ready states require owner opt-in and human review.",
+      "assumes": "Python 3.9+; a JSON assessment assembled from public or explicitly permitted evidence; stdlib only.",
+      "selftest": "python3 -m unittest discover -s templates/breadcrumb-score/tests"
     }
   ]
 }
