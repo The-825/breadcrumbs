@@ -1,7 +1,17 @@
 import copy
+import importlib.util
+from pathlib import Path
 import unittest
 
-from breadcrumb_score import AssessmentError, DIMENSIONS, score
+
+MODULE_PATH = Path(__file__).resolve().parents[1] / "breadcrumb_score.py"
+SPEC = importlib.util.spec_from_file_location("breadcrumb_score", MODULE_PATH)
+breadcrumb_score = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+SPEC.loader.exec_module(breadcrumb_score)
+AssessmentError = breadcrumb_score.AssessmentError
+DIMENSIONS = breadcrumb_score.DIMENSIONS
+score = breadcrumb_score.score
 
 
 def fixture(scored=5):
