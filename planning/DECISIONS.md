@@ -310,3 +310,9 @@ Why: recall demonstrates availability, while mastery requires demonstrated use
 and transfer without granting an agent authority to certify itself.
 Source: operator-approved governed-learning build, 2026-08-21.
 
+
+## D-26 · 2026-08-21 · Readiness separates evidence coverage from score
+
+Ruling: an agent or repository dimension is scored only when it cites permitted evidence. Unknown dimensions remain unscored and reduce coverage; they never become zeroes. A weighted readiness result requires at least five of eight dimensions, while any public-ready state also requires owner opt-in, human review, and a specific publication approval record.
+Why: collapsing missing evidence into failure creates false rankings, while publishing an automated score without ownership and review turns a useful delegation signal into an unsupported endorsement.
+Source: operator-approved Breadcrumb Score build, 2026-08-21.
