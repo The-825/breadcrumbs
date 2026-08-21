@@ -36,10 +36,14 @@ def build_case(engine, case):
             valid_from=fact.get("valid_from"),
             valid_until=fact.get("valid_until"),
             scope=fact.get("scope", "internal"),
+            asserted_by=fact.get("asserted_by", "agent:golden-fixture"),
+            assertion_authority=fact.get("assertion_authority", "agent"),
         )
         if fact.get("status") == "verified":
             engine.verify_fact(
-                fact["category"], fact["key"], fact["evidence"]
+                fact["category"], fact["key"], fact["evidence"],
+                verified_by=fact["verified_by"],
+                verification_authority=fact["verification_authority"],
             )
         if "recorded_at" in fact or "verified_at" in fact:
             facts = engine._read(engine.facts)

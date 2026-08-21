@@ -266,3 +266,15 @@ proves the specific failures already judged unacceptable stay fixed as ranking
 and lifecycle code evolve.
 Source: operator-approved Atlas retrieval-strengthening pass, 2026-08-21.
 
+## D-22 ? 2026-08-21 ? Trust promotion has an authority ceiling
+
+Ruling: semantic facts record the actor and authority class that asserted them.
+Verification requires evidence plus a distinct verifier whose authority is a
+tool or human; agent authority cannot promote a claim, and the asserting actor
+cannot verify itself. Repetition and added provenance preserve an existing
+trust state but never raise it.
+Why: separating evidence from authority prevents an agent-generated claim from
+becoming verified merely because another agent repeated it or because the same
+actor attached more sources. Trust changes require an independent boundary.
+Source: operator-approved Atlas trust-strengthening pass, 2026-08-21.
+
