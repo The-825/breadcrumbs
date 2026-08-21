@@ -209,3 +209,16 @@ habit rather than by contract.
 Source: claim-to-code audit of the docs tree, 2026-08-20, and the branch
 `claude/context-budget-guard`.
 
+## D-17 · 2026-08-20 · Borrow mechanisms, not a memory platform
+
+Ruling: the runnable memory engine adds two focused mechanisms from the wider
+agent-memory field: facts may cite the exact source episodes that produced them,
+and episodic recall fuses lexical, action/tag, and recency rankings with reciprocal
+rank fusion. The kit does not adopt an external database, autonomous memory
+rewriting, or unverified agent-generated facts.
+Why: the engine already ships bi-temporal replay, scoped assembly, oracle-gated
+verification, supersession, and tombstones. Replacing that contract would add a
+platform while weakening the governance distinction; provenance-linked writes and
+deterministic fusion close real gaps without changing the storage model.
+Source: operator-approved GitHub memory-system benchmark, 2026-08-20.
+
