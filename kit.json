@@ -82,7 +82,7 @@
     {
       "path": "templates/ledger-tools/governed_replay.py",
       "kind": "tool",
-      "what": "Governed offline replay: deterministically selects high-signal, repeated, and recent episodes, validates an external evaluator into a typed fact, skill, watch, correction, or unknown proposal, and appends stable review-only proposals without changing memory.",
+      "what": "Governed offline replay: deterministically selects high-signal, repeated, and recent episodes, validates an external evaluator into a typed fact, skill, watch, correction, or unknown proposal, counterfactually rehearses proposals against expected and forbidden outcomes, and appends stable review-only proposals without changing memory.",
       "assumes": "episodes.jsonl written by templates/ledger-tools/memory_engine.py; stdlib only; evaluator supplied by the adopter.",
       "selftest": "python3 templates/ledger-tools/governed_replay.py --selftest"
     },

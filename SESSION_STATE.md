@@ -5,19 +5,19 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (governed replay proposals in progress)
+Last refreshed: 2026-08-21 (counterfactual rehearsal in progress)
 
 ## Current state
 
-- Active branch: `claude/governed-replay-proposals`.
-- In-flight edits: deterministic offline replay sampling plus typed, durable,
-  review-only proposals for facts, skills, watches, and corrections.
-- Everything through PR #76 is merged on `main`.
+- Active branch: `claude/replay-counterfactual-rehearsal`.
+- In-flight edits: explicit expected/forbidden-outcome rehearsal for replay
+  proposals, with fail-closed unknown handling and no promotion or mutation.
+- Everything through PR #77 is merged on `main`.
 
 ## What just landed
 
-**Governed replay proposals (D-23, current branch).** Offline replay can surface
-patterns without turning its own synthesis into truth or permission.
+**Governed replay proposals (D-23).** Offline replay can surface patterns
+without turning its own synthesis into truth or permission.
 
 ## Next steps / watch
 
