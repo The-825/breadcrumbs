@@ -288,3 +288,14 @@ Why: reflection can discover useful patterns only if the system does not treat
 its own synthesis as evidence or authority.
 Source: operator-approved governed-replay build, 2026-08-21.
 
+## D-24 ? 2026-08-21 ? Rehearsal tests proposals without promoting them
+
+Ruling: a replay proposal may be counterfactually rehearsed against explicit
+expected and forbidden outcomes. Every scenario must pass; a failed scenario
+fails the rehearsal, and missing or malformed evaluation remains unknown. Even
+a passing rehearsal stays pending review and cannot increase trust, grant
+authority, activate work, or mutate memory.
+Why: simulated success is useful evidence about a proposed change, but it is
+not an independent observation of the real world or operator approval.
+Source: operator-approved brain-function build order, 2026-08-21.
+

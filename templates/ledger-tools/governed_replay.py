@@ -32,6 +32,7 @@ from pathlib import Path
 
 
 PROPOSAL_TYPES = frozenset(("fact", "skill", "watch", "correction", "unknown"))
+REHEARSAL_STATUSES = frozenset(("passed", "failed", "unknown"))
 HIGH_SIGNAL_ACTIONS = frozenset(("REJECTED", "SUPERSEDED", "PROVENANCE_LINKED"))
 HIGH_SIGNAL_TOKENS = frozenset((
     "failure", "failed", "error", "incident", "correction", "tombstone",
@@ -188,6 +189,78 @@ def append_proposal(path, proposal):
     return True
 
 
+def rehearse_proposal(proposal, scenarios, simulator=None):
+    """Counterfactually test a proposal without granting trust or permission.
+
+    A scenario names expected and forbidden outcomes. The adopter supplies the
+    simulator; this public kit only validates its observations. Any missing,
+    failed, or malformed evaluation stays unknown. A passing rehearsal remains
+    pending review and explicitly non-mutating.
+    """
+    rehearsed = dict(proposal)
+    rehearsed["status"] = "pending_review"
+    rehearsed["mutates"] = False
+    results = []
+    if proposal.get("proposal_type") not in PROPOSAL_TYPES \
+            or not proposal.get("proposal_id"):
+        raise ValueError("rehearsal requires a typed replay proposal")
+    if not isinstance(scenarios, list) or not scenarios:
+        rehearsed["rehearsal"] = {
+            "status": "unknown", "reason": "no rehearsal scenarios supplied",
+            "results": [],
+        }
+        return rehearsed
+    for scenario in scenarios:
+        scenario_id = scenario.get("scenario_id") if isinstance(scenario, dict) else None
+        expected = scenario.get("expected_outcomes", []) if scenario_id else []
+        forbidden = scenario.get("forbidden_outcomes", []) if scenario_id else []
+        if not scenario_id or not isinstance(expected, list) \
+                or not isinstance(forbidden, list) or not (expected or forbidden):
+            results.append({"scenario_id": scenario_id or "unknown",
+                            "status": "unknown", "reason": "malformed scenario"})
+            continue
+        if simulator is None:
+            results.append({"scenario_id": scenario_id, "status": "unknown",
+                            "reason": "no simulator supplied"})
+            continue
+        try:
+            observation = simulator(dict(proposal), dict(scenario))
+        except Exception as exc:
+            results.append({"scenario_id": scenario_id, "status": "unknown",
+                            "reason": f"simulator failed: {type(exc).__name__}"})
+            continue
+        observed = observation.get("observed_outcomes") \
+            if isinstance(observation, dict) else None
+        if not isinstance(observed, list) or not all(isinstance(x, str) for x in observed):
+            results.append({"scenario_id": scenario_id, "status": "unknown",
+                            "reason": "simulator returned a malformed observation"})
+            continue
+        observed_set = set(observed)
+        forbidden_hits = sorted(observed_set & set(forbidden))
+        missing_expected = sorted(set(expected) - observed_set)
+        if forbidden_hits or missing_expected:
+            results.append({
+                "scenario_id": scenario_id,
+                "status": "failed",
+                "reason": "forbidden outcome observed or expected outcome missing",
+                "forbidden_hits": forbidden_hits,
+                "missing_expected": missing_expected,
+            })
+        else:
+            results.append({"scenario_id": scenario_id, "status": "passed",
+                            "reason": "expected and forbidden outcomes satisfied"})
+    statuses = {result["status"] for result in results}
+    overall = "failed" if "failed" in statuses else (
+        "unknown" if "unknown" in statuses else "passed"
+    )
+    rehearsed["rehearsal"] = {
+        "status": overall,
+        "reason": "all scenarios must pass; failure outranks unknown",
+        "results": results,
+    }
+    return rehearsed
+
+
 def selftest():
     checks = []
 
@@ -267,6 +340,42 @@ def selftest():
         saved = json.loads(queue.read_text(encoding="utf-8").strip())
         ok("durable queue preserves the review-only contract",
            saved["mutates"] is False and saved["status"] == "pending_review")
+
+    scenarios = [{"scenario_id": "safe-correction",
+                  "expected_outcomes": ["tombstone-preserved"],
+                  "forbidden_outcomes": ["memory-rewritten"]}]
+    passed = rehearse_proposal(proposal, scenarios, simulator=lambda _p, _s: {
+        "observed_outcomes": ["tombstone-preserved"]
+    })
+    ok("counterfactual rehearsal can pass explicit expectations",
+       passed["rehearsal"]["status"] == "passed")
+    ok("passing rehearsal cannot approve or mutate",
+       passed["status"] == "pending_review" and passed["mutates"] is False)
+    failed_rehearsal = rehearse_proposal(proposal, scenarios,
+        simulator=lambda _p, _s: {"observed_outcomes": ["memory-rewritten"]})
+    ok("forbidden outcome fails rehearsal",
+       failed_rehearsal["rehearsal"]["status"] == "failed")
+    missing_expected = rehearse_proposal(proposal, scenarios,
+        simulator=lambda _p, _s: {"observed_outcomes": []})
+    ok("missing expected outcome fails rehearsal",
+       missing_expected["rehearsal"]["status"] == "failed")
+    no_simulator = rehearse_proposal(proposal, scenarios)
+    ok("missing simulator stays unknown",
+       no_simulator["rehearsal"]["status"] == "unknown")
+    broken_simulator = rehearse_proposal(proposal, scenarios,
+        simulator=lambda _p, _s: (_ for _ in ()).throw(RuntimeError("offline")))
+    ok("simulator failure stays unknown",
+       broken_simulator["rehearsal"]["status"] == "unknown")
+    malformed_observation = rehearse_proposal(proposal, scenarios,
+        simulator=lambda _p, _s: {"observed_outcomes": "not-a-list"})
+    ok("malformed observation stays unknown",
+       malformed_observation["rehearsal"]["status"] == "unknown")
+    mixed = rehearse_proposal(proposal, scenarios + [{
+        "scenario_id": "malformed", "expected_outcomes": [],
+        "forbidden_outcomes": [],
+    }], simulator=lambda _p, _s: {"observed_outcomes": ["tombstone-preserved"]})
+    ok("unknown scenario prevents an overall pass",
+       mixed["rehearsal"]["status"] == "unknown")
 
     failed_checks = [name for name, condition in checks if not condition]
     for name, condition in checks:
