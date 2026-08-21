@@ -70,6 +70,7 @@ jobs:
           python3 templates/ledger-tools/memory_engine_exam.py --selftest
           python3 templates/ledger-tools/governed_replay.py --selftest
           python3 templates/ledger-tools/governed_learning.py --selftest
+          python3 -m unittest discover -s templates/breadcrumb-score/tests
           python3 templates/ledger-tools/conclusions_audit.py --selftest
           python3 ci-kit/preflight/preflight.py --selftest
           python3 ci-kit/workflows/greenlight_tiers.py --selftest
@@ -84,3 +85,4 @@ jobs:
       - name: Provenance guard over this PR's commits
         if: github.event_name == 'pull_request'
         run: python3 ci-kit/guards/guard_no_provenance_leak.py --range origin/${{ github.base_ref }}..HEAD
+
