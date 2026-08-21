@@ -5,25 +5,24 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (repository continuity cleanup in progress)
+Last refreshed: 2026-08-21 (governed replay proposals in progress)
 
 ## Current state
 
-- Active branch: `claude/repo-continuity-cleanup`.
-- In-flight edits: align the README, machine inventory, agent map, figure-citation
-  status, and this handoff with the authority-ceiling work already on main.
-- Everything through PR #75 is merged on `main`.
+- Active branch: `claude/governed-replay-proposals`.
+- In-flight edits: deterministic offline replay sampling plus typed, durable,
+  review-only proposals for facts, skills, watches, and corrections.
+- Everything through PR #76 is merged on `main`.
 
 ## What just landed
 
-**The trust authority ceiling (D-22).** Verification now names a distinct tool
-or human authority. Agent repetition and self-verification cannot turn an
-assertion into verified memory.
+**Governed replay proposals (D-23, current branch).** Offline replay can surface
+patterns without turning its own synthesis into truth or permission.
 
 ## Next steps / watch
 
-- Run continuity checks, inspect the diff, then publish. This is a docs-only
-  cleanup and should use the repository's safe merge tier.
+- Run the replay selftest and full repository gates, inspect the diff, then
+  publish and greenlight under the operator's standing instruction.
 - Atlas follow-up: the operator will contact Simon for an independent rerun.
   Keep the 2026-08-12 self-audit pinned as historical evidence rather than
   silently rewriting it to match current main.
