@@ -876,4 +876,3 @@ if __name__ == "__main__":
     ap.add_argument("--demo", action="store_true")
     a = ap.parse_args()
     sys.exit(selftest() if a.selftest else demo() if a.demo else 0)
-
