@@ -28,7 +28,10 @@ are waiting, so the work arrives instead of waiting to be remembered.
    it is the best alias you will ever get). Point `source` at where the fact
    lives or was proven; set `checked` to today. Entries typed `todo` or
    `state` are not facts; route them to the repo's task or handoff surface.
-   `python3 gardener/promote.py --apply` does this step mechanically,
+   `python3 gardener/promote.py --apply` does this step mechanically. It reads
+   `tombstones.tsv` before proposing rows and refuses a normalized key-and-answer
+   pair that was already rejected, so retained source material cannot launder a
+   known-wrong value back through gardening.
    including the exact-key half of dedupe (step 2 below) and running
    `mem check`; it flags anything needing judgment (a derived key, a
    possible semantic duplicate) instead of guessing, and it writes nothing
