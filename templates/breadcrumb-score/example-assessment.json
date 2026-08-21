@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1.0",
+  "status": "draft",
+  "target": {
+    "name": "example/agent-kit",
+    "owner": "example",
+    "purpose": "Demonstrate a bounded agent workflow",
+    "evidence_scope": "Public repository at a named revision"
+  },
+  "owner_opt_in": true,
+  "human_reviewed": false,
+  "assessed_at": "2026-08-21",
+  "publication_approval": null,
+  "supersedes": null,
+  "withdrawal_reason": null,
+  "dimensions": {
+    "discoverability": {
+      "score": 3,
+      "evidence_class": "observed",
+      "evidence": [{"claim": "Purpose and entry point are documented", "source": "README.md", "observed_at": "2026-08-21"}]
+    },
+    "capability_evidence": {
+      "score": 3,
+      "evidence_class": "tested",
+      "evidence": [{"claim": "A representative workflow has a passing test", "source": "tests/test_workflow.py", "observed_at": "2026-08-21"}]
+    },
+    "memory_continuity": {
+      "score": null,
+      "evidence_class": null,
+      "evidence": []
+    },
+    "provenance_trust": {
+      "score": 2,
+      "evidence_class": "declared",
+      "evidence": [{"claim": "The workflow declares its evidence fields", "source": "docs/evidence.md", "observed_at": "2026-08-21", "limitations": "No executable verification was observed"}]
+    },
+    "correction_behavior": {
+      "score": null,
+      "evidence_class": null,
+      "evidence": []
+    },
+    "delegation_contract": {
+      "score": 3,
+      "evidence_class": "observed",
+      "evidence": [{"claim": "Inputs, outputs, and failure return are named", "source": "docs/contract.md", "observed_at": "2026-08-21"}]
+    },
+    "safety_approval": {
+      "score": 3,
+      "evidence_class": "tested",
+      "evidence": [{"claim": "The external action path requires approval", "source": "tests/test_approval.py", "observed_at": "2026-08-21"}]
+    },
+    "outcome_reliability": {
+      "score": null,
+      "evidence_class": null,
+      "evidence": []
+    }
+  }
+}

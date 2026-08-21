@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/The-825/breadcrumbs/templates/breadcrumb-score/assessment.schema.json",
+  "title": "Breadcrumb Score assessment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "target", "owner_opt_in", "human_reviewed", "assessed_at", "dimensions"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "status": {"enum": ["draft", "owner_reviewed", "published", "superseded", "withdrawn"]},
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "owner", "purpose", "evidence_scope"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "evidence_scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "owner_opt_in": {"const": true},
+    "human_reviewed": {"type": "boolean"},
+    "assessed_at": {"type": "string", "minLength": 1},
+    "publication_approval": {"type": ["string", "null"]},
+    "supersedes": {"type": ["string", "null"]},
+    "withdrawal_reason": {"type": ["string", "null"]},
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["discoverability", "capability_evidence", "memory_continuity", "provenance_trust", "correction_behavior", "delegation_contract", "safety_approval", "outcome_reliability"],
+      "properties": {
+        "discoverability": {"$ref": "#/$defs/dimension"},
+        "capability_evidence": {"$ref": "#/$defs/dimension"},
+        "memory_continuity": {"$ref": "#/$defs/dimension"},
+        "provenance_trust": {"$ref": "#/$defs/dimension"},
+        "correction_behavior": {"$ref": "#/$defs/dimension"},
+        "delegation_contract": {"$ref": "#/$defs/dimension"},
+        "safety_approval": {"$ref": "#/$defs/dimension"},
+        "outcome_reliability": {"$ref": "#/$defs/dimension"}
+      }
+    }
+  },
+  "$defs": {
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "evidence_class", "evidence"],
+      "properties": {
+        "score": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+        "evidence_class": {"enum": ["declared", "observed", "tested", "independently_verified", null]},
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claim", "source", "observed_at"],
+            "properties": {
+              "claim": {"type": "string", "minLength": 1},
+              "source": {"type": "string", "minLength": 1},
+              "observed_at": {"type": "string", "minLength": 1},
+              "limitations": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}
