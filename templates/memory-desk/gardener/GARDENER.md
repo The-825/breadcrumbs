@@ -32,6 +32,9 @@ are waiting, so the work arrives instead of waiting to be remembered.
    `tombstones.tsv` before proposing rows and refuses a normalized key-and-answer
    pair that was already rejected, so retained source material cannot launder a
    known-wrong value back through gardening.
+   Possible semantic duplicates are appended to
+   `consolidation-proposals.jsonl` as stable pending proposals that preserve
+   both rows. A proposal is a review surface, not permission to merge.
    including the exact-key half of dedupe (step 2 below) and running
    `mem check`; it flags anything needing judgment (a derived key, a
    possible semantic duplicate) instead of guessing, and it writes nothing
