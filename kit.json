@@ -61,6 +61,10 @@
       "templates/breadcrumb-score/README.md",
       "templates/breadcrumb-score/breadcrumb_score.py",
       "templates/breadcrumb-score/assessment.schema.json"
+    ],
+    "I need an A2A Agent Card to cite scored evidence": [
+      "templates/a2a-score-export/README.md",
+      "templates/a2a-score-export/a2a_score_export.py"
     ]
   },
   "artifacts": [
@@ -238,6 +242,13 @@
       "what": "Evidence-scoped readiness calculator for agents and repositories: unknown dimensions reduce coverage without becoming failures, every scored claim cites evidence, and public-ready states require owner opt-in and human review.",
       "assumes": "Python 3.9+; a JSON assessment assembled from public or explicitly permitted evidence; stdlib only.",
       "selftest": "python3 -m unittest discover -s templates/breadcrumb-score/tests"
+    },
+    {
+      "path": "templates/a2a-score-export/a2a_score_export.py",
+      "kind": "tool",
+      "what": "Attaches a publication-approved Breadcrumb Score pointer to an A2A Agent Card as a non-required extension while refusing private endpoints, unknown public fields, stale evidence, and mutation of signed cards.",
+      "assumes": "A2A 1.0 public Agent Card and a published Breadcrumb Score assessment; Python 3.9+ standard library only.",
+      "selftest": "python3 -m unittest discover -s templates/a2a-score-export/tests"
     }
   ]
 }

@@ -71,6 +71,7 @@ jobs:
           python3 templates/ledger-tools/governed_replay.py --selftest
           python3 templates/ledger-tools/governed_learning.py --selftest
           python3 -m unittest discover -s templates/breadcrumb-score/tests
+          python3 -m unittest discover -s templates/a2a-score-export/tests
           python3 templates/ledger-tools/conclusions_audit.py --selftest
           python3 ci-kit/preflight/preflight.py --selftest
           python3 ci-kit/workflows/greenlight_tiers.py --selftest
