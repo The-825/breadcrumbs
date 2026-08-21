@@ -278,3 +278,13 @@ becoming verified merely because another agent repeated it or because the same
 actor attached more sources. Trust changes require an independent boundary.
 Source: operator-approved Atlas trust-strengthening pass, 2026-08-21.
 
+## D-23 ? 2026-08-21 ? Offline replay proposes before it teaches
+
+Ruling: offline replay may rank episodes and propose a fact, skill, watch, or
+correction, but it cannot verify, activate, or rewrite anything. Every proposal
+is source-linked, stable across retries, pending review, and explicitly
+non-mutating; failed or malformed evaluation remains unknown.
+Why: reflection can discover useful patterns only if the system does not treat
+its own synthesis as evidence or authority.
+Source: operator-approved governed-replay build, 2026-08-21.
+
