@@ -11,6 +11,8 @@
   "human_reviewed": false,
   "assessed_at": "2026-08-21",
   "publication_approval": null,
+  "supersedes": null,
+  "withdrawal_reason": null,
   "dimensions": {
     "discoverability": {
       "score": 3,
