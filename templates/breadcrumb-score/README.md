@@ -68,4 +68,3 @@ The reference implementation validates an already assembled assessment. A produc
 collector should remain separate, because repository access, secrets, rate limits, and
 owner consent are deployment-specific. Feed only normalized evidence records into this
 calculator, and keep collection permissions outside the score.
-
