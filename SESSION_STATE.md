@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (governed learning cycle in progress)
+Last refreshed: 2026-08-21 (Breadcrumb Score in progress)
 
 ## Current state
 
