@@ -316,3 +316,9 @@ Source: operator-approved governed-learning build, 2026-08-21.
 Ruling: an agent or repository dimension is scored only when it cites permitted evidence. Unknown dimensions remain unscored and reduce coverage; they never become zeroes. A weighted readiness result requires at least five of eight dimensions, while any public-ready state also requires owner opt-in, human review, and a specific publication approval record.
 Why: collapsing missing evidence into failure creates false rankings, while publishing an automated score without ownership and review turns a useful delegation signal into an unsupported endorsement.
 Source: operator-approved Breadcrumb Score build, 2026-08-21.
+
+## D-27 · 2026-08-21 · A2A discovery may point to evidence without becoming a trust authority
+
+Ruling: a public A2A Agent Card may carry a non-required Breadcrumb Score extension only when the assessment is published, human reviewed, publication approved, unexpired, target-matched, and digest verified. The exporter refuses local endpoints, unknown public fields, and mutation of a signed card; the provider must re-sign any changed signed card.
+Why: discovery metadata can make delegation evidence easier to find without replacing A2A, turning a score into authentication, or exposing authenticated card data.
+Source: operator-approved agent-to-agent revenue and outreach program, 2026-08-21.

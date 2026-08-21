@@ -5,27 +5,25 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (Breadcrumb Score in progress)
+Last refreshed: 2026-08-21 (A2A score export in progress)
 
 ## Current state
 
-- Active branch: `claude/breadcrumb-score`.
-- In-flight edits: versioned evidence assessment, deterministic coverage and
-  readiness scoring, public-ready refusal rules, and focused tests.
-- Everything through PR #79 is merged on `main`.
+- Active branch: `claude/a2a-score-export`.
+- In-flight edits: a non-required A2A Agent Card extension that links to a
+  published Breadcrumb Score assessment without exposing authenticated fields.
+- Breadcrumb Score is merged on `main`.
 
 ## What just landed
 
-**Governed learning cycle (D-25).** Learning requires sourced knowledge,
-application, independent evaluation, and novel-context transfer before mastery
-may be proposed.
+**Breadcrumb Score (D-26).** Evidence coverage is separate from score, and
+public-ready assessments require owner opt-in, human review, and publication approval.
 
 ## Next steps / watch
 
-- Run the Breadcrumb Score selftest and full repository gates, inspect the
-  diff, then publish the feature PR for operator review.
-- The first repository self-assessment remains separate until the evaluator
-  itself is green.
+- Publish the A2A score-export feature PR after full gates and public review.
+- Keep the first repository self-assessment private until independent review
+  and a specific publication approval exist.
 - Atlas follow-up: the operator will contact Simon for an independent rerun.
   Keep the 2026-08-12 self-audit pinned as historical evidence rather than
   silently rewriting it to match current main.
