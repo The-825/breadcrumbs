@@ -1,0 +1,54 @@
+[
+  {
+    "id": "fusion-prefers-relevant-older-event",
+    "episodes": [
+      {"action": "MIGRATION", "outcome": "schema flight completed", "tags": ["database"]},
+      {"action": "CHAT", "outcome": "unrelated newest event", "tags": ["general"]}
+    ],
+    "query": "database migration schema",
+    "params": {"max_episodes": 1},
+    "expect": ["schema flight completed"],
+    "forbid": ["unrelated newest event"],
+    "repeat": 2
+  },
+  {
+    "id": "public-scope-fails-closed",
+    "facts": [
+      {"category": "kit", "key": "license", "value": "MIT", "scope": "public"},
+      {"category": "ops", "key": "roster", "value": "private rotation", "scope": "regulated"}
+    ],
+    "params": {"audience": "public"},
+    "expect": ["fact.kit.license: MIT"],
+    "forbid": ["private rotation", "episode:"]
+  },
+  {
+    "id": "learned-time-replay-excludes-the-future",
+    "facts": [
+      {"category": "policy", "key": "known_then", "value": "alpha", "recorded_at": 100},
+      {"category": "policy", "key": "learned_later", "value": "beta", "recorded_at": 300}
+    ],
+    "params": {"as_of": 200},
+    "expect": ["fact.policy.known_then: alpha"],
+    "forbid": ["fact.policy.learned_later", "beta"]
+  },
+  {
+    "id": "world-time-window-selects-current-fact",
+    "facts": [
+      {"category": "term", "key": "past", "value": "spring", "valid_from": 10, "valid_until": 20},
+      {"category": "term", "key": "current", "value": "fall", "valid_from": 30, "valid_until": 40}
+    ],
+    "params": {"valid_at": 35},
+    "expect": ["fact.term.current: fall"],
+    "forbid": ["fact.term.past", "spring"]
+  },
+  {
+    "id": "verification-does-not-travel-back-in-time",
+    "facts": [
+      {"category": "trust", "key": "claim", "value": "v1", "recorded_at": 100,
+       "status": "verified", "evidence": "human ruling", "verified_at": 300}
+    ],
+    "params": {"as_of": 200},
+    "expect": ["fact.trust.claim: v1 [asserted]"],
+    "forbid": ["human ruling", "[verified"]
+  }
+]

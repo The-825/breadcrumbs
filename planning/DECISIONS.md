@@ -255,3 +255,14 @@ rewrite can silently discard nuance or evidence. A durable proposal preserves
 both the work queue and the authorization boundary.
 Source: operator-approved Atlas extraction-strengthening pass, 2026-08-21.
 
+## D-21 ? 2026-08-21 ? Retrieval quality is a committed corpus, not a demo
+
+Ruling: the runnable memory engine gains a versioned golden-query corpus and a
+stdlib-only exam wired into CI. Cases name both expected and forbidden output
+across fusion, scope, learned-time replay, valid-time filtering, and trust-time
+masking; repeated cases must render identically.
+Why: one happy-path selftest proves a mechanism can work. A committed corpus
+proves the specific failures already judged unacceptable stay fixed as ranking
+and lifecycle code evolve.
+Source: operator-approved Atlas retrieval-strengthening pass, 2026-08-21.
+
