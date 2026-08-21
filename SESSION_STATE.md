@@ -1,4 +1,4 @@
-# SESSION_STATE.md � living handoff
+# SESSION_STATE.md · living handoff
 
 > How to use this file: read it FIRST at session start. Refresh it fully when
 > the operator says "checkpoint". Move finished work out so this file never
@@ -46,4 +46,3 @@ self-tests pass locally.
 - The figure-citation checker: build or label. See above.
 - D-16 was the last ruling (2026-08-20, D-3 gets a mechanical check and a stated
   default).
-
