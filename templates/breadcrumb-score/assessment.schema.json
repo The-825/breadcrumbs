@@ -23,6 +23,8 @@
     "human_reviewed": {"type": "boolean"},
     "assessed_at": {"type": "string", "minLength": 1},
     "publication_approval": {"type": ["string", "null"]},
+    "supersedes": {"type": ["string", "null"]},
+    "withdrawal_reason": {"type": ["string", "null"]},
     "dimensions": {
       "type": "object",
       "additionalProperties": false,
