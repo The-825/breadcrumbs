@@ -233,3 +233,14 @@ Why: contradiction resolution can improve correction quality only if a failed
 probe cannot erase evidence or quietly authorize a write.
 Source: operator-approved GitHub memory-system audit, 2026-08-21.
 
+## D-19 ? 2026-08-21 ? Negative memory guards derivation before it guards CI
+
+Ruling: the memory-desk gardener consults rejected-value tombstones before
+promoting journal entries. A normalized key-and-answer match is refused without
+changing the index; the existing post-write integrity check remains a backstop,
+not the first point at which re-derivation is discovered.
+Why: a pass that writes a known-wrong value and then fails leaves the derived
+store wrong even though the failure was reported. Forgetting is incomplete until
+retained evidence cannot launder the rejected answer back into ordinary recall.
+Source: operator-approved Atlas lifecycle-strengthening pass, 2026-08-21.
+

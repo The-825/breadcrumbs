@@ -34,7 +34,7 @@ does know the building.
 | [`index.tsv`](index.tsv) | The fact index: key, aliases, answer, source, checked date, one row per settled fact. Ships seeded with rows that describe the desk itself. |
 | [`MEMORY_TEMPLATE.md`](MEMORY_TEMPLATE.md) | The kernel: the one file a session reads whole. The one move, the frozen floor, the capture habit. `mem check` fails it past 60 lines. |
 | `journal.jsonl` | Raw capture, append-only, created by the first `mem add`. Nothing edits it; the gardener promotes from it. |
-| `tombstones.tsv` | Retired answers, created by the first `mem reject`. Four columns: key, value, reason, date. `mem check` fails if a retired value comes back under its own key. |
+| `tombstones.tsv` | Retired answers, created by the first `mem reject`. Four columns: key, value, reason, date. The gardener refuses a matching candidate before writing, and `mem check` remains the backstop if a retired value returns through another path. |
 | [`hooks/`](hooks/) | The push layer: kernel at session start, index hits at prompt time, file-scoped notes at first edit. Registration snippet included. |
 | [`gardener/`](gardener/) | The curation contract and a scheduled trigger, so index quality is a job with a cadence, not goodwill. |
 | [`tests/`](tests/) | Subprocess self-tests for the CLI, ending with the shipped kit passing its own `mem check`. |

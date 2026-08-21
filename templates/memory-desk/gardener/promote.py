@@ -26,6 +26,9 @@ What it DOES do, mechanically, safely:
   - Exact-key collision with an existing row: updates that row's answer,
     source, and checked date in place, matching step 2's literal-duplicate
     case. No collision: appends a new row.
+  - Reads tombstones.tsv before proposing rows and refuses any candidate whose
+    normalized key and answer match a rejected value. Negative memory is a
+    write guard, not a defect discovered after the write.
   - Runs mem's own `check()` after writing, so a gardening pass that breaks
     the index never gets written silently (step 6).
   - Appends the watermark last (step 7), so nothing is double-processed.
@@ -113,6 +116,22 @@ def load_index(index_path):
     return header, rows
 
 
+def load_tombstones(tombstones_path):
+    """Return normalized (key, rejected value) pairs from tombstones.tsv."""
+    rejected = set()
+    if not tombstones_path.exists():
+        return rejected
+    for line in tombstones_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) != 4:
+            continue
+        key, value, _, _ = (part.strip() for part in parts)
+        rejected.add((norm(key), norm(value)))
+    return rejected
+
+
 def word_overlap(a, b):
     wa = {w for w in re.findall(r"[a-z0-9]+", a.lower()) if w not in STOPWORDS}
     wb = {w for w in re.findall(r"[a-z0-9]+", b.lower()) if w not in STOPWORDS}
@@ -121,11 +140,13 @@ def word_overlap(a, b):
     return len(wa & wb) / len(wa | wb)
 
 
-def promote(entries, rows, today):
+def promote(entries, rows, today, tombstones=None):
     """Mutates rows in place for exact-key updates; returns (new_rows,
-    unkeyed_flags, duplicate_flags, skipped)."""
+    unkeyed_flags, duplicate_flags, skipped, rejected_flags)."""
     by_key = {norm(r["key"]): r for r in rows}
+    tombstones = tombstones or set()
     new_rows, unkeyed_flags, duplicate_flags, skipped = [], [], [], []
+    rejected_flags = []
 
     for e in entries:
         etype = e.get("type", "fact")
@@ -143,6 +164,11 @@ def promote(entries, rows, today):
         if not key:
             key = slugify(text)
         source = e.get("source") or "-"
+
+        if (norm(str(key)), norm(text)) in tombstones:
+            rejected_flags.append({"key": str(key), "answer": text,
+                                   "source": source})
+            continue
 
         existing = by_key.get(norm(key))
         if existing is not None:
@@ -164,7 +190,7 @@ def promote(entries, rows, today):
         if needs_key_review:
             unkeyed_flags.append({"key": key, "text": text})
 
-    return new_rows, unkeyed_flags, duplicate_flags, skipped
+    return new_rows, unkeyed_flags, duplicate_flags, skipped, rejected_flags
 
 
 def write_index(index_path, header, rows):
@@ -233,14 +259,17 @@ def main(argv):
     journal_path, index_path = desk / "journal.jsonl", desk / "index.tsv"
     entries, _ = load_journal(journal_path)
     header, rows = load_index(index_path)
+    rows_before = [dict(row) for row in rows]
+    tombstones = load_tombstones(desk / "tombstones.tsv")
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    new_rows, unkeyed, dupes, skipped = promote(entries, rows, today)
+    new_rows, unkeyed, dupes, skipped, rejected = promote(
+        entries, rows, today, tombstones
+    )
 
     print(f"promote.py: {len(entries)} journal entries since last marker")
-    print(f"  {len(new_rows)} new row(s), "
-          f"{len([e for e in entries if e.get('type') in TYPES_TO_PROMOTE]) - len(new_rows)} "
-          f"exact-key update(s), {len(skipped)} skipped (todo/state/other)")
+    print(f"  {len(new_rows)} new row(s), {len(skipped)} skipped "
+          "(todo/state/other)")
     if unkeyed:
         print(f"  REVIEW: {len(unkeyed)} entr{'y' if len(unkeyed) == 1 else 'ies'} promoted "
               "with a derived key, not a real alias; a human should give it one")
@@ -248,6 +277,10 @@ def main(argv):
         print(f"  REVIEW: {len(dupes)} possible semantic duplicate(s), not auto-merged:")
         for d in dupes:
             print(f"    '{d['candidate_key']}' overlaps existing '{d['existing_key']}'")
+    if rejected:
+        print(f"  REFUSED: {len(rejected)} tombstoned answer(s) were not promoted:")
+        for item in rejected:
+            print(f"    '{item['key']}' remains rejected")
 
     if mode == "--dry-run":
         print("\n--dry-run: nothing written. Re-run with --apply to write index.tsv "
@@ -258,7 +291,10 @@ def main(argv):
         print("nothing to promote; watermark not moved.")
         return 0
 
-    write_index(index_path, header, rows)
+    if rows != rows_before:
+        write_index(index_path, header, rows)
+    else:
+        print("index unchanged; no index rewrite needed")
     newest_ts = entries[-1].get("ts", datetime.now(timezone.utc).isoformat())
     append_watermark(journal_path, newest_ts)
 
@@ -321,7 +357,7 @@ def selftest():
         ok("existing row loaded", len(rows) == 1 and rows[0]["key"] == "existing fact")
 
         today = "2026-08-12"
-        new_rows, unkeyed, dupes, skipped = promote(entries, rows, today)
+        new_rows, unkeyed, dupes, skipped, rejected = promote(entries, rows, today)
         ok("two new rows created (new fact + unkeyed fact)", len(new_rows) == 2
            and any(r["key"] == "new fact" for r in new_rows))
         ok("unkeyed entry flagged, not silently dropped", len(unkeyed) == 1)
@@ -334,6 +370,7 @@ def selftest():
            rows[0]["answer"] == "the corrected answer" and rows[0]["checked"] == today)
         ok("total row count is existing(1) + new(1) + unkeyed(1), no duplicate rows",
            len(rows) == 3)
+        ok("ordinary promotion has no rejected candidates", rejected == [])
 
         write_index(desk / "index.tsv", header, rows)
         header2, rows2 = load_index(desk / "index.tsv")
@@ -354,10 +391,57 @@ def selftest():
         )
         entries3, _ = load_journal(desk / "journal2.jsonl")
         rows3 = [dict(r) for r in rows2]
-        _, _, dupes3, _ = promote(entries3, rows3, today)
+        _, _, dupes3, _, _ = promote(entries3, rows3, today)
         ok("near-duplicate text under a different key is flagged", len(dupes3) == 1)
         ok("a flagged duplicate is NOT auto-merged into the existing row",
            any(r["key"] == "a totally different key" for r in rows3))
+
+        # A fresh capture may repeat a value the operator already rejected.
+        # The tombstone must stop it before index.tsv is changed, not merely
+        # make mem check fail after the write.
+        tombstone_path = desk / "tombstones.tsv"
+        tombstone_path.write_text(
+            "# key\tvalue\treason\tdate\n"
+            "retired answer\tknown wrong value\toperator correction\t2026-08-12\n",
+            encoding="utf-8",
+        )
+        rejected_set = load_tombstones(tombstone_path)
+        rejected_entries = [{"ts": "2026-08-07T00:00:00", "type": "fact",
+                             "key": "Retired   Answer",
+                             "text": "KNOWN wrong value", "source": "stale.md"}]
+        rows_before_rejection = [dict(r) for r in rows3]
+        new4, _, _, _, rejected4 = promote(
+            rejected_entries, rows3, today, rejected_set
+        )
+        ok("tombstoned answer is refused before promotion",
+           new4 == [] and len(rejected4) == 1)
+        ok("refused re-derivation leaves every index row unchanged",
+           rows3 == rows_before_rejection)
+
+        refusal_desk = tmp / "refusal-only"
+        refusal_desk.mkdir()
+        refusal_index = refusal_desk / "index.tsv"
+        refusal_index.write_text(
+            "# keep this exact header\nactive\t\tcurrent value\tsource.md\t2026-08-12\n",
+            encoding="utf-8",
+        )
+        refusal_bytes = refusal_index.read_bytes()
+        (refusal_desk / "tombstones.tsv").write_text(
+            "# key\tvalue\treason\tdate\n"
+            "retired answer\tknown wrong value\toperator correction\t2026-08-12\n",
+            encoding="utf-8",
+        )
+        (refusal_desk / "journal.jsonl").write_text(
+            json.dumps({"ts": "2026-08-08T00:00:00", "type": "fact",
+                        "key": "retired answer", "text": "known wrong value"})
+            + "\n",
+            encoding="utf-8",
+        )
+        refusal_rc = main(["--desk", str(refusal_desk), "--apply"])
+        ok("refusal-only apply succeeds and advances the watermark",
+           refusal_rc == 0 and load_journal(refusal_desk / "journal.jsonl")[0] == [])
+        ok("refusal-only apply preserves index bytes exactly",
+           refusal_index.read_bytes() == refusal_bytes)
 
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
