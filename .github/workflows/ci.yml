@@ -69,6 +69,7 @@ jobs:
           python3 templates/ledger-tools/memory_engine.py --selftest
           python3 templates/ledger-tools/memory_engine_exam.py --selftest
           python3 templates/ledger-tools/governed_replay.py --selftest
+          python3 templates/ledger-tools/governed_learning.py --selftest
           python3 templates/ledger-tools/conclusions_audit.py --selftest
           python3 ci-kit/preflight/preflight.py --selftest
           python3 ci-kit/workflows/greenlight_tiers.py --selftest

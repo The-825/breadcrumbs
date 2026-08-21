@@ -5,14 +5,14 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (counterfactual rehearsal in progress)
+Last refreshed: 2026-08-21 (governed learning cycle in progress)
 
 ## Current state
 
-- Active branch: `claude/replay-counterfactual-rehearsal`.
-- In-flight edits: explicit expected/forbidden-outcome rehearsal for replay
-  proposals, with fail-closed unknown handling and no promotion or mutation.
-- Everything through PR #77 is merged on `main`.
+- Active branch: `claude/governed-learning-cycle`.
+- In-flight edits: sourced knowledge, application or teach-back, evaluated
+  understanding, novel-context transfer, and review-only mastery proposals.
+- Everything through PR #78 is merged on `main`.
 
 ## What just landed
 
