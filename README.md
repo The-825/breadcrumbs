@@ -67,9 +67,9 @@ behavior already happens:
   or formally defer an item with a deadline, the way aircraft defer an inoperative part
   under a minimum equipment list. What it cannot do is quietly drop the leftover.
 - **At the boast (claiming certainty).** An agent never marks its own claim "verified."
-  Verified requires naming an objective check: a CI result, a data assertion, a human
-  ruling. Everything else is stamped "asserted," and every future reader sees
-  "re-verify before acting." Most memory systems let models grade their own homework.
+  Verified requires evidence plus a distinct tool or human verifier; agent authority
+  and self-verification are refused. Everything else is stamped "asserted," and every
+  future reader sees "re-verify before acting." Most memory systems let models grade their own homework.
   Mine are not allowed to.
 - **At the handoff.** When one session hands work to the next, the handoff is a written
   brief plus a replay guard: read what your predecessor actually did before you redo
@@ -166,8 +166,9 @@ promises never to be wrong.
 
 ## Steal this: start in one afternoon
 
-Everything in this repo is a starting piece for the pattern above, and every piece of it
-runs in production somewhere. What you get here is the mechanism, stated generally enough
+Everything in this repo is a starting piece for the pattern above. Runnable artifacts
+say what they ship and include checks where this kit can prove them; pattern-only essays
+say so in their own headers. What you get here is the mechanism, stated generally enough
 to drop into whatever you work on. Nothing here depends *by design* on
 which model you use; a fleet member is anything that can read a file at start and append
 a line at the end. Models from other vendors already read and review this system, which

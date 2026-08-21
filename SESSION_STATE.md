@@ -5,33 +5,30 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (trust authority-ceiling branch in progress)
+Last refreshed: 2026-08-21 (repository continuity cleanup in progress)
 
 ## Current state
 
-- Active branch: `claude/trust-authority-ceiling`.
-- In-flight edits: trust records now separate asserting actor and authority
-  from verifier and verification authority. Agent authority and self-verification
-  are refused, while same-value provenance cannot promote trust.
-- Everything through PR #74 is merged on `main`.
+- Active branch: `claude/repo-continuity-cleanup`.
+- In-flight edits: align the README, machine inventory, agent map, figure-citation
+  status, and this handoff with the authority-ceiling work already on main.
+- Everything through PR #75 is merged on `main`.
 
 ## What just landed
 
-**The trust authority ceiling (D-22, current branch).** Verification is no
-longer just evidence text. It names a distinct tool or human authority, and
-agent repetition cannot turn an assertion into verified memory.
+**The trust authority ceiling (D-22).** Verification now names a distinct tool
+or human authority. Agent repetition and self-verification cannot turn an
+assertion into verified memory.
 
 ## Next steps / watch
 
-- Run the focused and full repo suites, inspect the diff, then publish and
-  greenlight under the operator's standing instruction.
-- Atlas thread (r/AIMemory): a round-3 reply is drafted and unposted. It opens by
-  conceding the correction gap and says what #67 did and did not close. Check
-  whether the author replied to round 2 before posting.
-- Open from the #68 audit, deliberately not guessed at: `docs/figure-citation.md`
-  describes a `[fact:key]` checker that does not ship. Build it, or label it
-  pattern-only. Same shape as the context-budget call, so the cheap answer is
-  probably to build it.
+- Run continuity checks, inspect the diff, then publish. This is a docs-only
+  cleanup and should use the repository's safe merge tier.
+- Atlas follow-up: the operator will contact Simon for an independent rerun.
+  Keep the 2026-08-12 self-audit pinned as historical evidence rather than
+  silently rewriting it to match current main.
+- `docs/figure-citation.md` is now labeled pattern-only. Building its checker
+  remains a separate feature decision, not documentation cleanup.
 - Issue #39 dockets the codebase-flywheel port (trigger: standing-agents
   expansion). The issue ledger also holds the synthetic-fixtures limitation.
 

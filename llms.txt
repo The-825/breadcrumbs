@@ -43,7 +43,8 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 - [templates/SESSION_STATE_TEMPLATE.md](templates/SESSION_STATE_TEMPLATE.md):
   the living handoff between sessions.
 - [templates/ledger-tools/memory_engine.py](templates/ledger-tools/memory_engine.py):
-  runnable three-tier memory; asserted vs verified, oracle-gated.
+  runnable three-tier memory; asserted vs verified, with a distinct tool or
+  human authority required for promotion.
 - [templates/ledger-tools/capture_nudge.py](templates/ledger-tools/capture_nudge.py):
   the hook that makes capture happen the turn a ruling lands.
 

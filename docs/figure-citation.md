@@ -1,5 +1,9 @@
 # Figure citation: numbers that cannot rot silently
 
+> **Pattern only. The generated ledger and `[fact:key]` checker described here
+> do not ship in this kit.** This document defines the contract for an adopter
+> to implement against its own sources and CI lane.
+
 > The enforcement half of "no unsourced numbers." A rule that every figure must
 > trace to something real (this repo's own binding rule 3) is unenforceable by
 > review alone: reviewers verify a number once, at merge time, and the number
