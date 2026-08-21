@@ -299,3 +299,14 @@ Why: simulated success is useful evidence about a proposed change, but it is
 not an independent observation of the real world or operator approval.
 Source: operator-approved brain-function build order, 2026-08-21.
 
+## D-25 ? 2026-08-21 ? Learning must manifest before mastery is proposed
+
+Ruling: sourced knowledge is not mastery. A learning cycle must preserve an
+application or teach-back, externally evaluated understanding, and successful
+transfer in a distinct context before it may create a stable mastery proposal.
+The proposal remains pending review, cannot activate a skill, and cannot mutate
+memory; failed and unknown attempts remain in the append-only learning cipher.
+Why: recall demonstrates availability, while mastery requires demonstrated use
+and transfer without granting an agent authority to certify itself.
+Source: operator-approved governed-learning build, 2026-08-21.
+
