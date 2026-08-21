@@ -46,11 +46,15 @@ HONEST LIMITS, so you do not trust it past what it does:
 
 DESIGN REFERENCES. The episode-to-fact provenance shape follows Graphiti's
 public episode lineage model, and the multi-signal read path follows the same
-semantic-plus-lexical fusion direction described by Mem0. This implementation
-is independent, stdlib-only, and uses no code from either project:
+semantic-plus-lexical fusion direction described by Mem0. The contradiction
+proposal shape follows Nacre's separation between resolution and mutation,
+with one stricter rule: evaluator failure stays UNKNOWN instead of becoming a
+negative result. This implementation is independent, stdlib-only, and uses no
+code from any of those projects:
 
   https://github.com/getzep/graphiti
   https://github.com/mem0ai/mem0
+  https://github.com/bofeizhu/nacre
 
 Usage:
     python3 memory_engine.py --selftest
@@ -173,6 +177,74 @@ class MemoryEngine:
         return row["episode_id"]
 
     # -- semantic tier --------------------------------------------------------
+
+    @staticmethod
+    def _normalized_value(value):
+        """Normalize only enough for the exact-match fast path."""
+        return " ".join(str(value).casefold().split())
+
+    @staticmethod
+    def _validity_windows_do_not_overlap(left, right):
+        """Return True only when two fully bounded windows are disjoint."""
+        left_from, left_until = left.get("valid_from"), left.get("valid_until")
+        right_from = right.get("valid_from")
+        right_until = right.get("valid_until")
+        if None in (left_from, left_until, right_from, right_until):
+            return False
+        return left_until < right_from or right_until < left_from
+
+    def propose_contradiction(self, category, key, candidate_value,
+                              valid_from=None, valid_until=None,
+                              evaluator=None):
+        """Return a typed contradiction proposal without changing storage.
+
+        Exact normalized values become corroboration proposals. Different
+        values with fully bounded, disjoint validity windows may coexist.
+        Every other comparison needs an external evaluator that returns a
+        mapping with verdict "contradiction", "compatible", or "unknown"
+        and a non-empty reason. Missing, malformed, or failed evaluation is
+        UNKNOWN. This method never calls a mutation path.
+        """
+        facts = self._read(self.facts)
+        existing = facts.get(category, {}).get(key)
+        candidate = {"value": candidate_value, "valid_from": valid_from,
+                     "valid_until": valid_until}
+        base = {"category": category, "key": key, "existing": existing,
+                "candidate": candidate, "mutates": False}
+        if existing is None:
+            return {**base, "outcome": "new_fact", "verdict": "compatible",
+                    "reason": "no existing fact uses this category and key"}
+        if self._normalized_value(existing.get("value")) == \
+                self._normalized_value(candidate_value):
+            return {**base, "outcome": "corroborate",
+                    "verdict": "compatible",
+                    "reason": "normalized values match exactly"}
+        if self._validity_windows_do_not_overlap(existing, candidate):
+            return {**base, "outcome": "coexist",
+                    "verdict": "compatible",
+                    "reason": "fully bounded validity windows do not overlap"}
+        if evaluator is None:
+            return {**base, "outcome": "review", "verdict": "unknown",
+                    "reason": "different values overlap or lack complete "
+                              "validity bounds; no evaluator was supplied"}
+        try:
+            result = evaluator(existing.copy(), candidate.copy())
+        except Exception as exc:
+            return {**base, "outcome": "review", "verdict": "unknown",
+                    "reason": "contradiction evaluator failed: "
+                              f"{type(exc).__name__}"}
+        if not isinstance(result, dict):
+            return {**base, "outcome": "review", "verdict": "unknown",
+                    "reason": "contradiction evaluator returned a malformed result"}
+        verdict = result.get("verdict")
+        reason = str(result.get("reason", "")).strip()
+        if verdict not in ("contradiction", "compatible", "unknown") or not reason:
+            return {**base, "outcome": "review", "verdict": "unknown",
+                    "reason": "contradiction evaluator returned a malformed result"}
+        outcome = {"contradiction": "review_replacement",
+                   "compatible": "coexist", "unknown": "review"}[verdict]
+        return {**base, "outcome": outcome, "verdict": verdict,
+                "reason": reason}
 
     def store_fact(self, category, key, value, valid_from=None,
                    valid_until=None, scope="internal", source_episode_ids=None):
@@ -753,6 +825,51 @@ def selftest():
            supersession_record["prior_source_episode_ids"] == [corroborating]
            and supersession_record["new_source_episode_ids"]
            == [replacement_source])
+
+        # Contradiction proposals are read-only. Cheap deterministic cases
+        # run before the evaluator, ambiguous cases fail to UNKNOWN, and even
+        # a positive contradiction verdict remains a review proposal.
+        mem.store_fact("policy", "term", "Fall", valid_from=10, valid_until=20)
+        before_proposals = mem._read(mem.facts)
+        exact_calls = []
+        exact = mem.propose_contradiction(
+            "policy", "term", "  fall  ", evaluator=lambda *_: exact_calls.append(1)
+        )
+        ok("normalized exact match proposes corroboration without evaluator",
+           exact["outcome"] == "corroborate" and not exact_calls)
+        historical = mem.propose_contradiction(
+            "policy", "term", "Spring", valid_from=30, valid_until=40,
+            evaluator=lambda *_: (_ for _ in ()).throw(RuntimeError("unused")),
+        )
+        ok("non-overlapping bounded windows coexist without evaluator",
+           historical["outcome"] == "coexist"
+           and historical["verdict"] == "compatible")
+        ambiguous = mem.propose_contradiction("policy", "term", "Spring")
+        ok("missing temporal evidence and evaluator stays unknown",
+           ambiguous["outcome"] == "review"
+           and ambiguous["verdict"] == "unknown")
+        failed = mem.propose_contradiction(
+            "policy", "term", "Spring",
+            evaluator=lambda *_: (_ for _ in ()).throw(RuntimeError("offline")),
+        )
+        ok("evaluator failure stays unknown, never false",
+           failed["verdict"] == "unknown"
+           and "RuntimeError" in failed["reason"])
+        malformed = mem.propose_contradiction(
+            "policy", "term", "Spring", evaluator=lambda *_: {"verdict": "no"}
+        )
+        ok("malformed evaluator result stays unknown",
+           malformed["verdict"] == "unknown")
+        conflict = mem.propose_contradiction(
+            "policy", "term", "Spring",
+            evaluator=lambda *_: {"verdict": "contradiction",
+                                  "reason": "same term, different label"},
+        )
+        ok("positive contradiction remains a review-only proposal",
+           conflict["outcome"] == "review_replacement"
+           and conflict["mutates"] is False)
+        ok("contradiction proposals never change stored facts",
+           mem._read(mem.facts) == before_proposals)
 
         # tombstones: a rejected value cannot be silently re-asserted
         mem.store_fact("env", "db", "postgres 14")

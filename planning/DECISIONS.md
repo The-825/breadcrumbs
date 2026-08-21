@@ -222,3 +222,14 @@ platform while weakening the governance distinction; provenance-linked writes an
 deterministic fusion close real gaps without changing the storage model.
 Source: operator-approved GitHub memory-system benchmark, 2026-08-20.
 
+## D-18 � 2026-08-21 � Contradictions are proposals before they are mutations
+
+Ruling: the runnable memory engine classifies normalized exact matches and
+fully bounded non-overlapping validity windows deterministically, then returns
+a typed review-only proposal for semantic conflicts. Missing, malformed, or
+failed evaluator output remains unknown; it never becomes compatible by
+default, and the proposal path never mutates facts or tombstones.
+Why: contradiction resolution can improve correction quality only if a failed
+probe cannot erase evidence or quietly authorize a write.
+Source: operator-approved GitHub memory-system audit, 2026-08-21.
+
