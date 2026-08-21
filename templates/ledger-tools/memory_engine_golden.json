@@ -45,7 +45,9 @@
     "id": "verification-does-not-travel-back-in-time",
     "facts": [
       {"category": "trust", "key": "claim", "value": "v1", "recorded_at": 100,
-       "status": "verified", "evidence": "human ruling", "verified_at": 300}
+       "status": "verified", "evidence": "human ruling", "verified_at": 300,
+       "asserted_by": "agent:extractor", "assertion_authority": "agent",
+       "verified_by": "human:reviewer", "verification_authority": "human"}
     ],
     "params": {"as_of": 200},
     "expect": ["fact.trust.claim: v1 [asserted]"],

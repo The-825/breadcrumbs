@@ -19,12 +19,12 @@ one undifferentiated store forces one clock on all of them:
 
 THE TWO RULES THIS ENCODES, which are the point:
 
-1. A fact is ASSERTED until something other than its author says otherwise.
-   store_fact() records status "asserted". Promoting to "verified" requires
-   naming the oracle (a CI run, a data assertion, a human ruling) via
-   verify_fact(). The engine refuses a verified status with no evidence,
-   because an agent marking its own claim verified is the failure this whole
-   kit exists to prevent.
+1. A fact is ASSERTED until an independent authority says otherwise.
+   store_fact() records both the asserting actor and its authority class.
+   Promoting to "verified" requires evidence plus a distinct tool or human
+   verifier. Agent authority can never verify, and repetition cannot promote,
+   because an agent laundering its own claim through added provenance is the
+   failure this whole kit exists to prevent.
 
 2. Compaction flushes DOWN, never deletes. When the scratchpad hits its cap,
    the overflow is appended to the episodic ledger before the working file
@@ -66,8 +66,11 @@ As a library:
     mem.set_goal("migrate the sync job to async")
     mem.note("step_1", "connection pool blueprint written")
     mem.log_episode("TEST", "pool latency down 40 percent", ["perf"])
-    mem.store_fact("environment", "python", ">=3.11")
-    mem.verify_fact("environment", "python", evidence="ci run 4412 green on 3.11")
+    mem.store_fact("environment", "python", ">=3.11",
+                   asserted_by="agent:runtime-reader")
+    mem.verify_fact("environment", "python",
+                    evidence="ci run 4412 green on 3.11",
+                    verified_by="tool:ci", verification_authority="tool")
     print(mem.build_context("async pool tests"))
 """
 from __future__ import annotations
@@ -88,6 +91,7 @@ MAX_WORKING_ENTRIES = 8
 # Episodes injected into a context block. The ledger itself is unbounded; this
 # caps what a prompt pays, not what is remembered.
 MAX_EPISODES_IN_CONTEXT = 5
+AUTHORITY_CLASSES = frozenset(("agent", "tool", "human"))
 
 
 class MemoryEngine:
@@ -247,7 +251,8 @@ class MemoryEngine:
                 "reason": reason}
 
     def store_fact(self, category, key, value, valid_from=None,
-                   valid_until=None, scope="internal", source_episode_ids=None):
+                   valid_until=None, scope="internal", source_episode_ids=None,
+                   asserted_by="agent:unspecified", assertion_authority="agent"):
         """Record a fact as ASSERTED. Nothing an agent stores starts verified.
 
         valid_from / valid_until (optional, unix timestamps) are the VALID-AT
@@ -267,6 +272,14 @@ class MemoryEngine:
         SAME value is a no-op: status and evidence are untouched, so a
         verified fact is never demoted by repetition.
         """
+        asserted_by = str(asserted_by).strip()
+        if not asserted_by:
+            raise ValueError("asserted_by must name the actor that made the claim")
+        if assertion_authority not in AUTHORITY_CLASSES:
+            raise ValueError(
+                f"unknown assertion authority {assertion_authority!r}: use "
+                "agent, tool, or human"
+            )
         sources = list(dict.fromkeys(source_episode_ids or []))
         if sources:
             known = {
@@ -328,6 +341,8 @@ class MemoryEngine:
         entry = {
             "value": value, "status": "asserted", "evidence": None,
             "recorded_at": time.time(), "scope": scope,
+            "asserted_by": asserted_by,
+            "assertion_authority": assertion_authority,
         }
         if sources:
             entry["source_episode_ids"] = sources
@@ -399,8 +414,9 @@ class MemoryEngine:
             ["tombstone"],
         )
 
-    def verify_fact(self, category, key, evidence):
-        """Promote to verified, naming the oracle. Refuses empty evidence.
+    def verify_fact(self, category, key, evidence, verified_by=None,
+                    verification_authority=None):
+        """Promote through a distinct tool or human verifier.
 
         Stamps verified_at (unix timestamp), distinct from recorded_at. This
         is the trust-axis fix (Agent Memory Atlas, 2026-08-10 review): an
@@ -416,12 +432,28 @@ class MemoryEngine:
                 "assertion, a human ruling); an agent may not mark its own "
                 "claim verified with nothing behind it"
             )
+        verifier = str(verified_by or "").strip()
+        if not verifier:
+            raise ValueError("verified_by must name the independent verifier")
+        if verification_authority not in AUTHORITY_CLASSES:
+            raise ValueError(
+                f"unknown verification authority {verification_authority!r}: "
+                "use agent, tool, or human"
+            )
+        if verification_authority == "agent":
+            raise ValueError(
+                "agent authority may assert but may not promote a claim to verified"
+            )
         facts = self._read(self.facts)
         entry = facts.get(category, {}).get(key)
         if entry is None:
             raise KeyError(f"no fact at {category}/{key} to verify")
+        if verifier == entry.get("asserted_by"):
+            raise ValueError("the asserting actor may not verify its own claim")
         entry["status"] = "verified"
         entry["evidence"] = str(evidence)
+        entry["verified_by"] = verifier
+        entry["verification_authority"] = verification_authority
         entry["verified_at"] = time.time()
         entry.pop("verified_at_inferred", None)
         self._write(self.facts, facts)
@@ -606,9 +638,15 @@ class MemoryEngine:
                         tag = "asserted"
                 if tag == "verified":
                     tag += f" ({e['evidence']})"
+                actor_note = f" asserted_by={e.get('asserted_by', 'unknown')}"
+                if tag.startswith("verified"):
+                    actor_note += f" verified_by={e.get('verified_by', 'unknown')}"
                 sources = e.get("source_episode_ids", [])
                 source_note = (f" sources={','.join(sources)}" if sources else "")
-                out.append(f"fact.{cat}.{k}: {e['value']} [{tag}]{source_note}")
+                out.append(
+                    f"fact.{cat}.{k}: {e['value']} [{tag}]"
+                    f"{actor_note}{source_note}"
+                )
         for r in picked:
             out.append(f"episode: [{r['action']}] {r['outcome']}")
         out.append("=== END MEMORY ===")
@@ -633,20 +671,72 @@ def selftest():
         mem.store_fact("env", "python", ">=3.8")
         f = mem._read(mem.facts)["env"]["python"]
         ok("stored fact starts asserted, never verified", f["status"] == "asserted")
+        ok("stored fact names its asserting actor and authority",
+           f["asserted_by"] == "agent:unspecified"
+           and f["assertion_authority"] == "agent")
 
         try:
-            mem.verify_fact("env", "python", evidence="")
+            mem.store_fact(
+                "env", "bad_authority", "x",
+                asserted_by="agent:test", assertion_authority="model",
+            )
+            ok("unknown assertion authority refused", False)
+        except ValueError:
+            ok("unknown assertion authority refused", True)
+
+        try:
+            mem.verify_fact(
+                "env", "python", evidence="",
+                verified_by="tool:ci", verification_authority="tool",
+            )
             ok("empty evidence refused", False)
         except ValueError:
             ok("empty evidence refused", True)
 
-        mem.verify_fact("env", "python", evidence="ci run green on 3.8")
+        try:
+            mem.verify_fact("env", "python", evidence="agent said so")
+            ok("verification without a named verifier refused", False)
+        except ValueError:
+            ok("verification without a named verifier refused", True)
+
+        try:
+            mem.verify_fact(
+                "env", "python", evidence="second agent repeated it",
+                verified_by="agent:reviewer", verification_authority="agent",
+            )
+            ok("agent authority cannot promote a claim", False)
+        except ValueError:
+            ok("agent authority cannot promote a claim", True)
+
+        mem.store_fact(
+            "trust", "self_check", "v1",
+            asserted_by="human:operator", assertion_authority="human",
+        )
+        try:
+            mem.verify_fact(
+                "trust", "self_check", evidence="I confirm my claim",
+                verified_by="human:operator", verification_authority="human",
+            )
+            ok("an asserting actor cannot self-verify", False)
+        except ValueError:
+            ok("an asserting actor cannot self-verify", True)
+
+        mem.verify_fact(
+            "env", "python", evidence="ci run green on 3.8",
+            verified_by="tool:ci", verification_authority="tool",
+        )
         f = mem._read(mem.facts)["env"]["python"]
         ok("verification names its oracle", f["evidence"] == "ci run green on 3.8")
         ok("verify_fact stamps verified_at", f.get("verified_at") is not None)
+        ok("verification names a distinct authority",
+           f["verified_by"] == "tool:ci"
+           and f["verification_authority"] == "tool")
 
         try:
-            mem.verify_fact("env", "missing", evidence="x")
+            mem.verify_fact(
+                "env", "missing", evidence="x",
+                verified_by="tool:ci", verification_authority="tool",
+            )
             ok("verifying a missing fact raises", False)
         except KeyError:
             ok("verifying a missing fact raises", True)
@@ -712,7 +802,10 @@ def selftest():
         facts = mem._read(mem.facts)
         facts["trust"]["claim"]["recorded_at"] = 1000.0
         mem._write(mem.facts, facts)
-        mem.verify_fact("trust", "claim", evidence="human ruling")
+        mem.verify_fact(
+            "trust", "claim", evidence="human ruling",
+            verified_by="human:reviewer", verification_authority="human",
+        )
         facts = mem._read(mem.facts)
         facts["trust"]["claim"]["verified_at"] = 2000.0
         mem._write(mem.facts, facts)
@@ -746,7 +839,10 @@ def selftest():
         facts = mem._read(mem.facts)
         facts["trust"]["legacy"]["recorded_at"] = 3000.0
         mem._write(mem.facts, facts)
-        mem.verify_fact("trust", "legacy", evidence="pre-fix ruling")
+        mem.verify_fact(
+            "trust", "legacy", evidence="pre-fix ruling",
+            verified_by="human:reviewer", verification_authority="human",
+        )
         facts = mem._read(mem.facts)
         del facts["trust"]["legacy"]["verified_at"]  # simulate pre-fix data
         mem._write(mem.facts, facts)
@@ -788,7 +884,10 @@ def selftest():
         eps2 = [json.loads(l) for l in mem.episodes.read_text().splitlines() if l.strip()]
         ok("restating the same value is not a supersession",
            len([e for e in eps2 if e["action"] == "SUPERSEDED"]) == 1)
-        mem.verify_fact("env", "python", "CI run 42")
+        mem.verify_fact(
+            "env", "python", "CI run 42",
+            verified_by="tool:ci", verification_authority="tool",
+        )
         mem.store_fact("env", "python", ">=3.11")
         kept = mem._read(mem.facts)["env"]["python"]
         ok("restating the same value keeps verified status and evidence",
@@ -806,6 +905,8 @@ def selftest():
         ok("same-value evidence accumulates without demoting the fact",
            enriched["status"] == "verified"
            and enriched["evidence"] == "CI run 42"
+           and enriched["verified_by"] == "tool:ci"
+           and enriched["verification_authority"] == "tool"
            and enriched["source_episode_ids"] == [corroborating])
         replacement_source = mem.log_episode(
             "OBSERVED", "runtime check reports Python 3.12", ["runtime"]
