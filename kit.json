@@ -20,6 +20,8 @@
     "I cannot tell whether my memory layer actually works": [
       "docs/memory-measurement.md",
       "templates/ledger-tools/retrieval_exam.py",
+      "templates/ledger-tools/memory_engine_exam.py",
+      "templates/ledger-tools/memory_engine_golden.json",
       "templates/ledger-tools/conclusions_audit.py",
       "templates/ledger-tools/SEARCH_MISSES.md"
     ],
@@ -68,6 +70,13 @@
       "what": "Three-tier runnable memory: working state, append-only episodes with stable provenance handles, and semantic facts that can cite their source episodes. Verification refuses an empty oracle; compaction flushes down before shrinking; overwrites log the prior value as a supersession episode first; rejected values leave tombstones that block silent re-assertion; deterministic retrieval fuses lexical, action/tag, and recency ranks; build_context takes an as-of cutoff (learned-at replay), a valid-at moment (world-time windows), and an audience (public/internal/regulated scope filter at assembly; the unscoped episodic tier is omitted under any audience).",
       "assumes": "Local filesystem; single operator.",
       "selftest": "python3 templates/ledger-tools/memory_engine.py --selftest"
+    },
+    {
+      "path": "templates/ledger-tools/memory_engine_exam.py",
+      "kind": "tool",
+      "what": "Golden-query regression exam for the runnable memory engine: expected hits, forbidden hits, deterministic fusion, scope exclusion, learned-time replay, world-time validity, and verification-time masking.",
+      "assumes": "Sibling memory_engine.py and a JSON corpus shaped like memory_engine_golden.json; stdlib only.",
+      "selftest": "python3 templates/ledger-tools/memory_engine_exam.py --selftest"
     },
     {
       "path": "templates/ledger-tools/conclusions_audit.py",
