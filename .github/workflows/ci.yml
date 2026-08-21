@@ -85,4 +85,3 @@ jobs:
       - name: Provenance guard over this PR's commits
         if: github.event_name == 'pull_request'
         run: python3 ci-kit/guards/guard_no_provenance_leak.py --range origin/${{ github.base_ref }}..HEAD
-
