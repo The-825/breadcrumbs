@@ -577,6 +577,11 @@ class MemoryEngine:
         internal (fail closed against a public audience). This makes the
         publication boundary mechanical: a public-bound context cannot carry
         a regulated fact no matter what the composing session forgets.
+
+        This is a low-level storage primitive, not an authorization boundary.
+        A caller that may choose audience may also widen it. Put untrusted
+        callers behind scoped_context.ScopedContextService, which derives the
+        audience from a host-authenticated principal and a fixed policy.
         """
         state = self._read(self.working)
         facts = self._read(self.facts)

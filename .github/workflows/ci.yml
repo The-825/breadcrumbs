@@ -67,6 +67,7 @@ jobs:
         run: |
           python3 templates/ledger-tools/retrieval_exam.py --selftest
           python3 templates/ledger-tools/memory_engine.py --selftest
+          python3 templates/ledger-tools/scoped_context.py --selftest
           python3 templates/ledger-tools/memory_engine_exam.py --selftest
           python3 templates/ledger-tools/governed_replay.py --selftest
           python3 templates/ledger-tools/governed_learning.py --selftest
