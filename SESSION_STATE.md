@@ -5,12 +5,12 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-24 (trusted-principal scope gate in review)
+Last refreshed: 2026-08-24 (trusted-principal scope gate merged)
 
 ## Current state
 
-- Active branch: `codex/atlas-scope-enforcement`.
-- In-flight edits: a host-bound context service derives memory clearance from
+- Active branch: `main`.
+- Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
 - The low-level memory engine, golden exam, and new scope-gate selftest pass.
@@ -22,7 +22,7 @@ Last refreshed: 2026-08-24 (trusted-principal scope gate in review)
 
 ## Next steps / watch
 
-- Review and merge the trusted-principal scope gate after CI.
+- Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
 - Atlas follow-up: contact Simon for an independent rerun only after the scope
