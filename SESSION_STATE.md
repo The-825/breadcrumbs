@@ -5,26 +5,28 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-21 (A2A score export in progress)
+Last refreshed: 2026-08-24 (trusted-principal scope gate in review)
 
 ## Current state
 
-- Active branch: `claude/a2a-score-export`.
-- In-flight edits: a non-required A2A Agent Card extension that links to a
-  published Breadcrumb Score assessment without exposing authenticated fields.
-- Breadcrumb Score is merged on `main`.
+- Active branch: `codex/atlas-scope-enforcement`.
+- In-flight edits: a host-bound context service derives memory clearance from
+  an authenticated principal and fixed policy. Requests cannot assert or widen
+  audience, and ungranted principals fail closed.
+- The low-level memory engine, golden exam, and new scope-gate selftest pass.
 
 ## What just landed
 
-**Breadcrumb Score (D-26).** Evidence coverage is separate from score, and
-public-ready assessments require owner opt-in, human review, and publication approval.
+**A2A score export and work-governance related work (D-27).** Both are merged on
+`main`. Breadcrumb Score remains evidence-scoped and publication-gated.
 
 ## Next steps / watch
 
-- Publish the A2A score-export feature PR after full gates and public review.
+- Review and merge the trusted-principal scope gate after CI.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
-- Atlas follow-up: the operator will contact Simon for an independent rerun.
+- Atlas follow-up: contact Simon for an independent rerun only after the scope
+  gate is merged and publicly inspectable.
   Keep the 2026-08-12 self-audit pinned as historical evidence rather than
   silently rewriting it to match current main.
 - `docs/figure-citation.md` is labeled pattern-only. Building its checker

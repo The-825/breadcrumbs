@@ -322,3 +322,9 @@ Source: operator-approved Breadcrumb Score build, 2026-08-21.
 Ruling: a public A2A Agent Card may carry a non-required Breadcrumb Score extension only when the assessment is published, human reviewed, publication approved, unexpired, target-matched, and digest verified. The exporter refuses local endpoints, unknown public fields, and mutation of a signed card; the provider must re-sign any changed signed card.
 Why: discovery metadata can make delegation evidence easier to find without replacing A2A, turning a score into authentication, or exposing authenticated card data.
 Source: operator-approved agent-to-agent revenue and outreach program, 2026-08-21.
+
+## D-28 · 2026-08-24 · Scope is derived from trusted identity
+
+Ruling: memory context exposed to an untrusted caller must resolve the current principal through a host-owned adapter and derive clearance from fixed policy. Request input never supplies principal, audience, role, or clearance; ungranted principals fail closed. The engine's direct audience argument remains a low-level composition primitive, not an authorization boundary.
+Why: filtering works only when the caller cannot select a broader filter than its authenticated identity permits.
+Source: operator-approved independent catalog gap closure, 2026-08-24.

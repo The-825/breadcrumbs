@@ -12,6 +12,7 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [retrieval_exam.py](retrieval_exam.py) | Retrieval exam: per-entry reachability verdicts against your real tree, an injection-lane probe, a use-stamp readout, and a ratchetable baseline. Asks whether entries can be SEEN, where the auditor asks whether they are still TRUE |
 | [sample_probes.json](sample_probes.json) | Four session-start conditions for the exam's lane probe, written against the sample ledger |
 | [memory_engine.py](memory_engine.py) | Three-tier runnable memory (working state, append-only episodes, semantic facts with asserted-vs-verified status): compaction flushes down instead of deleting, facts can cite their exact source episodes, contradiction checks produce typed review-only proposals and keep evaluator failures unknown, verification requires a distinct tool or human authority so agent repetition cannot self-promote, rejected values leave tombstones that block silent re-assertion, and deterministic retrieval fuses lexical, action/tag, and recency ranks while preserving as-of replay, valid-at windows, and audience scoping |
+| [scoped_context.py](scoped_context.py) | Trusted-principal authorization seam for memory assembly: the host resolves identity, fixed policy derives clearance, ungranted principals fail closed, and requests cannot assert or widen their audience |
 | [memory_engine_exam.py](memory_engine_exam.py) + [memory_engine_golden.json](memory_engine_golden.json) | Golden-query regression exam over the runnable memory engine: expected and forbidden hits for deterministic fusion, public-scope exclusion, learned-time replay, valid-time windows, and verification-time masking |
 | [governed_replay.py](governed_replay.py) | Offline replay sampler, typed proposal queue, and counterfactual rehearsal: correction signals, exact recurrence, and recency select episodes deterministically; an external evaluator may propose a fact, skill, watch, or correction; explicit expected and forbidden outcomes can then be rehearsed, but failure stays unknown and even a passing proposal remains source-linked, pending review, and non-mutating |
 | [governed_learning.py](governed_learning.py) | Append-only learning cycle from sourced knowledge through application or teach-back, externally evaluated understanding, novel-context transfer, and a review-only mastery proposal; failed attempts remain in the cipher and no stage mutates memory or activates a skill |
@@ -40,6 +41,7 @@ And the retrieval exam over the same fixture:
 python3 templates/ledger-tools/retrieval_exam.py templates/ledger-tools/sample_conclusions.jsonl \
     --root . --probes templates/ledger-tools/sample_probes.json
 python3 templates/ledger-tools/retrieval_exam.py --selftest
+python3 templates/ledger-tools/scoped_context.py --selftest
 ```
 
 On the sample that reports one unreachable entry (the retired path, which the auditor

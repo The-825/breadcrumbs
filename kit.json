@@ -83,6 +83,13 @@
       "selftest": "python3 templates/ledger-tools/memory_engine.py --selftest"
     },
     {
+      "path": "templates/ledger-tools/scoped_context.py",
+      "kind": "tool",
+      "what": "Trusted-principal authorization seam for memory context: the host resolves the current principal, immutable policy derives its clearance, ungranted identities fail closed, and request input cannot assert or widen audience.",
+      "assumes": "Sibling memory_engine.py and a host-owned PrincipalProvider backed by an authenticated session or workload identity; stdlib only.",
+      "selftest": "python3 templates/ledger-tools/scoped_context.py --selftest"
+    },
+    {
       "path": "templates/ledger-tools/memory_engine_exam.py",
       "kind": "tool",
       "what": "Golden-query regression exam for the runnable memory engine: expected hits, forbidden hits, deterministic fusion, scope exclusion, learned-time replay, world-time validity, and verification-time masking.",
