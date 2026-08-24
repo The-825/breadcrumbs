@@ -473,6 +473,31 @@ inspect-trace-separate-synthesize method, pinned to a commit, published alongsid
 this paper. Self-review is not a substitute for the outside eye that found the gap in
 the first place, and the writeup says so.
 
+There is a neighboring distinction this system now makes explicitly: governing an
+agent is not the same as governing the work the agent produces. Jason Stanley names
+these as separate objects. Actor governance asks what a human or agent may access and
+do. Work governance asks whether this particular unit of work was authorized, reviewed
+at the level its stakes require, reproducible from evidence, and assigned to an
+accountable owner. That distinction improved the implementation here. The shared task
+contract now declares stakes, review mode, task-specific evaluation criteria, and the
+judgments that remain human-owned instead of assuming that a well-scoped worker makes
+every output well-governed. See [Governing Work in the Era of Agents](https://jasonstanley.substack.com/p/governing-work-in-the-era-of-agents).
+
+Three other public practices sharpen how that contract should be used. Alli Kirkley's
+shared vocabulary for autonomy, authority, consequential events, operational context,
+and accountability makes scope inspectable before execution, not reconstructed after
+it. Ethan Mollick's recommendation to benchmark models on the work an organization
+actually performs argues for task-specific evaluation criteria rather than faith in a
+general model ranking. Marc Watkins's emphasis on human context and judgment is why the
+contract names decisions that remain human-owned. Anne-Laure Le Cunff's tiny-experiment
+practice supplies the operating posture for uncertain improvements: try one bounded
+action for a bounded period, preserve what was learned, and do not silently promote the
+trial into standing authority. These are influences, not evidence that those authors
+reviewed or endorsed this system. Sources: [AI Agent Governance](https://allikirkley.substack.com/p/ai-agent-governance-shared-language),
+[Making AI Work](https://www.oneusefulthing.org/p/making-ai-work-leadership-lab-and),
+[Context Is All You Need](https://marcwatkins.substack.com/p/context-is-all-you-need), and
+[How tiny experiments can set you free](https://nesslabs.com/tiny-experiments-tedx-nashville-transcript).
+
 ## 7. Limitations
 
 This runs in one office, mine, at one scale, a few hundred agent sessions a month, in
