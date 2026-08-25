@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-24 (trusted-principal scope gate merged)
+Last refreshed: 2026-08-25 (stale-content sweep, main current)
 
 ## Current state
 
@@ -37,5 +37,5 @@ Last refreshed: 2026-08-24 (trusted-principal scope gate merged)
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-26 is the latest ruling (2026-08-21, readiness separates evidence coverage
-  from score).
+- D-28 is the latest ruling (2026-08-24, scope is derived from trusted
+  identity).
