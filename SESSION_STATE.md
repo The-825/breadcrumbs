@@ -23,7 +23,7 @@ packaged as one public, evidence-honest ledger with a shared method, corroborati
 matrix, dependency map, research debt, and ranked questions. Paper 002 is identified
 as the Fügener, Walzner, and Gupta task-allocation study; the earlier conversational
 reference to Raisch and Krakowski was a related citation, not the reviewed source.
-Validation is complete; commit, PR, and merge remain.
+Validation, commit, and PR #89 are complete; the repository merge gate remains.
 
 ## What just landed
 
