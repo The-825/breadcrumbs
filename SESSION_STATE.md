@@ -5,12 +5,12 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-26 (collaborative-intelligence research checkpoint)
+Last refreshed: 2026-08-26 (adjacent research-angle seed pass)
 
 ## Current state
 
-- Active branch: `claude/collaborative-intelligence-research-system`, cut from
-  `origin/main` at `967b905`.
+- Active branch: `claude/adjacent-research-angle-seeds`, cut from `origin/main`
+  after PR #91.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -18,12 +18,10 @@ Last refreshed: 2026-08-26 (collaborative-intelligence research checkpoint)
 
 ## In flight
 
-**Collaborative-intelligence research method (D-29).** The four-source checkpoint is
-packaged as one public, evidence-honest ledger with a shared method, corroboration
-matrix, dependency map, research debt, and ranked questions. Paper 002 is identified
-as the Fügener, Walzner, and Gupta task-allocation study; the earlier conversational
-reference to Raisch and Krakowski was a related citation, not the reviewed source.
-Validation, commit, and PR #89 are complete; the repository merge gate remains.
+**Adjacent research-angle seeds (D-29).** Five public sources now seed the open angles
+for team evaluation, durable joint-work protocols, calibrated reliance, multi-agent
+coordination, and overreliance or external-validity risk. The pass adds direct negative
+evidence and does not promote a new runtime capability or architecture principle.
 
 ## What just landed
 
@@ -32,9 +30,9 @@ Validation, commit, and PR #89 are complete; the repository merge gate remains.
 
 ## Next steps / watch
 
-- Seek negative evidence before adding a fifth supportive source. Do not promote the
-  candidate work-allocation capability into a shipped claim without a bounded test in
-  consequential, privacy-constrained work.
+- Seek applied and longitudinal evidence next. Do not promote the candidate
+  work-allocation or multi-agent capabilities into shipped claims without matched,
+  consequential, privacy-constrained tests.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
