@@ -328,3 +328,14 @@ Source: operator-approved agent-to-agent revenue and outreach program, 2026-08-2
 Ruling: memory context exposed to an untrusted caller must resolve the current principal through a host-owned adapter and derive clearance from fixed policy. Request input never supplies principal, audience, role, or clearance; ungranted principals fail closed. The engine's direct audience argument remains a low-level composition primitive, not an authorization boundary.
 Why: filtering works only when the caller cannot select a broader filter than its authenticated identity permits.
 Source: operator-approved independent catalog gap closure, 2026-08-24.
+
+## D-29 · 2026-08-26 · Research changes evidence before architecture
+
+Ruling: Collaborative-intelligence sources use one versioned review method with common
+fields, architecture-impact labels, corroboration states, explicit negative evidence,
+and a ranked question queue. Metadata changes are backfilled across prior reviews;
+analytical changes require rereading the source. A literature gap never proves this
+repository fills it, and a new implementation never creates a principle by itself.
+Why: separating method evolution from architecture evolution prevents a growing paper
+catalog from becoming a machine for confirming the design it was meant to test.
+Source: operator-approved ChatGPT research checkpoint, 2026-08-26.
