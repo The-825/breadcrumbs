@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (100-source collaborative-intelligence ledger pass)
+Last refreshed: 2026-08-27 (collaborative-intelligence Method v2.0)
 
 ## Current state
 
@@ -33,6 +33,13 @@ confidence map separates converged findings from emerging evidence and explicit 
 limits. It strengthens the method without establishing a runtime capability, another
 memory store, or a general collaboration benefit.
 
+**Research Method v2.0 (D-32).** All 100 sources now have a screened structural
+appraisal covering design, publication state, directness, evidence-family
+dependence, time horizon, transfer flags, and linked claim IDs. Seventeen bounded
+claims now carry separate confidence profiles, null cases, dispositions, and next
+tests. The pass does not claim a full-text risk-of-bias review or silently rewrite
+the original findings.
+
 ## What just landed
 
 **A2A score export and work-governance related work (D-27).** Both are merged on
@@ -46,6 +53,9 @@ memory store, or a general collaboration benefit.
   trace-based recovery evidence, and an adversarial-content case. Do not promote the
   candidate work-allocation or multi-agent capabilities into shipped claims before that
   comparison.
+- Complete claim-specific full-text appraisal before upgrading any Method v2.0
+  validity profile. Future source waves must begin with a target claim and retain
+  their query, inclusion, exclusion, duplicate, and evidence-family checks.
 - Add a versioned material-change manifest to the next owning-system evaluation so model,
   prompt, tool, policy, and data-distribution changes can invalidate stale delegation and
   reliance evidence.
@@ -70,5 +80,5 @@ memory store, or a general collaboration benefit.
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-28 is the latest ruling (2026-08-24, scope is derived from trusted
-  identity).
+- D-32 is the latest ruling (2026-08-27, research synthesis is claim-centered
+  and profile-based).

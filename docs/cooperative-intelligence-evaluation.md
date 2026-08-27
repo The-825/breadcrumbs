@@ -22,6 +22,12 @@ private content, credentials, student information, customer material, or interna
 in a public record. Keep those source records in their owning system and retain only
 safe pointers or aggregate results where disclosure is permitted.
 
+Before comparing conditions, profile the work item. Record stakes, consequence,
+reversibility, feedback latency, participant expertise, task decomposability,
+privacy and authority constraints, expected duration, and the model, prompt,
+tool, policy, and data versions that bound the result. These fields determine
+which evidence transfers and when a prior evaluation expires.
+
 ## Compare the right conditions
 
 Compare only conditions that answer the same task question. When feasible, record:
@@ -54,18 +60,38 @@ found changes to independently controlled work without a significant change to a
 coordination-dependent measure, which is why throughput and coordination remain
 separate here. See [Dillon et al.](https://www.microsoft.com/en-us/research/publication/shifting-work-patterns-with-generative-ai/).
 
+## Activate only relevant modules
+
+The five concerns remain the core governance and continuity checks. Add a module
+only when the work item exposes its risk. Do not turn every evaluation into one
+large checklist.
+
+| Module | Activate when | Required observation | Failure signal |
+|---|---|---|---|
+| Grounding | Participants must coordinate across a handoff or repository boundary | Shared objective, constraints, owner, correction state, and recipient acknowledgement | Work proceeds from a wrong premise or requires unbounded source copying |
+| Reliance and deferral | A person or agent may accept, reject, override, or route advice | Acceptance, verification, override, escalation, abstention, and outcome | Confidence or role label substitutes for calibrated behavior |
+| Explanation behavior | An explanation is intended to change a decision behavior | Predeclared behavior, observed effect, burden, and side effects | Confidence rises without better detection, correction, or escalation |
+| Mode and reentry | Automation changes mode, routing, or active control | Visible state plus safe takeover or stale-context drill | The participant cannot identify the mode or recover safely |
+| Skill retention | Work repeats or may remove practice from a responsible person | Independent performance or recovery after repeated assistance | Routine gains coexist with lost intervention ability |
+| Portfolio diversity | The work generates repeated research, writing, or design options | Quality and diversity across the complete portfolio | Average quality rises while useful option diversity collapses |
+| Fairness and accessibility | Outcomes may differ across groups, abilities, languages, or access modes | Disaggregated outcomes and participation burden | Aggregate benefit hides subgroup harm or exclusion |
+| Retrieval and memory governance | Prior records or retrieved evidence affect the result | Query fit, leaf provenance, version, correction, tombstone, isolation, and deletion behavior | Recall succeeds while stale, unauthorized, or corrected evidence remains active |
+| Adversarial safety | Tools or retrieved content can contain untrusted instructions | Utility and attack outcome under the same authority boundary | The system follows untrusted content or widens authority |
+
 ## Run the protocol
 
-1. Define the work item and its authority boundary before exposing it to a participant.
+1. Define the work item, workflow profile, and authority boundary before exposing it to a participant.
 2. Select a matched baseline or record why no safe baseline exists.
-3. Run the work through the stated roles without changing the target outcome midway.
-4. Record each concern as observed, failed, or unknown. Unknown is not a failure and is
+3. Select only the conditional modules required by the workflow profile.
+4. Run the work through the stated roles without changing the target outcome midway.
+5. Record each concern and selected module as observed, failed, or unknown. Unknown is not a failure and is
    not a pass.
-5. Attempt one safe recovery or correction check when the work exposes a relevant
+6. Attempt one safe recovery or correction check when the work exposes a relevant
    premise, handoff, or source. Do not manufacture a harmful failure in production.
-6. Compare outcomes by task stage. Generation, selection, review, correction, and
+7. Compare outcomes by task stage. Generation, selection, review, correction, and
    closeout may have different owners and different results.
-7. Publish or retain only the level of detail permitted by the owning environment.
+8. Record the change manifest that would expire the result.
+9. Publish or retain only the level of detail permitted by the owning environment.
    A public pattern can name the method and aggregate outcome. It must not reveal the
    underlying private work item.
 
@@ -87,6 +113,10 @@ hide a safety or correction failure behind better throughput. If a team later ne
 summary, publish coverage first: which concerns have evidence, which are unknown, and
 which failed.
 
+Report conditional modules the same way. A module is not a new score component.
+Its result stays separate so a productivity gain cannot offset a reliance,
+fairness, memory, or adversarial-safety failure.
+
 ## What this method does not establish
 
 This method does not prove general intelligence, organizational transformation, durable
@@ -95,7 +125,8 @@ owning system's governance, or justify moving source records into Breadcrumbs.
 
 Before generalizing a result, obtain independent support, name the null case, and rerun
 the protocol in a different relevant condition. The promotion rule remains in
-[cooperative intelligence](cooperative-intelligence.md).
+[cooperative intelligence](cooperative-intelligence.md), and evidence strength
+is recorded through [research method v2.0](collaborative-intelligence-method-v2.md).
 
 ## Copyable record
 

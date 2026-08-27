@@ -14,24 +14,43 @@ source supports, what it does not support, and what question should be investiga
 next. Architecture changes only after evidence converges across sources or a bounded
 implementation test produces a result.
 
-## Method v1.0
+## Method v2.0
 
-Each source carries the same fields:
+Method v2.0 uses three linked records:
+
+1. this source ledger preserves identity, the first-pass finding, boundaries, and
+   review history;
+2. the [source appraisal register](collaborative-intelligence-source-appraisals.md)
+   records design, publication state, directness, evidence-family dependence,
+   horizon, transfer flags, and claim links; and
+3. the [claim register](collaborative-intelligence-claim-register.md) evaluates
+   bounded propositions with explicit confidence profiles and null cases.
+
+The full method is in
+[collaborative intelligence research method v2.0](collaborative-intelligence-method-v2.md).
+Source count is coverage, not confidence.
+
+Each source retains these common fields:
 
 1. source identity and verification status;
 2. level of analysis: task, interaction, workflow, organization, or ecosystem;
 3. decision context: structured, semi-structured, or unstructured;
 4. evidence type and scope;
 5. claims relevant to this repository;
-6. architecture impact: adopt, strengthen, watch, reject, or no change;
+6. historical architecture impact from the method version used at review time;
 7. corroborating and contradicting evidence;
 8. boundaries and assumptions;
 9. the next best research question; and
-10. method version.
+10. method version and linked claim IDs.
 
 Metadata enrichment, such as adding a level-of-analysis field, is backfilled across
 prior entries. Analytical enrichment, such as changing a finding, requires rereading
 the source. A method change never silently becomes an architecture change.
+
+The v2.0 controlled claim dispositions are `adopt-method`, `prototype`, `watch`,
+`defer`, `reject-generalization`, and `no-change`. Earlier source rows preserve
+v1.0 terms such as `Strengthen` as historical review evidence rather than
+pretending they were written under the new method.
 
 ## Source ledger
 
@@ -397,6 +416,10 @@ This map records confidence in bounded findings, not confidence in Breadcrumbs a
 implemented system. Confidence reflects convergence, evidence diversity, direct contrary
 tests, and transfer limits.
 
+This table is the v1.0 summary retained for continuity. Method v2.0 replaces its
+single confidence label with the multidimensional profiles in the
+[claim register](collaborative-intelligence-claim-register.md).
+
 | Finding | Primary coverage | Confidence | What raises confidence | What still limits the finding |
 |---|---|---|---|---|
 | Collaboration benefit is conditional on the workflow and better individual baseline. | 001-031, 085-086 | High | Meta-analysis, experiments, field studies, and negative productivity evidence converge. | Longitudinal, privacy-constrained, cross-repository evidence remains sparse. |
@@ -517,6 +540,7 @@ new principle, and a literature gap does not certify an implementation as the an
 | 1.0, 2026-08-27 | Added 14 sources on productivity heterogeneity, jagged capability boundaries, critical engagement, multi-agent scaling, evaluation validity, interleaving, failure attribution, and tool-use safety. | The prior ledger lacked enough contrary real-work evidence and process-level agent evaluation to guide a bounded owning-system test. | 001 through 017 retain their findings; the matrix and question queue now make task fit, trace evidence, cost, and adversarial safety explicit. |
 | 1.0, 2026-08-27 | Added 20 sources on function-specific automation, trust dynamics, delegation and update compatibility, long-term memory evaluation, tiered memory, and self-refinement. | The prior ledger did not adequately test when routing evidence expires or distinguish memory benchmark gains from governance and independent verification. | 001 through 031 retain their findings; the method now requires function-bound authority, change-triggered revalidation, a broader memory exam, and independent evidence for durable corrections. |
 | 1.0, 2026-08-27 | Added 49 sources across team cognition, recovery, reliance, explanation, deferral, collective diversity, multi-agent coordination, and retrieval architecture, bringing the ledger to 100 sources. | The prior ledger needed broader foundational evidence, explicit contradictory results, and a confidence map that separated benchmark mechanics from governed deployment claims. | 001 through 051 retain their findings; the method now adds grounding, recovery readiness, behavior-level explanation tests, calibrated deferral, portfolio diversity, and retrieval-fitness questions without creating a runtime or memory store. |
+| 2.0, 2026-08-27 | Changed the unit of synthesis from source to claim, added source appraisals and evidence-family warnings, replaced one confidence label with a six-dimension profile, unified claim dispositions, and added collection and expiry rules. | The 100-source audit showed that unique papers are not independent votes, source identity is not claim validity, and new research findings had outgrown the five-field evaluation template. | All 100 sources received a screened structural appraisal and claim links. Original findings remain unchanged pending full-text claim-specific appraisal. |
 
 ## Research debt
 
@@ -553,6 +577,11 @@ new principle, and a literature gap does not certify an implementation as the an
 - Add portfolio-diversity measures to repeated creative and research workflows.
 - Compare lexical, dense, hierarchical, and graph retrieval on repository-derived
   global and local questions while preserving leaf provenance and tombstones.
-- Keep source identity verification separate from claim verification.
+- Complete claim-specific full-text appraisal before upgrading any v2.0 validity
+  profile or generalizing a result beyond its screened boundary.
+- Add a search log for every future research wave, including databases, queries,
+  inclusion rules, exclusions, duplicate checks, and evidence-family checks.
+- Seek accessibility, disability, multilingual, cross-cultural, labor, power,
+  deskilling, memory-poisoning, reproducibility, and incident-tail-risk evidence.
 - Revisit every earlier entry when a major method version changes. Minor metadata
   additions may be backfilled without changing the finding.
