@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (cooperative evaluation protocol pass)
+Last refreshed: 2026-08-27 (third collaborative-intelligence ledger pass)
 
 ## Current state
 
@@ -24,6 +24,12 @@ Last refreshed: 2026-08-27 (cooperative evaluation protocol pass)
 repository template now evaluate orientation, handoff, correction, ownership, and
 recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
 evaluator, score, or authority.
+
+**Third research-ledger pass.** The public ledger now carries an integrated synthesis
+of entries 001 through 017 and bounded evidence on motivation, feedback loops,
+interaction order, and agent-team fit. It narrows the method toward matched baselines,
+stage-specific measures, correction, and protocol cost. It does not establish a runtime
+capability or a general collaboration benefit.
 
 ## What just landed
 
