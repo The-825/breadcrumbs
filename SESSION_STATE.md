@@ -5,11 +5,11 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (applied collaboration-evidence pass)
+Last refreshed: 2026-08-27 (longitudinal collaboration-evidence pass)
 
 ## Current state
 
-- Active branch: `claude/applied-collaboration-evidence`, cut from current `main`.
+- Active branch: `claude/longitudinal-collaboration-evidence`, cut from current `main`.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -20,9 +20,9 @@ Last refreshed: 2026-08-27 (applied collaboration-evidence pass)
 
 ## In flight
 
-**Applied collaboration evidence (D-29).** The public ledger now includes a
-best-baseline meta-analysis and a field preprint on collaboration scaffolding. The
-evidence rejects generic synergy and structure-as-benefit claims. It does not promote a
+**Longitudinal collaboration evidence (D-29).** The public ledger now distinguishes
+individual throughput from coordination outcomes and treats generation, selection,
+review, and correction as separate candidate stages. The evidence does not promote a
 new runtime capability or architecture principle.
 
 ## What just landed
@@ -32,10 +32,10 @@ new runtime capability or architecture principle.
 
 ## Next steps / watch
 
-- Seek longitudinal and repeated-use field evidence next. Do not promote the candidate
-  work-allocation or multi-agent capabilities into shipped claims without matched,
-  consequential, privacy-constrained tests that compare against the better individual
-  baseline.
+- Draft a pattern-only evaluation protocol for handoff quality, correction, ownership,
+  and recovery. Do not promote the candidate work-allocation or multi-agent capabilities
+  into shipped claims without matched, consequential, privacy-constrained tests that
+  compare against the better individual baseline.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
