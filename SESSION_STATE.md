@@ -9,8 +9,8 @@ Last refreshed: 2026-08-27 (collaborative-intelligence repository landscape)
 
 ## Current state
 
-- Active branch: `claude/collaboration-repository-landscape`, stacked on
-  `claude/collaboration-research-batch-five` while the Method v2.0 work is open.
+- Active branch: `claude/collaboration-repository-landscape`, updated from current
+  `main` after Method v2.0 merged in PR #100.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
