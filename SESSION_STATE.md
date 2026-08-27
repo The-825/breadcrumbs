@@ -5,11 +5,11 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (fourth collaborative-intelligence ledger pass)
+Last refreshed: 2026-08-27 (fifth collaborative-intelligence ledger pass)
 
 ## Current state
 
-- Active branch: `claude/collaboration-research-batch-four`, cut from current `main`.
+- Active branch: `claude/collaboration-research-batch-five`, cut from current `main`.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -25,11 +25,12 @@ repository template now evaluate orientation, handoff, correction, ownership, an
 recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
 evaluator, score, or authority.
 
-**Fourth research-ledger pass.** The public ledger now carries 31 reviewed sources. The
-14-source batch adds real-work productivity contradictions, jagged task frontiers,
-critical-engagement evidence, multi-agent scaling limits, process and cost evaluation,
-interleaved continuity, recovery-aware failure attribution, and adversarial tool-use
-evidence. It does not establish a runtime capability or a general collaboration benefit.
+**Fifth research-ledger pass.** The public ledger now carries 51 reviewed sources. The
+20-source batch adds function-specific automation, dynamic trust and automation-bias
+evidence, delegation and model-update compatibility, long-term memory evaluation,
+memory architecture candidates, and self-refinement limits. It strengthens the method
+without establishing a runtime capability, another memory store, or a general
+collaboration benefit.
 
 ## What just landed
 
@@ -44,6 +45,12 @@ evidence. It does not establish a runtime capability or a general collaboration 
   trace-based recovery evidence, and an adversarial-content case. Do not promote the
   candidate work-allocation or multi-agent capabilities into shipped claims before that
   comparison.
+- Add a versioned material-change manifest to the next owning-system evaluation so model,
+  prompt, tool, policy, and data-distribution changes can invalidate stale delegation and
+  reliance evidence.
+- Extend the fresh-session memory exam with updates, abstention, temporal and causal
+  reasoning, participant-versus-observer roles, efficiency, and capacity. Keep source
+  precedence, correction survival, custody, and authority as separate governance checks.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
