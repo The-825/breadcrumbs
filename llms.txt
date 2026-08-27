@@ -89,6 +89,18 @@ assumptions in its header, and every runnable tool ships an offline selftest.
 - [templates/standing-agents/](templates/standing-agents/): the standing-agent
   fleet kit.
 
+## Researching collaborative intelligence
+
+- [docs/collaborative-intelligence-method-v2.md](docs/collaborative-intelligence-method-v2.md):
+  claim-centered research method, confidence profiles, and promotion rules.
+- [docs/collaborative-intelligence-repository-landscape.md](docs/collaborative-intelligence-repository-landscape.md):
+  pinned first cohort of public runtimes, workflows, protocols, memory systems,
+  and research frameworks.
+- [docs/collaborative-intelligence-repository-landscape-method.md](docs/collaborative-intelligence-repository-landscape-method.md):
+  reproduce or extend the repository appraisal without ranking products.
+- [docs/collaborative-intelligence-repository-landscape.json](docs/collaborative-intelligence-repository-landscape.json):
+  machine-readable snapshots, claim links, and mechanism observations.
+
 ## Optional
 
 - [docs/](docs/): the full pattern-essay shelf, one reasoning essay per

@@ -1,5 +1,6 @@
 {
   "_comment": "Clean fixture for guard_no_pii_in_fixtures: synthetic placeholders only.",
   "email": "student@example.com",
-  "id": "ID-0001"
+  "id": "ID-0001",
+  "public_git_object": "de02975ee606a40f1a813197326be9079b565498"
 }

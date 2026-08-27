@@ -374,3 +374,16 @@ benchmarks, judges, or narrow settings; source identity verification does not ve
 a claim; and a single confidence label hides the exact evidence weakness that should
 drive the next test.
 Source: operator-approved Method v2.0 and 100-source re-evaluation, 2026-08-27.
+
+## D-33 · 2026-08-27 · Repository landscapes appraise mechanisms, not products
+
+Ruling: public repository comparisons bind every observation to a canonical
+repository, exact commit, evidence depth, and claim link. They classify visible,
+partial, not-observed, and out-of-scope mechanisms without calculating a composite
+framework score or inferring runtime performance from repository features. Maintenance,
+migration, archive, licensing, and hosted-product boundaries remain explicit.
+Why: feature counts and README claims can show how a theory was codified, but they do
+not establish collaboration benefit, authority quality, recovery performance, cost, or
+independent verification. Versioned observations make the map reproducible and allow
+later code tracing without silently rewriting the earlier screen.
+Source: operator-approved collaborative-intelligence repository landscape, 2026-08-27.
