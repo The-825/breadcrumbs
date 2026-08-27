@@ -5,7 +5,7 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (fifth collaborative-intelligence ledger pass)
+Last refreshed: 2026-08-27 (100-source collaborative-intelligence ledger pass)
 
 ## Current state
 
@@ -25,12 +25,13 @@ repository template now evaluate orientation, handoff, correction, ownership, an
 recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
 evaluator, score, or authority.
 
-**Fifth research-ledger pass.** The public ledger now carries 51 reviewed sources. The
-20-source batch adds function-specific automation, dynamic trust and automation-bias
-evidence, delegation and model-update compatibility, long-term memory evaluation,
-memory architecture candidates, and self-refinement limits. It strengthens the method
-without establishing a runtime capability, another memory store, or a general
-collaboration benefit.
+**100-source research-ledger pass.** The public ledger now carries 100 reviewed sources.
+The 49-source expansion adds seven distinct lenses: team cognition, automation and
+situation awareness, algorithm aversion and discretion, human-centered oversight,
+learning to defer, multi-agent coordination, and retrieval-memory architecture. The
+confidence map separates converged findings from emerging evidence and explicit transfer
+limits. It strengthens the method without establishing a runtime capability, another
+memory store, or a general collaboration benefit.
 
 ## What just landed
 
@@ -51,6 +52,9 @@ collaboration benefit.
 - Extend the fresh-session memory exam with updates, abstention, temporal and causal
   reasoning, participant-versus-observer roles, efficiency, and capacity. Keep source
   precedence, correction survival, custody, and authority as separate governance checks.
+- Add privacy-minimal grounding, visible mode state, recovery rehearsal, behavior-level
+  explanation tests, expiring deferral calibration, portfolio diversity, and
+  query-specific retrieval comparisons to the next owning-system evaluation design.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
