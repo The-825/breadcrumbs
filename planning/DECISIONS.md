@@ -360,3 +360,17 @@ collapse those concerns into one collaboration score.
 Why: a system can improve an individual's work without improving coordination, or hide a
 correction and authority failure behind a faster result.
 Source: operator-approved Breadcrumbs research expansion, 2026-08-27.
+
+## D-32 · 2026-08-27 · Research synthesis is claim-centered and profile-based
+
+Ruling: Method v2.0 treats a bounded claim, not a paper, as the unit of synthesis.
+Sources retain identity and review history, receive a visible structural appraisal,
+and link to stable claim IDs. Confidence remains a profile of directness, validity,
+independence, consistency, transfer, and durability rather than one score. Source
+count never substitutes for evidence independence, and research promotion requires
+a null case, expiry conditions, and owning-system evidence.
+Why: the 100-source audit showed that unique papers can share authors, datasets,
+benchmarks, judges, or narrow settings; source identity verification does not verify
+a claim; and a single confidence label hides the exact evidence weakness that should
+drive the next test.
+Source: operator-approved Method v2.0 and 100-source re-evaluation, 2026-08-27.

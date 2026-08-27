@@ -65,7 +65,13 @@ For each source or field finding, keep three separate outputs:
 | --- | --- | --- |
 | Evidence | Source, scope, boundary, and confidence | A vague claim that the source proves the system works |
 | Method | A reusable review, measurement, or falsification practice | A mandatory process with no stated cost or purpose |
-| Architecture impact | Adopt, prototype, watch, defer, or reject, plus a validation plan | An automatic code change |
+| Claim disposition | Adopt-method, prototype, watch, defer, reject-generalization, or no-change, plus a validation plan | An automatic code change |
+
+The source itself is not the unit of promotion. Use
+[research method v2.0](collaborative-intelligence-method-v2.md) to appraise the
+source, then update the bounded proposition in the
+[claim register](collaborative-intelligence-claim-register.md). This prevents
+multiple papers from one evidence family from becoming independent votes.
 
 ## The promotion rule
 
@@ -88,11 +94,13 @@ a negative evaluation are useful evidence. They are not failures to be hidden.
 
 The next phase is not a giant catalog. It is a small, inspectable research cycle:
 
-1. Add a verified source or a bounded field observation.
-2. Map it to one of the six concerns and name the boundary condition.
-3. Check whether an existing Breadcrumbs artifact already answers it.
-4. If not, design one contained experiment in an owning system.
-5. Publish a generalized pattern only when the result is inspectable and safe to share.
+1. Name the target claim or gap before searching.
+2. Record the search path, exclusions, and possible evidence-family dependence.
+3. Add a verified source or a bounded field observation to the source register.
+4. Link it to the exact claim it supports, limits, or contradicts.
+5. Check whether an existing Breadcrumbs artifact already answers it.
+6. If not, design one contained experiment in an owning system.
+7. Publish a generalized pattern only when the result is inspectable and safe to share.
 
 That keeps Breadcrumbs cumulative without turning it into a private archive or a stack
 of claims that no one can test.
