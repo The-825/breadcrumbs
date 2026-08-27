@@ -5,12 +5,11 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-26 (adjacent research-angle seed pass)
+Last refreshed: 2026-08-27 (applied collaboration-evidence pass)
 
 ## Current state
 
-- Active branch: `claude/adjacent-research-angle-seeds`, cut from `origin/main`
-  after PR #91.
+- Active branch: `claude/applied-collaboration-evidence`, cut from current `main`.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -21,10 +20,10 @@ Last refreshed: 2026-08-26 (adjacent research-angle seed pass)
 
 ## In flight
 
-**Adjacent research-angle seeds (D-29).** Five public sources now seed the open angles
-for team evaluation, durable joint-work protocols, calibrated reliance, multi-agent
-coordination, and overreliance or external-validity risk. The pass adds direct negative
-evidence and does not promote a new runtime capability or architecture principle.
+**Applied collaboration evidence (D-29).** The public ledger now includes a
+best-baseline meta-analysis and a field preprint on collaboration scaffolding. The
+evidence rejects generic synergy and structure-as-benefit claims. It does not promote a
+new runtime capability or architecture principle.
 
 ## What just landed
 
@@ -33,9 +32,10 @@ evidence and does not promote a new runtime capability or architecture principle
 
 ## Next steps / watch
 
-- Seek applied and longitudinal evidence next. Do not promote the candidate
+- Seek longitudinal and repeated-use field evidence next. Do not promote the candidate
   work-allocation or multi-agent capabilities into shipped claims without matched,
-  consequential, privacy-constrained tests.
+  consequential, privacy-constrained tests that compare against the better individual
+  baseline.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.
