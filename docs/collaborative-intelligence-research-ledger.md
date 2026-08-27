@@ -50,6 +50,10 @@ the source. A method change never silently becomes an architecture change.
 | 011 | Alex Farach, Alexia Cambon, Lev Tankelevitch, Connie Hsueh, and Rebecca Janssen, ["Scaffolding Human-AI Collaboration: A Field Experiment on Behavioral Protocols and Cognitive Reframing"](https://www.microsoft.com/en-us/research/publication/human-ai-collaboration-field-experiment/), Microsoft Research preprint, 2026 | Workflow and organization; field experiment with 388 employees at a Fortune 500 retailer | A structured pair-use protocol was associated with lower document quality and substantially lower document production than unstructured use. A cognitive framing intervention was associated with higher individual quality at the top of the distribution, subject to reported design limitations. | **Watch** protocol and framing interventions. **Reject** structure alone as evidence of better collaboration. No runtime change. | This is a preprint with an AM/PM session confound, differential attrition, and LLM-grading sensitivity to document length. Next: can a preregistered, replicated field study show durable benefit without reducing throughput? |
 | 012 | Eleanor Dillon, Sonia Jaffe, Nicole Immorlica, and Christopher Stanton, ["Shifting Work Patterns with Generative AI"](https://www.microsoft.com/en-us/research/publication/shifting-work-patterns-with-generative-ai/), Microsoft Research working paper, 2025 | Workflow and organization; 6-month, cross-industry randomized field experiment with 6,000 knowledge workers | Access to AI changed work that individuals could change independently, including less time spent on email and moderately faster document completion. It did not significantly change time spent in meetings, a coordination-dependent activity. | **Strengthen** separate measurement of individual throughput and coordination outcomes. **Reject** productivity change as a proxy for improved collaboration. | The report describes access and work-pattern effects, not the quality, safety, or persistence of cross-repository coordination. Next: which repeated-use measures observe handoff quality, correction, and ownership changes rather than only time use? |
 | 013 | Fabrizio Dell'Acqua et al., ["The Cybernetic Teammate: A Field Experiment on Generative AI and Teamwork"](https://doi.org/10.1287/orsc.2025.20702), *Organization Science* 37(4), 2026 | Workflow and organization; preregistered field experiment with 791 professionals working on real product-innovation challenges | Individuals with AI matched teams without AI on average solution quality, while the study's decomposition found that AI improved idea generation and human teams retained an advantage in evaluative selection. | **Watch** role-specific collaboration hypotheses. **Strengthen** stage-specific outcome measurement instead of a single collaboration score. | This is a one-day organizational experiment, not evidence of durable teamwork or authority transfer. Next: can repeated-use studies preserve human evaluative selection while testing whether AI-assisted generation remains beneficial over time? |
+| 014 | Suqing Wu et al., ["Human-generative AI collaboration enhances task performance but undermines human’s intrinsic motivation"](https://doi.org/10.1038/s41598-025-98385-2), *Scientific Reports* 15, 2025 | Task and short-sequence interaction; four preregistered online experiments with 3,562 participants | GenAI assistance improved the assisted task, but did not establish a lasting independent-performance benefit. In several collaboration-to-solo comparisons, intrinsic motivation fell and boredom rose more than in solo-only sequences. | **Watch** continuity and agency effects. **Strengthen** separate outcome, burden, and post-handoff measures. | Professional-role simulations and short task sequences do not establish durable workplace effects. Next: how should a protocol distinguish a useful handoff from a reliance pattern that leaves later independent work worse? |
+| 015 | Moshe Glickman and Tali Sharot, ["How human-AI feedback loops alter human perceptual, emotional and social judgements"](https://doi.org/10.1038/s41562-024-02077-2), *Nature Human Behaviour* 9, 2025 | Interaction and repeated judgment; experiments with 1,401 participants across perceptual, emotional, and social domains | Repeated interaction with biased AI altered human judgments and amplified bias more than comparable human interaction. Participants often underestimated the AI influence. | **Strengthen** correction, counterevidence, and independence checks. **Reject** passive repeated exposure as a safe reliance model. | Judgment tasks and selected algorithms do not map directly to repository work. Next: which correction and provenance signals reduce feedback-loop effects in sustained, open-ended collaboration? |
+| 016 | Peng Liu et al., ["Human-AI teaming in healthcare: 1 + 1 > 2?"](https://doi.org/10.1038/s44387-025-00052-4), *npj Artificial Intelligence* 1, 2025 | Task and interaction; reliability analysis of 52 empirical clinical studies | Medical AI can augment clinicians, but full complementarity was uncommon. Concurrent review of cases and AI output outperformed sequential review, and junior clinicians benefited more than senior clinicians. | **Watch** interaction order and expertise as contextual variables. **Reject** a universal handoff sequence. | Safety-critical clinical evidence cannot prescribe a general operating protocol. Next: when should a low-consequence workflow compare independent and concurrent review, while retaining an auditable human decision? |
+| 017 | Harang Ju and Sinan Aral, ["Collaborating with AI Agents: Field Experiments on Teamwork, Productivity, and Performance"](https://arxiv.org/abs/2503.18238), arXiv preprint, 2026 | Workflow and organization; marketing experiment with 2,310 participants, randomized agent traits, and downstream campaign tests | Human-AI teams increased communication and some text productivity, but human-human teams produced stronger images and overall campaign results were similar. Trait pairing changed outcomes in both directions. | **Watch** participant and modality fit. **Strengthen** disaggregated outcome and coordination-cost measurement. | This is a preprint in a marketing setting with platform-specific interventions. Next: can a matched evaluation identify when another agent changes the result rather than only increasing messages and cost? |
 
 ### Entry metadata
 
@@ -68,6 +72,10 @@ the source. A method change never silently becomes an architecture change.
 | 011 | Verified 2026-08-27 against the Microsoft Research publication page | Semi-structured professional document work | Field preprint that contradicts structure-as-benefit assumptions; its reported limits require replication before an adoption claim | v1.0 |
 | 012 | Verified 2026-08-27 against the Microsoft Research publication page | Repeated workplace use across email, document, and meeting work | Supplies longitudinal field evidence that individual work patterns can change while a coordination-dependent measure does not | v1.0 |
 | 013 | Verified 2026-08-27 against the *Organization Science* article page and DOI | Real product-innovation work with individual, team, AI, and team-plus-AI conditions | Supports stage-specific performance claims while leaving the repeated-use question open | v1.0 |
+| 014 | Verified 2026-08-27 against the *Scientific Reports* article page and DOI | Short professional-role writing and ideation sequences | Adds outcome and motivation limits to the continuity question | v1.0 |
+| 015 | Verified 2026-08-27 against the *Nature Human Behaviour* article page and DOI | Repeated perceptual, emotional, and social judgments | Adds a feedback-loop risk to calibrated-reliance and correction questions | v1.0 |
+| 016 | Verified 2026-08-27 against the *npj Artificial Intelligence* article page and DOI | Clinical human-AI teaming across heterogeneous empirical studies | Adds sequencing and expertise limits to universal handoff claims | v1.0 |
+| 017 | Verified 2026-08-27 against the arXiv record | Human-human and human-AI marketing teams with agent-trait variation | Adds field evidence that outcomes can vary by modality and pairing | v1.0 |
 
 ## Corroboration matrix
 
@@ -108,6 +116,31 @@ measure. Paper 013 shows useful role differentiation in a real-work field experi
 but over one workday rather than a durable operating cycle. Therefore, a future
 Breadcrumbs evaluation must track handoff quality, correction, ownership, and recovery
 separately from individual speed or output quality.
+
+## Integrated synthesis of entries 001 through 017
+
+The evidence supports a narrower claim than generic human-AI synergy. Collaboration is
+conditional. It can change task output, work allocation, feedback access, or the
+distribution of generation and selection work. It can also lower quality, increase
+coordination cost, distort reliance, or shift the human participant's later judgment and
+motivation. The correct unit of analysis is therefore a bounded workflow with a matched
+human-only and AI-only baseline, not the presence of an assistant or another agent.
+
+Four patterns are strong enough to shape the method. First, compare collaboration with
+the better individual baseline and report losses as well as gains. Second, separate
+generation, selection, review, correction, handoff, and recovery instead of treating a
+single output score as collaboration quality. Third, preserve a visible human decision
+and correction path, because explanations, repeated AI exposure, and nominal human
+oversight can still produce inappropriate reliance. Fourth, measure the cost of the
+protocol itself, including extra messages, time, burden, and independence after a
+handoff.
+
+Three questions remain open. No source establishes a durable multi-agent advantage in
+privacy-constrained, cross-repository work. No source validates a universal order for
+human and AI review. No source supplies a composite score that can combine quality,
+burden, authority, correction, and continuity without hiding tradeoffs. Breadcrumbs
+therefore remains a public pattern and evaluation layer. It does not claim a validated
+runtime or a proved collaboration benefit.
 
 ## Dependency map
 
@@ -160,10 +193,11 @@ new principle, and a literature gap does not certify an implementation as the an
 | 1.0, 2026-08-26 | Established the common source fields, architecture-impact labels, corroboration states, negative-evidence requirement, dependency map, and ranked-question queue. | Four-source checkpoint review exposed repeated drift between paper summaries and architecture claims. | 001 through 004 received the same metadata backfill. |
 | 1.0, 2026-08-27 | Added a meta-analysis and a field preprint to test the best-baseline and protocol-benefit assumptions. | The prior ledger lacked broad synthesis of comparative outcomes and applied evidence that a collaboration intervention can fail. | 001 through 009 retain their findings; matrix statuses now record the new contrary evidence. |
 | 1.0, 2026-08-27 | Added repeated-use work-pattern evidence and a matched workplace teamwork experiment. | The applied pass showed the need to distinguish individual throughput from coordination and to measure task stages separately. | 001 through 011 retain their findings; the question queue now names repeated-use coordination measures. |
+| 1.0, 2026-08-27 | Added an integrated synthesis and four bounded sources on motivation, feedback loops, interaction order, and agent-team fit. | The next pass needed to test whether continuity, correction, sequencing, and coordination cost change the existing method. | 001 through 013 retain their findings; the synthesis narrows claims without creating a new architecture principle. |
 
 ## Research debt
 
-- Seek at least one source that reports failed or harmful human-AI collaboration.
+- Continue seeking failed or harmful human-AI collaboration evidence outside short experimental and preprint settings.
 - Seek longitudinal or repeated-use field evidence that follows correction, turnover,
   and coordination quality after initial adoption.
 - Design a pattern-only evaluation protocol for handoff quality, correction, ownership,
