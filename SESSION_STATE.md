@@ -5,11 +5,11 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (third collaborative-intelligence ledger pass)
+Last refreshed: 2026-08-27 (fourth collaborative-intelligence ledger pass)
 
 ## Current state
 
-- Active branch: `claude/cooperative-evaluation-protocol`, cut from current `main`.
+- Active branch: `claude/collaboration-research-batch-four`, cut from current `main`.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -25,11 +25,11 @@ repository template now evaluate orientation, handoff, correction, ownership, an
 recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
 evaluator, score, or authority.
 
-**Third research-ledger pass.** The public ledger now carries an integrated synthesis
-of entries 001 through 017 and bounded evidence on motivation, feedback loops,
-interaction order, and agent-team fit. It narrows the method toward matched baselines,
-stage-specific measures, correction, and protocol cost. It does not establish a runtime
-capability or a general collaboration benefit.
+**Fourth research-ledger pass.** The public ledger now carries 31 reviewed sources. The
+14-source batch adds real-work productivity contradictions, jagged task frontiers,
+critical-engagement evidence, multi-agent scaling limits, process and cost evaluation,
+interleaved continuity, recovery-aware failure attribution, and adversarial tool-use
+evidence. It does not establish a runtime capability or a general collaboration benefit.
 
 ## What just landed
 
@@ -38,10 +38,12 @@ capability or a general collaboration benefit.
 
 ## Next steps / watch
 
-- Run the evaluation template in an owning system with a safe, bounded work item. Do not
-  promote the candidate work-allocation or multi-agent capabilities into shipped claims
-  without matched, consequential, privacy-constrained tests that compare against the
-  better individual baseline.
+- Run the evaluation template in an owning system with a safe, bounded work item, one
+  agent, a multi-agent variant only when the task is decomposable, and a no-AI baseline
+  where meaningful. Include an unseen holdout, observed time and cost, interleaving,
+  trace-based recovery evidence, and an adversarial-content case. Do not promote the
+  candidate work-allocation or multi-agent capabilities into shipped claims before that
+  comparison.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.

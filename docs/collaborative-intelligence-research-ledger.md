@@ -54,6 +54,20 @@ the source. A method change never silently becomes an architecture change.
 | 015 | Moshe Glickman and Tali Sharot, ["How human-AI feedback loops alter human perceptual, emotional and social judgements"](https://doi.org/10.1038/s41562-024-02077-2), *Nature Human Behaviour* 9, 2025 | Interaction and repeated judgment; experiments with 1,401 participants across perceptual, emotional, and social domains | Repeated interaction with biased AI altered human judgments and amplified bias more than comparable human interaction. Participants often underestimated the AI influence. | **Strengthen** correction, counterevidence, and independence checks. **Reject** passive repeated exposure as a safe reliance model. | Judgment tasks and selected algorithms do not map directly to repository work. Next: which correction and provenance signals reduce feedback-loop effects in sustained, open-ended collaboration? |
 | 016 | Peng Liu et al., ["Human-AI teaming in healthcare: 1 + 1 > 2?"](https://doi.org/10.1038/s44387-025-00052-4), *npj Artificial Intelligence* 1, 2025 | Task and interaction; reliability analysis of 52 empirical clinical studies | Medical AI can augment clinicians, but full complementarity was uncommon. Concurrent review of cases and AI output outperformed sequential review, and junior clinicians benefited more than senior clinicians. | **Watch** interaction order and expertise as contextual variables. **Reject** a universal handoff sequence. | Safety-critical clinical evidence cannot prescribe a general operating protocol. Next: when should a low-consequence workflow compare independent and concurrent review, while retaining an auditable human decision? |
 | 017 | Harang Ju and Sinan Aral, ["Collaborating with AI Agents: Field Experiments on Teamwork, Productivity, and Performance"](https://arxiv.org/abs/2503.18238), arXiv preprint, 2026 | Workflow and organization; marketing experiment with 2,310 participants, randomized agent traits, and downstream campaign tests | Human-AI teams increased communication and some text productivity, but human-human teams produced stronger images and overall campaign results were similar. Trait pairing changed outcomes in both directions. | **Watch** participant and modality fit. **Strengthen** disaggregated outcome and coordination-cost measurement. | This is a preprint in a marketing setting with platform-specific interventions. Next: can a matched evaluation identify when another agent changes the result rather than only increasing messages and cost? |
+| 018 | Erik Brynjolfsson, Danielle Li, and Lindsey Raymond, ["Generative AI at Work"](https://doi.org/10.1093/qje/qjae044), *The Quarterly Journal of Economics* 140(2), 2025 | Workflow and organization; staggered deployment study of 5,172 customer-support agents | AI assistance increased issues resolved per hour by about 15% on average, with larger gains for less experienced and lower-skilled workers. The highest-skilled group saw smaller gains and some quality decline. | **Strengthen** expertise-sensitive baselines and distributional reporting. **Reject** one average productivity effect as a routing rule. | One support setting with a purpose-built assistant does not establish transfer to open-ended work. Next: when does AI diffuse expert practice without flattening expert judgment? |
+| 019 | Shakked Noy and Whitney Zhang, ["Experimental evidence on the productivity effects of generative artificial intelligence"](https://doi.org/10.1126/science.adh2586), *Science* 381(6654), 2023 | Task; preregistered experiment with 453 professionals completing short writing tasks | ChatGPT access reduced completion time by about 40% and raised rated output quality by about 18%, while compressing performance differences between participants. | **Strengthen** matched time-and-quality measurement. **Watch** skill compression and task-boundary effects. | The tasks were short, self-contained, and text based. Next: do gains survive multi-stage work with persistent context, verification, and accountability? |
+| 020 | Fabrizio Dell'Acqua et al., ["Navigating the Jagged Technological Frontier"](https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf), *Organization Science*, 2026 | Task and workflow; preregistered field experiment with 758 consultants across tasks inside and outside an AI capability frontier | AI improved speed and quality on tasks within its capability frontier, but reduced correctness on a task outside that frontier even when the tasks appeared similarly difficult. | **Strengthen** capability-boundary detection and task-specific evaluation. **Reject** provider-level capability claims as sufficient routing evidence. | The frontier was constructed for one model, occupation, and task set. Next: how can a workflow detect boundary crossings before an apparently competent output becomes authoritative? |
+| 021 | Hao-Ping Lee et al., ["The Impact of Generative AI on Critical Thinking"](https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/), *CHI*, 2025 | Interaction and workflow; survey of 319 knowledge workers covering 936 reported GenAI work examples | Higher confidence in GenAI was associated with less reported critical-thinking enactment and effort, while confidence in one's own ability was associated with more. Critical work shifted toward verification, integration, and stewardship. | **Strengthen** visible verification and human-owned synthesis. **Watch** cognitive-effort displacement. | Self-reported associations do not establish causal skill loss. Next: which observable review behaviors preserve critical engagement without adding performative friction? |
+| 022 | Joel Becker, Nate Rush, Beth Barnes, and David Rein, ["Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity"](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/), METR, 2025 | Workflow; randomized controlled trial with 16 experienced developers and 246 tasks in mature open-source repositories | Allowing AI tools increased completion time by 19%, even though participants expected and later believed that AI made them faster. | **Strengthen** observed-versus-perceived outcome checks. **Reject** self-reported speed as evaluation evidence. | The sample is small, unusually experienced, and limited to early-2025 tools and familiar repositories. Next: which task and familiarity features predict when assistance becomes overhead? |
+| 023 | Zheyuan Cui et al., ["The Effects of Generative AI on High-Skilled Work: Evidence from Three Field Experiments with Software Developers"](https://www.microsoft.com/en-us/research/publication/the-effects-of-generative-ai-on-high-skilled-work-evidence-from-three-field-experiments-with-software-developers/), Microsoft Research preprint, 2025 | Workflow and organization; three randomized field experiments covering 4,867 developers | Pooled results associated coding-assistant access with a 26.08% increase in completed tasks, with higher adoption and gains among less experienced developers. | **Watch** as counterevidence to 022. **Strengthen** context, experience, adoption, and task-mix reporting. | The experiments are noisy individually, use completed-task measures, and do not resolve code quality or long-term maintenance. Next: which design differences explain the opposite productivity directions in 022 and 023? |
+| 024 | Yubin Kim et al., ["Towards a Science of Scaling Agent Systems"](https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/), Google Research, 2026 | Task and workflow; controlled evaluation of 180 single-agent and multi-agent configurations across four agentic benchmarks and three model families | Multi-agent systems helped parallelizable work but degraded sequential planning by 39% to 70%. Independent agents amplified errors more than centralized systems, and tool density increased coordination cost. | **Strengthen** task-decomposability and error-containment checks. **Reject** agent count as a quality proxy. | Benchmark architectures and tasks do not prove the same effects in governed repository work. Next: can a bounded owning-system test predict when centralized delegation beats one agent? |
+| 025 | Kunlun Zhu et al., ["MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents"](https://aclanthology.org/2025.acl-long.421/), *ACL*, 2025 | Task and interaction; benchmark across six interactive scenarios, multiple coordination topologies, and milestone-based indicators | Coordination topology and planning strategy changed milestone progress and task results. A graph topology performed best in one research scenario, while cognitive planning improved milestone achievement by 3%. | **Watch** milestone and topology measures. **Reject** transfer of one topology result into a default architecture. | Simulated scenarios and model-specific rankings do not establish operational superiority. Next: which milestone signals remain meaningful in real handoffs with authority and privacy boundaries? |
+| 026 | Sayash Kapoor et al., ["AI Agents That Matter"](https://arxiv.org/abs/2407.01502), arXiv preprint, 2024 | Ecosystem and evaluation; critical analysis plus cost-aware benchmark optimization | Accuracy-only evaluation can reward complex, expensive agents, obscure the source of gains, and encourage benchmark overfitting. Downstream users and model developers also need different evaluation evidence. | **Strengthen** joint cost-and-outcome evaluation, holdouts, and downstream-fit reporting. | This is a methodological critique, not a field test of one collaboration workflow. Next: what minimum holdout and replay design prevents Breadcrumbs patterns from overfitting their own examples? |
+| 027 | David Castillo-Bolado et al., ["Beyond Prompts: Dynamic Conversational Benchmarking of Large Language Models"](https://proceedings.neurips.cc/paper_files/paper/2024/hash/4aedf0cba303537fcb6cf948bb41b2df-Abstract-Datasets_and_Benchmarks_Track.html), *NeurIPS*, 2024 | Interaction and workflow; synthetic long-conversation benchmark with interleaved tasks and context switching | Models that performed well on isolated tasks struggled when those tasks were interleaved. Long-term-memory augmentation sometimes matched or exceeded larger context windows. | **Strengthen** interleaving and recovery tests. **Reject** context-window size as continuity evidence. | Synthetic conversations do not reproduce repository authority or real user stakes. Next: can fresh-session evaluation separate retrieval success from correct task ownership and stale-context rejection? |
+| 028 | Qianzhi Chen et al., ["Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-Based Multi-Agent Systems"](https://aclanthology.org/2026.acl-long.912/), *ACL*, 2026 | Workflow and evaluation; 220 annotated failure traces from three agentic systems | Full execution traces improved agent-level and step-level failure attribution over output-only evidence. The benchmark attributes failure to the missed recovery responsibility when an upstream mistake remained correctable. | **Strengthen** complete trace capture and recovery-aware responsibility. **Reject** final-output inspection as sufficient incident evidence. | Attribution accuracy remains limited and varies by architecture and trace completeness. Next: which minimum trace fields support reliable correction without retaining unnecessary private content? |
+| 029 | Edoardo Debenedetti et al., ["AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents"](https://proceedings.neurips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html), *NeurIPS*, 2024 | Task, tool use, and security; dynamic environment with 97 realistic tasks and 629 security test cases | Tool-using agents failed many ordinary tasks and remained vulnerable to prompt injection from untrusted tool data. Security and task utility must be evaluated together. | **Strengthen** instruction-data separation and adversarial evaluation. **Reject** successful tool execution as evidence of safe delegation. | The benchmark is simulated and cannot enumerate future attacks. Next: how should a governed workflow preserve provenance and authority when retrieved content contains instructions? |
+| 030 | Chang Ma et al., ["AgentBoard: An Analytical Evaluation Board of Multi-turn LLM Agents"](https://proceedings.neurips.cc/paper_files/paper/2024/hash/877b40688e330a0e2a3fc24084208dfa-Abstract-Datasets_and_Benchmarks_Track.html), *NeurIPS*, 2024 | Task and evaluation; multi-domain benchmark with partially observable, multi-turn environments and process-level analytics | Final success rate hides partial progress and failure location. AgentBoard adds a progress-rate measure and process views across multiple agent environments. | **Strengthen** stage and progress evidence. **Reject** completion status as the only workflow measure. | Benchmark progress does not itself capture human authority, burden, or recovery. Next: which process milestones should be standardized without creating a misleading composite score? |
+| 031 | Tianbao Xie et al., ["OSWORLD: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments"](https://proceedings.neurips.cc/paper_files/paper/2024/hash/5d413e48f84dc61244b6be550f1cd8f5-Abstract-Datasets_and_Benchmarks_Track.html), *NeurIPS*, 2024 | Task and tool use; executable benchmark of 369 open-ended tasks across real desktop applications and operating systems | Humans completed 72.4% of tasks while the best evaluated agents completed less than 12.2%, exposing major grounding and operational-knowledge gaps in realistic computer use. | **Strengthen** executable-environment validation and bounded authority. **Reject** fluent planning as evidence of reliable computer action. | Models and systems have advanced since the study, and benchmark success is not deployment safety. Next: what current, owning-system test is required before a computer-use capability receives write authority? |
 
 ### Entry metadata
 
@@ -76,6 +90,20 @@ the source. A method change never silently becomes an architecture change.
 | 015 | Verified 2026-08-27 against the *Nature Human Behaviour* article page and DOI | Repeated perceptual, emotional, and social judgments | Adds a feedback-loop risk to calibrated-reliance and correction questions | v1.0 |
 | 016 | Verified 2026-08-27 against the *npj Artificial Intelligence* article page and DOI | Clinical human-AI teaming across heterogeneous empirical studies | Adds sequencing and expertise limits to universal handoff claims | v1.0 |
 | 017 | Verified 2026-08-27 against the arXiv record | Human-human and human-AI marketing teams with agent-trait variation | Adds field evidence that outcomes can vary by modality and pairing | v1.0 |
+| 018 | Verified 2026-08-27 against the *QJE* article and DOI | Repeated customer-support work with a deployed assistant | Supports context-specific productivity and expertise effects; limits 019's broad transfer | v1.0 |
+| 019 | Verified 2026-08-27 against the *Science* article and DOI | Short, self-contained professional writing tasks | Corroborates time-and-quality gains in bounded tasks; 020 and 022 limit transfer beyond the tested frontier | v1.0 |
+| 020 | Verified 2026-08-27 against the HBS-hosted published paper | Professional consulting tasks inside and outside a measured capability frontier | Explains why average gains can coexist with task-specific harm and strengthens 002's allocation question | v1.0 |
+| 021 | Verified 2026-08-27 against the Microsoft Research publication page and CHI paper | Weekly GenAI use in knowledge work, reported retrospectively | Corroborates 005, 007, 009, and 015 on reliance and review; does not prove causal cognitive decline | v1.0 |
+| 022 | Verified 2026-08-27 against the METR report and paper | Experienced developers working in familiar, mature repositories | Direct negative productivity evidence and perception mismatch; materially contested by 023 in different settings | v1.0 |
+| 023 | Verified 2026-08-27 against the Microsoft Research publication page | Enterprise developers in three ordinary-course field experiments | Positive productivity counterevidence to 022; both require context-specific interpretation | v1.0 |
+| 024 | Verified 2026-08-27 against the Google Research report and linked paper | Parallelizable, sequential, planning, browsing, finance, and tool-use benchmarks | Directly tests 008 and 017's unresolved multi-agent benefit question and supplies negative scaling evidence | v1.0 |
+| 025 | Verified 2026-08-27 against the ACL Anthology record and DOI | Simulated interactive multi-agent scenarios | Supplies process milestones and topology comparisons, bounded by scenario-specific results | v1.0 |
+| 026 | Verified 2026-08-27 against the arXiv record | Cross-benchmark agent evaluation | Corroborates D-31's separate cost and outcome measures; adds holdout and downstream-fit requirements | v1.0 |
+| 027 | Verified 2026-08-27 against the NeurIPS proceedings record and DOI | Synthetic interleaved conversational tasks | Supplies direct interleaving evidence for continuity and fresh-session evaluation | v1.0 |
+| 028 | Verified 2026-08-27 against the ACL Anthology paper and DOI | Failure attribution across complete agentic execution traces | Corroborates 006's joint-activity responsibility and adds recovery-aware trace evidence | v1.0 |
+| 029 | Verified 2026-08-27 against the NeurIPS proceedings record and DOI | Tool use over trusted and adversarial simulated content | Adds adversarial evidence to authority, provenance, and safe delegation questions | v1.0 |
+| 030 | Verified 2026-08-27 against the NeurIPS proceedings record and DOI | Partially observable multi-turn agent environments | Corroborates stage-specific measurement while leaving human authority and burden outside scope | v1.0 |
+| 031 | Verified 2026-08-27 against the NeurIPS proceedings paper | Executable open-ended desktop tasks across three operating systems | Supplies a large human-agent reliability gap in real application environments | v1.0 |
 
 ## Corroboration matrix
 
@@ -83,7 +111,7 @@ Status meanings: **emerging** has one direct source, **corroborated** has suppor
 at least two independently scoped sources, and **contested** has material contrary
 evidence. Absence of contradiction is not confirmation.
 
-| Candidate pattern | 001 | 002 | 003 | 004 | Evidence from 005-013 | Current status | Repository consequence |
+| Candidate pattern | 001 | 002 | 003 | 004 | Evidence from 005-031 | Current status | Repository consequence |
 |---|---|---|---|---|---|---|---|
 | Human-AI complementarity | supports | supports | supports | synthesizes | 005 supplies a direct team-performance test; 010 finds average performance below the best baseline | contested | Keep collaboration, not replacement, as the frame, but require a matched best-baseline comparison. |
 | Workflow redesign | supports | task-level implication | neutral | synthesizes | 006 specifies joint-activity demands | corroborated | Evaluate the surrounding workflow, not only the model response. |
@@ -92,7 +120,7 @@ evidence. Absence of contradiction is not confirmation.
 | Interaction quality as an outcome | compatible | partially measurable through performance | compatible | direct synthesis | 005 measures complementarity; 009 exposes burden trade-offs | corroborated but underspecified | Define measures before claiming improvement. |
 | Longitudinal continuity | not tested | not tested | not tested | names a literature gap | 006 supplies protocol concepts but no longitudinal test | emerging research debt | Breadcrumbs may provide a test bed, but current implementation is not research validation. |
 | Unified collaboration evaluation | not supplied | task-performance measure only | not supplied | names a literature gap | 005 and 009 require outcome and burden measures | emerging research debt | Do not publish one composite score as settled science. |
-| Multi-AI coordination | not tested | not tested | not tested | adjacent, not resolved | 008 demonstrates framework feasibility only | unresolved | Keep as an open question, not a supported contribution. |
+| Multi-AI coordination | not tested | not tested | not tested | adjacent, not resolved | 008 demonstrates feasibility; 024 finds strong task-dependent gains and losses; 025 finds topology-specific differences | contested and testable | Require task decomposability, tool density, communication cost, and a single-agent baseline before adding agents. |
 | Complementary team performance | implied | task allocation can support it | compatible | identifies evaluation gap | contested by 005 when explanation is treated as the intervention; 010 finds no average synergy against the better baseline | contested and measurable | Compare team performance with both human-only and AI-only baselines, and report when collaboration loses. |
 | Joint-activity protocol quality | workflow implication | compatible | compatible | identifies interaction-design need | direct challenge framework in 006 | corroborated but not operationalized | Turn coordination demands into bounded, observable protocol checks. |
 | Calibrated reliance | compatible | allocation depends on capability | compatible | compatible | direct support in 007; failure evidence in 005 and 009 | corroborated | Measure reliance against demonstrated capability and consequence, not stated trust. |
@@ -101,6 +129,13 @@ evidence. Absence of contradiction is not confirmation.
 | Structured collaboration protocol benefit | workflow implication | compatible | compatible | identifies interaction-design need | 011 field preprint finds a structured pair-use protocol associated with lower quality and production | contested and insufficient | Do not treat added process or extra participants as a benefit without a replicated, matched field comparison. |
 | Individual productivity versus coordination | workflow implication | compatible | compatible | names an evaluation gap | 012 finds independently changeable work shifted while meeting time did not | emerging | Record coordination outcomes separately from personal throughput. |
 | Role-specific human-AI contribution | compatible | task allocation supports it | supports human judgment under uncertainty | compatible | 013 finds AI-assisted generation and human evaluative selection can differ | emerging | Test generation, selection, review, and correction as distinct stages before routing work. |
+| Context-specific productivity | workflow implication | compatible | compatible | identifies evaluation gap | 018 and 019 find gains; 022 finds a slowdown; 023 finds pooled gains in different developer settings | contested and measurable | Report task mix, expertise, adoption, quality, and observed time rather than one general productivity claim. |
+| Capability-frontier detection | compatible | task allocation depends on it | supports human judgment outside reliable scope | compatible | 020 shows gains inside and losses outside a jagged task frontier | emerging | Treat capability as task-specific and require escalation when evidence does not cover the current task. |
+| Critical engagement | compatible | compatible | direct human-judgment support | compatible | 021 adds self-reported verification and confidence effects; 005, 009, and 015 supply reliance risks | corroborated but causally limited | Preserve observable review and correction behavior without claiming that one intervention prevents skill loss. |
+| Process-level evaluation | workflow implication | compatible | compatible | identifies evaluation gap | 025 and 030 add milestone and progress measures; 028 shows trace completeness changes failure attribution | corroborated for agent benchmarks | Record stage, progress, responsibility, and recovery evidence separately from final success. |
+| Evaluation validity and cost | neutral | compatible | neutral | identifies unified-evaluation gap | 026 identifies cost, holdout, downstream-fit, and reproducibility failures | emerging | Add evaluation cost and holdout design without collapsing them into the collaboration outcome. |
+| Interleaved continuity | not tested | not tested | compatible | names longitudinal gap | 027 finds interleaving degrades otherwise successful conversational tasks | emerging | Test task switching, stale-context rejection, and recovery rather than treating context size as continuity. |
+| Safe tool use | neutral | allocation must account for consequence | supports human judgment under uncertainty | adjacent | 029 exposes injection and ordinary-task failures; 031 exposes a large executable desktop reliability gap | contested and consequential | Keep write authority bounded and test utility and adversarial safety before enabling action. |
 
 The second pass supplies the first direct negative evidence. Papers 005 and 009 show
 that explanations and low-friction assistance can increase acceptance without improving
@@ -117,7 +152,7 @@ but over one workday rather than a durable operating cycle. Therefore, a future
 Breadcrumbs evaluation must track handoff quality, correction, ownership, and recovery
 separately from individual speed or output quality.
 
-## Integrated synthesis of entries 001 through 017
+## Integrated synthesis of entries 001 through 031
 
 The evidence supports a narrower claim than generic human-AI synergy. Collaboration is
 conditional. It can change task output, work allocation, feedback access, or the
@@ -126,21 +161,32 @@ coordination cost, distort reliance, or shift the human participant's later judg
 motivation. The correct unit of analysis is therefore a bounded workflow with a matched
 human-only and AI-only baseline, not the presence of an assistant or another agent.
 
-Four patterns are strong enough to shape the method. First, compare collaboration with
+Six patterns are strong enough to shape the method. First, compare collaboration with
 the better individual baseline and report losses as well as gains. Second, separate
 generation, selection, review, correction, handoff, and recovery instead of treating a
 single output score as collaboration quality. Third, preserve a visible human decision
 and correction path, because explanations, repeated AI exposure, and nominal human
 oversight can still produce inappropriate reliance. Fourth, measure the cost of the
 protocol itself, including extra messages, time, burden, and independence after a
-handoff.
+handoff. Fifth, treat capability and productivity as properties of a specific task,
+participant population, tool configuration, and time period. Sixth, evaluate the work
+process and trace, because final success can hide stalled progress, unsafe tool behavior,
+misattributed failures, and missed recovery responsibilities.
 
-Three questions remain open. No source establishes a durable multi-agent advantage in
-privacy-constrained, cross-repository work. No source validates a universal order for
-human and AI review. No source supplies a composite score that can combine quality,
-burden, authority, correction, and continuity without hiding tradeoffs. Breadcrumbs
-therefore remains a public pattern and evaluation layer. It does not claim a validated
-runtime or a proved collaboration benefit.
+The new batch sharpens several contradictions rather than resolving them. Real-work
+productivity studies report meaningful gains in some support, writing, and enterprise
+development settings, while experienced maintainers in familiar repositories became
+slower. Multi-agent systems improved parallelizable tasks but degraded sequential work,
+with error containment changing by architecture. Long conversations, adversarial tool
+content, and real desktop environments exposed failures hidden by isolated prompt or
+final-output evaluation.
+
+No source establishes a durable multi-agent advantage in privacy-constrained,
+cross-repository work. No source validates a universal order for human and AI review.
+No source supplies a composite score that can combine quality, burden, authority,
+correction, safety, and continuity without hiding tradeoffs. Breadcrumbs therefore
+remains a public pattern and evaluation layer. It does not claim a validated runtime or
+a proved collaboration benefit.
 
 ## Dependency map
 
@@ -160,17 +206,19 @@ new principle, and a literature gap does not certify an implementation as the an
 
 ## Ranked research questions
 
-1. How should collaboration quality be evaluated across task, workflow, and
-   organizational levels without creating a misleading composite score?
-2. Which protocols preserve coordination and correction over time as people, models,
-   and tools change?
-3. How should consequence, privacy, accountability, and uncertainty constrain
-   evidence-based work allocation?
-4. Which repeated-use measures detect changes in handoff quality, correction,
-   ownership, and recovery as participants, tools, and models change?
-5. What evidence would distinguish multi-AI coordination from several independent
-   agents sharing a queue?
-6. Which findings survive outside idealized tasks with known ground truth?
+1. Which task, expertise, tool-density, and decomposability signals predict whether one
+   agent, several agents, or no AI will outperform the better individual baseline?
+2. Which protocols preserve coordination, correction, and critical engagement over
+   time as people, models, tools, and capability frontiers change?
+3. How should consequence, privacy, accountability, adversarial content, and
+   uncertainty constrain evidence-based work allocation and tool authority?
+4. Which repeated-use and process measures detect changes in handoff quality,
+   correction, ownership, recovery, and failure responsibility without creating a
+   misleading composite score?
+5. What minimum holdout, replay, and executable-environment evidence is required before
+   a public pattern or owning-system implementation may claim improvement?
+6. Which findings survive interleaved, open-ended, privacy-constrained work rather than
+   isolated tasks with known ground truth?
 
 ## Adjacent-angle seed status
 
@@ -185,6 +233,14 @@ new principle, and a literature gap does not certify an implementation as the an
 | Applied protocol intervention | 011 | More structure can reduce quality and production; field results remain provisional because this is a preprint with reported confounds. | Replicated, preregistered field evidence of a durable benefit without throughput loss. |
 | Repeated workplace use | 012 | Independently controlled work can shift without a change to a coordination-dependent measure. | Repeated-use measures for handoffs, correction, ownership, and recovery. |
 | Stage-specific teamwork | 013 | AI-assisted idea generation and human evaluative selection can have different effects in a real-work field experiment. | Whether the role separation persists across repeated, consequential work. |
+| Context-specific productivity | 018, 019, 022, 023 | Assistance can improve or reduce productivity depending on task, expertise, setting, adoption, and measurement. | A prospective predictor that survives quality and maintenance follow-up. |
+| Jagged capability boundaries | 020 | Similar-looking tasks can fall on opposite sides of a model's useful frontier. | A pre-action signal that detects unsupported task regions without relying on model confidence. |
+| Critical engagement | 021 | Knowledge workers report shifting effort toward verification and integration, with confidence associated with engagement. | Causal, observable measures that distinguish useful cognitive redistribution from uncritical reliance. |
+| Multi-agent scaling | 024, 025 | Decomposability, topology, tool density, and error containment affect multi-agent outcomes. | A governed owning-system comparison against one agent with cost and trace evidence. |
+| Evaluation validity | 026, 030 | Cost, holdouts, downstream fit, incremental progress, and process evidence matter beyond final accuracy. | A minimal repeatable evaluation packet that stays interpretable across systems. |
+| Interleaved continuity | 027 | Isolated-task success overstates performance under task switching and long conversations. | A fresh-session and interleaving test that includes ownership and stale-context rejection. |
+| Failure attribution | 028 | Full traces and explicit recovery responsibility materially improve attribution. | The minimum privacy-preserving trace required for correction and incident learning. |
+| Tool-use safety and realism | 029, 031 | Agents can fail ordinary executable tasks and follow malicious instructions embedded in tool data. | A current utility-plus-security gate before granting write authority in an owning system. |
 
 ## Method change log
 
@@ -194,6 +250,7 @@ new principle, and a literature gap does not certify an implementation as the an
 | 1.0, 2026-08-27 | Added a meta-analysis and a field preprint to test the best-baseline and protocol-benefit assumptions. | The prior ledger lacked broad synthesis of comparative outcomes and applied evidence that a collaboration intervention can fail. | 001 through 009 retain their findings; matrix statuses now record the new contrary evidence. |
 | 1.0, 2026-08-27 | Added repeated-use work-pattern evidence and a matched workplace teamwork experiment. | The applied pass showed the need to distinguish individual throughput from coordination and to measure task stages separately. | 001 through 011 retain their findings; the question queue now names repeated-use coordination measures. |
 | 1.0, 2026-08-27 | Added an integrated synthesis and four bounded sources on motivation, feedback loops, interaction order, and agent-team fit. | The next pass needed to test whether continuity, correction, sequencing, and coordination cost change the existing method. | 001 through 013 retain their findings; the synthesis narrows claims without creating a new architecture principle. |
+| 1.0, 2026-08-27 | Added 14 sources on productivity heterogeneity, jagged capability boundaries, critical engagement, multi-agent scaling, evaluation validity, interleaving, failure attribution, and tool-use safety. | The prior ledger lacked enough contrary real-work evidence and process-level agent evaluation to guide a bounded owning-system test. | 001 through 017 retain their findings; the matrix and question queue now make task fit, trace evidence, cost, and adversarial safety explicit. |
 
 ## Research debt
 
@@ -202,9 +259,14 @@ new principle, and a literature gap does not certify an implementation as the an
   and coordination quality after initial adoption.
 - Design a pattern-only evaluation protocol for handoff quality, correction, ownership,
   and recovery before adding a collaboration score.
-- Define an evaluation unit before adding a collaboration score.
+- Run that protocol in an owning repository with a safe work item, a one-agent baseline,
+  a no-AI baseline where meaningful, an unseen holdout, and observed cost and time.
 - Test whether the candidate work-allocation capability survives consequential,
   privacy-constrained, and open-ended work.
+- Define a privacy-minimal execution trace that still supports recovery-aware failure
+  attribution.
+- Add adversarial content and interleaved-task cases to the evaluation packet before any
+  recommendation to widen tool authority.
 - Keep source identity verification separate from claim verification.
 - Revisit every earlier entry when a major method version changes. Minor metadata
   additions may be backfilled without changing the finding.
