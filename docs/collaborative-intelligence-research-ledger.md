@@ -46,20 +46,24 @@ the source. A method change never silently becomes an architecture change.
 | 007 | John D. Lee and Katrina A. See, ["Trust in Automation: Designing for Appropriate Reliance"](https://pubmed.ncbi.nlm.nih.gov/15151155/), *Human Factors* 46(1), 2004 | Interaction and decision; multidisciplinary review and conceptual model | Trust affects reliance when full understanding is impractical, but the design goal is appropriate reliance calibrated to context and automation performance, not maximum trust. | **Strengthen** calibrated reliance and evidence display. **Reject** confidence or user acceptance as sufficient evidence of safe collaboration. | The review predates current generative systems. Next: which observable behaviors show appropriate reliance when outputs and system capability change between runs? |
 | 008 | Qingyun Wu et al., ["AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation"](https://www.microsoft.com/en-us/research/publication/autogen-enabling-next-gen-llm-applications-via-multi-agent-conversation-framework/), *COLM*, 2024 | Workflow and implementation; framework description plus pilot applications across several domains | Configurable agents, tools, human input, and conversation patterns can compose multi-agent applications. The paper demonstrates feasibility and flexibility, not a general advantage over one agent or proof of governance. | **Watch** as implementation evidence. Do not promote conversational multiplicity into a coordination principle or performance claim. | Pilot applications do not isolate when extra agents help, duplicate work, or amplify error. Next: what matched evaluation distinguishes coordination benefit from added calls and shared context? |
 | 009 | Zana Buçinca, Maja Barbara Malaya, and Krzysztof Z. Gajos, ["To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making"](https://doi.org/10.1145/3449287), *Proceedings of the ACM on Human-Computer Interaction* 5(CSCW1), 2021 | Task and interaction; experiment with 199 participants | Cognitive-forcing interventions reduced overreliance more than simple explanation interfaces, but the strongest interventions received the least favorable subjective ratings and effects varied with need for cognition. | **Strengthen** deliberate review at consequential boundaries. **Test** proportionate friction rather than adding a universal interruption. | One experimental task does not establish the right intervention for sustained professional work. Next: what is the least disruptive intervention that improves error detection for a given consequence level? |
+| 010 | Michelle Vaccaro, Abdullah Almaatouq, and Thomas Malone, ["When combinations of humans and AI are useful: A systematic review and meta-analysis"](https://doi.org/10.1038/s41562-024-02024-1), *Nature Human Behaviour* 8, 2024 | Task and interaction; preregistered systematic review and meta-analysis of 106 experiments and 370 effect sizes | On average, human-AI combinations performed worse than the better human-only or AI-only baseline. Effects varied: decision-making tasks showed losses, content-creation tasks showed gains, and augmentation depended on which side initially performed better. | **Strengthen** matched baseline evaluation. **Reject** any general claim that adding AI creates synergy. | The reviewed evidence is experimental and heterogeneous, with possible publication bias and differing study designs. Next: which coordination mechanisms improve the best-baseline comparison in sustained, privacy-constrained work? |
+| 011 | Alex Farach, Alexia Cambon, Lev Tankelevitch, Connie Hsueh, and Rebecca Janssen, ["Scaffolding Human-AI Collaboration: A Field Experiment on Behavioral Protocols and Cognitive Reframing"](https://www.microsoft.com/en-us/research/publication/human-ai-collaboration-field-experiment/), Microsoft Research preprint, 2026 | Workflow and organization; field experiment with 388 employees at a Fortune 500 retailer | A structured pair-use protocol was associated with lower document quality and substantially lower document production than unstructured use. A cognitive framing intervention was associated with higher individual quality at the top of the distribution, subject to reported design limitations. | **Watch** protocol and framing interventions. **Reject** structure alone as evidence of better collaboration. No runtime change. | This is a preprint with an AM/PM session confound, differential attrition, and LLM-grading sensitivity to document length. Next: can a preregistered, replicated field study show durable benefit without reducing throughput? |
 
 ### Entry metadata
 
 | ID | Identity verification | Decision context | Corroboration and contradiction | Method |
 |---|---|---|---|---|
-| 001 | Verified 2026-08-26 against the public HBR article page | Semi-structured organizational work | Corroborated by 002, 003, and 004 on complementarity; no negative-evidence source reviewed yet | v1.0 |
+| 001 | Verified 2026-08-26 against the public HBR article page | Semi-structured organizational work | Corroborated by 002, 003, and 004 on workflow redesign; 010 now limits any unqualified complementarity claim | v1.0 |
 | 002 | Verified 2026-08-26 against the INFORMS publication page and DOI metadata | Structured judgment tasks with known ground truth | Corroborates complementarity and task allocation; scope limits transfer to open-ended or consequential work | v1.0 |
 | 003 | Verified 2026-08-26 against DOI metadata and the publicly available abstract | Semi-structured and unstructured organizational decisions | Corroborated by 002 on difficult-task human contribution and by 004 on human-centered collaboration; conceptual rather than deployed evidence | v1.0 |
-| 004 | Verified 2026-08-26 against the Springer article page and DOI metadata | Cross-context literature synthesis | Corroborates the overall frame and records longitudinal, evaluation, and theory gaps; no negative-evidence source reviewed yet | v1.0 |
+| 004 | Verified 2026-08-26 against the Springer article page and DOI metadata | Cross-context literature synthesis | Corroborates the overall frame and records longitudinal, evaluation, and theory gaps; 005, 009, 010, and 011 now supply negative or limiting evidence | v1.0 |
 | 005 | Verified 2026-08-26 against the Microsoft Research publication page and paper DOI | Structured tasks with known outcomes | Contradicts explanation-as-improvement assumptions and sharpens 004's evaluation gap | v1.0 |
 | 006 | Verified 2026-08-26 against the paper and DOI record | Semi-structured joint activity | Extends 001's workflow redesign into explicit coordination demands; conceptual rather than deployment evidence | v1.0 |
 | 007 | Verified 2026-08-26 against the PubMed record and DOI metadata | Cross-context automation reliance | Supports 003's human judgment boundary and provides a calibration lens for 005 and 009 | v1.0 |
 | 008 | Verified 2026-08-26 against the Microsoft Research publication page and COLM record | Multi-agent application workflows | Demonstrates implementation feasibility but does not resolve the multi-agent outcome question | v1.0 |
 | 009 | Verified 2026-08-26 against the Harvard publication page and ACM DOI | Structured AI-assisted decisions | Corroborates 005's overreliance risk and supplies direct negative evidence against explanation-only intervention | v1.0 |
+| 010 | Verified 2026-08-27 against the Nature article page, PubMed record, and DOI metadata | Structured decision-making and content-creation experiments | Supplies broad contrary evidence to unqualified complementarity claims and reinforces 005's best-baseline requirement | v1.0 |
+| 011 | Verified 2026-08-27 against the Microsoft Research publication page | Semi-structured professional document work | Field preprint that contradicts structure-as-benefit assumptions; its reported limits require replication before an adoption claim | v1.0 |
 
 ## Corroboration matrix
 
@@ -69,7 +73,7 @@ evidence. Absence of contradiction is not confirmation.
 
 | Candidate pattern | 001 | 002 | 003 | 004 | Evidence from 005-009 | Current status | Repository consequence |
 |---|---|---|---|---|---|---|---|
-| Human-AI complementarity | supports | supports | supports | synthesizes | 005 supplies a direct team-performance test | corroborated | Keep collaboration, not replacement, as the frame. |
+| Human-AI complementarity | supports | supports | supports | synthesizes | 005 supplies a direct team-performance test; 010 finds average performance below the best baseline | contested | Keep collaboration, not replacement, as the frame, but require a matched best-baseline comparison. |
 | Workflow redesign | supports | task-level implication | neutral | synthesizes | 006 specifies joint-activity demands | corroborated | Evaluate the surrounding workflow, not only the model response. |
 | Evidence-based work allocation | neutral | direct support | compatible | compatible | 007 adds reliance calibration; no open-ended test | emerging | Treat allocation as a candidate capability and test it against consequential work. |
 | Human judgment under uncertainty | compatible | supports human-only handling for difficult tasks | direct support | compatible | 007 and 009 support calibrated, deliberate reliance | corroborated | Preserve explicit human-owned judgments and escalation criteria. |
@@ -77,16 +81,20 @@ evidence. Absence of contradiction is not confirmation.
 | Longitudinal continuity | not tested | not tested | not tested | names a literature gap | 006 supplies protocol concepts but no longitudinal test | emerging research debt | Breadcrumbs may provide a test bed, but current implementation is not research validation. |
 | Unified collaboration evaluation | not supplied | task-performance measure only | not supplied | names a literature gap | 005 and 009 require outcome and burden measures | emerging research debt | Do not publish one composite score as settled science. |
 | Multi-AI coordination | not tested | not tested | not tested | adjacent, not resolved | 008 demonstrates framework feasibility only | unresolved | Keep as an open question, not a supported contribution. |
-| Complementary team performance | implied | task allocation can support it | compatible | identifies evaluation gap | contested by 005 when explanation is treated as the intervention | contested and measurable | Compare team performance with both human-only and AI-only baselines. |
+| Complementary team performance | implied | task allocation can support it | compatible | identifies evaluation gap | contested by 005 when explanation is treated as the intervention; 010 finds no average synergy against the better baseline | contested and measurable | Compare team performance with both human-only and AI-only baselines, and report when collaboration loses. |
 | Joint-activity protocol quality | workflow implication | compatible | compatible | identifies interaction-design need | direct challenge framework in 006 | corroborated but not operationalized | Turn coordination demands into bounded, observable protocol checks. |
 | Calibrated reliance | compatible | allocation depends on capability | compatible | compatible | direct support in 007; failure evidence in 005 and 009 | corroborated | Measure reliance against demonstrated capability and consequence, not stated trust. |
 | Conversational multi-agent feasibility | not tested | not tested | not tested | adjacent | demonstrated by 008 pilot applications | emerging | Treat as implementation evidence only until matched comparisons show a benefit. |
 | Deliberate friction at consequential boundaries | not tested | compatible | supports human judgment | compatible | direct support with trade-offs in 009 | emerging | Test consequence-scaled review friction and track both error detection and burden. |
+| Structured collaboration protocol benefit | workflow implication | compatible | compatible | identifies interaction-design need | 011 field preprint finds a structured pair-use protocol associated with lower quality and production | contested and insufficient | Do not treat added process or extra participants as a benefit without a replicated, matched field comparison. |
 
 The second pass supplies the first direct negative evidence. Papers 005 and 009 show
 that explanations and low-friction assistance can increase acceptance without improving
-judgment. The next search should test whether those effects survive sustained,
-open-ended work rather than returning to supportive framework papers.
+judgment. The applied-evidence pass makes the baseline rule stricter: paper 010 finds
+that human-AI combinations do not, on average, outperform the better individual baseline,
+and paper 011 reports that a structured collaboration protocol can reduce quality and
+throughput in a field setting. Neither result disproves collaboration. Together they
+reject generic synergy and process claims until a matched evaluation shows the outcome.
 
 ## Dependency map
 
@@ -125,16 +133,21 @@ new principle, and a literature gap does not certify an implementation as the an
 | Calibrated reliance | 007 | Appropriate reliance, not maximum trust, is the design target. | Behavioral calibration measures for changing generative systems. |
 | Multi-agent coordination | 008 | Conversation frameworks make multi-agent patterns feasible. | Matched evidence that extra agents improve outcomes rather than cost and complexity. |
 | Overreliance and external validity | 009 | Deliberate cognitive friction can reduce overreliance but carries usability and equity trade-offs. | Consequence-scaled interventions tested in sustained professional work. |
+| Best-baseline comparison | 010 | Collaboration must be compared with both human-only and AI-only performance, not just one side. | Coordination mechanisms that improve outcomes in privacy-constrained, sustained work. |
+| Applied protocol intervention | 011 | More structure can reduce quality and production; field results remain provisional because this is a preprint with reported confounds. | Replicated, preregistered field evidence of a durable benefit without throughput loss. |
 
 ## Method change log
 
 | Version | Change | Evidence or reason | Prior entries affected |
 |---|---|---|---|
 | 1.0, 2026-08-26 | Established the common source fields, architecture-impact labels, corroboration states, negative-evidence requirement, dependency map, and ranked-question queue. | Four-source checkpoint review exposed repeated drift between paper summaries and architecture claims. | 001 through 004 received the same metadata backfill. |
+| 1.0, 2026-08-27 | Added a meta-analysis and a field preprint to test the best-baseline and protocol-benefit assumptions. | The prior ledger lacked broad synthesis of comparative outcomes and applied evidence that a collaboration intervention can fail. | 001 through 009 retain their findings; matrix statuses now record the new contrary evidence. |
 
 ## Research debt
 
 - Seek at least one source that reports failed or harmful human-AI collaboration.
+- Seek longitudinal or repeated-use field evidence that follows correction, turnover,
+  and coordination quality after initial adoption.
 - Define an evaluation unit before adding a collaboration score.
 - Test whether the candidate work-allocation capability survives consequential,
   privacy-constrained, and open-ended work.
