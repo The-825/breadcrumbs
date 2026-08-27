@@ -339,3 +339,14 @@ repository fills it, and a new implementation never creates a principle by itsel
 Why: separating method evolution from architecture evolution prevents a growing paper
 catalog from becoming a machine for confirming the design it was meant to test.
 Source: operator-approved ChatGPT research checkpoint, 2026-08-26.
+
+## D-30 · 2026-08-26 · Breadcrumbs is the public cooperative-intelligence pattern layer
+
+Ruling: Breadcrumbs extends beyond agent memory into a public, reusable pattern kit for
+human-AI cooperation. It owns generalized research, methods, and patterns, while each
+implementation retains its own source records, authority, and private operational context.
+Research reaches the kit only through source-linked, bounded claims and does not trigger
+an automatic runtime change.
+Why: a public kit can make proven mechanisms reusable without becoming a second memory
+store or disclosing the private systems that generated the lessons.
+Source: operator direction, 2026-08-26.
