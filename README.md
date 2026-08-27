@@ -201,7 +201,7 @@ half is proven. Do these in order and stop when you have had enough for the day:
 | [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, a preflight that catches branch collisions before you push, and the fail-closed merge gate |
 | [`skills/`](skills/) | Paste-able rule sets for your own rules file |
 | [`checklists/`](checklists/) | Two-minute operational checklists |
-| [`docs/`](docs/) | The reasoning behind each piece, including [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
+| [`docs/`](docs/) | The reasoning behind each piece, including [`cooperative-intelligence.md`](docs/cooperative-intelligence.md), the public research-to-pattern model, and [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
 | [`playbook/`](playbook/) | How the pieces fit together, and patterns for running more than one agent at a time |
 | [`kit.json`](kit.json) | Machine-readable inventory: problem-to-artifact routing, per-artifact assumptions, and selftest commands, so you or your agent can adopt programmatically. CI verifies every path in it resolves |
 | [`llms.txt`](llms.txt) | The same map for an agent reading this repo: route by problem, one line per artifact |

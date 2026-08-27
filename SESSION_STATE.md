@@ -15,6 +15,9 @@ Last refreshed: 2026-08-26 (adjacent research-angle seed pass)
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
 - The low-level memory engine, golden exam, and new scope-gate selftest pass.
+- The cooperative-intelligence vision is documented as a public research and pattern
+  layer. It does not import private implementation material or claim that research has
+  validated a live system.
 
 ## In flight
 
