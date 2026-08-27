@@ -387,3 +387,14 @@ not establish collaboration benefit, authority quality, recovery performance, co
 independent verification. Versioned observations make the map reproducible and allow
 later code tracing without silently rewriting the earlier screen.
 Source: operator-approved collaborative-intelligence repository landscape, 2026-08-27.
+
+## D-34 · 2026-08-27 · Popularity selects candidates within an aspect
+
+Ruling: repository star counts may order discovery inside a named
+collaborative-intelligence aspect, but they never score quality or decide promotion.
+The landscape deduplicates product lineages and overlapping mechanisms, retains a
+lower-starred repository when it uniquely fills a mechanism gap, and records popular
+screened-out alternatives with reasons and an observation date.
+Why: a raw popularity ranking would overrepresent broad, older platforms and hide
+specialized work on authority, memory, evaluation, observability, and guardrails.
+Source: operator-approved 25-repository popularity-directed expansion, 2026-08-27.

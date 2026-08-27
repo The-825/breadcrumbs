@@ -41,9 +41,9 @@ claims now carry separate confidence profiles, null cases, dispositions, and nex
 tests. The pass does not claim a full-text risk-of-bias review or silently rewrite
 the original findings.
 
-**Repository landscape (D-33).** A public, README-screened register pins 15 current
-repositories across five architecture families and 11 mechanism dimensions without
-ranking products or claiming runtime performance.
+**Repository landscape (D-33, D-34).** A public, README-screened register pins 25
+repositories across runtimes, protocols, memory, retrieval, evaluation, guardrails,
+and control planes without treating stars as quality or claiming runtime performance.
 
 ## What just landed
 
@@ -61,7 +61,7 @@ ranking products or claiming runtime performance.
 - Complete claim-specific full-text appraisal before upgrading any Method v2.0
   validity profile. Future source waves must begin with a target claim and retain
   their query, inclusion, exclusion, duplicate, and evidence-family checks.
-- Code-trace Microsoft Agent Framework, Google ADK, A2A, Letta Code, and Pydantic AI
+- Code-trace Microsoft Agent Framework, A2A, Letta Code, Mem0, Promptfoo, and OpenHands
   before changing any README-screened `N` or `P` observation.
 - Add a versioned material-change manifest to the next owning-system evaluation so model,
   prompt, tool, policy, and data-distribution changes can invalidate stale delegation and
@@ -87,4 +87,4 @@ ranking products or claiming runtime performance.
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-33 is the latest ruling: repository landscapes appraise mechanisms, not products.
+- D-34 is the latest ruling: popularity selects candidates within an aspect.

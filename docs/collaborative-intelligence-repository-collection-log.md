@@ -38,6 +38,52 @@ No candidate was excluded because of a negative quality judgment. These
 decisions prevent duplicates, retired landing pages, and migration lineages
 from inflating the cohort.
 
+## Wave R2, 2026-08-27
+
+**Mode:** popularity-directed, aspect-balanced expansion from 15 to 25
+repositories.
+
+**Discovery queries:** GitHub repository searches for agent frameworks,
+multi-agent systems, agent memory, RAG, LLM evaluation, LLM observability, AI
+workflows, and LLM guardrails. Candidates were compared using public repository
+metadata, including star count, archive state, update time, and canonical owner.
+Exact counts were recorded on the observation date and will drift.
+
+**Selection rule:** inspect the most-starred candidates inside each aspect,
+then retain one or more only when they add a distinct mechanism. Stars determine
+discovery order, not inclusion by themselves. Product-line duplicates,
+maintenance successors, archived projects, and broad platforms that add no new
+mechanism remain in the screened-out table.
+
+**Added:** Dify, Mem0, LlamaIndex, RAGFlow, GraphRAG, DSPy, Promptfoo, Phoenix,
+NeMo Guardrails, and OpenHands. The additions cover visual workflow assembly,
+memory, data context, context engines, graph retrieval, program optimization,
+evaluation and red teaming, observability, programmable guardrails, and a
+multi-backend agent control plane.
+
+**Lifecycle exception:** GraphRAG is retained as a maintenance-mode research
+implementation because its graph-context method, explicit research boundary,
+and indexing-cost warning add evidence not represented by a second current
+general agent framework.
+
+### High-star candidates screened out in R2
+
+| Candidate | Stars observed | Decision | Reason |
+|---|---:|---|---|
+| [n8n](https://github.com/n8n-io/n8n) | 202,623 | screened out | Broad automation platform. Dify supplies the direct visual agent-workflow layer, while OpenHands supplies the agent control-plane layer. |
+| [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) | 186,935 | screened out | Broad agent platform overlaps the existing runtime and application categories without closing a higher-priority mechanism gap in this wave. |
+| [Langflow](https://github.com/langflow-ai/langflow) | 153,741 | screened out | Visual agent-workflow surface overlaps Dify. Their observed star counts were effectively tied, so Dify was selected for the broader RAG, agent, model-management, and observability surface visible in its README. |
+| [LangChain](https://github.com/langchain-ai/langchain) | 145,146 | ecosystem overlap | The cohort already includes LangGraph for durable orchestration and LlamaIndex for data context. The broader parent ecosystem would double-count mechanisms. |
+| [LightRAG](https://github.com/HKUDS/LightRAG) | 39,234 | defer | RAGFlow, GraphRAG, and LlamaIndex cover context engine, graph research, and data-framework roles. LightRAG remains a candidate for a retrieval-specific wave. |
+| [Agno](https://github.com/agno-agi/agno) | 41,945 | screened out | Current agent-platform functionality overlaps the existing runtime cohort. |
+| [Semantic Kernel](https://github.com/microsoft/semantic-kernel) | 28,507 | lineage overlap | Microsoft Agent Framework is the current multi-agent target in this cohort. Compare the two in a dedicated migration study. |
+| [DeepEval](https://github.com/confident-ai/deepeval) | 17,914 | defer | Promptfoo covers comparative testing and red teaming, while Phoenix covers traces, datasets, and experiments. |
+| [Ragas](https://github.com/vibrantlabsai/ragas) | 15,503 | defer | Retrieval evaluation is important but already adjacent to Promptfoo, Phoenix, and the retrieval cohort. It belongs in a focused evaluation wave. |
+| [Flowise](https://github.com/FlowiseAI/Flowise) | 55,399 | archived | GitHub marked the repository archived on the observation date. |
+
+Screening out a popular repository is not a negative appraisal. It prevents
+stars and overlapping product scope from inflating a mechanism count.
+
 ## Recheck triggers
 
 Re-run identity and lifecycle checks when a project changes canonical owner,

@@ -13,6 +13,11 @@ The comparison is not which repository has the most features. It is which
 mechanisms are inspectable, bounded, testable, and honest about authority,
 recovery, cost, change, and evidence.
 
+Stars are used only to discover widely adopted candidates within an aspect.
+They are volatile, reflect project age and audience size, and do not measure
+quality, safety, research validity, or collaboration benefit. Every recorded
+star count carries an observation date.
+
 ## Unit of appraisal
 
 The unit is a repository snapshot, not a vendor, paper, package download count,
@@ -36,6 +41,12 @@ claim, and can be pinned to a reproducible revision. The first cohort is
 purposive and balances orchestration runtimes, workflow and state runtimes,
 protocols, memory-oriented systems, and research-driven multi-agent systems.
 
+For a popularity-directed wave, search each aspect separately, inspect the
+most-starred candidates, then deduplicate by mechanism and product lineage.
+Keep a lower-starred repository when it represents a distinct mechanism that a
+more popular general platform does not. Record both the selected aspect and the
+screened-out alternatives so popularity cannot silently become the rubric.
+
 Exclude or move a repository to the lineage register when it is a duplicate
 fork without a distinct mechanism, a marketing-only landing page, a tutorial
 without a reusable mechanism, an archived exemplar, or a superseded project
@@ -48,6 +59,11 @@ judgment.
 - `workflow-runtime`: explicit graph, flow, checkpoint, or resumable state.
 - `protocol`: interfaces for context, tools, tasks, or agent communication.
 - `memory-runtime`: durable context, identity, retrieval, or long-horizon state.
+- `retrieval-runtime`: data, indexing, graph, retrieval, or context assembly.
+- `evaluation-platform`: traces, datasets, experiments, comparisons, or red teams.
+- `guardrail-runtime`: programmable constraints around model or agent behavior.
+- `application-control-plane`: supervises one or more agent backends in a
+  concrete work surface.
 - `research-framework`: research-oriented roles, societies, simulation, or
   software-process experiments.
 - `hybrid-platform`: several of the above with no single dominant layer.
