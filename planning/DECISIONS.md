@@ -350,3 +350,13 @@ an automatic runtime change.
 Why: a public kit can make proven mechanisms reusable without becoming a second memory
 store or disclosing the private systems that generated the lessons.
 Source: operator direction, 2026-08-26.
+
+## D-31 · 2026-08-27 · Cooperative intelligence is evaluated by separate concerns
+
+Ruling: Breadcrumbs evaluates bounded shared work through orientation, handoff,
+correction, ownership, and recovery, while keeping individual throughput, quality, cost,
+and burden as separate outcomes. A result must name its comparison baseline and may not
+collapse those concerns into one collaboration score.
+Why: a system can improve an individual's work without improving coordination, or hide a
+correction and authority failure behind a faster result.
+Source: operator-approved Breadcrumbs research expansion, 2026-08-27.

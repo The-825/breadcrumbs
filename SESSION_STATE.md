@@ -5,11 +5,11 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (longitudinal collaboration-evidence pass)
+Last refreshed: 2026-08-27 (cooperative evaluation protocol pass)
 
 ## Current state
 
-- Active branch: `claude/longitudinal-collaboration-evidence`, cut from current `main`.
+- Active branch: `claude/cooperative-evaluation-protocol`, cut from current `main`.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -20,10 +20,10 @@ Last refreshed: 2026-08-27 (longitudinal collaboration-evidence pass)
 
 ## In flight
 
-**Longitudinal collaboration evidence (D-29).** The public ledger now distinguishes
-individual throughput from coordination outcomes and treats generation, selection,
-review, and correction as separate candidate stages. The evidence does not promote a
-new runtime capability or architecture principle.
+**Cooperative evaluation protocol (D-31).** A public, pattern-only method and owning
+repository template now evaluate orientation, handoff, correction, ownership, and
+recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
+evaluator, score, or authority.
 
 ## What just landed
 
@@ -32,10 +32,10 @@ new runtime capability or architecture principle.
 
 ## Next steps / watch
 
-- Draft a pattern-only evaluation protocol for handoff quality, correction, ownership,
-  and recovery. Do not promote the candidate work-allocation or multi-agent capabilities
-  into shipped claims without matched, consequential, privacy-constrained tests that
-  compare against the better individual baseline.
+- Run the evaluation template in an owning system with a safe, bounded work item. Do not
+  promote the candidate work-allocation or multi-agent capabilities into shipped claims
+  without matched, consequential, privacy-constrained tests that compare against the
+  better individual baseline.
 - Request an independent Atlas rerun when the maintainer is ready to contact Simon.
 - Keep the first repository self-assessment private until independent review
   and a specific publication approval exist.

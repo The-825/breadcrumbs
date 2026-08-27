@@ -96,3 +96,8 @@ The next phase is not a giant catalog. It is a small, inspectable research cycle
 
 That keeps Breadcrumbs cumulative without turning it into a private archive or a stack
 of claims that no one can test.
+
+For a bounded, pattern-only way to test the work itself, use
+[cooperative intelligence evaluation](cooperative-intelligence-evaluation.md). It keeps
+orientation, handoff, correction, ownership, and recovery distinct from throughput or
+output quality.
