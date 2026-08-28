@@ -1,0 +1,4 @@
+const escClaim = (value = "") => String(value).replace(/[&<>'"]/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[character]));
+fetch("data/claims.json").then(response => response.json()).then(claims => {
+  document.querySelector("#claims").innerHTML = claims.map(item => `<article class="detail claim-card" id="${item.id.toLowerCase()}"><p class="eyebrow">${escClaim(item.id)}</p><h2>${escClaim(item.title)}</h2><p class="lede">${escClaim(item.claim)}</p><dl><dt>Evidence profile</dt><dd>${escClaim(item.profile)}</dd><dt>Disposition</dt><dd>${escClaim(item.disposition)}</dd><dt>Support</dt><dd>${escClaim(item.supports)}</dd><dt>What would disprove it</dt><dd>${escClaim(item.nullCase)}</dd><dt>Next test</dt><dd>${escClaim(item.nextTest)}</dd></dl></article>`).join("");
+}).catch(() => { document.querySelector("#claims").textContent = "The claim register could not load. Use the public repository record instead."; });

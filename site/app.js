@@ -6,6 +6,8 @@ let items = [];
 
 const detailLink = (kind, id, label) =>
   `<a href="detail.html?type=${kind}&id=${encodeURIComponent(id)}">${escapeHtml(label)}</a>`;
+const claimLinks = claims => claims.map(claim => `<a class="pill" href="claims.html#${claim.toLowerCase()}">${escapeHtml(claim)}</a>`).join("");
+const label = value => value.replaceAll("-", " ").replace(/\b\w/g, letter => letter.toUpperCase());
 
 function researchRow(item) {
   return `<tr>
@@ -13,7 +15,7 @@ function researchRow(item) {
     <td><strong>${detailLink("research", item.id, `${item.id}. ${item.title}`)}</strong><br><a href="${escapeHtml(item.url)}">Original source</a></td>
     <td><strong>${item.directnessValue} / 3</strong><br><span class="pill">${escapeHtml(item.directness)}</span></td>
     <td><strong>${item.horizonValue} / 3</strong><br><span class="pill">${escapeHtml(item.horizon)}</span></td>
-    <td><strong>${item.claimCount}</strong><br>${item.claims.map(claim => `<span class="pill">${escapeHtml(claim)}</span>`).join("")}</td>
+    <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
     <td>${escapeHtml(item.citationSignal)}</td>
     <td>${escapeHtml(item.finding)}</td>
     <td>${escapeHtml(item.impact)}</td>
@@ -28,8 +30,8 @@ function repositoryRow(item) {
     <td><strong>${item.aspectPopularityOrder} / ${item.aspectRepositoryCount}</strong><br><span class="pill">${escapeHtml(item.selection_aspect)}</span></td>
     <td><strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small></td>
     <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial</td>
-    <td><strong>${item.claimCount}</strong><br>${item.claims.map(claim => `<span class="pill">${escapeHtml(claim)}</span>`).join("")}</td>
-    <td><span class="pill">${escapeHtml(item.evidence_depth)}</span><span class="pill">${escapeHtml(item.lifecycle)}</span></td>
+    <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
+    <td><strong>Reviewed ${escapeHtml(item.lastReviewed)}</strong><br><span class="pill">${escapeHtml(label(item.evidence_depth))}</span></td>
     <td>${escapeHtml(item.evidence_note)}</td>
   </tr>`;
 }
@@ -52,7 +54,7 @@ function render() {
 }
 
 function addOptions(control, values) {
-  control.innerHTML += values.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+  control.innerHTML += values.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(label(value))}</option>`).join("");
 }
 
 async function catalog() {

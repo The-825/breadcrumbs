@@ -11,12 +11,14 @@ class CatalogTests(unittest.TestCase):
     def setUpClass(cls):
         cls.research = json.loads((SITE / "data" / "research.json").read_text(encoding="utf-8"))
         cls.repositories = json.loads((SITE / "data" / "repositories.json").read_text(encoding="utf-8"))
+        cls.claims = json.loads((SITE / "data" / "claims.json").read_text(encoding="utf-8"))
 
     def test_all_reviewed_records_are_present(self):
         self.assertEqual(100, len(self.research))
         self.assertEqual(100, len(self.repositories))
         self.assertEqual(100, len({item["id"] for item in self.research}))
         self.assertEqual(100, len({item["id"] for item in self.repositories}))
+        self.assertEqual(17, len(self.claims))
 
     def test_profiles_keep_signals_separate(self):
         for item in self.research:
@@ -34,14 +36,23 @@ class CatalogTests(unittest.TestCase):
             self.assertLessEqual(item["aspectPopularityOrder"], item["aspectRepositoryCount"])
             self.assertEqual(item["mechanismTotal"], len(item["mechanisms"]))
             self.assertEqual(item["claimCount"], len(item["claims"]))
+            self.assertEqual(item["snapshot_date"], item["lastReviewed"])
+            self.assertTrue(item["starsObservedDate"])
             self.assertNotIn("score", item)
 
     def test_table_headers_do_not_float_over_rows(self):
         css = (SITE / "app.css").read_text(encoding="utf-8")
         self.assertIn("th { position: static;", css)
 
+    def test_public_profiles_include_visual_explanations(self):
+        jarvis = (SITE / "jarvis.html").read_text(encoding="utf-8")
+        detail = (SITE / "detail.js").read_text(encoding="utf-8")
+        self.assertIn('class="system-map"', jarvis)
+        self.assertIn("Mechanism profile", detail)
+        self.assertIn("Last reviewed", detail)
+
     def test_every_page_has_accessible_navigation(self):
-        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html"):
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)
