@@ -455,3 +455,11 @@ describe observed dimensions only and never imply a composite quality score.
 Why: the public site needs to make system relationships and review findings legible without
 copying the private Operator Board or adding unsupported decorative claims.
 Source: operator direction for richer public profiles and visual explanation, 2026-08-28.
+
+## D-40 · 2026-08-28 · Public labels must explain the model without prior knowledge
+
+Ruling: public profiles use full claim titles, expanded evidence-family names, broader
+repository categories, and specific selection lenses. Category rank replaces rankings
+inside mostly unique selection lenses. Related items rank by shared claims and stop at five.
+Why: internal IDs and one-of-one ranks are traceable but not meaningful to a new reader.
+Source: operator walkthrough of the first public profile release, 2026-08-28.
