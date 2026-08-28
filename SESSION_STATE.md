@@ -9,8 +9,7 @@ Last refreshed: 2026-08-27 (collaborative-intelligence repository landscape)
 
 ## Current state
 
-- Active branch: `claude/collaboration-repository-landscape`, updated from current
-  `main` after Method v2.0 merged in PR #100.
+- Active branch: `claude/collaboration-repository-landscape-100`, cut from current `main` after the 25-repository landscape merged in PR #102.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -41,14 +40,15 @@ claims now carry separate confidence profiles, null cases, dispositions, and nex
 tests. The pass does not claim a full-text risk-of-bias review or silently rewrite
 the original findings.
 
-**Repository landscape (D-33, D-34).** A public, README-screened register pins 25
-repositories across runtimes, protocols, memory, retrieval, evaluation, guardrails,
-and control planes without treating stars as quality or claiming runtime performance.
+**Repository landscape (D-33 through D-35).** A public, README-screened register
+pins 100 repositories across runtimes, protocols, memory, retrieval, evaluation,
+guardrails, gateways, sandboxes, research simulations, and coding-agent control
+planes without treating stars as quality or claiming runtime performance. Wave R3
+adds 75 nonduplicate repositories and makes research-artifact, maintenance, and
+successor boundaries explicit.
 
 ## What just landed
-
-**A2A score export and work-governance related work (D-27).** Both are merged on
-`main`. Breadcrumb Score remains evidence-scoped and publication-gated.
+**A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.
 
 ## Next steps / watch
 
@@ -87,4 +87,4 @@ and control planes without treating stars as quality or claiming runtime perform
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-34 is the latest ruling: popularity selects candidates within an aspect.
+- D-35 is the latest ruling: the breadth map stops at mechanism-family saturation, and future additions must close a named gap.
