@@ -59,6 +59,8 @@ h3 { margin: 0 0 .45rem; color: #fff; }
 .card p, .detail p { color: var(--muted); }
 .stat { font-family: Georgia, "Times New Roman", serif; font-size: 2.5rem; font-weight: 700; color: var(--gold); letter-spacing: -.04em; }
 .catalog-head { padding: 3.5rem 0 1.5rem; }
+.catalog-head h1 { max-width: none; }
+.catalog-head .lede { max-width: 82ch; }
 .controls { position: sticky; top: 68px; z-index: 8; display: grid; grid-template-columns: 1fr repeat(4,minmax(130px,auto)); gap: .75rem; padding: .9rem; margin: 0 0 1rem; background: rgba(27,67,50,.97); border: 1px solid var(--line); border-radius: .45rem; }
 input, select { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: .3rem; padding: .65rem .8rem; background: var(--forest-mid); color: #fff; font: inherit; }
 .summary { color: var(--muted); margin: .5rem 0 1rem; }
