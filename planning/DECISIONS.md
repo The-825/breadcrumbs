@@ -425,3 +425,12 @@ only from public repository records.
 Why: the repository contains linked evidence, but a file tree is not an accessible discovery
 interface for people who do not already know how to navigate repositories.
 Source: operator direction, 2026-08-28.
+
+## D-37 · 2026-08-28 · Breadcrumbs extends the established editorial brand
+
+Ruling: the Breadcrumbs web surface uses the established forest-green, jade, antique-gold,
+and ivory visual system with Georgia display type and Arial working type. It does not use
+the navy technical-dashboard palette inferred from the older repository banner.
+Why: Breadcrumbs belongs to the same public body of work as the 825 and Architect's
+Sandbox materials, so its visual identity should make that relationship recognizable.
+Source: operator correction against the first public-site release, 2026-08-28.
