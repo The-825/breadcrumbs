@@ -1,0 +1,55 @@
+name: Repository evaluation request
+description: Submit a public repository for possible review through the Breadcrumbs method.
+title: "Evaluation request: "
+labels: ["evaluation-request", "queue: submitted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This queue is public. Submit only public repository information. A request does not guarantee inclusion. New reviews must close a named mechanism gap or materially update an existing observation.
+  - type: input
+    id: repository
+    attributes:
+      label: Public repository URL
+      placeholder: https://github.com/owner/repository
+    validations:
+      required: true
+  - type: dropdown
+    id: aspect
+    attributes:
+      label: Primary aspect
+      options:
+        - Agent runtime or orchestration
+        - Human authority or approval
+        - Memory or retrieval
+        - Evaluation or observability
+        - Guardrails or sandboxing
+        - Protocol or interoperability
+        - Coding-agent control plane
+        - Research or simulation
+        - Other named mechanism gap
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Mechanism gap or material update
+      description: Explain what this repository adds that is not already represented in the 100-repository landscape.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public evidence pointers
+      description: Link to the README, documentation, code, paper, benchmark, or release that supports the request.
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Submission checks
+      options:
+        - label: I am submitting only public information and understand this request and its discussion will be public.
+          required: true
+        - label: I understand stars, feature counts, and self-reported benchmarks do not establish quality or inclusion.
+          required: true

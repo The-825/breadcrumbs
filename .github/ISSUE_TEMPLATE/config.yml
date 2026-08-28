@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question or discuss a finding
+    url: https://github.com/The-825/breadcrumbs/discussions
+    about: Use Discussions for questions, comments, and community interpretation.

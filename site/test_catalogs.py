@@ -1,0 +1,49 @@
+import json
+import unittest
+from pathlib import Path
+
+
+SITE = Path(__file__).resolve().parent
+
+
+class CatalogTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.research = json.loads((SITE / "data" / "research.json").read_text(encoding="utf-8"))
+        cls.repositories = json.loads((SITE / "data" / "repositories.json").read_text(encoding="utf-8"))
+
+    def test_all_reviewed_records_are_present(self):
+        self.assertEqual(100, len(self.research))
+        self.assertEqual(100, len(self.repositories))
+        self.assertEqual(100, len({item["id"] for item in self.research}))
+        self.assertEqual(100, len({item["id"] for item in self.repositories}))
+
+    def test_profiles_keep_signals_separate(self):
+        for item in self.research:
+            self.assertIn(item["directness"][:2], {"D0", "D1", "D2", "D3"})
+            self.assertTrue(item["claims"])
+            self.assertNotIn("score", item)
+        for item in self.repositories:
+            self.assertIn("stars_observed", item)
+            self.assertIn("evidence_depth", item)
+            self.assertIn("mechanisms", item)
+            self.assertNotIn("score", item)
+
+    def test_every_page_has_accessible_navigation(self):
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html"):
+            page = (SITE / name).read_text(encoding="utf-8")
+            self.assertIn('href="#main"', page)
+            self.assertIn('aria-label="Primary"', page)
+
+    def test_no_private_runtime_language(self):
+        public_text = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in SITE.rglob("*")
+            if path.is_file() and path.suffix in {".html", ".css", ".js", ".json"}
+        ).lower()
+        for blocked in ("student record", "ferpa record", "jarvis token", "operator dashboard token"):
+            self.assertNotIn(blocked, public_text)
+
+
+if __name__ == "__main__":
+    unittest.main()

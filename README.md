@@ -2,6 +2,10 @@
 
 ![breadcrumbs: memory for agent sessions, built like airport wayfinding](assets/banner.svg)
 
+**New to repositories?** The [Breadcrumbs web guide](site/index.html) provides a visual
+Trail Map plus searchable Research and Repository catalogs. GitHub remains the source of
+truth for every claim and implementation pattern.
+
 *One person's working answer to a specific problem: how do I get the most out of AI
 coding models without re-explaining everything at the start of every session? Not a
 product, not a framework launch. A pattern I built for my own work that I think you can
