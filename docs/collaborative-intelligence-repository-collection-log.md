@@ -91,3 +91,46 @@ enters maintenance mode, archives, points to a successor, changes license
 boundaries, or releases a material architecture revision. Re-run mechanism
 appraisal when a linked evidence path changes or when the next code-traced wave
 selects the repository.
+
+## Wave R3, 2026-08-27
+
+**Mode:** popularity-directed, mechanism-family expansion from 25 to 100
+repositories.
+
+**Discovery aspects:** orchestration and control planes, multi-agent research,
+memory and retrieval, evaluation and observability, guardrails and sandboxes,
+interoperability and tools, and coding agents. Public GitHub repository pages
+provided the canonical identity, exact default-branch commit, archive state,
+and dated star observation. Each pinned README was screened against the same 11
+dimensions and Method v2 claim register.
+
+**Added:** 75 nonduplicate repositories. The wave adds model gateways,
+execution sandboxes, human evidence production, coding-agent modes, temporal
+memory, tool authentication, browser action layers, multi-agent simulation,
+benchmark harnesses, red teams, and trace-linked evaluation. Four preserved
+research implementations use the `research-artifact` lifecycle, and AutoGen is
+retained as `maintenance` because its README points to Agent Framework.
+
+**Saturation rule:** this wave completes the breadth map, not the evidence
+program. Future additions must close a named mechanism gap. The default next
+step is code tracing and bounded execution against a specific claim, baseline,
+failure mode, and independent verifier.
+
+### Candidates screened out in R3
+
+| Candidate | Decision | Reason |
+|---|---|---|
+| [SWE-agent](https://github.com/SWE-agent/SWE-agent) | lineage | Its README says `mini-swe-agent` supersedes it. The successor is included. |
+| [PyRIT](https://github.com/Azure/PyRIT) | archived | GitHub marks the repository archived. |
+| [PromptBench](https://github.com/microsoftarchive/promptbench) | archived | The canonical repository redirects to an archived Microsoft Archive project. |
+| [LLM Guard](https://github.com/protectai/llm-guard) | archived | GitHub marks the repository archived. |
+| [Roo Code](https://github.com/RooCodeInc/Roo-Code) | archived | GitHub marks the redirected canonical repository archived. |
+| [Activepieces](https://github.com/activepieces/activepieces) | mechanism overlap | n8n and Promptflow already cover broad workflow automation and flow evaluation in this wave. |
+| [Chroma](https://github.com/chroma-core/chroma) | storage overlap | The wave retains memory and retrieval frameworks that expose change, evaluation, or workflow mechanisms beyond vector storage. |
+| [Milvus](https://github.com/milvus-io/milvus) | storage overlap | The wave avoids counting multiple vector databases as distinct collaboration mechanisms. |
+| [Qdrant](https://github.com/qdrant/qdrant) | storage overlap | The wave avoids counting multiple vector databases as distinct collaboration mechanisms. |
+| [Weaviate](https://github.com/weaviate/weaviate) | storage overlap | The wave avoids counting multiple vector databases as distinct collaboration mechanisms. |
+| [LanceDB](https://github.com/lancedb/lancedb) | storage overlap | The wave avoids counting multiple vector databases as distinct collaboration mechanisms. |
+| [Argilla](https://github.com/argilla-io/argilla) | human-evidence overlap | Label Studio was retained as the higher-starred human labeling and review surface for this breadth pass. |
+
+These exclusions are scope and deduplication decisions, not quality judgments.

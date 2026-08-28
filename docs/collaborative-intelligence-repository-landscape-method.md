@@ -66,7 +66,18 @@ judgment.
   concrete work surface.
 - `research-framework`: research-oriented roles, societies, simulation, or
   software-process experiments.
+- `model-gateway`: normalizes providers or agents while applying routing,
+  access, budget, retry, or guardrail policy.
+- `execution-sandbox`: isolates agent work and exposes lifecycle or human
+  control outside the model loop.
 - `hybrid-platform`: several of the above with no single dominant layer.
+
+Lifecycle states remain separate from mechanism categories:
+
+- `current`: active public implementation or specification.
+- `maintenance`: retained with a visible maintenance or successor boundary.
+- `research-artifact`: public implementation primarily preserved to reproduce
+  or inspect a research result rather than represent a current product path.
 
 ## Evidence depth
 

@@ -1,6 +1,6 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public, two-wave cohort of 25 repositories. The observations are pinned,
+**Status:** public, three-wave cohort of 100 repositories. The observations are pinned,
 README-screened repository evidence. They are not runtime tests, product
 endorsements, or proof that collaboration improves outcomes.
 
@@ -9,6 +9,12 @@ the codes and boundaries. The
 [machine-readable register](collaborative-intelligence-repository-landscape.json)
 holds the exact commit, evidence note, claim links, and 11-dimension profile for
 each repository.
+
+The table below preserves the first 25 repositories. The
+[Wave R3 inventory](collaborative-intelligence-repository-landscape-wave-r3.md)
+lists the 75 additions across orchestration, multi-agent research, memory,
+retrieval, evaluation, guardrails, gateways, sandboxes, protocols, and coding
+agents.
 
 ## Cohort
 
@@ -42,27 +48,27 @@ Stars were observed on 2026-08-27. They explain discovery priority, not quality.
 | R-024 | [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) | 7,023 | programmable guardrails | `94fb1cdc` | model controls, dialog paths, output constraints, linked technical evaluation |
 | R-025 | [OpenHands](https://github.com/OpenHands/OpenHands) | 85,300 | agent control plane | `b50c60c6` | multiple coding-agent backends, automations, integrations, ACP interoperability |
 
-## What the 25-repository cohort says
+## What the 100-repository cohort says
 
 ### Mechanism profile at a glance
 
 The register uses `V` for verified at the current evidence depth, `P` for
 partial, `N` for not found, and `O` for out of scope. These counts summarize
-the 25 pinned README-level appraisals. They are not product scores.
+the 100 pinned README-level appraisals. They are not product scores.
 
 | Mechanism | V | P | N | O |
 | --- | ---: | ---: | ---: | ---: |
-| collaboration topology | 13 | 7 | 0 | 5 |
-| workflow state | 15 | 10 | 0 | 0 |
-| human authority | 3 | 18 | 3 | 1 |
-| memory and context | 11 | 10 | 0 | 4 |
-| trace and recovery | 4 | 21 | 0 | 0 |
-| evaluation surface | 6 | 17 | 0 | 2 |
-| collaboration baseline | 2 | 3 | 18 | 2 |
-| cost and burden | 2 | 5 | 16 | 2 |
-| change and expiry | 4 | 6 | 15 | 0 |
-| independent verification | 0 | 3 | 20 | 2 |
-| interoperability | 12 | 13 | 0 | 0 |
+| collaboration topology | 33 | 32 | 0 | 35 |
+| workflow state | 54 | 46 | 0 | 0 |
+| human authority | 16 | 71 | 11 | 2 |
+| memory and context | 29 | 40 | 0 | 31 |
+| trace and recovery | 19 | 81 | 0 | 0 |
+| evaluation surface | 33 | 60 | 0 | 7 |
+| collaboration baseline | 19 | 18 | 55 | 8 |
+| cost and burden | 10 | 24 | 58 | 8 |
+| change and expiry | 18 | 37 | 45 | 0 |
+| independent verification | 0 | 18 | 74 | 8 |
+| interoperability | 47 | 53 | 0 | 0 |
 
 ### 1. Topology is common. Evidence of benefit is not.
 
@@ -108,7 +114,7 @@ retrieval evaluation under `CI-008`, `CI-009`, `CI-010`, and `CI-014`.
 
 Role separation, critique, review, and subagents can improve process structure.
 They do not automatically create an independent verifier. Same-model or
-same-context reviewers can share failure modes. The 25-repository cohort gives
+same-context reviewers can share failure modes. The 100-repository cohort gives
 little README-level evidence that `CI-017` is handled explicitly. Evaluation
 platforms can host a distinct test, but the operator must still establish
 evaluator and evidence independence.
@@ -145,10 +151,50 @@ maintenance-mode research demonstration. These are stronger evidence-honesty
 signals than silent feature lists, but they still do not establish transfer to
 a governed collaborative workflow.
 
+### 11. Tool access is more mature than authority semantics.
+
+MCP servers, authenticated toolkits, model gateways, database tools, browser
+interfaces, and execution sandboxes make connection and isolation mechanisms
+concrete. Their READMEs rarely bind each consequential action to a complete
+approval, expiry, and recovery contract. Interoperability is visible in 47
+repositories, while complete human authority is visible in only 16.
+
+### 12. Coding agents expose useful operating modes, not proof of teamwork.
+
+The coding-agent cohort adds read-only planning modes, permission prompts,
+checkpoints, worktrees, subagents, team surfaces, and versioned plans. Those
+mechanisms can support safer collaboration. Only a workflow-level comparison
+against a simpler process can establish whether the added coordination improves
+quality, recovery, time, cost, or operator burden.
+
+### 13. Simulation broadens the theory and raises a transfer warning.
+
+Persona simulations, social worlds, role-based software teams, financial-agent
+teams, and many-agent reinforcement-learning environments make topology and
+interaction observable. Synthetic participants and benchmark environments do
+not establish how real people divide authority, notice errors, or absorb
+coordination costs. Simulation evidence should generate tests, not settle the
+human-AI claim.
+
+### 14. Temporal memory is the clearest change-handling advance.
+
+Graphiti, MemOS, LangMem, Memvid, and related systems make updates,
+supersession, editability, provenance, or versioning more visible than the first
+cohort did. The remaining gap is outcome evidence: a mechanism for changing
+memory does not show that corrections survive retrieval, stale evidence expires
+at the right time, or downstream agents stop acting on superseded state.
+
+### 15. Breadth makes the next priority depth, not source count.
+
+The 100-repository map now spans the major public mechanism families. Adding
+more overlapping frameworks would mainly increase maintenance cost. The next
+wave should code-trace contrasting cases and execute bounded comparisons tied
+to a named claim, baseline, failure mode, and independent verifier.
+
 ## Next code-traced wave
 
-The next appraisal should not expand the cohort immediately. It should select
-six contrasting repositories and trace the same four mechanisms through code,
+The next appraisal should not expand the cohort. It should select contrasting
+repositories and trace the same four mechanisms through code,
 tests, and evaluation fixtures:
 
 1. collaboration versus a simpler baseline;
@@ -157,10 +203,10 @@ tests, and evaluation fixtures:
 4. stale-evidence or material-change invalidation.
 
 Recommended contrasting cases are Microsoft Agent Framework, A2A, Letta Code,
-Mem0, Promptfoo, and OpenHands. Together they cover orchestration, protocol,
-long-horizon memory, explicit benchmark costs, independent test infrastructure,
-and an application control plane without treating any one architecture as the
-field.
+Mem0, Promptfoo, OpenHands, Graphiti, TinyTroupe, TruLens, Invariant Guardrails,
+Daytona, and Qwen Code. Together they cover orchestration, protocol, memory,
+simulation, evaluation, policy, isolation, coding-agent teamwork, and control
+planes without treating any one architecture as the field.
 
 ## Boundary
 

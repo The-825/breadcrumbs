@@ -16,7 +16,7 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_cohort_is_unique_and_pinned(self):
         rows = self.data["repositories"]
-        self.assertEqual(len(rows), 25)
+        self.assertEqual(len(rows), 100)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertEqual(len({row["repository"].lower() for row in rows}), len(rows))
         for row in rows:
@@ -47,13 +47,23 @@ class TestRepositoryLandscape(unittest.TestCase):
                 self.assertIn(int(match.group(1)), range(1, 18))
 
     def test_wave_does_not_overstate_depth_or_lifecycle(self):
-        allowed_lifecycle = {"current", "maintenance"}
+        allowed_lifecycle = {"current", "maintenance", "research-artifact"}
         for row in self.data["repositories"]:
             self.assertIn(row["lifecycle"], allowed_lifecycle)
             self.assertEqual(row["evidence_depth"], "readme-screened")
-            self.assertEqual(row["evidence_pointer"], "README.md")
+            self.assertIn(row["evidence_pointer"], {"README.md", "README.MD"})
         maintenance = [row["repository"] for row in self.data["repositories"] if row["lifecycle"] == "maintenance"]
-        self.assertEqual(maintenance, ["microsoft/graphrag"])
+        self.assertEqual(maintenance, ["microsoft/graphrag", "microsoft/autogen"])
+
+    def test_expansion_is_aspect_balanced_and_tracks_research_artifacts(self):
+        rows = self.data["repositories"]
+        categories = {row["category"] for row in rows}
+        self.assertIn("model-gateway", categories)
+        self.assertIn("execution-sandbox", categories)
+        self.assertGreaterEqual(len(categories), 10)
+        artifacts = [row for row in rows if row["lifecycle"] == "research-artifact"]
+        self.assertGreaterEqual(len(artifacts), 4)
+        self.assertTrue(all(row["category"] == "research-framework" for row in artifacts))
 
     def test_popularity_is_dated_and_not_a_score(self):
         self.assertEqual(self.data["popularity_observed_date"], "2026-08-27")

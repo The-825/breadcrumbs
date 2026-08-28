@@ -398,3 +398,17 @@ screened-out alternatives with reasons and an observation date.
 Why: a raw popularity ranking would overrepresent broad, older platforms and hide
 specialized work on authority, memory, evaluation, observability, and guardrails.
 Source: operator-approved 25-repository popularity-directed expansion, 2026-08-27.
+
+## D-35 · 2026-08-27 · The repository landscape stops at mechanism-family saturation
+
+Ruling: the public repository landscape may expand to 100 pinned,
+README-screened repositories to cover orchestration, multi-agent research,
+memory, retrieval, evaluation, guardrails, gateways, sandboxes, protocols, and
+coding-agent control planes. Research artifacts and maintenance lineages remain
+explicit lifecycle states. After this breadth pass, new repositories enter only
+when they close a named mechanism gap; the default next step is code tracing and
+bounded execution, not a higher source count.
+Why: the 75-repository expansion closes major category gaps but confirms that
+additional overlapping frameworks would add maintenance burden faster than
+claim confidence. Depth is now the limiting evidence factor.
+Source: operator-approved 100-repository landscape expansion, 2026-08-27.
