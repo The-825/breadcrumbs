@@ -412,3 +412,16 @@ Why: the 75-repository expansion closes major category gaps but confirms that
 additional overlapping frameworks would add maintenance burden faster than
 claim confidence. Depth is now the limiting evidence factor.
 Source: operator-approved 100-repository landscape expansion, 2026-08-27.
+
+## D-36 · 2026-08-28 · Breadcrumbs has a public web front door
+
+Ruling: Breadcrumbs presents its public research, repository landscape, memory patterns,
+workflow patterns, and evaluation method through a GitHub Pages site called Breadcrumbs.
+The primary visualization is the Trail Map. Research and repository catalogs are separate,
+searchable pages with item detail pages and typed related links. Multi-dimensional profiles
+keep popularity, evidence, directness, durability, and mechanism coverage separate rather
+than collapsing them into one score. GitHub remains authoritative, and the site is built
+only from public repository records.
+Why: the repository contains linked evidence, but a file tree is not an accessible discovery
+interface for people who do not already know how to navigate repositories.
+Source: operator direction, 2026-08-28.

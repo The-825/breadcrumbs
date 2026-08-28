@@ -1,0 +1,32 @@
+name: Publish Breadcrumbs site
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python site/build_catalogs.py
+      - run: python -m unittest site/test_catalogs.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

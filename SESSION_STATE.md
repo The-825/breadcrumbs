@@ -5,20 +5,17 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (collaborative-intelligence repository landscape)
+Last refreshed: 2026-08-28 (Breadcrumbs public site)
 
 ## Current state
 
-- Active branch: `claude/collaboration-repository-landscape-100`, cut from current `main` after the 25-repository landscape merged in PR #102.
-- Merged in PR #86: a host-bound context service derives memory clearance from
-  an authenticated principal and fixed policy. Requests cannot assert or widen
-  audience, and ungranted principals fail closed.
-- The low-level memory engine, golden exam, and new scope-gate selftest pass.
-- The cooperative-intelligence vision is documented as a public research and pattern
-  layer. It does not import private implementation material or claim that research has
-  validated a live system.
+- Active branch: `claude/breadcrumbs-public-site`, cut from current `main`.
+- The public kit, 100-source ledger, and 100-repository landscape remain authoritative.
 
 ## In flight
+
+**Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
+searchable catalogs, item profiles, related links, and a public evaluation-request queue.
 
 **Cooperative evaluation protocol (D-31).** A public, pattern-only method and owning
 repository template now evaluate orientation, handoff, correction, ownership, and
