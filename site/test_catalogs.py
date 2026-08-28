@@ -86,6 +86,13 @@ class CatalogTests(unittest.TestCase):
             for trail in ("Research", "Synthesis", "Repositories", "Claims", "Papers", "Method", "Jarvis", "Community"):
                 self.assertIn(f">{trail}</a>", page)
 
+    def test_every_page_exposes_the_complete_trail_set(self):
+        trails = ("Research", "Synthesis", "Repositories", "Claims", "Papers", "Method", "Jarvis", "Community")
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
+            page = (SITE / name).read_text(encoding="utf-8")
+            for trail in trails:
+                self.assertIn(f">{trail}</a>", page, f"{name} is missing {trail}")
+
     def test_no_private_runtime_language(self):
         public_text = "\n".join(
             path.read_text(encoding="utf-8")
