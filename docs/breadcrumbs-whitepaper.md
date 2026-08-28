@@ -23,11 +23,14 @@ familiarity of a neighborhood grocery store: the relevant aisle is recognizable,
 labels are clear, and the next action is close at hand. Five mechanisms, all
 implementable with git, shell hooks, and plain text files, support that experience:
 event-triggered context placement, refusal at consequential boundaries, oracle-gated
-verification, grounded versioned handoffs, and append-only supersession. The design
-objective is to reduce orientation cost for both lighter and heavier models so their
-capability is spent on the assigned work. That objective is testable and not yet
-proven. I include the incident that convinced me to publish, in which the system caught
-a false memory about itself, and an explicit account of what I have not proven.
+verification, grounded versioned handoffs, and append-only supersession. The original
+design problem was continuity among concurrent Claude Code sessions working against a
+moving repository while context windows filled and compacted. The design objective is
+to preserve the smallest vivid account of current state so any assigned session,
+including a lighter subagent, spends as little context and effort as possible reaching
+the real work. That objective is testable and not yet proven. I include the incident
+that convinced me to publish, in which the system caught a false memory about itself,
+and an explicit account of what I have not proven.
 
 ## 1. The problem is not recall
 
@@ -44,10 +47,20 @@ of recall, because they are failures of discipline, not of memory capacity:
    predecessor's record of finishing was buried in a transcript nobody reads.
 3. **Stale action.** A session acts on a fact that changed after it last looked, with
    no signal that the ground moved.
+4. **Parallel drift.** One session works on component A while another changes component
+   B or advances the main branch, and neither receives the small update that would have
+   changed its next decision.
+5. **Compaction loss.** A long session compresses its context and drops the exact job,
+   decision, identifier, or unresolved obligation that the next step depends on.
 
 Retrieval systems make these worse in one specific way: they let the model write its
 own confidence. A memory entry that says "verified" because the model felt sure is a
 liability with a timestamp.
+
+The cost is not only correctness. Every re-read, repeated explanation, and oversized
+boot packet consumes context that could have been spent on the task. The memory system
+therefore has to preserve vivid state while remaining smaller than the history it
+replaces.
 
 ## 2. The design stance: architect the environment
 
@@ -345,55 +358,36 @@ is narrower than a result and more useful than an anecdote: the failures a cue-p
 design targets are real, frequent, and countable in ordinary work, and roughly half of
 them were failures of a mechanism I already had and never pointed at the right corpus.
 
-## 5. The join protocol
+## 5. The continuity protocol
 
-Nothing above depends, *by design*, on which model you run. A fleet member is anything
-that can read a file at start and append a line at the end:
+The original system joined Claude Code sessions working concurrently against one
+repository environment. A participating session needed only to follow a small loop:
 
-1. Read the boot packet. Mine is printed by a script; yours might be a `git show` plus
-   a few greps.
-2. Do the work.
-3. Record what is now true as an append-only line in a file only you write: the claim,
-   what anchors it, who you are, and whether an oracle verified it. Let the recorder
-   refuse you if obligations dangle.
-4. Read back the memory version you booted on, so staleness is visible.
+1. Read the compact boot packet: current branch and repository state, active work,
+   relevant decisions, unresolved obligations, and pointers to deeper evidence.
+2. Follow narrow cues only when the task, prompt, or file makes them relevant.
+3. Do the work, while checking whether another session or the main branch moved the
+   shared state underneath it.
+4. Record what is now true, what remains open, what evidence anchors the claim, and
+   which memory version the session used.
 
-The core loop touches no vendor API: a script that prints text, and an append to a
-file. A human enters through the same protocol too, and my own rulings do exactly that,
-at the top trust rank. Heterogeneous fleets are the design case, not an afterthought.
+The point is compression without flattening. The boot packet must be small enough to
+protect the context window, but vivid enough to preserve the identifiers, dependencies,
+decisions, and unfinished work that a generic summary tends to lose. Pointers keep the
+packet small. Placed cues make the referenced detail arrive only when the participant
+reaches the relevant aisle.
 
-**What is tested, and what is not, because the distinction turns out to matter more
-than I expected.** Models from two other vendors have read this system and reviewed it,
-and that works. It is genuinely useful, in fact, precisely because an outside reader
-brings assumptions the resident model does not, and catches things a session steeped in
-the house conventions stops seeing. So cross-vendor *reading* is not a hypothetical
-here; it is part of how the work actually gets checked.
+Model capability can change the quality of the final work without changing the route
+to it. A primary session or a lighter subagent should be able to reach the same
+authoritative starting state without re-reading the whole repository or transcript.
+That is the efficiency objective: reduce tokens, search, and re-explanation before the
+real task begins. It is not a claim that different model tiers reason equally well.
 
-What none of them have done is the write half. No non-Claude model has yet run the full
-loop above, boot read through fold append through version ack, as a participating member
-of the memory rather than a visitor commenting on it. The protocol is built to be
-vendor-neutral and I believe it is, but belief is not a receipt, and this paper's own
-standard is that a claim without an oracle is marked asserted rather than verified. So
-the read side is verified and the write side is asserted, and I would rather say that
-than blur the two.
-
-One finding from the reading side is worth passing on, because it cuts against a naive
-"any model, drop it in" reading. The models differ sharply in how well they follow the
-pointer-based routing: one navigated it comfortably, another struggled enough that it
-needed a separate, fully inlined copy of the rules written for it specifically,
-subordinate to the original, before it stopped flagging deliberate patterns as bugs.
-The storage protocol can be vendor-neutral while the *navigation* layer is not equally
-legible to every model. Expect to write a capability-matched entry point per model
-family rather than assuming one set of pointers serves all of them.
-
-That difference is not a reason to make every entry point equally verbose. It is the
-reason to measure orientation separately from task performance. A lighter and a heavier
-model should each receive a capability-matched route to the same authoritative starting
-state. The comparison should record whether they found the required context, how much
-time and context they spent finding it, which errors or escalations occurred, and only
-then how well they performed the assigned task. Breadcrumbs is successful on this
-dimension if the environment reduces avoidable navigation work. It does not imply that
-the models will reason equally well after they arrive.
+The same protocol may transfer to other vendors, and my current workflow now includes
+them, but that is not the evidence base for this paper. The claim here remains bounded
+to the session-continuity problem that produced the system. Cross-vendor orchestration
+and Jarvis deciding when one or several agents should work belong to the broader
+cooperative-intelligence evaluation, not to this memory result.
 
 ## 6. Related work, briefly and honestly
 
@@ -519,8 +513,9 @@ reviewed or endorsed this system. Sources: [AI Agent Governance](https://allikir
 
 ## 7. Limitations
 
-This runs in one office, mine, at one scale, a few hundred agent sessions a month, in
-one regulated domain, operated by the person who designed it. Evidence so far is
+This began and was observed in one office, mine, across concurrent Claude Code sessions
+working in one repository environment and operated by the person who designed it.
+Evidence so far is
 incidents caught and work not redone, counted by hand; instrumentation for measuring
 which injected memories actually change behavior is new, and numbers from it will
 follow rather than be promised. The instruments themselves are written up in
@@ -531,8 +526,8 @@ assume that applies to me. Adversarial settings (a malicious fleet member poison
 the shared record) are addressed only by the trust ladder's quarantine rank and the
 append-only forensic trail, and deserve fuller treatment.
 
-Two specific things I want to be unambiguous about, because both are easy to assume
-from the design and neither is earned yet:
+Three specific things I want to be unambiguous about, because they are easy to assume
+from the design and none is earned yet:
 
 **Orientation parity is a design objective, not a measured result.** I have not yet run
 matched lighter-model and heavier-model trials against the same frozen repository state
@@ -540,17 +535,11 @@ and task. The claim here is that the environment can be designed to reduce avoid
 orientation work. Whether different models reach the same verified starting state with
 comparable effort remains an evaluation question.
 
-**Cross-vendor writing is asserted; cross-vendor reading is not.** See section 5. Models
-from two other vendors read and review this system regularly, and that half works well
-enough to be part of the process. No non-Claude model has yet run the full write loop as
-a participating member of the memory, so the portability claim covers reading only until
-that join is documented.
-
-**This is one fleet, not many.** Everything here describes multiple sessions, over
-time, sharing one memory for one system: one presence table, one memory branch, one
-coordinator. It says nothing about two independently owned fleets staying continuous
-with each other across a trust boundary. That is a genuinely harder problem, it is
-not what I built, and I do not want the single-fleet result read as evidence for it.
+**This is one continuity system, not evidence for cross-vendor orchestration.**
+Everything here describes multiple Claude Code sessions, over time, sharing memory for
+one repository environment. My current workflow now uses other systems and a Jarvis
+coordination layer, but that later architecture does not retroactively become evidence
+for the original memory result.
 
 **Nothing here internalizes anything, and that ceiling looks structural.** The whole
 design gets a standard in front of every session, in identical words, without fail.
