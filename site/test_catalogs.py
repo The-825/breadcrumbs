@@ -79,6 +79,8 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("five evidence trails", synthesis.lower())
         self.assertIn("CI-017", synthesis)
         self.assertIn("Evidence boundary", synthesis)
+        for page in (index, research, papers, synthesis):
+            self.assertIn("Community</a>", page)
 
     def test_no_private_runtime_language(self):
         public_text = "\n".join(
