@@ -1,7 +1,80 @@
-const type=document.body.dataset.catalog;const esc=(v="")=>String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));let items=[];
-const detailLink=(kind,id,label)=>`<a href="detail.html?type=${kind}&id=${encodeURIComponent(id)}">${esc(label)}</a>`;
-function researchRow(x){return `<tr><td class="rank">${x.evidenceOrder}</td><td><strong>${detailLink("research",x.id,`${x.id}. ${x.title}`)}</strong><br><a href="${esc(x.url)}">Original source</a></td><td><span class="pill">${esc(x.directness)}</span><span class="pill">${esc(x.horizon)}</span><br>${esc(x.design)}</td><td>${esc(x.finding)}</td><td>${esc(x.impact)}</td><td>${esc(x.flags)}</td></tr>`}
-function repoRow(x){const v=Object.values(x.mechanisms).filter(y=>y==="V").length,p=Object.values(x.mechanisms).filter(y=>y==="P").length;return `<tr><td class="rank">${x.popularityOrder}</td><td><strong>${detailLink("repositories",x.id,x.repository)}</strong><br><a href="${esc(x.url)}">GitHub repository</a></td><td>${Number(x.stars_observed).toLocaleString()}<br><span class="pill">${esc(x.snapshot_date)}</span></td><td><span class="pill">${esc(x.selection_aspect)}</span><span class="pill">${esc(x.lifecycle)}</span></td><td>${v} visible, ${p} partial<br><span class="pill">${esc(x.evidence_depth)}</span></td><td>${esc(x.evidence_note)}</td></tr>`}
-function render(){const q=document.querySelector("#search").value.trim().toLowerCase(),f=document.querySelector("#filter").value,c=document.querySelector("#claim").value,s=document.querySelector("#sort").value;let out=items.filter(x=>JSON.stringify(x).toLowerCase().includes(q));if(f)out=out.filter(x=>type==="research"?x.directness.startsWith(f):x.selection_aspect===f);if(c)out=out.filter(x=>x.claims.includes(c));if(s==="alpha")out.sort((a,b)=>(a.title||a.repository).localeCompare(b.title||b.repository));else out.sort((a,b)=>(a.evidenceOrder||a.popularityOrder)-(b.evidenceOrder||b.popularityOrder));document.querySelector("tbody").innerHTML=out.map(type==="research"?researchRow:repoRow).join("");document.querySelector("#count").textContent=`${out.length} of ${items.length}`;document.querySelector(".empty").style.display=out.length?"none":"block"}
-async function catalog(){if(!type)return;items=await fetch(`data/${type}.json`).then(r=>{if(!r.ok)throw Error();return r.json()});const filter=document.querySelector("#filter"),claim=document.querySelector("#claim");const facets=type==="research"?["D3","D2","D1","D0"]:[...new Set(items.map(x=>x.selection_aspect))].sort();filter.innerHTML+=facets.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");const claims=[...new Set(items.flatMap(x=>x.claims))].sort();claim.innerHTML+=claims.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");document.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",render));render()}
-catalog().catch(()=>{const e=document.querySelector(".empty");if(e){e.textContent="The catalog could not load. Use the repository source files instead.";e.style.display="block"}});
+const type = document.body.dataset.catalog;
+const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, char => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+}[char]));
+let items = [];
+
+const detailLink = (kind, id, label) =>
+  `<a href="detail.html?type=${kind}&id=${encodeURIComponent(id)}">${escapeHtml(label)}</a>`;
+
+function researchRow(item) {
+  return `<tr>
+    <td class="rank">${item.evidenceOrder}<small> / 100</small></td>
+    <td><strong>${detailLink("research", item.id, `${item.id}. ${item.title}`)}</strong><br><a href="${escapeHtml(item.url)}">Original source</a></td>
+    <td><strong>${item.directnessValue} / 3</strong><br><span class="pill">${escapeHtml(item.directness)}</span></td>
+    <td><strong>${item.horizonValue} / 3</strong><br><span class="pill">${escapeHtml(item.horizon)}</span></td>
+    <td><strong>${item.claimCount}</strong><br>${item.claims.map(claim => `<span class="pill">${escapeHtml(claim)}</span>`).join("")}</td>
+    <td>${escapeHtml(item.citationSignal)}</td>
+    <td>${escapeHtml(item.finding)}</td>
+    <td>${escapeHtml(item.impact)}</td>
+    <td>${escapeHtml(item.flags)}</td>
+  </tr>`;
+}
+
+function repositoryRow(item) {
+  return `<tr>
+    <td class="rank">${item.popularityOrder}<small> / 100</small></td>
+    <td><strong>${detailLink("repositories", item.id, item.repository)}</strong><br><a href="${escapeHtml(item.url)}">GitHub repository</a></td>
+    <td><strong>${item.aspectPopularityOrder} / ${item.aspectRepositoryCount}</strong><br><span class="pill">${escapeHtml(item.selection_aspect)}</span></td>
+    <td><strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small></td>
+    <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial</td>
+    <td><strong>${item.claimCount}</strong><br>${item.claims.map(claim => `<span class="pill">${escapeHtml(claim)}</span>`).join("")}</td>
+    <td><span class="pill">${escapeHtml(item.evidence_depth)}</span><span class="pill">${escapeHtml(item.lifecycle)}</span></td>
+    <td>${escapeHtml(item.evidence_note)}</td>
+  </tr>`;
+}
+
+function render() {
+  const query = document.querySelector("#search").value.trim().toLowerCase();
+  const filter = document.querySelector("#filter").value;
+  const theme = document.querySelector("#theme").value;
+  const claim = document.querySelector("#claim").value;
+  const sort = document.querySelector("#sort").value;
+  let output = items.filter(item => JSON.stringify(item).toLowerCase().includes(query));
+  if (filter) output = output.filter(item => type === "research" ? item.directness.startsWith(filter) : item.selection_aspect === filter);
+  if (theme) output = output.filter(item => type === "research" ? item.family === theme : item.lifecycle === theme);
+  if (claim) output = output.filter(item => item.claims.includes(claim));
+  if (sort === "alpha") output.sort((a, b) => (a.title || a.repository).localeCompare(b.title || b.repository));
+  else output.sort((a, b) => (a.evidenceOrder || a.popularityOrder) - (b.evidenceOrder || b.popularityOrder));
+  document.querySelector("tbody").innerHTML = output.map(type === "research" ? researchRow : repositoryRow).join("");
+  document.querySelector("#count").textContent = `${output.length} of ${items.length}`;
+  document.querySelector(".empty").style.display = output.length ? "none" : "block";
+}
+
+function addOptions(control, values) {
+  control.innerHTML += values.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+}
+
+async function catalog() {
+  if (!type) return;
+  const response = await fetch(`data/${type}.json`);
+  if (!response.ok) throw new Error("Catalog data unavailable");
+  items = await response.json();
+  addOptions(document.querySelector("#filter"), type === "research"
+    ? ["D3", "D2", "D1", "D0"]
+    : [...new Set(items.map(item => item.selection_aspect))].sort());
+  addOptions(document.querySelector("#theme"), type === "research"
+    ? [...new Set(items.map(item => item.family))].sort()
+    : [...new Set(items.map(item => item.lifecycle))].sort());
+  addOptions(document.querySelector("#claim"), [...new Set(items.flatMap(item => item.claims))].sort());
+  document.querySelectorAll("input, select").forEach(control => control.addEventListener("input", render));
+  render();
+}
+
+catalog().catch(() => {
+  const empty = document.querySelector(".empty");
+  if (empty) {
+    empty.textContent = "The catalog could not load. Use the repository source files instead.";
+    empty.style.display = "block";
+  }
+});

@@ -9,15 +9,16 @@ Last refreshed: 2026-08-28 (Breadcrumbs public site)
 
 ## Current state
 
-- Active branch: `claude/breadcrumbs-public-site`, cut from current `main`.
+- Active branch: `claude/catalog-rating-profiles`, cut from current `main`.
 - The public kit, 100-source ledger, and 100-repository landscape remain authoritative.
 
 ## In flight
 
 **Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
 searchable catalogs, item profiles, related links, and a public evaluation-request queue.
-The brand correction in D-37 replaces the inferred navy palette with the established
-forest, jade, antique-gold, ivory, and editorial-serif visual system.
+The D-37 brand uses forest, jade, antique-gold, ivory, and editorial-serif styling.
+The catalog correction in D-38 separates numeric evidence, audience, mechanism, and
+lifecycle signals and fixes the table header overlay.
 
 **Cooperative evaluation protocol (D-31).** A public, pattern-only method and owning
 repository template now evaluate orientation, handoff, correction, ownership, and

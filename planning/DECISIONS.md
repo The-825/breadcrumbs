@@ -434,3 +434,14 @@ the navy technical-dashboard palette inferred from the older repository banner.
 Why: Breadcrumbs belongs to the same public body of work as the 825 and Architect's
 Sandbox materials, so its visual identity should make that relationship recognizable.
 Source: operator correction against the first public-site release, 2026-08-28.
+
+## D-38 · 2026-08-28 · Catalog ratings remain multi-dimensional profiles
+
+Ruling: the research catalog displays evidence order, directness, horizon, linked claims,
+and citation signal as separate fields. Evidence order uses directness, then horizon, then
+stable source ID. Citation popularity remains not collected until a reproducible source is
+approved. The repository catalog displays global star rank, within-aspect star rank,
+mechanism coverage, linked claims, evidence depth, and lifecycle separately.
+Why: combining unlike signals into one rating would imply a quality verdict the evidence
+does not support. Separate dimensions remain sortable, interpretable, and correctable.
+Source: operator direction for expanded catalog ratings, 2026-08-28.
