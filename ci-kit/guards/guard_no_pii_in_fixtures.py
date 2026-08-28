@@ -11,7 +11,8 @@ fixture files:
 It is pragmatic, not exhaustive: it scans the fixture surfaces where synthetic
 data lives (DEFAULT_PATHS), not the whole repo, so real staff addresses in
 docs are out of scope. Use @example.com and placeholder ids of a different
-length in fixtures.
+length in fixtures. A complete 40-character hexadecimal Git object id is a
+public code pointer, so digit runs inside it are not treated as person ids.
 
 Usage:
     guard_no_pii_in_fixtures.py [path ...]
@@ -41,6 +42,7 @@ EXTS = (".json", ".csv", ".ndjson", ".py", ".js", ".sql", ".txt", ".yaml", ".yml
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@" + re.escape(EMAIL_DOMAIN), re.IGNORECASE)
 ID_RE = re.compile(r"(?<!\d)\d{" + str(ID_DIGITS) + r"}(?!\d)")
+GIT_OBJECT_RE = re.compile(r"(?<![0-9A-Fa-f])[0-9A-Fa-f]{40}(?![0-9A-Fa-f])")
 
 
 def _iter_files(paths, apply_exclude):
@@ -65,7 +67,8 @@ def check_line(line):
     msgs = []
     for tok in EMAIL_RE.findall(line):
         msgs.append(f"PII-shaped institutional email '{tok}': use an @example.com placeholder")
-    for tok in ID_RE.findall(line):
+    line_without_git_objects = GIT_OBJECT_RE.sub("", line)
+    for tok in ID_RE.findall(line_without_git_objects):
         msgs.append(f"{ID_DIGITS}-digit ID-shaped number '{tok}': fixtures must be synthetic (use a different length)")
     return msgs
 

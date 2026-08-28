@@ -5,11 +5,12 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-27 (collaborative-intelligence Method v2.0)
+Last refreshed: 2026-08-27 (collaborative-intelligence repository landscape)
 
 ## Current state
 
-- Active branch: `claude/collaboration-research-batch-five`, cut from current `main`.
+- Active branch: `claude/collaboration-repository-landscape`, updated from current
+  `main` after Method v2.0 merged in PR #100.
 - Merged in PR #86: a host-bound context service derives memory clearance from
   an authenticated principal and fixed policy. Requests cannot assert or widen
   audience, and ungranted principals fail closed.
@@ -40,6 +41,10 @@ claims now carry separate confidence profiles, null cases, dispositions, and nex
 tests. The pass does not claim a full-text risk-of-bias review or silently rewrite
 the original findings.
 
+**Repository landscape (D-33, D-34).** A public, README-screened register pins 25
+repositories across runtimes, protocols, memory, retrieval, evaluation, guardrails,
+and control planes without treating stars as quality or claiming runtime performance.
+
 ## What just landed
 
 **A2A score export and work-governance related work (D-27).** Both are merged on
@@ -56,6 +61,8 @@ the original findings.
 - Complete claim-specific full-text appraisal before upgrading any Method v2.0
   validity profile. Future source waves must begin with a target claim and retain
   their query, inclusion, exclusion, duplicate, and evidence-family checks.
+- Code-trace Microsoft Agent Framework, A2A, Letta Code, Mem0, Promptfoo, and OpenHands
+  before changing any README-screened `N` or `P` observation.
 - Add a versioned material-change manifest to the next owning-system evaluation so model,
   prompt, tool, policy, and data-distribution changes can invalidate stale delegation and
   reliance evidence.
@@ -80,5 +87,4 @@ the original findings.
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-32 is the latest ruling (2026-08-27, research synthesis is claim-centered
-  and profile-based).
+- D-34 is the latest ruling: popularity selects candidates within an aspect.

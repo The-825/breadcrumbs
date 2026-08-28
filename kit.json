@@ -65,6 +65,12 @@
     "I need an A2A Agent Card to cite scored evidence": [
       "templates/a2a-score-export/README.md",
       "templates/a2a-score-export/a2a_score_export.py"
+    ],
+    "I need to compare repositories that codify collaborative intelligence": [
+      "docs/collaborative-intelligence-repository-landscape-method.md",
+      "docs/collaborative-intelligence-repository-landscape.md",
+      "docs/collaborative-intelligence-repository-landscape.json",
+      "docs/collaborative-intelligence-repository-collection-log.md"
     ]
   },
   "artifacts": [
