@@ -81,6 +81,10 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("Evidence boundary", synthesis)
         for page in (index, research, papers, synthesis):
             self.assertIn("Community</a>", page)
+        repositories = (SITE / "repositories.html").read_text(encoding="utf-8")
+        for page in (index, research, repositories, papers, synthesis):
+            for trail in ("Research", "Synthesis", "Repositories", "Claims", "Papers", "Method", "Jarvis", "Community"):
+                self.assertIn(f">{trail}</a>", page)
 
     def test_no_private_runtime_language(self):
         public_text = "\n".join(
