@@ -45,6 +45,14 @@ class CatalogTests(unittest.TestCase):
         css = (SITE / "app.css").read_text(encoding="utf-8")
         self.assertIn("th { position: static;", css)
 
+    def test_research_identity_and_order_are_separate(self):
+        page = (SITE / "research.html").read_text(encoding="utf-8")
+        script = (SITE / "app.js").read_text(encoding="utf-8")
+        self.assertIn("<th>Review number</th><th>Evidence order</th><th>Source</th>", page)
+        self.assertIn('${escapeHtml(item.id)}</td>', script)
+        self.assertIn('${item.evidenceOrder}<small> / 100</small>', script)
+        self.assertNotIn('${item.id}. ${item.title}', script)
+
     def test_public_profiles_include_visual_explanations(self):
         jarvis = (SITE / "jarvis.html").read_text(encoding="utf-8")
         detail = (SITE / "detail.js").read_text(encoding="utf-8")
