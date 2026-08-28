@@ -16,6 +16,8 @@ Last refreshed: 2026-08-28 (Breadcrumbs public site)
 
 **Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
 searchable catalogs, item profiles, related links, and a public evaluation-request queue.
+The brand correction in D-37 replaces the inferred navy palette with the established
+forest, jade, antique-gold, ivory, and editorial-serif visual system.
 
 **Cooperative evaluation protocol (D-31).** A public, pattern-only method and owning
 repository template now evaluate orientation, handoff, correction, ownership, and
