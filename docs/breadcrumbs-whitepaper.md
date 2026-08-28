@@ -1,14 +1,6 @@
 # Breadcrumbs: cue-placement memory for AI agent fleets
 
-*A working paper from one practitioner. Version 1.3, August 2026 (1.3 names Letta's
-Context Repositories in section 6 and sharpens the axis from inspectable memory to
-governed memory: git-backed storage is now shipped by others, which makes it the floor
-rather than the claim. 1.0 published earlier
-the same month; 1.1 extended section 3.5 with the tombstone, validity-window, and
-audience-scoping mechanics that landed after publication, and added the Agent Memory
-Atlas to related work; 1.2 adds the trust-timing fix the Atlas's own review of this
-paper's system found, and notes the companion memory-desk kit's tooling maturing past
-documented-but-not-executable). This describes a
+*A working paper from one practitioner. Version 1.5, August 20, 2026. This describes a
 pattern I run in production, generalized so you can run it too. The memory layer here
 is a personal insight project, built on my own time out of my own need to stop
 re-explaining context to my tools; it sits alongside the day job rather than being
@@ -17,24 +9,30 @@ are in this repository under MIT.*
 
 ## Abstract
 
-AI coding agents lose all working context between sessions. The dominant remedy is
-retrieval: vector stores, knowledge graphs, and ranking layers that answer "what should
-the agent remember?" Running many agent sessions a week against one production system,
-I found retrieval was not my failure mode. My failures were governance failures: a
-session claiming work was done when it was not, redoing work a previous session had
-finished, or acting confidently on a fact that had changed underneath it. This paper
-describes a different approach, borrowed from why an experienced traveler moves through
-an unfamiliar airport almost as fast as a familiar one: place cues where the behavior
-already happens, and let the environment do the remembering. Five mechanisms, all
-implementable with git, shell hooks, and plain
-text files: boot-time injection, refusal at the point of claim, oracle-gated
-verification, versioned handoffs, and append-only supersession. I include the incident
-that convinced me to publish, in which the system caught a false memory about itself,
-and an explicit account of what I have not proven.
+Not every coding-agent environment carries working context from one session into a
+fresh session. I encountered that gap while running many Claude Code sessions each week
+across multiple concurrent efforts in one repository system. Common remedies emphasize
+retrieval through vector stores, knowledge graphs, and ranking layers that answer "what
+should the agent remember?" In my experience, retrieval was not the central failure
+mode. My failures were governance failures: a session claiming work was done when it
+was not, redoing work a previous session had finished, or acting confidently on a fact
+that had changed underneath it. This paper describes a different approach: design the
+environment so participants do not have to reconstruct it. The system may carry
+airport-grade logistical complexity, but each model should experience the local
+familiarity of a neighborhood grocery store: the relevant aisle is recognizable, the
+labels are clear, and the next action is close at hand. Five mechanisms, all
+implementable with git, shell hooks, and plain text files, support that experience:
+event-triggered context placement, refusal at consequential boundaries, oracle-gated
+verification, grounded versioned handoffs, and append-only supersession. The design
+objective is to reduce orientation cost for both lighter and heavier models so their
+capability is spent on the assigned work. That objective is testable and not yet
+proven. I include the incident that convinced me to publish, in which the system caught
+a false memory about itself, and an explicit account of what I have not proven.
 
 ## 1. The problem is not recall
 
-A fresh agent session pays a tax before any real work happens: re-reading files to
+A fresh agent session without reliable continuity pays a tax before any real work
+happens: re-reading files to
 guess the current state, re-deriving decisions already made, being re-briefed by a
 human who has explained the same context many times before. Bigger context windows and
 better retrieval shrink parts of this tax, but three failure modes survive any amount
@@ -51,7 +49,7 @@ Retrieval systems make these worse in one specific way: they let the model write
 own confidence. A memory entry that says "verified" because the model felt sure is a
 liability with a timestamp.
 
-## 2. The design stance: cues, not archives
+## 2. The design stance: architect the environment
 
 Drop a frequent flyer into an airport they have never set foot in and they still move
 through it almost as fast as their home airport. Drop a first-time flyer into that same
@@ -67,15 +65,24 @@ the pattern underneath the specific signs, and carry it forward. The second airp
 not easier because it is a simpler building; it is easier because they stopped treating
 the first one as a one-off and started treating it as an instance of a system they now
 understand. That gap, not a bigger map, is the design target here: not "give the agent
-more to remember," but give the environment enough structure that any session, on its
-first visit, moves like the experienced traveler.
+more to remember," but give the environment enough structure that a session on its
+first visit can move with less uncertainty.
+
+The airport is the system underneath: repositories, evidence, permissions, handoffs,
+verification, routing, and recovery all coordinated at once. The neighborhood grocery
+store is the experience at the point of work. A participant should recognize its aisle,
+see only the inventory relevant to its task, know what it may take or change, and find
+an obvious checkout path. Breadcrumbs is the architect of that environment. It does not
+make every participant equally capable. It keeps them from spending their capability
+reconstructing the building.
 
 Applied to agents: instead of building a smarter archive the agent must remember to
 consult, place cues at the moments where agent behavior already happens, the way an
-airport signs the next decision only, at the exact spot the decision gets made, and
-gives the cues teeth. The moments are few and predictable: session start, finishing
-work, claiming certainty, and handing off. Discipline is encoded as refusals rather
-than reminders, because a reminder can be ignored and a refusal cannot.
+airport signs the next decision at the exact spot the decision gets made. The moments
+are few and predictable: session start, a relevant prompt, first contact with a governed
+file, finishing work, claiming certainty, requesting authority, and handing off.
+Discipline is encoded as refusals rather than reminders where consequences justify it,
+because a reminder can be ignored and a refusal cannot.
 
 ## 2.5 This is not folk wisdom: the science underneath the signage
 
@@ -86,7 +93,7 @@ known to be true about memory in general.
 **Cue-dependent memory.** The psychology of recall (Tulving's encoding specificity,
 decades old and well replicated) says retrieval works best when the context at recall
 matches the context at encoding. That is the literal mechanism behind the sign at the
-gate rather than the map at the entrance. Boot injection works because it recreates the
+gate rather than the map at the entrance. Event-triggered placement works because it recreates the
 working context, this repo, this branch, these open obligations, at the exact moment
 recall is needed, instead of asking the agent to fetch it cold from an archive it has
 to remember exists.
@@ -119,74 +126,78 @@ certificate, and it should be treated exactly the way you treat those.
 
 **Organizational memory.** The literature on how institutions retain knowledge (Walsh
 and Ungson's retention bins) observes that most knowledge loss happens because
-knowledge lives only in individuals, and individuals leave. An agent fleet is the
-pathological case: every individual leaves at the end of every session. So everything
-has to live in the other bins, the procedures, the roles, the archives, which is why
-the whole design keeps pushing memory out of the participants and into the structure.
+knowledge lives only in individuals, and individuals leave. Coding environments that
+do not preserve reliable session-to-session context reproduce that loss repeatedly. So
+the durable parts have to live in the other bins, the procedures, the roles, and the
+archives, which is why the design keeps pushing continuity out of the participants and
+into the structure.
 
-### The hierarchy, and what self-actualization means for a memory
+### The hierarchy: from custody to efficient action
 
 Reading the five mechanisms as a flat list undersells how they depend on each other.
-They stack, and the stack runs in the same direction Maslow ran human needs: each
-layer is only worth building once the one below it holds.
+The functional hierarchy is:
 
-1. **Existence.** The memory survives at all: append-only records, nothing silently
-   dropped. Without this, nothing above matters.
-2. **Safety.** The memory cannot corrupt itself unrecoverably: refusal at the point of
-   claim, supersession instead of editing in place, the wrong entry preserved under
-   the correction that killed it.
-3. **Belonging.** The memory is a shared grammar rather than a private diary: one join
-   protocol that humans, and models of any make, enter through the same way.
-4. **Esteem.** Standing in the memory is earned, never self-declared: the trust ladder,
-   verification gated on named oracles, quarantine for the unattributable.
-5. **Self-actualization.** The system becomes capable of maintaining its own
-   integrity: it can audit its own beliefs against reality, discover that one of them
-   is false, and correct the record while preserving the evidence of having been
-   wrong.
+1. **Custody.** The authoritative record has a named owner and survives beyond any
+   participant or session.
+2. **Relevance.** The participant receives the smallest context that fits the current
+   task instead of the whole archive.
+3. **Provenance.** Every consequential claim points back to its source and records when
+   it became available.
+4. **Authority.** The system distinguishes what a participant may read, propose,
+   verify, decide, or execute for this audience and consequence level.
+5. **Verification.** Confidence is not evidence. A claim earns standing through a
+   named oracle or remains explicitly asserted.
+6. **Correction and recovery.** Supersession, tombstones, validity windows, and
+   handoffs contain errors without erasing how they happened.
+7. **Efficiency.** Once the lower layers hold, participants spend less effort locating
+   and validating their starting state and more effort on the actual objective.
 
-The top of the hierarchy is not a feature I built. It is what the lower layers made
-possible, and the case study that follows is what it looked like the first time the
-system got there.
+The last layer is the design target, not a result this paper has already established.
+The case study that follows shows correction and recovery working once in one system.
 
 ## 3. The five mechanisms
 
-**3.1 Boot injection.** Every session starts with a small injected packet it did not
-have to ask for: the short list of facts that must never be wrong (frozen verbatim and
-pinned by a test, so a missing line fails a build), the open obligations no session has
-finished, and a delta of what changed since this session last acted. The packet is
-budgeted in bytes; injection is a tax every session pays, so everything injected has to
+**3.1 Event-triggered context placement.** Every session starts with a small injected
+packet it did not have to ask for: the short list of facts that must never be wrong
+(frozen verbatim and pinned by a test, so a missing line fails a build), the open
+obligations no session has finished, and a delta of what changed since this session last
+acted. Narrower cues can arrive when a prompt matches an indexed topic or when a
+governed file is first touched. Every injection is a tax, so it is budgeted and has to
 earn its place.
 
-**3.2 Refusal at the claim.** A session cannot simply assert "done." It records a
-completion claim, and the recorder refuses the claim while obligations dangle. The
-session's options are to finish, to park the work with the leftovers explicitly
-attached, or to formally defer a named item with an owner and a deadline, the way
-aircraft operate under a minimum equipment list: a known-inoperative part is flown with
-deliberately, on the record, with a due date, never silently.
+**3.2 Refusal at consequential boundaries.** A session cannot simply assert "done."
+It records a completion claim, and the recorder refuses the claim while obligations
+dangle. The same pattern applies when a participant lacks authority to publish, merge,
+send, expose a protected audience, or reintroduce a tombstoned answer. The options are
+to satisfy the condition, park the work with the leftovers explicitly attached, or
+defer a named item with an owner and a deadline. The system refuses the unsafe boundary,
+not the entire workflow.
 
 **3.3 Oracle-gated verification.** No agent may mark its own claim "verified."
 Verified status requires naming an objective oracle: a CI result, a data assertion
-against a live store, a reverted change, a human ruling. Everything else is stamped
-"asserted," and every future reader of an asserted entry sees an instruction to
-re-verify before acting on it. Human rulings enter through the same grammar at the
-highest trust rank, which makes humans and models the same kind of memory participant
-at different prices, and makes the trust ladder legible: ruling over oracle-verified
-over asserted, with unattributable claims quarantined.
+against a live store, a deployment probe, or another check independent of the writer.
+Everything else is stamped "asserted," and every future reader of an asserted entry
+sees an instruction to re-verify before acting on it. A human ruling establishes
+authority or a decision, not automatically factual proof. The grammar keeps those
+functions distinct: owner-ratified decisions, oracle-verified claims, observed or tested
+evidence, asserted claims, and unattributable material held in quarantine.
 
-**3.4 Versioned handoffs.** Shared memory state carries a version marker, and each
+**3.4 Grounded versioned handoffs.** Shared memory state carries a version marker, and each
 session acknowledges the version it booted on, the way pilots read back that they have
 "information Bravo." Staleness becomes visible at a glance instead of surfacing as a
 wrong decision. Session-to-session handoffs are written briefs with a replay guard:
 read what your predecessor actually did before you redo it. Durable decisions are
 written down in the same turn they are made, because a ruling that lives only in a
-transcript gets re-litigated by the next session.
+transcript gets re-litigated by the next session. The acknowledgement matters: a
+handoff is not complete merely because one participant wrote it. The next participant
+must be able to identify the current state, scope, limits, and unresolved work.
 
 **3.5 Append-only supersession.** No memory entry is edited in place. A wrong entry is
 killed by a newer entry that names it and explains the correction. The record of being
 wrong survives, which is what makes the system auditable, and what made the incident
 below tellable at all.
 
-Three refinements landed after version 1.0 of this paper, all on the same principle:
+The implementation adds four refinements on the same principle:
 
 - **Tombstones with redirects.** A correction that only overwrites is half a
   correction: the next session that re-derives the old value writes it right back.
@@ -215,17 +226,16 @@ Three refinements landed after version 1.0 of this paper, all on the same princi
   missing timestamp, flagged as inferred rather than observed, so the two are never
   confused later.
 
-Two mechanisms outside this list matured the same month, in the lighter companion kit
-this paper's own artifacts ship alongside (a settled-facts index rather than the full
-supersession ledger above): a promotion step that was documented intent became
-executable, and the staleness horizon stopped being one fixed number imposed on every
-ledger and started reading each ledger's own re-check cadence instead. Neither changes
-the five mechanisms; both close the gap between what the kit's own help text promised
-and what it actually did.
+Two mechanisms outside this list appear in the lighter companion kit that ships with
+this paper's artifacts, which uses a settled-facts index rather than the full
+supersession ledger above. Its promotion step is executable, and its staleness horizon
+reads each ledger's own re-check cadence instead of imposing one fixed number on every
+ledger. Neither changes the five mechanisms; both keep the kit's behavior aligned with
+its stated contract.
 
 ## 4. Case study: the day it caught itself
 
-This is the top of the hierarchy observed in the wild, once, in my one office: the
+This is correction and recovery observed in the wild, once, in my one office: the
 system holding a false belief about itself, discovering it through its own machinery,
 and correcting the record without destroying the evidence.
 
@@ -376,6 +386,15 @@ The storage protocol can be vendor-neutral while the *navigation* layer is not e
 legible to every model. Expect to write a capability-matched entry point per model
 family rather than assuming one set of pointers serves all of them.
 
+That difference is not a reason to make every entry point equally verbose. It is the
+reason to measure orientation separately from task performance. A lighter and a heavier
+model should each receive a capability-matched route to the same authoritative starting
+state. The comparison should record whether they found the required context, how much
+time and context they spent finding it, which errors or escalations occurred, and only
+then how well they performed the assigned task. Breadcrumbs is successful on this
+dimension if the environment reduces avoidable navigation work. It does not imply that
+the models will reason equally well after they arrive.
+
 ## 6. Related work, briefly and honestly
 
 The retrieval tier (episodic and semantic memory stores with ranked recall) is mature
@@ -515,6 +534,12 @@ append-only forensic trail, and deserve fuller treatment.
 Two specific things I want to be unambiguous about, because both are easy to assume
 from the design and neither is earned yet:
 
+**Orientation parity is a design objective, not a measured result.** I have not yet run
+matched lighter-model and heavier-model trials against the same frozen repository state
+and task. The claim here is that the environment can be designed to reduce avoidable
+orientation work. Whether different models reach the same verified starting state with
+comparable effort remains an evaluation question.
+
 **Cross-vendor writing is asserted; cross-vendor reading is not.** See section 5. Models
 from two other vendors read and review this system regularly, and that half works well
 enough to be part of the process. No non-Claude model has yet run the full write loop as
@@ -541,9 +566,9 @@ else.
 
 ## 8. Try it
 
-Start with one sign, not the whole terminal. Pick the single moment your agents most
-often act on stale state and place one cue there that fires automatically; for me that
-was session start. Add the refusal second, because it is the piece with teeth. The
+Start with one familiar aisle, not the whole airport. Pick the single moment your agents
+most often act on stale state and place one cue there that fires automatically; for me
+that was session start. Add the refusal second, because it is the piece with teeth. The
 copy-and-adapt artifacts (a session handoff file, a decisions ledger, a settled-facts
 store, a bootable rules file, and a fail-closed merge gate) are in this repository,
 MIT licensed. If you try the pattern and it breaks somewhere, open an issue and tell
