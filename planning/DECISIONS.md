@@ -463,3 +463,11 @@ repository categories, and specific selection lenses. Category rank replaces ran
 inside mostly unique selection lenses. Related items rank by shared claims and stop at five.
 Why: internal IDs and one-of-one ranks are traceable but not meaningful to a new reader.
 Source: operator walkthrough of the first public profile release, 2026-08-28.
+
+## D-41 · 2026-08-28 · Claims use one interactive landscape, not a long list
+
+Ruling: the public claim register presents four thematic clusters around Breadcrumbs.
+Selecting a claim updates one detail inspector. Wide screens show four clusters, the
+in-app view shows two, and only narrow mobile screens collapse to one column.
+Why: the relationship among claims is more important than their document order.
+Source: operator walkthrough of the graph-only claim release, 2026-08-28.
