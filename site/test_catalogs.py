@@ -53,7 +53,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("Last reviewed", detail)
 
     def test_every_page_has_accessible_navigation(self):
-        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html"):
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)
