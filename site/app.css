@@ -103,28 +103,33 @@ td strong { color: #fff; }
 .capability-web strong { color: var(--gold); font: 700 1.25rem Georgia, "Times New Roman", serif; }
 .capability-web span { color: var(--muted); }
 .method-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
-.claim-list { display: grid; gap: 1rem; }
-.claim-card { scroll-margin-top: 90px; }
 .claim-links { display: grid; gap: .45rem; }
 .claim-link { display: grid; grid-template-columns: 4.5rem 1fr; gap: .5rem; align-items: baseline; padding: .55rem .7rem; border: 1px solid rgba(199,154,63,.35); border-radius: .35rem; text-decoration: none; }
 .claim-link small { color: var(--gold); }
 .claim-link strong { color: var(--ink); }
-.claim-landscape { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2rem; }
-.claim-landscape a { display: grid; min-height: 135px; place-content: center; text-align: center; padding: 1rem; background: var(--forest-mid); border: 1px solid rgba(199,154,63,.4); border-radius: .4rem; text-decoration: none; }
-.claim-landscape strong { color: var(--gold); font: 700 2.4rem Georgia, "Times New Roman", serif; }
-.claim-theme { padding: 2.5rem 0 0; scroll-margin-top: 80px; }
-.claim-card { margin: .65rem 0; padding: 0; overflow: hidden; }
-.claim-card summary { display: grid; grid-template-columns: 5rem 1fr; gap: .7rem; padding: 1rem 1.2rem; cursor: pointer; }
-.claim-card summary span { color: var(--gold); font-weight: 700; }
-.claim-body { padding: 0 1.2rem 1.2rem; }
-.claim-card dl { display: grid; grid-template-columns: 9rem 1fr; gap: .55rem 1rem; }
-.claim-card dt { color: var(--gold); font-weight: 700; }
-.claim-card dd { margin: 0; color: var(--muted); }
+.claim-graph { position: relative; display: grid; grid-template-columns: repeat(2,1fr); gap: 4.5rem 8rem; padding: 2rem; border: 1px solid rgba(199,154,63,.45); border-radius: .5rem; background: radial-gradient(circle at center, rgba(199,154,63,.15), transparent 28%), rgba(27,67,50,.45); }
+.claim-graph::before, .claim-graph::after { content: ""; position: absolute; left: 50%; top: 50%; z-index: 0; background: rgba(199,154,63,.35); transform: translate(-50%,-50%); }
+.claim-graph::before { width: 60%; height: 1px; }
+.claim-graph::after { width: 1px; height: 62%; }
+.claim-cluster { position: relative; z-index: 1; }
+.claim-cluster h2 { font-size: 1.1rem; }
+.claim-cluster > div { display: grid; gap: .5rem; }
+.claim-node { display: grid; grid-template-columns: 4.5rem 1fr; gap: .55rem; width: 100%; padding: .65rem .75rem; text-align: left; color: var(--ink); background: var(--forest-mid); border: 1px solid var(--line); border-radius: .35rem; cursor: pointer; }
+.claim-node small { color: var(--gold); }
+.claim-node.selected, .claim-node:hover, .claim-node:focus-visible { border-color: var(--gold); background: var(--jade); }
+.claim-core { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%,-50%); width: 145px; min-height: 105px; display: grid; place-content: center; text-align: center; color: var(--forest); background: var(--gold); border-radius: 50%; font: 700 1.1rem Georgia, "Times New Roman", serif; box-shadow: 0 8px 30px rgba(0,0,0,.3); }
+.claim-core span { font: .7rem Arial, sans-serif; }
+.claim-inspector { margin-top: 1rem; }
+.claim-inspector dl { display: grid; grid-template-columns: 11rem 1fr; gap: .55rem 1rem; }
+.claim-inspector dt { color: var(--gold); font-weight: 700; }
+.claim-inspector dd { margin: 0; color: var(--muted); }
 footer { border-top: 1px solid rgba(199,154,63,.35); color: var(--muted); padding: 2rem 1.25rem; text-align: center; }
 
 @media (max-width: 820px) {
   .hero { grid-template-columns: 1fr; padding-top: 2rem; }
-  .grid, .related, .profile, .split-detail, .jarvis-hero, .capability-web, .method-grid, .claim-landscape { grid-template-columns: 1fr; }
+  .grid, .related, .profile, .split-detail, .jarvis-hero, .capability-web, .method-grid, .claim-graph { grid-template-columns: 1fr; }
+  .claim-graph { gap: 1.5rem; padding: 1rem; }
+  .claim-graph::before, .claim-graph::after, .claim-core { display: none; }
   .system-map { grid-template-columns: 1fr; }
   .map-arrow { transform: rotate(90deg); text-align: center; }
   .controls { grid-template-columns: 1fr; position: static; }
