@@ -61,11 +61,24 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("Last reviewed", detail)
 
     def test_every_page_has_accessible_navigation(self):
-        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html"):
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)
             self.assertIn('href="app.css?v=', page)
+
+    def test_white_paper_and_synthesis_are_publicly_routed(self):
+        index = (SITE / "index.html").read_text(encoding="utf-8")
+        research = (SITE / "research.html").read_text(encoding="utf-8")
+        papers = (SITE / "papers.html").read_text(encoding="utf-8")
+        synthesis = (SITE / "synthesis.html").read_text(encoding="utf-8")
+        self.assertIn("Read the White Paper", index)
+        self.assertIn("breadcrumbs-whitepaper.md", papers)
+        self.assertIn('href="synthesis.html"', index)
+        self.assertIn('href="synthesis.html"', research)
+        self.assertIn("five evidence trails", synthesis.lower())
+        self.assertIn("CI-017", synthesis)
+        self.assertIn("Evidence boundary", synthesis)
 
     def test_no_private_runtime_language(self):
         public_text = "\n".join(
