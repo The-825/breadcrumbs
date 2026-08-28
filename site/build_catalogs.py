@@ -31,6 +31,19 @@ def research_catalog() -> list[dict[str, object]]:
     proximity = {"D3": 0, "D2": 1, "D1": 2, "D0": 3}
     horizon_order = {"longitudinal": 0, "repeated": 1, "single": 2, "technical": 3, "retrospective": 4, "not observed": 5}
     horizon_value = {"longitudinal": 3, "repeated": 2, "single": 1, "technical": 1, "retrospective": 1, "not observed": 0}
+    family_labels = {
+        "AGENT-EVAL": "Agent evaluation", "AGENT-SCALE": "Large-scale agent systems", "AGENT-SECURITY": "Agent security",
+        "ALGO-USE": "Algorithm use and reliance", "ALLOCATION": "Task allocation", "AUTO-HF": "Automation and human factors",
+        "BANSAL-TEAM": "Human-AI team performance", "CLINICAL-TEAM": "Clinical team collaboration", "DEFER": "Learning when to defer",
+        "DELEGATION": "Delegation", "DEV-PROD": "Developer productivity", "FAIRNESS-HCAI": "Fairness and human-centered AI",
+        "FEEDBACK-LOOP": "Feedback loops", "FIELD-PROD": "Field productivity", "FIELD-TEAM": "Field team performance",
+        "JOINT-ACTIVITY": "Joint activity", "MEM-ARCH": "Memory architecture", "MEM-EVAL": "Memory evaluation",
+        "MOTIVATION": "Motivation", "MSR-AGENTS": "Microsoft Research agent studies", "MSR-WORK": "Microsoft Research work-practice studies",
+        "MULTIAGENT": "Multi-agent systems", "ORG-SYN": "Organizational synthesis", "PORTFOLIO-DIVERSITY": "Portfolio diversity",
+        "RELIANCE-FRICTION": "Reliance and friction", "RETRIEVAL": "Retrieval", "SELF-REFINE": "Self-refinement",
+        "SYNERGY-META": "Collaboration synergy meta-analysis", "TEAM-COG": "Team cognition", "TRUST-REL": "Trust and reliance",
+        "XAI-BEHAVIOR": "Explainability and behavior", "XAI-GUIDANCE": "Explainability guidance",
+    }
     output = []
     for source_id, source, level, finding, impact, boundary in ledger:
         app = appraisals[source_id]
@@ -40,7 +53,7 @@ def research_catalog() -> list[dict[str, object]]:
             "id": source_id, "title": title, "url": url, "levelEvidence": level,
             "finding": finding, "impact": impact.replace("**", ""), "boundary": boundary,
             "design": app[1], "directness": app[2], "directnessValue": int(app[2][1]),
-            "family": app[3], "horizon": app[4], "horizonValue": horizon_value.get(app[4], 0),
+            "family": app[3], "familyLabel": family_labels.get(app[3], app[3]), "horizon": app[4], "horizonValue": horizon_value.get(app[4], 0),
             "flags": app[5], "claims": claims, "claimCount": len(claims),
             "citationSignal": "not collected",
             "_sort": [proximity.get(app[2][:2], 9), horizon_order.get(app[4], 9), int(source_id)],
@@ -56,12 +69,12 @@ def repository_catalog() -> list[dict[str, object]]:
     landscape = json.loads((DOCS / "collaborative-intelligence-repository-landscape.json").read_text(encoding="utf-8"))
     output = landscape["repositories"]
     output.sort(key=lambda item: (-item["stars_observed"], item["repository"]))
-    aspect_counts: dict[str, int] = {}
+    category_counts: dict[str, int] = {}
     for rank, item in enumerate(output, 1):
         item["popularityOrder"] = rank
-        aspect = item["selection_aspect"]
-        aspect_counts[aspect] = aspect_counts.get(aspect, 0) + 1
-        item["aspectPopularityOrder"] = aspect_counts[aspect]
+        category = item["category"]
+        category_counts[category] = category_counts.get(category, 0) + 1
+        item["categoryPopularityOrder"] = category_counts[category]
         item["visibleMechanisms"] = sum(value == "V" for value in item["mechanisms"].values())
         item["partialMechanisms"] = sum(value == "P" for value in item["mechanisms"].values())
         item["mechanismTotal"] = len(item["mechanisms"])
@@ -70,14 +83,20 @@ def repository_catalog() -> list[dict[str, object]]:
         item["starsObservedDate"] = landscape["popularity_observed_date"]
     totals: dict[str, int] = {}
     for item in output:
-        totals[item["selection_aspect"]] = totals.get(item["selection_aspect"], 0) + 1
+        totals[item["category"]] = totals.get(item["category"], 0) + 1
     for item in output:
-        item["aspectRepositoryCount"] = totals[item["selection_aspect"]]
+        item["categoryRepositoryCount"] = totals[item["category"]]
     return output
 
 
 def claim_catalog() -> list[dict[str, str]]:
     text = (DOCS / "collaborative-intelligence-claim-register.md").read_text(encoding="utf-8")
+    themes = {
+        "CI-001": "Outcomes and burden", "CI-004": "Outcomes and burden", "CI-005": "Outcomes and burden", "CI-015": "Outcomes and burden", "CI-016": "Outcomes and burden",
+        "CI-002": "Workflow evidence", "CI-006": "Workflow evidence", "CI-008": "Workflow evidence", "CI-017": "Workflow evidence",
+        "CI-003": "Authority and reliance", "CI-007": "Authority and reliance", "CI-011": "Authority and reliance", "CI-012": "Authority and reliance", "CI-013": "Authority and reliance",
+        "CI-009": "Memory and grounding", "CI-010": "Memory and grounding", "CI-014": "Memory and grounding",
+    }
     output = []
     for section in re.split(r"^### ", text, flags=re.MULTILINE)[1:]:
         heading, body = section.split("\n", 1)
@@ -89,7 +108,7 @@ def claim_catalog() -> list[dict[str, str]]:
             return " ".join(found.group(1).split()) if found else ""
         claim = re.search(r"\*\*Claim\.\*\*\s*(.*?)(?=\n\n- \*\*)", body, flags=re.DOTALL)
         output.append({
-            "id": match.group(1), "title": match.group(2),
+            "id": match.group(1), "title": match.group(2), "theme": themes.get(match.group(1), "Other"),
             "claim": " ".join(claim.group(1).split()) if claim else "",
             "supports": field("Supports"), "profile": field("Profile"),
             "disposition": field("Disposition").replace("`", ""),

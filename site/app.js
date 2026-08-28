@@ -3,10 +3,11 @@ const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, char => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
 }[char]));
 let items = [];
+let claimsById = {};
 
 const detailLink = (kind, id, label) =>
   `<a href="detail.html?type=${kind}&id=${encodeURIComponent(id)}">${escapeHtml(label)}</a>`;
-const claimLinks = claims => claims.map(claim => `<a class="pill" href="claims.html#${claim.toLowerCase()}">${escapeHtml(claim)}</a>`).join("");
+const claimLinks = claims => claims.map(claim => `<a class="pill" href="claims.html#${claim.toLowerCase()}">${escapeHtml(claimsById[claim]?.title || claim)}</a>`).join("");
 const label = value => value.replaceAll("-", " ").replace(/\b\w/g, letter => letter.toUpperCase());
 
 function researchRow(item) {
@@ -27,7 +28,9 @@ function repositoryRow(item) {
   return `<tr>
     <td class="rank">${item.popularityOrder}<small> / 100</small></td>
     <td><strong>${detailLink("repositories", item.id, item.repository)}</strong><br><a href="${escapeHtml(item.url)}">GitHub repository</a></td>
-    <td><strong>${item.aspectPopularityOrder} / ${item.aspectRepositoryCount}</strong><br><span class="pill">${escapeHtml(item.selection_aspect)}</span></td>
+    <td><strong>${item.categoryPopularityOrder} / ${item.categoryRepositoryCount}</strong></td>
+    <td><span class="pill">${escapeHtml(label(item.category))}</span></td>
+    <td>${escapeHtml(label(item.selection_aspect))}</td>
     <td><strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small></td>
     <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial</td>
     <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
@@ -43,7 +46,7 @@ function render() {
   const claim = document.querySelector("#claim").value;
   const sort = document.querySelector("#sort").value;
   let output = items.filter(item => JSON.stringify(item).toLowerCase().includes(query));
-  if (filter) output = output.filter(item => type === "research" ? item.directness.startsWith(filter) : item.selection_aspect === filter);
+  if (filter) output = output.filter(item => type === "research" ? item.directness.startsWith(filter) : item.category === filter);
   if (theme) output = output.filter(item => type === "research" ? item.family === theme : item.lifecycle === theme);
   if (claim) output = output.filter(item => item.claims.includes(claim));
   if (sort === "alpha") output.sort((a, b) => (a.title || a.repository).localeCompare(b.title || b.repository));
@@ -62,13 +65,16 @@ async function catalog() {
   const response = await fetch(`data/${type}.json`);
   if (!response.ok) throw new Error("Catalog data unavailable");
   items = await response.json();
+  const claims = await fetch("data/claims.json").then(result => result.json());
+  claimsById = Object.fromEntries(claims.map(item => [item.id, item]));
   addOptions(document.querySelector("#filter"), type === "research"
     ? ["D3", "D2", "D1", "D0"]
-    : [...new Set(items.map(item => item.selection_aspect))].sort());
+    : [...new Set(items.map(item => item.category))].sort());
   addOptions(document.querySelector("#theme"), type === "research"
     ? [...new Set(items.map(item => item.family))].sort()
     : [...new Set(items.map(item => item.lifecycle))].sort());
-  addOptions(document.querySelector("#claim"), [...new Set(items.flatMap(item => item.claims))].sort());
+  const claimControl = document.querySelector("#claim");
+  claimControl.innerHTML += [...new Set(items.flatMap(item => item.claims))].sort().map(value => `<option value="${escapeHtml(value)}">${escapeHtml(`${value}: ${claimsById[value]?.title || value}`)}</option>`).join("");
   document.querySelectorAll("input, select").forEach(control => control.addEventListener("input", render));
   render();
 }

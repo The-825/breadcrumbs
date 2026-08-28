@@ -9,7 +9,7 @@ Last refreshed: 2026-08-28 (Breadcrumbs public site)
 
 ## Current state
 
-- Active branch: `claude/richer-public-profiles`, cut from current `main`.
+- Active branch: `claude/profile-clarity-pass`, cut from current `main`.
 - The public kit, 100-source ledger, and 100-repository landscape remain authoritative.
 
 ## In flight
