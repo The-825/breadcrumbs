@@ -34,6 +34,7 @@ class CatalogTests(unittest.TestCase):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)
+            self.assertIn('href="app.css?v=', page)
 
     def test_no_private_runtime_language(self):
         public_text = "\n".join(
