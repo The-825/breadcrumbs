@@ -445,3 +445,13 @@ mechanism coverage, linked claims, evidence depth, and lifecycle separately.
 Why: combining unlike signals into one rating would imply a quality verdict the evidence
 does not support. Separate dimensions remain sortable, interpretable, and correctable.
 Source: operator direction for expanded catalog ratings, 2026-08-28.
+
+## D-39 · 2026-08-28 · Public profiles explain relationships visually
+
+Ruling: the public Jarvis profile includes a content-free operating map from repository
+truth through governed routing, bounded execution, and independent verification.
+Repository and research profiles use small visual signal charts alongside prose. Charts
+describe observed dimensions only and never imply a composite quality score.
+Why: the public site needs to make system relationships and review findings legible without
+copying the private Operator Board or adding unsupported decorative claims.
+Source: operator direction for richer public profiles and visual explanation, 2026-08-28.

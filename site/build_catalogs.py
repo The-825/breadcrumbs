@@ -66,11 +66,35 @@ def repository_catalog() -> list[dict[str, object]]:
         item["partialMechanisms"] = sum(value == "P" for value in item["mechanisms"].values())
         item["mechanismTotal"] = len(item["mechanisms"])
         item["claimCount"] = len(item["claims"])
+        item["lastReviewed"] = item["snapshot_date"]
+        item["starsObservedDate"] = landscape["popularity_observed_date"]
     totals: dict[str, int] = {}
     for item in output:
         totals[item["selection_aspect"]] = totals.get(item["selection_aspect"], 0) + 1
     for item in output:
         item["aspectRepositoryCount"] = totals[item["selection_aspect"]]
+    return output
+
+
+def claim_catalog() -> list[dict[str, str]]:
+    text = (DOCS / "collaborative-intelligence-claim-register.md").read_text(encoding="utf-8")
+    output = []
+    for section in re.split(r"^### ", text, flags=re.MULTILINE)[1:]:
+        heading, body = section.split("\n", 1)
+        match = re.match(r"(CI-\d+):\s*(.+)", heading)
+        if not match:
+            continue
+        def field(label: str) -> str:
+            found = re.search(rf"^- \*\*{re.escape(label)}:\*\*\s*(.+(?:\n  .+)*)", body, flags=re.MULTILINE)
+            return " ".join(found.group(1).split()) if found else ""
+        claim = re.search(r"\*\*Claim\.\*\*\s*(.*?)(?=\n\n- \*\*)", body, flags=re.DOTALL)
+        output.append({
+            "id": match.group(1), "title": match.group(2),
+            "claim": " ".join(claim.group(1).split()) if claim else "",
+            "supports": field("Supports"), "profile": field("Profile"),
+            "disposition": field("Disposition").replace("`", ""),
+            "nullCase": field("Null case"), "nextTest": field("Next test"),
+        })
     return output
 
 
@@ -83,3 +107,4 @@ def write(name: str, value: object) -> None:
 if __name__ == "__main__":
     write("research.json", research_catalog())
     write("repositories.json", repository_catalog())
+    write("claims.json", claim_catalog())
