@@ -13,6 +13,7 @@ const label = value => value.replaceAll("-", " ").replace(/\b\w/g, letter => let
 function researchRow(item) {
   return `<tr>
     <td class="rank">${escapeHtml(item.id)}</td>
+    <td class="rank">${item.evidenceOrder}<small> / 100</small></td>
     <td><strong>${detailLink("research", item.id, item.title)}</strong><br><a href="${escapeHtml(item.url)}">Original source</a></td>
     <td><strong>${item.directnessValue} / 3</strong><br><span class="pill">${escapeHtml(item.directness)}</span></td>
     <td><strong>${item.horizonValue} / 3</strong><br><span class="pill">${escapeHtml(item.horizon)}</span></td>
