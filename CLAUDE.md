@@ -23,6 +23,11 @@ checklists, and the pattern docs behind them. Readers arrive with a specific pro
 usually that their agent sessions have no memory across a repo that matters, and leave
 with files they can copy.
 
+Cross-repository consumers discover this repo's ownership and transfer boundary in the
+versioned `portfolio_contract` inside `kit.json`. That contract routes reusable public
+patterns and public repository assessment metadata here without making this a private
+or production store.
+
 **Everything here is public and world-readable the moment it lands.** That is the single
 most important fact about this repo, and it drives most of the rules below.
 

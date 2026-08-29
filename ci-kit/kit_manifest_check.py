@@ -17,11 +17,135 @@ Usage:
 """
 
 import json
+import re
+import runpy
 import sys
 import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+REQUIRED_OWNS = {
+    "reusable-public-patterns-and-templates",
+    "assessed-external-public-repository-metadata",
+    "portable-repository-identity-and-provenance-intake",
+}
+REQUIRED_ACCEPTED = {
+    "public-verified-repository-identity-and-provenance",
+    "public-github-links",
+    "public-license-and-upstream-revision",
+    "public-safe-evidence-linked-aliases",
+    "explicit-unknown-values",
+    "generalized-workflows-and-mechanisms",
+    "public-or-synthetic-tests",
+}
+REQUIRED_PROHIBITED = {
+    "private-repository-identities",
+    "operated-repository-identities",
+    "source-context-repository-identity-as-transfer-row",
+    "ferpa-student-or-staff-records",
+    "internal-paths",
+    "private-evidence",
+    "credentials",
+    "personal-or-household-data",
+    "production-bound-schemas-or-queries",
+}
+REQUIRED_PROVENANCE = {
+    "stable-repository-id",
+    "stable-assessment-artifact-ids",
+    "positive-public-visibility-proof",
+    "public-source-links",
+    "source-revision",
+    "source-content-sha256",
+    "explicit-nonauthorization",
+}
+
+
+def check_portfolio_contract(manifest: dict, root: Path) -> list[str]:
+    failures = []
+    contract = manifest.get("portfolio_contract")
+    if not isinstance(contract, dict):
+        return ["portfolio contract missing"]
+    if contract.get("schema_version") != "1.0":
+        failures.append("portfolio contract schema_version must be 1.0")
+    if contract.get("canonical_owner") != "The-825/breadcrumbs":
+        failures.append("portfolio contract canonical owner is not Breadcrumbs")
+    if contract.get("role") != "reusable-public-pattern-and-assessment-owner":
+        failures.append("portfolio contract role is incomplete")
+    if set(contract.get("owns", [])) != REQUIRED_OWNS:
+        failures.append("portfolio contract ownership capabilities are incomplete")
+    if set(contract.get("source_retains", [])) != {
+        "source-evidence", "private-records", "operational-authority"
+    }:
+        failures.append("portfolio contract must keep source evidence and authority external")
+    if set(contract.get("accepted_data_classes", [])) != REQUIRED_ACCEPTED:
+        failures.append("portfolio contract accepted data classes are incomplete")
+    if set(contract.get("prohibited_data_classes", [])) != REQUIRED_PROHIBITED:
+        failures.append("portfolio contract prohibited data classes are incomplete")
+
+    transfer = contract.get("transfer_contract", {})
+    entrypoint = transfer.get("entrypoint", "")
+    if not entrypoint or not (root / entrypoint).is_file():
+        failures.append("portfolio transfer entrypoint is missing")
+    elif transfer.get("fail_closed") is not True:
+        failures.append("portfolio transfer must fail closed")
+    else:
+        module = runpy.run_path(str(root / entrypoint))
+        expected = {
+            "PORTFOLIO_OWNER": contract.get("canonical_owner"),
+            "TRANSFER_SCHEMA_VERSION": transfer.get("source_schema_version"),
+            "LANDSCAPE_SCHEMA_VERSION": transfer.get("destination_schema_version"),
+            "TRANSFER_RECORD_TYPE": transfer.get("required_record_type"),
+            "TRANSFER_AUTHORITY": transfer.get("authority"),
+        }
+        for name, value in expected.items():
+            if module.get(name) != value:
+                failures.append(f"portfolio contract disagrees with importer constant {name}")
+    if set(transfer.get("required_provenance", [])) != REQUIRED_PROVENANCE:
+        failures.append("portfolio transfer provenance requirements are incomplete")
+    if transfer.get("authority") != "evidence-only":
+        failures.append("portfolio transfer must remain evidence-only")
+
+    evidence = contract.get("evidence_classes", {})
+    portable = evidence.get("portable_intake", {})
+    detailed = evidence.get("detailed_appraisal", {})
+    if portable != {
+        "evidence_depth": "source-assessment",
+        "may_expand": True,
+        "claims_detailed_mechanism_review": False,
+    }:
+        failures.append("portable intake evidence class is incomplete")
+    if detailed.get("evidence_depth") != "readme-screened" or detailed.get(
+        "promotion_requires"
+    ) != "named-mechanism-gap":
+        failures.append("detailed appraisal promotion rule is incomplete")
+
+    ledger_path = root / "docs" / "collaborative-intelligence-repository-landscape.json"
+    try:
+        ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        failures.append(f"portfolio ledger unreadable: {exc}")
+    else:
+        rows = ledger.get("repositories", [])
+        detailed_count = sum(
+            row.get("evidence_depth") == detailed.get("evidence_depth") for row in rows
+        )
+        if detailed_count < detailed.get("saturation_baseline_count", 0):
+            failures.append("detailed appraisal count is below its saturation baseline")
+        if not any(row.get("evidence_depth") == portable.get("evidence_depth") for row in rows):
+            failures.append("portable intake class is absent from the repository ledger")
+        if ledger.get("schema_version") != transfer.get("destination_schema_version"):
+            failures.append("portfolio contract disagrees with ledger schema version")
+        summary = ledger.get("import_summary", {})
+        if not re.fullmatch(r"[0-9a-f]{64}", summary.get("transfer_sha256", "")):
+            failures.append("portfolio ledger lacks a valid source content hash")
+        if not re.fullmatch(
+            r"[0-9a-f]{40}", summary.get("transfer_upstream_revision", "")
+        ):
+            failures.append("portfolio ledger lacks a valid source revision")
+        if summary.get("authority") != "descriptive-only":
+            failures.append("portfolio ledger import summary grants authority")
+    return failures
 
 
 def check(manifest_path: Path, root: Path):
@@ -54,6 +178,8 @@ def check(manifest_path: Path, root: Path):
         if not (root / name).exists():
             failures.append(f"companion file missing: {name}")
 
+    failures.extend(check_portfolio_contract(manifest, root))
+
     # The manifest also may not lie about CI. kit.json tells adopters the
     # selftests run in this repo's own gate; without this check the manifest
     # and the workflow agree only because someone edited both (Atlas round 2,
@@ -82,14 +208,68 @@ def selftest() -> int:
         (root / "tool.py").write_text("# fixture\n")
         (root / "llms.txt").write_text("# fixture\n")
         (root / "README.md").write_text("# fixture\n")
-        good = {"artifacts": [{"path": "tool.py",
+        (root / "scripts").mkdir()
+        (root / "scripts" / "repository_landscape.py").write_text(
+            "PORTFOLIO_OWNER='The-825/breadcrumbs'\n"
+            "TRANSFER_SCHEMA_VERSION='1.0'\n"
+            "LANDSCAPE_SCHEMA_VERSION='2.0'\n"
+            "TRANSFER_RECORD_TYPE='assessed_external_public_repository'\n"
+            "TRANSFER_AUTHORITY='evidence-only'\n"
+        )
+        (root / "docs").mkdir()
+        (root / "docs" / "collaborative-intelligence-repository-landscape.json").write_text(
+            json.dumps({
+                "schema_version": "2.0",
+                "repositories": [
+                    {"evidence_depth": "readme-screened"} for _ in range(100)
+                ] + [{"evidence_depth": "source-assessment"}],
+                "import_summary": {
+                    "transfer_sha256": "a" * 64,
+                    "transfer_upstream_revision": "b" * 40,
+                    "authority": "descriptive-only",
+                },
+            })
+        )
+        contract = {
+            "schema_version": "1.0",
+            "canonical_owner": "The-825/breadcrumbs",
+            "role": "reusable-public-pattern-and-assessment-owner",
+            "owns": sorted(REQUIRED_OWNS),
+            "source_retains": ["source-evidence", "private-records", "operational-authority"],
+            "accepted_data_classes": sorted(REQUIRED_ACCEPTED),
+            "prohibited_data_classes": sorted(REQUIRED_PROHIBITED),
+            "transfer_contract": {
+                "entrypoint": "scripts/repository_landscape.py",
+                "source_schema_version": "1.0",
+                "destination_schema_version": "2.0",
+                "required_record_type": "assessed_external_public_repository",
+                "required_provenance": sorted(REQUIRED_PROVENANCE),
+                "authority": "evidence-only",
+                "fail_closed": True,
+            },
+            "evidence_classes": {
+                "portable_intake": {
+                    "evidence_depth": "source-assessment",
+                    "may_expand": True,
+                    "claims_detailed_mechanism_review": False,
+                },
+                "detailed_appraisal": {
+                    "evidence_depth": "readme-screened",
+                    "saturation_baseline_count": 100,
+                    "promotion_requires": "named-mechanism-gap",
+                },
+            },
+        }
+        good = {"portfolio_contract": contract,
+                "artifacts": [{"path": "tool.py",
                                "selftest": "python3 tool.py --selftest"}],
                 "problems": {"p": ["tool.py"]}}
         (root / "kit.json").write_text(json.dumps(good))
         checks.append(("a true manifest is clean",
                        check(root / "kit.json", root) == []))
 
-        bad = {"artifacts": [{"path": "gone.py",
+        bad = {"portfolio_contract": contract,
+               "artifacts": [{"path": "gone.py",
                               "selftest": "python3 also_gone.py --selftest"}],
                "problems": {"p": ["gone.py"]}}
         (root / "kit.json").write_text(json.dumps(bad))
@@ -100,6 +280,18 @@ def selftest() -> int:
                        any("selftest script missing" in f for f in fails)))
         checks.append(("a missing problem route fails",
                        any("problem route missing" in f for f in fails)))
+
+        missing_owner = json.loads(json.dumps(good))
+        del missing_owner["portfolio_contract"]["canonical_owner"]
+        checks.append(("a missing portfolio owner fails closed",
+                       bool(check_portfolio_contract(missing_owner, root))))
+
+        unsafe = json.loads(json.dumps(good))
+        unsafe["portfolio_contract"]["prohibited_data_classes"].remove(
+            "ferpa-student-or-staff-records"
+        )
+        checks.append(("an incomplete prohibited-data boundary fails closed",
+                       bool(check_portfolio_contract(unsafe, root))))
 
         (root / "kit.json").write_text(json.dumps(good))
         wf = root / ".github" / "workflows"

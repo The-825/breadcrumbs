@@ -412,6 +412,8 @@ Why: the 75-repository expansion closes major category gaps but confirms that
 additional overlapping frameworks would add maintenance burden faster than
 claim confidence. Depth is now the limiting evidence factor.
 Source: operator-approved 100-repository landscape expansion, 2026-08-27.
+Clarified by D-45: the saturation limit applies to detailed appraisals, not portable
+public identity and provenance intake.
 
 ## D-36 · 2026-08-28 · Breadcrumbs has a public web front door
 
@@ -510,3 +512,15 @@ exclusions.
 Why: a reusable public assessment layer belongs with the public pattern kit, while
 restricted systems retain only their own evidence and data.
 Source: operator repository-ownership correction, 2026-08-29.
+
+## D-45 · 2026-08-29 · Portfolio ownership is machine-routable
+
+Ruling: `kit.json` carries the versioned cross-repository ownership and transfer
+contract. Breadcrumbs owns reusable public patterns and external public repository
+assessment metadata, while source repositories retain source evidence, private records,
+and operational authority. Portable identity and provenance intake is distinct from the
+100 detailed appraisals governed by D-35.
+Why: prose made the correct destination inferable but not deterministic for an agent.
+The machine contract prevents local repository context from silently becoming ownership.
+Source: cross-repository ownership incident review and operator-approved prevention work,
+2026-08-29.

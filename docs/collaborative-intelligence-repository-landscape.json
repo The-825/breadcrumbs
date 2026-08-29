@@ -311,7 +311,8 @@
             "https://github.com/modelcontextprotocol/modelcontextprotocol"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -681,7 +682,8 @@
             "https://github.com/langgenius/dify"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -739,7 +741,8 @@
             "https://github.com/mem0ai/mem0"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -1838,7 +1841,8 @@
             "https://github.com/browserbase/stagehand"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -1896,7 +1900,8 @@
             "https://github.com/modelcontextprotocol/servers"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -2279,7 +2284,8 @@
             "https://github.com/anthropics/claude-code"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -2417,7 +2423,8 @@
             "https://github.com/composiohq/composio"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -2592,7 +2599,8 @@
             "https://github.com/browser-use/browser-use"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -3489,7 +3497,8 @@
             "https://github.com/microsoft/jarvis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -3945,7 +3954,8 @@
             "https://github.com/topoteretes/cognee"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4236,7 +4246,8 @@
             "https://github.com/1771-technologies/lytenyte"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4287,7 +4298,8 @@
             "https://github.com/1f916-ai/1f916"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4338,7 +4350,8 @@
             "https://github.com/1gr14/agents-party"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4389,7 +4402,8 @@
             "https://github.com/aashaexo/soundshuman"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4441,7 +4455,8 @@
             "https://github.com/abhijeet777ui/contextops"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4492,7 +4507,8 @@
             "https://github.com/actions/dependency-review-action"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4543,7 +4559,8 @@
             "https://github.com/addyosmani/agent-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4595,7 +4612,8 @@
             "https://github.com/affaan-m/ecc"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4646,7 +4664,8 @@
             "https://github.com/agent-clinic/claude-md-doctor"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4698,7 +4717,8 @@
             "https://github.com/agent-rl/recall"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4749,7 +4769,8 @@
             "https://github.com/agentrhq/webcmd"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4800,7 +4821,8 @@
             "https://github.com/akitaonrails/ai-memory"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4851,7 +4873,8 @@
             "https://github.com/akullpp/awesome-java"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4902,7 +4925,8 @@
             "https://github.com/alexiocassanifm/anthropic-certifications"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -4954,7 +4978,8 @@
             "https://github.com/amrmkayid/friday"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5005,7 +5030,8 @@
             "https://github.com/anthropics/claude-code-action"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5056,7 +5082,8 @@
             "https://github.com/anthropics/claude-cookbooks"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5107,7 +5134,8 @@
             "https://github.com/anthropics/claude-plugins-official"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5158,7 +5186,8 @@
             "https://github.com/anthropics/courses"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5209,7 +5238,8 @@
             "https://github.com/anthropics/skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5261,7 +5291,8 @@
             "https://github.com/arihantdeva/heimdall"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5312,7 +5343,8 @@
             "https://github.com/arkivanov/decompose"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5363,7 +5395,8 @@
             "https://github.com/asgeirtj/system_prompts_leaks"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5415,7 +5448,8 @@
             "https://github.com/atlascloudai/atlas-cloud-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5466,7 +5500,8 @@
             "https://github.com/avelino/awesome-go"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5517,7 +5552,8 @@
             "https://github.com/aws/serverless-application-model"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5568,7 +5604,8 @@
             "https://github.com/ayghri/i-have-adhd"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5619,7 +5656,8 @@
             "https://github.com/basicmachines-co/basic-memory"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5670,7 +5708,8 @@
             "https://github.com/basicmachines-co/basic-memory-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5721,7 +5760,8 @@
             "https://github.com/binhnguyennus/awesome-scalability"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5772,7 +5812,8 @@
             "https://github.com/bjgreenberg/senior-engineering-partner"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5824,7 +5865,8 @@
             "https://github.com/blaise-g/germinai-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5875,7 +5917,8 @@
             "https://github.com/blakeblackshear/frigate"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5926,7 +5969,8 @@
             "https://github.com/bleak-ai/gcontext"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -5978,7 +6022,8 @@
             "https://github.com/blitzdotdev/blitzos"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6029,7 +6074,8 @@
             "https://github.com/block/agent-task-queue"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6080,7 +6126,8 @@
             "https://github.com/bradautomates/claude-video"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6131,7 +6178,8 @@
             "https://github.com/bradygaster/squad"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6182,7 +6230,8 @@
             "https://github.com/btw-so/open-source-alternatives"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6234,7 +6283,8 @@
             "https://github.com/calesthio/openmontage"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6285,7 +6335,8 @@
             "https://github.com/cathrynlavery/diagram-design"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6336,7 +6387,8 @@
             "https://github.com/cbalgeman/agent-mesh"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6387,7 +6439,8 @@
             "https://github.com/cdmorozov/claude-tutors"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6439,7 +6492,8 @@
             "https://github.com/chromedevtools/chrome-devtools-mcp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6490,7 +6544,8 @@
             "https://github.com/cloud-custodian/cloud-custodian"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6541,7 +6596,8 @@
             "https://github.com/cncf/landscape"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6592,7 +6648,8 @@
             "https://github.com/codecrafters-io/build-your-own-x"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6644,7 +6701,8 @@
             "https://github.com/coleam00/archon"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6696,7 +6754,8 @@
             "https://github.com/composiohq/awesome-claude-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6748,7 +6807,8 @@
             "https://github.com/copilotkit/copilotkit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6799,7 +6859,8 @@
             "https://github.com/dan-calin/shared-agent-memory"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6851,7 +6912,8 @@
             "https://github.com/danny-avila/librechat"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6903,7 +6965,8 @@
             "https://github.com/datafog/datafog-python"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -6954,7 +7017,8 @@
             "https://github.com/datakind/student-success-tool"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7005,7 +7069,8 @@
             "https://github.com/datopian/portal-apple"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7056,7 +7121,8 @@
             "https://github.com/datopian/portaljs"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7107,7 +7173,8 @@
             "https://github.com/datumbrain/claude-code-privacy-guard"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7158,7 +7225,8 @@
             "https://github.com/dbeaver/dbeaver"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7209,7 +7277,8 @@
             "https://github.com/decalage2/awesome-security-hardening"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7260,7 +7329,8 @@
             "https://github.com/deepseek-ai/deepseek-harness"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7311,7 +7381,8 @@
             "https://github.com/devoteamgcloud/dataform-assertions"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7363,7 +7434,8 @@
             "https://github.com/dicklesworthstone/destructive_command_guard"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7415,7 +7487,8 @@
             "https://github.com/dietrichgebert/ponytail"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7466,7 +7539,8 @@
             "https://github.com/donnemartin/system-design-primer"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7518,7 +7592,8 @@
             "https://github.com/dovamir/awesome-design-patterns"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7570,7 +7645,8 @@
             "https://github.com/dtm-repo/context-os"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7621,7 +7697,8 @@
             "https://github.com/easystats/report"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7673,7 +7750,8 @@
             "https://github.com/ebookfoundation/free-programming-books"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7725,7 +7803,8 @@
             "https://github.com/eriklindernoren/ml-from-scratch"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7777,7 +7856,8 @@
             "https://github.com/etiennepasteur/jean-claude"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7828,7 +7908,8 @@
             "https://github.com/evidence-gate/agentgov"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7879,7 +7960,8 @@
             "https://github.com/featbit/featbit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7931,7 +8013,8 @@
             "https://github.com/fission-ai/openspec"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -7982,7 +8065,8 @@
             "https://github.com/fjwood69/mori"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8034,7 +8118,8 @@
             "https://github.com/flowiseai/flowise"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8085,7 +8170,8 @@
             "https://github.com/forrestchang/andrej-karpathy-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8137,7 +8223,8 @@
             "https://github.com/fsoft-ai4code/codewiki"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8188,7 +8275,8 @@
             "https://github.com/garrytan/gstack"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8239,7 +8327,8 @@
             "https://github.com/github/gh-aw"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8290,7 +8379,8 @@
             "https://github.com/github/spec-kit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8342,7 +8432,8 @@
             "https://github.com/gokumohandas/made-with-ml"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8393,7 +8484,8 @@
             "https://github.com/googleapis/genai-toolbox"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8445,7 +8537,8 @@
             "https://github.com/googlecloudplatform/cloud-data-quality"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8497,7 +8590,8 @@
             "https://github.com/googlecloudplatform/generative-ai"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8549,7 +8643,8 @@
             "https://github.com/googlecloudplatform/knowledge-catalog"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8601,7 +8696,8 @@
             "https://github.com/googlecloudplatform/terraform-google-dataplex-auto-data-quality"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8653,7 +8749,8 @@
             "https://github.com/graphify-labs/graphify"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8705,7 +8802,8 @@
             "https://github.com/hack-with-github/awesome-hacking"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8757,7 +8855,8 @@
             "https://github.com/harshitk-cp/engram"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8808,7 +8907,8 @@
             "https://github.com/hesreallyhim/awesome-claude-code"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8859,7 +8959,8 @@
             "https://github.com/homeassistant-ai/ha-mcp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8910,7 +9011,8 @@
             "https://github.com/huangruiteng/loopx"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -8961,7 +9063,8 @@
             "https://github.com/huggingface/transformers"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9012,7 +9115,8 @@
             "https://github.com/humanlayer/12-factor-agents"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9064,7 +9168,8 @@
             "https://github.com/ikalus1988/misakanet"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9116,7 +9221,8 @@
             "https://github.com/immo2n/friday-ai"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9167,7 +9273,8 @@
             "https://github.com/isair/jarvis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9218,7 +9325,8 @@
             "https://github.com/ismailsaoulaj/reddit-mcp-server"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9269,7 +9377,8 @@
             "https://github.com/jamiepine/voicebox"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9321,7 +9430,8 @@
             "https://github.com/jaspersoft/jasperreports"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9373,7 +9483,8 @@
             "https://github.com/jawami73/autodream"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9425,7 +9536,8 @@
             "https://github.com/jaypokale/rdxmin"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9477,7 +9589,8 @@
             "https://github.com/jcarterjohnson/vibecoded-design-tells"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9528,7 +9641,8 @@
             "https://github.com/jobsta/reportbro-lib"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9580,7 +9694,8 @@
             "https://github.com/julian-ivanov/jarvis-voice-assistant"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9631,7 +9746,8 @@
             "https://github.com/kamranahmedse/developer-roadmap"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9682,7 +9798,8 @@
             "https://github.com/kedacore/keda"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9734,7 +9851,8 @@
             "https://github.com/kepano/obsidian-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9785,7 +9903,8 @@
             "https://github.com/keshrath/agent-knowledge"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9836,7 +9955,8 @@
             "https://github.com/kid-sid/claude-spellbook"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9887,7 +10007,8 @@
             "https://github.com/kilimchoi/engineering-blogs"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9938,7 +10059,8 @@
             "https://github.com/kopias/loreto-mcp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -9990,7 +10112,8 @@
             "https://github.com/kristenzhang/triggerbench-official"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10041,7 +10164,8 @@
             "https://github.com/kunal12203/graperoot"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10093,7 +10217,8 @@
             "https://github.com/loupineways/vibecoding-common-sense"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10144,7 +10269,8 @@
             "https://github.com/makenotion/notion-mcp-server"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10195,7 +10321,8 @@
             "https://github.com/marblo-app/marblo"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10247,7 +10374,8 @@
             "https://github.com/mark393295827/third-brain-v5-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10298,7 +10426,8 @@
             "https://github.com/mattpocock/skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10349,7 +10478,8 @@
             "https://github.com/mex-memory/mex"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10401,7 +10531,8 @@
             "https://github.com/mibayy/token-savior"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10452,7 +10583,8 @@
             "https://github.com/microsoft/agent-governance-toolkit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10503,7 +10635,8 @@
             "https://github.com/microsoft/conductor"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10554,7 +10687,8 @@
             "https://github.com/microsoft/presidio"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10605,7 +10739,8 @@
             "https://github.com/milvus-io/milvus"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10657,7 +10792,8 @@
             "https://github.com/mohammedayanrafiq/friday"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10708,7 +10844,8 @@
             "https://github.com/mono424/punktraster"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10759,7 +10896,8 @@
             "https://github.com/mrtooher/fable-mode"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10810,7 +10948,8 @@
             "https://github.com/msitarzewski/agency-agents"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10862,7 +11001,8 @@
             "https://github.com/mudler/localrecall"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10914,7 +11054,8 @@
             "https://github.com/neeeophytee/agent-stylebooks"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -10966,7 +11107,8 @@
             "https://github.com/neeeophytee/ai-cost-cutter-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11018,7 +11160,8 @@
             "https://github.com/neoneye/agent-memory-atlas"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11069,7 +11212,8 @@
             "https://github.com/netlify-templates/astro-platform-starter"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11121,7 +11265,8 @@
             "https://github.com/nevamind-ai/memu"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11172,7 +11317,8 @@
             "https://github.com/nhowardtli/virp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11223,7 +11369,8 @@
             "https://github.com/niksh06/cogit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11274,7 +11421,8 @@
             "https://github.com/obra/superpowers"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11325,7 +11473,8 @@
             "https://github.com/obra/superpowers-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11376,7 +11525,8 @@
             "https://github.com/ollama/ollama"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11427,7 +11577,8 @@
             "https://github.com/onyx-dot-app/onyx"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11479,7 +11630,8 @@
             "https://github.com/open-jarvis/openjarvis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11530,7 +11682,8 @@
             "https://github.com/openclaw/openclaw"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11582,7 +11735,8 @@
             "https://github.com/opensensenova/sensenova-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11633,7 +11787,8 @@
             "https://github.com/ossf/scorecard"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11684,7 +11839,8 @@
             "https://github.com/ossu/computer-science"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11735,7 +11891,8 @@
             "https://github.com/paperclipai/paperclip"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11786,7 +11943,8 @@
             "https://github.com/papers-we-love/papers-we-love"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11837,7 +11995,8 @@
             "https://github.com/pbakaus/impeccable"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11888,7 +12047,8 @@
             "https://github.com/pentaho/pentaho-reporting"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11939,7 +12099,8 @@
             "https://github.com/philterd/phileas"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -11991,7 +12152,8 @@
             "https://github.com/pilastdigit/code-with-claude"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12042,7 +12204,8 @@
             "https://github.com/podlayer/consult-box"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12093,7 +12256,8 @@
             "https://github.com/practical-tutorials/project-based-learning"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12144,7 +12308,8 @@
             "https://github.com/prefrontal-systems/cortexgraph"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12195,7 +12360,8 @@
             "https://github.com/public-apis/public-apis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12246,7 +12412,8 @@
             "https://github.com/randommonicle/claude-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12298,7 +12465,8 @@
             "https://github.com/rasbt/llms-from-scratch"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12350,7 +12518,8 @@
             "https://github.com/recallworks/recall"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12401,7 +12570,8 @@
             "https://github.com/redis/redis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12453,7 +12623,8 @@
             "https://github.com/redplanethq/core"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12504,7 +12675,8 @@
             "https://github.com/rhysd/actionlint"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12556,7 +12728,8 @@
             "https://github.com/riccardo8888/agent-link"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12607,7 +12780,8 @@
             "https://github.com/ripienaar/free-for-dev"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12659,7 +12833,8 @@
             "https://github.com/rohanadwankar/ws-term"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12710,7 +12885,8 @@
             "https://github.com/rohitg00/agentmemory"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12762,7 +12938,8 @@
             "https://github.com/sagar-tamang/friday-tony-stark-demo"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12814,7 +12991,8 @@
             "https://github.com/sahir619/fable-method"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12866,7 +13044,8 @@
             "https://github.com/sdmg15/best-websites-a-programmer-should-visit"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12917,7 +13096,8 @@
             "https://github.com/semantica-agi/semantica"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -12968,7 +13148,8 @@
             "https://github.com/shadcn-ui/ui"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13019,7 +13200,8 @@
             "https://github.com/shanraisshan/claude-code-best-practice"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13071,7 +13253,8 @@
             "https://github.com/shopdevx/adeptlydev"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13122,7 +13305,8 @@
             "https://github.com/sindresorhus/awesome"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13174,7 +13358,8 @@
             "https://github.com/skyvern-ai/skyvern"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13226,7 +13411,8 @@
             "https://github.com/sohailkhan0525/skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13277,7 +13463,8 @@
             "https://github.com/sqlfluff/sqlfluff"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13328,7 +13515,8 @@
             "https://github.com/srihari7070/lore-map"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13379,7 +13567,8 @@
             "https://github.com/sruthik27/creating-claude-md"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13430,7 +13619,8 @@
             "https://github.com/stablyai/orca"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13481,7 +13671,8 @@
             "https://github.com/stanford-earth/stanford_r25"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13532,7 +13723,8 @@
             "https://github.com/step-security/harden-runner"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13583,7 +13775,8 @@
             "https://github.com/steveyegge/beads"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13634,7 +13827,8 @@
             "https://github.com/stffns/vstash"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13685,7 +13879,8 @@
             "https://github.com/sukeesh/jarvis"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13736,7 +13931,8 @@
             "https://github.com/supabase/supabase"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13787,7 +13983,8 @@
             "https://github.com/tamdogood/builder-essential-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13838,7 +14035,8 @@
             "https://github.com/teng-lin/notebooklm-py"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13890,7 +14088,8 @@
             "https://github.com/texasbedouin/vibe-check"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13942,7 +14141,8 @@
             "https://github.com/the-pr-agent/pr-agent"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -13993,7 +14193,8 @@
             "https://github.com/thedotmack/claude-mem"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14044,7 +14245,8 @@
             "https://github.com/thisisnsh/planx"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14095,7 +14297,8 @@
             "https://github.com/thomaspoignant/go-feature-flag"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14146,7 +14349,8 @@
             "https://github.com/tiimgreen/github-cheat-sheet"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14197,7 +14401,8 @@
             "https://github.com/tirth8205/code-review-graph"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14248,7 +14453,8 @@
             "https://github.com/tl-its-umich-edu/my-learning-analytics"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14299,7 +14505,8 @@
             "https://github.com/trimstray/the-book-of-secret-knowledge"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14350,7 +14557,8 @@
             "https://github.com/uber/piranha"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14402,7 +14610,8 @@
             "https://github.com/unitime/unitime"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14454,7 +14663,8 @@
             "https://github.com/unleash/unleash"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14505,7 +14715,8 @@
             "https://github.com/ussumant/useful-agent-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14557,7 +14768,8 @@
             "https://github.com/valera-studio/valera-studio-harness"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14608,7 +14820,8 @@
             "https://github.com/vectorize-io/hindsight"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14660,7 +14873,8 @@
             "https://github.com/veracium-ai/veracium"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14711,7 +14925,8 @@
             "https://github.com/vinta/awesome-python"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14762,7 +14977,8 @@
             "https://github.com/virgiliojr94/book-to-skill"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14813,7 +15029,8 @@
             "https://github.com/vishalsachdev/canvas-mcp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14864,7 +15081,8 @@
             "https://github.com/vitali87/code-graph-rag"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14916,7 +15134,8 @@
             "https://github.com/volcengine/openviking"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -14968,7 +15187,8 @@
             "https://github.com/voltagent/awesome-agent-skills"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -15020,7 +15240,8 @@
             "https://github.com/windseries69/memsem"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -15072,7 +15293,8 @@
             "https://github.com/wonderwhy-er/desktopcommandermcp"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -15123,7 +15345,8 @@
             "https://github.com/yamadashy/repomix"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     },
@@ -15174,7 +15397,8 @@
             "https://github.com/zizmorcore/zizmor"
           ],
           "aliases": [],
-          "authority": "evidence-only"
+          "authority": "evidence-only",
+          "visibility_proof": "public-github-source-link"
         }
       ]
     }

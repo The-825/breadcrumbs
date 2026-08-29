@@ -17,6 +17,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LANDSCAPE = ROOT / "docs" / "collaborative-intelligence-repository-landscape.json"
+PORTFOLIO_OWNER = "The-825/breadcrumbs"
+TRANSFER_SCHEMA_VERSION = "1.0"
+LANDSCAPE_SCHEMA_VERSION = "2.0"
+TRANSFER_RECORD_TYPE = "assessed_external_public_repository"
+TRANSFER_AUTHORITY = "evidence-only"
+PUBLIC_SOURCE_PREFIX = "https://github.com/"
 DIMENSION_UNKNOWN = "U"
 HEX_TO_LETTERS = str.maketrans("0123456789", "ghijklmnop")
 FORBIDDEN_PUBLIC_FIELDS = {
@@ -27,6 +33,32 @@ FORBIDDEN_PUBLIC_FIELDS = {
     "access_mode",
     "purpose",
     "notes",
+}
+REQUIRED_TRANSFER_FIELDS = {
+    "stable_id",
+    "canonical_key",
+    "owner",
+    "repo",
+    "public_source_links",
+    "source_artifact_ids",
+    "assessment_date",
+    "license",
+    "upstream_revision",
+    "authority",
+}
+FORBIDDEN_TRANSFER_FIELDS = {
+    "source_path",
+    "internal_path",
+    "private_repository",
+    "private_evidence",
+    "credential",
+    "student_record",
+    "staff_record",
+    "ferpa_record",
+    "household_data",
+    "personal_data",
+    "production_schema",
+    "production_query",
 }
 
 
@@ -107,8 +139,47 @@ def sanitized_source(row: dict, repository_url: str) -> dict:
         "upstream_revision": row.get("upstream_revision") or "unknown",
         "source_links": links,
         "aliases": aliases,
-        "authority": "evidence-only",
+        "authority": TRANSFER_AUTHORITY,
+        "visibility_proof": "public-github-source-link",
     }
+
+
+def validate_transfer_record(row: dict) -> None:
+    if row.get("record_type") != TRANSFER_RECORD_TYPE:
+        raise ValueError("transfer contains a non-external-public repository record")
+    missing = sorted(REQUIRED_TRANSFER_FIELDS - set(row))
+    if missing:
+        raise ValueError(f"transfer record lacks required fields: {', '.join(missing)}")
+    prohibited = sorted(FORBIDDEN_TRANSFER_FIELDS.intersection(row))
+    if prohibited:
+        raise ValueError(f"transfer record contains prohibited fields: {', '.join(prohibited)}")
+    key = canonical_key(row["canonical_key"])
+    if key != canonical_key(f"{row['owner']}/{row['repo']}"):
+        raise ValueError("transfer identity does not match owner/repo")
+    expected_url = f"{PUBLIC_SOURCE_PREFIX}{row['owner']}/{row['repo']}".casefold()
+    links = row.get("public_source_links")
+    if not isinstance(links, list) or not links:
+        raise ValueError(f"{key}: positive public visibility proof is required")
+    if any(not isinstance(link, str) or not link.startswith(PUBLIC_SOURCE_PREFIX) for link in links):
+        raise ValueError(f"{key}: visibility proof must use public GitHub links")
+    if expected_url not in {link.casefold() for link in links}:
+        raise ValueError(f"{key}: canonical public repository link is required")
+    if not row.get("source_artifact_ids") or not all(
+        isinstance(value, str) and value for value in row["source_artifact_ids"]
+    ):
+        raise ValueError(f"{key}: stable assessment artifact IDs are required")
+    if not isinstance(row.get("stable_id"), str) or not row["stable_id"]:
+        raise ValueError(f"{key}: stable repository ID is required")
+    if "no authority" not in row["authority"].casefold():
+        raise ValueError(f"{key}: transfer must explicitly deny authority")
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", row["assessment_date"]):
+        raise ValueError(f"{key}: assessment date must be explicit")
+    revision = row["upstream_revision"]
+    if revision != "unknown" and not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError(f"{key}: upstream revision must be explicit or unknown")
+    for alias in row.get("aliases", []):
+        if not isinstance(alias, dict) or not alias.get("key") or not alias.get("evidence"):
+            raise ValueError(f"{key}: aliases require public-safe evidence")
 
 
 def reset_portable_import(data: dict) -> None:
@@ -132,8 +203,10 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
     if not rows or rows[0].get("record_type") != "manifest":
         raise ValueError("transfer manifest must be the first JSONL record")
     manifest, source_rows = rows[0], rows[1:]
-    if manifest.get("schema_version") != "1.0":
+    if manifest.get("schema_version") != TRANSFER_SCHEMA_VERSION:
         raise ValueError("unsupported transfer schema")
+    if manifest.get("intended_owner") != PORTFOLIO_OWNER:
+        raise ValueError("transfer is not addressed to the Breadcrumbs owner contract")
     if not re.fullmatch(r"[0-9a-f]{40}", handoff_revision):
         raise ValueError("transfer revision must be a full lowercase Git commit")
 
@@ -150,8 +223,7 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
     grouped: dict[str, list[dict]] = defaultdict(list)
     unresolved = []
     for row in source_rows:
-        if row.get("record_type") != "assessed_external_public_repository":
-            raise ValueError("transfer contains a non-assessed repository record")
+        validate_transfer_record(row)
         key = canonical_key(row["canonical_key"])
         grouped[key].append(row)
 
@@ -228,7 +300,7 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
     data["repositories"].sort(key=lambda row: int(row["id"].split("-")[1]))
     data["unresolved_identities"] = []
     data.pop("operated_repositories", None)
-    data["schema_version"] = "2.0"
+    data["schema_version"] = LANDSCAPE_SCHEMA_VERSION
     data["status_codes"] = ["V", "P", "N", "O", DIMENSION_UNKNOWN]
     data["snapshot_date"] = "2026-08-29"
     data["import_summary"] = {
@@ -309,8 +381,10 @@ def validate(data: dict) -> list[str]:
             if previous != key:
                 errors.append(f"{key}: alias collision with {previous}")
         for source in row.get("portable_assessments", []):
-            if source.get("authority") != "evidence-only":
+            if source.get("authority") != TRANSFER_AUTHORITY:
                 errors.append(f"{key}: portable source grants authority")
+            if source.get("visibility_proof") != "public-github-source-link":
+                errors.append(f"{key}: portable source lacks positive visibility proof")
             if not source.get("source_links"):
                 errors.append(f"{key}: portable source lacks a public link")
             if not source.get("repository_stable_id"):
