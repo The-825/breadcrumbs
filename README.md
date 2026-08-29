@@ -111,6 +111,12 @@ and often: checkpoint the handoff file, wipe the context, boot clean off the cue
 clean sheet plus good breadcrumbs beats a full context window that is mostly
 archaeology.
 
+The public [orientation benchmark](benchmarks/orientation/README.md) turns that claim
+into a bounded test. It compares an unstructured history with a Breadcrumbs cue packet
+across model tiers, while reporting accuracy, token use, and latency separately. The
+fixtures are synthetic, and live inference requires a separate execution-time cost
+confirmation.
+
 ## Two of my own sessions, colliding
 
 The forgetting that actually costs money is not a session forgetting me. It is my

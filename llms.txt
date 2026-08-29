@@ -60,6 +60,9 @@ assumptions in its header, and every runnable tool ships an offline selftest.
   staleness verdicts against the live tree.
 - [templates/ledger-tools/SEARCH_MISSES.md](templates/ledger-tools/SEARCH_MISSES.md):
   the ledger for the entry that was never written.
+- [benchmarks/orientation/README.md](benchmarks/orientation/README.md): a public,
+  synthetic matched evaluation of raw history versus Breadcrumbs cues across
+  model tiers, with accuracy, tokens, and latency kept separate.
 
 ## Enforcement (rules as CI, not prose)
 

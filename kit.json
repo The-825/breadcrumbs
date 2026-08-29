@@ -19,6 +19,8 @@
     ],
     "I cannot tell whether my memory layer actually works": [
       "docs/memory-measurement.md",
+      "benchmarks/orientation/README.md",
+      "benchmarks/orientation/benchmark.py",
       "templates/ledger-tools/retrieval_exam.py",
       "templates/ledger-tools/memory_engine_exam.py",
       "templates/ledger-tools/memory_engine_golden.json",
@@ -263,6 +265,13 @@
       "what": "Attaches a publication-approved Breadcrumb Score pointer to an A2A Agent Card as a non-required extension while refusing private endpoints, unknown public fields, stale evidence, and mutation of signed cards.",
       "assumes": "A2A 1.0 public Agent Card and a published Breadcrumb Score assessment; Python 3.9+ standard library only.",
       "selftest": "python3 -m unittest discover -s templates/a2a-score-export/tests"
+    },
+    {
+      "path": "benchmarks/orientation/benchmark.py",
+      "kind": "benchmark",
+      "what": "Public synthetic matched evaluation of unstructured history versus Breadcrumbs cue packets, scored by exact orientation fields with accuracy, token use, latency, and errors reported separately.",
+      "assumes": "Python 3.9+ standard library only; optional Hugging Face inference uses the sibling runner, a local HF_TOKEN, current model IDs, and execution-time confirmation for potentially billable calls.",
+      "selftest": "python3 benchmarks/orientation/benchmark.py selftest"
     }
   ]
 }

@@ -471,3 +471,30 @@ Selecting a claim updates one detail inspector. Wide screens show four clusters,
 in-app view shows two, and only narrow mobile screens collapse to one column.
 Why: the relationship among claims is more important than their document order.
 Source: operator walkthrough of the graph-only claim release, 2026-08-28.
+
+## D-42 · 2026-08-28 · Hugging Face is an evaluation lab, not a memory store
+
+Ruling: Breadcrumbs may use public synthetic cases and Hugging Face model inference to
+compare orientation accuracy, token use, and latency across model tiers. The benchmark
+must keep measures separate, retain repository ownership, exclude private records, and
+require execution-time confirmation before any potentially billable inference call.
+Why: the first useful Hugging Face integration is evidence for the Version 1.5
+orientation objective, not another memory backend or an uncontrolled data boundary.
+Source: operator direction, 2026-08-28.
+
+## D-43 · 2026-08-28 · Live benchmark matrices require a one-call preflight
+
+Ruling: a Hugging Face benchmark must validate one live response for transport parsing,
+authentication, and account capacity before launching a multi-call matrix. The runner
+fails closed after a preflight error and retains only response metadata and a digest when
+the provider payload cannot be parsed.
+Why: the first live orientation run recorded sixteen unusable attempts. Evidence:
+`responses.jsonl` and `results.json` from the local 2026-08-28 run. The light-model
+responses could not be parsed, the strong-model responses reached payment-required, and
+no valid comparative scores were produced. The correction is transport-aware parsing
+plus a mandatory one-call preflight. Follow-up diagnostics showed that Granite 4.2's
+default thinking mode exhausted the original 160-token generation cap and returned empty
+final content, so the benchmark now disables thinking explicitly and uses the model-card
+sampling defaults. The prevention check is a passing preflight artifact with non-empty
+final content before any matrix authorization.
+Source: live benchmark correction, 2026-08-28.

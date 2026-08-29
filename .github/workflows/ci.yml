@@ -78,6 +78,8 @@ jobs:
           python3 ci-kit/workflows/greenlight_tiers.py --selftest
           python3 templates/ledger-tools/budget_loans.py --selftest
           python3 ci-kit/guards/guard_context_budget.py --selftest
+          python3 benchmarks/orientation/benchmark.py selftest
+          python3 benchmarks/orientation/test_hf_runner.py
 
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py
