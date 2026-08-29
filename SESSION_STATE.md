@@ -5,21 +5,20 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-29 (repository ledger ownership correction)
+Last refreshed: 2026-08-29 (Wave R4 repository triage)
 
 ## Current state
 
-- Active branch: `claude/repository-ledger-ownership`, cut from current `main`.
+- Active branch: `claude/breadcrumbs-ranking-update-c9zbr7`, cut from current `main`.
 - The public kit and 100-source research ledger remain authoritative. The repository
-  ledger now holds 314 unique assessed public repositories, including 100 detailed
-  mechanism appraisals.
+  ledger now holds 206 unique repositories, ALL with pinned, README-screened
+  mechanism appraisals (100 from Waves R1-R3, 106 from Wave R4/D-45); none remain
+  at the unscreened `source-assessment` depth.
 
 ## In flight
 
-**Public repository ledger correction (D-44).** Breadcrumbs now owns the
-portable public assessment layer. The current branch imports only assessed
-external public repositories, preserves unknowns, collapses duplicate
-identities, and excludes operated or private portfolio records.
+Nothing in flight on this branch beyond final push/PR review; Wave R4 is done (see
+below), all local tests and guards green.
 
 **Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
 searchable catalogs, item profiles, related links, and a public evaluation-request queue.
@@ -38,6 +37,18 @@ holds 100 screened sources and 17 bounded claims. The detailed repository cohort
 performance. Full-text appraisal and code-traced upgrades remain future evidence work.
 
 ## What just landed
+
+**Wave R4 repository triage (D-45), 2026-08-29.** The 214 repositories D-44
+transferred in unreviewed were triaged against the landscape's real inclusion rule
+rather than promoted wholesale: 106 passed and got the full live-fetched
+mechanism review (real stars, pinned commit SHA, claims); 108 were screened out
+(one-sentence reason each, per the R1-R3 convention) including one cross-wave
+duplicate (`milvus-io/milvus`, already excluded by Wave R3). Full detail in
+`planning/DECISIONS.md` and the collection log's Wave R4 section.
+
+**Public repository ledger ownership (D-44), merged in `main` #122.** Breadcrumbs
+owns the portable public assessment layer, evidence-only and non-authorizing.
+
 **A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.
 
 ## Next steps / watch
@@ -77,4 +88,3 @@ performance. Full-text appraisal and code-traced upgrades remain future evidence
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-44 is the latest ruling: Breadcrumbs owns the portable public repository ledger.

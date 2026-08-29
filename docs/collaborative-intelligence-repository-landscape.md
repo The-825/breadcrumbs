@@ -1,23 +1,25 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public ledger of 314 assessed repositories. One hundred records are
-pinned, README-screened mechanism appraisals. Another 214 preserve public
-assessment evidence with unknown mechanism, license, and revision fields where
-the transfer did not establish them. None are runtime tests, product
-endorsements, or proof that collaboration improves outcomes.
+**Status:** public ledger of 206 assessed repositories, all pinned,
+README-screened mechanism appraisals: 100 records from a popularity-directed
+sweep (Waves R1 through R3), and 106 triaged in from a separately collected,
+unscreened list and reviewed to the same depth (Wave R4). None are runtime
+tests, product endorsements, or proof that collaboration improves outcomes.
 
 The [method](collaborative-intelligence-repository-landscape-method.md) defines
 the codes and boundaries. The
 [machine-readable register](collaborative-intelligence-repository-landscape.json)
-holds the exact commit, evidence note, claim links, and 11-dimension profile for
-the detailed cohort, plus the bounded public assessment record for every ledger
-entry.
+holds the exact commit, evidence note, claim links, and 11-dimension profile
+for every entry, plus the bounded public assessment record each Wave R4 entry
+carried before its review (`portable_assessments`), kept as lineage.
 
 The table below preserves the first 25 repositories. The
 [Wave R3 inventory](collaborative-intelligence-repository-landscape-wave-r3.md)
 lists the 75 additions across orchestration, multi-agent research, memory,
 retrieval, evaluation, guardrails, gateways, sandboxes, protocols, and coding
-agents.
+agents. The [Wave R4 inventory](collaborative-intelligence-repository-landscape-wave-r4.md)
+lists the 106 repositories triaged in from a separately collected list and
+reviewed to the same depth.
 
 ## Cohort
 
@@ -55,15 +57,27 @@ Stars were observed on 2026-08-27. They explain discovery priority, not quality.
 
 The public-only transfer contributed 226 assessment sources representing 224
 unique repositories. Two repeated identities collapsed inside the transfer,
-and ten more matched existing Breadcrumbs records. The result adds 214
-repositories to the existing 100, for 314 unique repositories. The transfer
-excluded 19 supporting-only references, four unresolved identity mentions, and
-nine operated repositories before import. Those identities do not appear in
-the machine or human views.
+and ten more matched existing Breadcrumbs records. The result added 214
+unscreened records to the existing 100, for 314 unique repositories. The
+transfer excluded 19 supporting-only references, four unresolved identity
+mentions, and nine operated repositories before import. Those identities do
+not appear in the machine or human views.
 
-The 214 additions are discovery records, not mechanism appraisals. Their
-mechanism fields use `U` for unknown, and popularity, licenses, and upstream
-revisions remain unreported unless source evidence established them.
+The 214 additions were discovery records, not mechanism appraisals: they were
+collected for an unrelated purpose (personal tool and idea scouting), not
+screened against this ledger's inclusion rule. D-45
+(`planning/DECISIONS.md`) ruled they get triaged against that rule, the same
+one the search-directed waves already use, before any mechanism review. Wave
+R4 (2026-08-29) resolved all 214: 106 passed triage and received the full
+11-dimension review, and 108 were screened out for a documented reason (a
+curated list or curriculum, no visible collaboration-relevant mechanism, an
+inaccessible repository, or a duplicate of a repository a prior wave already
+screened out) and removed from the ledger, the same convention Waves R1
+through R3 use for a screened-out candidate. The ledger now holds 206 unique
+repositories, and none remain at the unscreened evidence depth. Full
+disposition: the
+[Wave R4 inventory](collaborative-intelligence-repository-landscape-wave-r4.md)
+and the [collection log](collaborative-intelligence-repository-collection-log.md#wave-r4-2026-08-29).
 
 ## What the 100-repository detailed cohort says
 

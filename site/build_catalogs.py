@@ -82,7 +82,7 @@ def repository_catalog() -> list[dict[str, object]]:
         item["mechanismTotal"] = len(item["mechanisms"])
         item["claimCount"] = len(item["claims"])
         item["lastReviewed"] = item["snapshot_date"]
-        item["starsObservedDate"] = landscape["popularity_observed_date"]
+        item["starsObservedDate"] = item.get("stars_observed_date") or landscape["popularity_observed_date"]
         item["ledgerRepositoryCount"] = len(output)
         item["detailedReviewCount"] = sum(row["evidence_depth"] != "source-assessment" for row in output)
     totals: dict[str, int] = {}

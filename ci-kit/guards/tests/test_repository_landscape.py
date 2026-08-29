@@ -16,7 +16,7 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_cohort_is_unique_and_pinned(self):
         rows = self.data["repositories"]
-        self.assertEqual(len(rows), 314)
+        self.assertEqual(len(rows), 206)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertEqual(len({row["repository"].lower() for row in rows}), len(rows))
         for row in rows:
@@ -27,7 +27,9 @@ class TestRepositoryLandscape(unittest.TestCase):
                 self.assertEqual(set(row["mechanisms"].values()), {"U"})
             else:
                 self.assertRegex(row["snapshot_commit"], r"^[0-9a-f]{40}$")
-                self.assertGreater(row["stars_observed"], 0)
+                # A genuinely unstarred repository (0) is real, sourced data, not a
+                # sentinel; only a negative or missing value would be a bug.
+                self.assertGreaterEqual(row["stars_observed"], 0)
             self.assertRegex(row["snapshot_date"], r"^\d{4}-\d{2}-\d{2}$")
             self.assertEqual(row["url"], f"https://github.com/{row['repository']}")
             self.assertTrue(row["selection_aspect"])
@@ -105,6 +107,18 @@ class TestRepositoryLandscape(unittest.TestCase):
     def test_unresolved_identities_are_excluded_from_public_ledger(self):
         rows = self.data["unresolved_identities"]
         self.assertEqual(rows, [])
+
+    def test_wave_r4_promotions_carry_their_own_observation_date(self):
+        # Wave R4 reviewed the D-44 transfer's 214 unscreened repositories on a later
+        # date than the original 100-repository popularity sweep. A promoted record
+        # must carry its own stars_observed_date instead of silently inheriting the
+        # global popularity_observed_date for stars nobody re-observed on that date.
+        global_date = self.data["popularity_observed_date"]
+        dated = [row for row in self.data["repositories"] if row.get("stars_observed_date")]
+        self.assertGreater(len(dated), 0)
+        for row in dated:
+            self.assertRegex(row["stars_observed_date"], r"^\d{4}-\d{2}-\d{2}$")
+            self.assertNotEqual(row["stars_observed_date"], global_date)
 
 
 if __name__ == "__main__":

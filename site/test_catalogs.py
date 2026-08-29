@@ -15,9 +15,9 @@ class CatalogTests(unittest.TestCase):
 
     def test_all_reviewed_records_are_present(self):
         self.assertEqual(100, len(self.research))
-        self.assertEqual(314, len(self.repositories))
+        self.assertEqual(206, len(self.repositories))
         self.assertEqual(100, len({item["id"] for item in self.research}))
-        self.assertEqual(314, len({item["id"] for item in self.repositories}))
+        self.assertEqual(206, len({item["id"] for item in self.repositories}))
         self.assertEqual(17, len(self.claims))
 
     def test_profiles_keep_signals_separate(self):
@@ -44,8 +44,11 @@ class CatalogTests(unittest.TestCase):
             self.assertNotIn("score", item)
 
     def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
+        # Wave R4 resolved every source-assessment record from the D-44 transfer
+        # (triaged in or removed as screened-out), so none remain today. The
+        # invariant stays here for the next unreviewed transfer.
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
-        self.assertEqual(214, len(portable))
+        self.assertEqual(0, len(portable))
         for item in portable:
             self.assertIsNone(item["stars_observed"])
             self.assertIsNone(item["popularityOrder"])
