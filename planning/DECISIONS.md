@@ -471,3 +471,13 @@ Selecting a claim updates one detail inspector. Wide screens show four clusters,
 in-app view shows two, and only narrow mobile screens collapse to one column.
 Why: the relationship among claims is more important than their document order.
 Source: operator walkthrough of the graph-only claim release, 2026-08-28.
+
+## D-42 · 2026-08-28 · Hugging Face is an evaluation lab, not a memory store
+
+Ruling: Breadcrumbs may use public synthetic cases and Hugging Face model inference to
+compare orientation accuracy, token use, and latency across model tiers. The benchmark
+must keep measures separate, retain repository ownership, exclude private records, and
+require execution-time confirmation before any potentially billable inference call.
+Why: the first useful Hugging Face integration is evidence for the Version 1.5
+orientation objective, not another memory backend or an uncontrolled data boundary.
+Source: operator direction, 2026-08-28.

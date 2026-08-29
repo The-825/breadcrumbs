@@ -186,5 +186,6 @@ ci-kit/            The runnable enforcement kit
 skills/            Paste-able rule sets for your own rules file
 checklists/        Operational checklists
 docs/              Pattern essays: the reasoning behind each artifact
+benchmarks/         Public synthetic evaluations; no private or production traces
 playbook/          How the pieces fit together; multi-agent operation
 ```

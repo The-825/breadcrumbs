@@ -1,0 +1,32 @@
+{
+  "status": "prepared_not_run",
+  "checked_on": "2026-08-28",
+  "conditions": ["raw", "breadcrumb"],
+  "cases": 4,
+  "planned_calls": 16,
+  "models": [
+    {
+      "label": "light",
+      "id": "ibm-granite/granite-4.2-3b",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-3b",
+      "reason": "Smaller member of the same current model family",
+      "public": true,
+      "gated": false,
+      "license": "apache-2.0"
+    },
+    {
+      "label": "strong",
+      "id": "ibm-granite/granite-4.2-30b",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b",
+      "reason": "Larger member of the same current model family, reducing family-level confounds",
+      "public": true,
+      "gated": false,
+      "license": "apache-2.0"
+    }
+  ],
+  "execution_blockers": [
+    "HF_TOKEN with Inference Providers permission is not configured",
+    "execution-time confirmation of current credit or billing impact is required"
+  ],
+  "publication_state": "not_authorized"
+}
