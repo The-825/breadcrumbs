@@ -26,14 +26,17 @@ function researchRow(item) {
 }
 
 function repositoryRow(item) {
+  const popularity = item.popularityOrder ? `${item.popularityOrder}<small> / ${item.detailedReviewCount}</small>` : "Not collected";
+  const categoryRank = item.categoryPopularityOrder ? `${item.categoryPopularityOrder} / ${item.categoryRepositoryCount}` : "Not collected";
+  const stars = item.stars_observed === null ? "Not collected" : `<strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small>`;
   return `<tr>
-    <td class="rank">${item.popularityOrder}<small> / 100</small></td>
+    <td class="rank">${popularity}</td>
     <td><strong>${detailLink("repositories", item.id, item.repository)}</strong><br><a href="${escapeHtml(item.url)}">GitHub repository</a></td>
-    <td><strong>${item.categoryPopularityOrder} / ${item.categoryRepositoryCount}</strong></td>
+    <td><strong>${categoryRank}</strong></td>
     <td><span class="pill">${escapeHtml(label(item.category))}</span></td>
     <td>${escapeHtml(label(item.selection_aspect))}</td>
-    <td><strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small></td>
-    <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial</td>
+    <td>${stars}</td>
+    <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial<br><strong>${item.unknownMechanisms} / ${item.mechanismTotal}</strong> unknown</td>
     <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
     <td><strong>Reviewed ${escapeHtml(item.lastReviewed)}</strong><br><span class="pill">${escapeHtml(label(item.evidence_depth))}</span></td>
     <td>${escapeHtml(item.evidence_note)}</td>
@@ -51,7 +54,7 @@ function render() {
   if (theme) output = output.filter(item => type === "research" ? item.family === theme : item.lifecycle === theme);
   if (claim) output = output.filter(item => item.claims.includes(claim));
   if (sort === "alpha") output.sort((a, b) => (a.title || a.repository).localeCompare(b.title || b.repository));
-  else output.sort((a, b) => (a.evidenceOrder || a.popularityOrder) - (b.evidenceOrder || b.popularityOrder));
+  else output.sort((a, b) => (a.evidenceOrder || a.catalogOrder) - (b.evidenceOrder || b.catalogOrder));
   document.querySelector("tbody").innerHTML = output.map(type === "research" ? researchRow : repositoryRow).join("");
   document.querySelector("#count").textContent = `${output.length} of ${items.length}`;
   document.querySelector(".empty").style.display = output.length ? "none" : "block";

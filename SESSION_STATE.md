@@ -5,14 +5,21 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-28 (Breadcrumbs public site)
+Last refreshed: 2026-08-29 (repository ledger ownership correction)
 
 ## Current state
 
-- Active branch: `claude/restore-evidence-order`, cut from current `main`.
-- The public kit, 100-source ledger, and 100-repository landscape remain authoritative.
+- Active branch: `claude/repository-ledger-ownership`, cut from current `main`.
+- The public kit and 100-source research ledger remain authoritative. The repository
+  ledger now holds 314 unique assessed public repositories, including 100 detailed
+  mechanism appraisals.
 
 ## In flight
+
+**Public repository ledger correction (D-44).** Breadcrumbs now owns the
+portable public assessment layer. The current branch imports only assessed
+external public repositories, preserves unknowns, collapses duplicate
+identities, and excludes operated or private portfolio records.
 
 **Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
 searchable catalogs, item profiles, related links, and a public evaluation-request queue.
@@ -25,27 +32,10 @@ repository template now evaluate orientation, handoff, correction, ownership, an
 recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
 evaluator, score, or authority.
 
-**100-source research-ledger pass.** The public ledger now carries 100 reviewed sources.
-The 49-source expansion adds seven distinct lenses: team cognition, automation and
-situation awareness, algorithm aversion and discretion, human-centered oversight,
-learning to defer, multi-agent coordination, and retrieval-memory architecture. The
-confidence map separates converged findings from emerging evidence and explicit transfer
-limits. It strengthens the method without establishing a runtime capability, another
-memory store, or a general collaboration benefit.
-
-**Research Method v2.0 (D-32).** All 100 sources now have a screened structural
-appraisal covering design, publication state, directness, evidence-family
-dependence, time horizon, transfer flags, and linked claim IDs. Seventeen bounded
-claims now carry separate confidence profiles, null cases, dispositions, and next
-tests. The pass does not claim a full-text risk-of-bias review or silently rewrite
-the original findings.
-
-**Repository landscape (D-33 through D-35).** A public, README-screened register
-pins 100 repositories across runtimes, protocols, memory, retrieval, evaluation,
-guardrails, gateways, sandboxes, research simulations, and coding-agent control
-planes without treating stars as quality or claiming runtime performance. Wave R3
-adds 75 nonduplicate repositories and makes research-artifact, maintenance, and
-successor boundaries explicit.
+**Research and detailed landscape (D-32 through D-35).** The public research ledger
+holds 100 screened sources and 17 bounded claims. The detailed repository cohort pins
+100 README-screened appraisals without treating stars as quality or claiming runtime
+performance. Full-text appraisal and code-traced upgrades remain future evidence work.
 
 ## What just landed
 **A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.
@@ -87,4 +77,4 @@ successor boundaries explicit.
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-35 is the latest ruling: the breadth map stops at mechanism-family saturation, and future additions must close a named gap.
+- D-44 is the latest ruling: Breadcrumbs owns the portable public repository ledger.

@@ -1,14 +1,17 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public, three-wave cohort of 100 repositories. The observations are pinned,
-README-screened repository evidence. They are not runtime tests, product
+**Status:** public ledger of 314 assessed repositories. One hundred records are
+pinned, README-screened mechanism appraisals. Another 214 preserve public
+assessment evidence with unknown mechanism, license, and revision fields where
+the transfer did not establish them. None are runtime tests, product
 endorsements, or proof that collaboration improves outcomes.
 
 The [method](collaborative-intelligence-repository-landscape-method.md) defines
 the codes and boundaries. The
 [machine-readable register](collaborative-intelligence-repository-landscape.json)
 holds the exact commit, evidence note, claim links, and 11-dimension profile for
-each repository.
+the detailed cohort, plus the bounded public assessment record for every ledger
+entry.
 
 The table below preserves the first 25 repositories. The
 [Wave R3 inventory](collaborative-intelligence-repository-landscape-wave-r3.md)
@@ -48,7 +51,21 @@ Stars were observed on 2026-08-27. They explain discovery priority, not quality.
 | R-024 | [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) | 7,023 | programmable guardrails | `94fb1cdc` | model controls, dialog paths, output constraints, linked technical evaluation |
 | R-025 | [OpenHands](https://github.com/OpenHands/OpenHands) | 85,300 | agent control plane | `b50c60c6` | multiple coding-agent backends, automations, integrations, ACP interoperability |
 
-## What the 100-repository cohort says
+## Ledger expansion
+
+The public-only transfer contributed 226 assessment sources representing 224
+unique repositories. Two repeated identities collapsed inside the transfer,
+and ten more matched existing Breadcrumbs records. The result adds 214
+repositories to the existing 100, for 314 unique repositories. The transfer
+excluded 19 supporting-only references, four unresolved identity mentions, and
+nine operated repositories before import. Those identities do not appear in
+the machine or human views.
+
+The 214 additions are discovery records, not mechanism appraisals. Their
+mechanism fields use `U` for unknown, and popularity, licenses, and upstream
+revisions remain unreported unless source evidence established them.
+
+## What the 100-repository detailed cohort says
 
 ### Mechanism profile at a glance
 

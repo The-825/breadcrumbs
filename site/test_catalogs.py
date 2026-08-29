@@ -15,9 +15,9 @@ class CatalogTests(unittest.TestCase):
 
     def test_all_reviewed_records_are_present(self):
         self.assertEqual(100, len(self.research))
-        self.assertEqual(100, len(self.repositories))
+        self.assertEqual(314, len(self.repositories))
         self.assertEqual(100, len({item["id"] for item in self.research}))
-        self.assertEqual(100, len({item["id"] for item in self.repositories}))
+        self.assertEqual(314, len({item["id"] for item in self.repositories}))
         self.assertEqual(17, len(self.claims))
 
     def test_profiles_keep_signals_separate(self):
@@ -34,12 +34,22 @@ class CatalogTests(unittest.TestCase):
             self.assertIn("stars_observed", item)
             self.assertIn("evidence_depth", item)
             self.assertIn("mechanisms", item)
-            self.assertLessEqual(item["categoryPopularityOrder"], item["categoryRepositoryCount"])
+            if item["categoryPopularityOrder"] is not None:
+                self.assertLessEqual(item["categoryPopularityOrder"], item["categoryRepositoryCount"])
             self.assertEqual(item["mechanismTotal"], len(item["mechanisms"]))
             self.assertEqual(item["claimCount"], len(item["claims"]))
+            self.assertEqual(item["unknownMechanisms"], sum(value == "U" for value in item["mechanisms"].values()))
             self.assertEqual(item["snapshot_date"], item["lastReviewed"])
             self.assertTrue(item["starsObservedDate"])
             self.assertNotIn("score", item)
+
+    def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
+        portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
+        self.assertEqual(214, len(portable))
+        for item in portable:
+            self.assertIsNone(item["stars_observed"])
+            self.assertIsNone(item["popularityOrder"])
+            self.assertEqual(item["unknownMechanisms"], item["mechanismTotal"])
 
     def test_table_headers_do_not_float_over_rows(self):
         css = (SITE / "app.css").read_text(encoding="utf-8")
