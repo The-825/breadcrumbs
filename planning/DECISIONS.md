@@ -510,3 +510,26 @@ exclusions.
 Why: a reusable public assessment layer belongs with the public pattern kit, while
 restricted systems retain only their own evidence and data.
 Source: operator repository-ownership correction, 2026-08-29.
+
+## D-45 · 2026-08-29 · Wave R4 reviews the 214 transferred repositories by triage, not blanket promotion
+
+Ruling: the 214 repositories imported under D-44 (`selection_aspect:
+"portfolio-memory-scout"`) were originally collected for an unrelated purpose (personal
+tool and idea scouting), not screened against this ledger's collaborative-intelligence
+inclusion bar. They are reviewed in Wave R4 by first triaging each against the existing
+landscape method's inclusion rule (public, canonical, contains code or a specification
+relevant to at least one CI-001 through CI-017 claim, pinnable to a reproducible
+revision). Only repositories that pass triage receive a full 11-dimension mechanism
+review, a real observed star count, and a pinned 40-character commit SHA, joining the
+ranked cohort. Repositories that fail triage (curricula, lists, unrelated tools, or
+anything with no visible collaboration-relevant mechanism) are removed from the
+machine-readable register and logged in the collection log's screened-out table with a
+one-line reason, the same convention Waves R1 through R3 already use. This is a
+narrower operation than "expand the mechanism-reviewed cohort," so it does not reopen
+the Wave R3 saturation rule (no new discovery searches, no popularity-directed
+expansion); it only resolves an already-imported batch's evidence depth honestly.
+Why: forcing mechanism codes onto repositories never screened for CI relevance (a CS
+curriculum, a learning-analytics tool, an unrelated personal utility) would fabricate
+relevance the method's own inclusion rule forbids, and would misrepresent their real
+star counts as "collaborative intelligence" popularity signal.
+Source: operator scope correction, 2026-08-29 session (git.io ranking / 314-repo request).
