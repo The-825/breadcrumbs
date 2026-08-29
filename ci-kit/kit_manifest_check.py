@@ -94,6 +94,7 @@ def check_portfolio_contract(manifest: dict, root: Path) -> list[str]:
         expected = {
             "PORTFOLIO_OWNER": contract.get("canonical_owner"),
             "TRANSFER_SCHEMA_VERSION": transfer.get("source_schema_version"),
+            "PRODUCER_CONTRACT_VERSION": transfer.get("producer_contract_version"),
             "LANDSCAPE_SCHEMA_VERSION": transfer.get("destination_schema_version"),
             "TRANSFER_RECORD_TYPE": transfer.get("required_record_type"),
             "TRANSFER_AUTHORITY": transfer.get("authority"),
@@ -212,6 +213,7 @@ def selftest() -> int:
         (root / "scripts" / "repository_landscape.py").write_text(
             "PORTFOLIO_OWNER='The-825/breadcrumbs'\n"
             "TRANSFER_SCHEMA_VERSION='1.0'\n"
+            "PRODUCER_CONTRACT_VERSION='2.0'\n"
             "LANDSCAPE_SCHEMA_VERSION='2.0'\n"
             "TRANSFER_RECORD_TYPE='assessed_external_public_repository'\n"
             "TRANSFER_AUTHORITY='evidence-only'\n"
@@ -241,6 +243,7 @@ def selftest() -> int:
             "transfer_contract": {
                 "entrypoint": "scripts/repository_landscape.py",
                 "source_schema_version": "1.0",
+                "producer_contract_version": "2.0",
                 "destination_schema_version": "2.0",
                 "required_record_type": "assessed_external_public_repository",
                 "required_provenance": sorted(REQUIRED_PROVENANCE),

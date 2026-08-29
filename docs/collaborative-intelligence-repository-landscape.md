@@ -1,9 +1,9 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public ledger of 314 assessed repositories. One hundred records are
-pinned, README-screened mechanism appraisals. Another 214 preserve public
-assessment evidence with unknown mechanism, license, and revision fields where
-the transfer did not establish them. None are runtime tests, product
+**Status:** public ledger of 311 assessed repositories. One hundred records are
+pinned, README-screened mechanism appraisals. Another 211 are portable-only
+records preserving positively verified public identity and assessment evidence.
+None are runtime tests, product
 endorsements, or proof that collaboration improves outcomes.
 
 The [method](collaborative-intelligence-repository-landscape-method.md) defines
@@ -53,17 +53,19 @@ Stars were observed on 2026-08-27. They explain discovery priority, not quality.
 
 ## Ledger expansion
 
-The public-only transfer contributed 226 assessment sources representing 224
-unique repositories. Two repeated identities collapsed inside the transfer,
-and ten more matched existing Breadcrumbs records. The result adds 214
-repositories to the existing 100, for 314 unique repositories. The transfer
+The hardened public-only transfer contributed 225 assessment sources representing
+223 unique repositories. Two repeated identities collapsed inside the transfer,
+and twelve matched existing Breadcrumbs records through canonical keys or
+evidence-backed aliases. The result adds 211 portable-only repositories to the
+existing 100, for 311 unique repositories. The transfer
 excluded 19 supporting-only references, four unresolved identity mentions, and
-nine operated repositories before import. Those identities do not appear in
+nine operated repositories before import. One additional unverified or nonpublic
+candidate remains aggregate-only after independent public verification did not
+establish eligibility. Those identities do not appear in
 the machine or human views.
 
-The 214 additions are discovery records, not mechanism appraisals. Their
-mechanism fields use `U` for unknown, and popularity, licenses, and upstream
-revisions remain unreported unless source evidence established them.
+The 211 additions are discovery records, not mechanism appraisals. Their
+mechanism fields use `U` for unknown, and popularity remains unreported.
 
 ## What the 100-repository detailed cohort says
 

@@ -70,7 +70,7 @@ class PortfolioContractTests(unittest.TestCase):
 
         authority_grant = self._valid_row()
         authority_grant["authority"] = "may install and act"
-        with self.assertRaisesRegex(ValueError, "deny authority"):
+        with self.assertRaisesRegex(ValueError, "evidence-only"):
             self.importer.validate_transfer_record(authority_grant)
 
         private_payload = self._valid_row()
@@ -88,7 +88,7 @@ class PortfolioContractTests(unittest.TestCase):
             evidence["detailed_appraisal"]["saturation_baseline_count"],
         )
         self.assertEqual(len(detailed), 100)
-        self.assertEqual(len(portable), 214)
+        self.assertEqual(len(portable), 211)
         self.assertTrue(evidence["portable_intake"]["may_expand"])
         self.assertFalse(
             evidence["portable_intake"]["claims_detailed_mechanism_review"]
@@ -108,8 +108,16 @@ class PortfolioContractTests(unittest.TestCase):
             "source_artifact_ids": ["public-assessment:test"],
             "assessment_date": "2026-08-29",
             "license": "unknown",
-            "upstream_revision": "unknown",
-            "authority": "public metadata only; no authority or ownership granted",
+            "upstream_revision": "a" * 40,
+            "authority": "evidence-only",
+            "source_content_sha256": ["b" * 64],
+            "visibility": "public",
+            "verification_source": "https://api.github.com/repos/public-owner/public-repository",
+            "verification_method": "github-rest-repository-and-default-branch-head",
+            "verification_date": "2026-08-29",
+            "source_revision": "a" * 40,
+            "license_status": "unknown",
+            "public_github_url": "https://github.com/public-owner/public-repository",
             "aliases": [],
         }
 

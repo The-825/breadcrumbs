@@ -46,6 +46,7 @@
     "transfer_contract": {
       "entrypoint": "scripts/repository_landscape.py",
       "source_schema_version": "1.0",
+      "producer_contract_version": "2.0",
       "destination_schema_version": "2.0",
       "required_record_type": "assessed_external_public_repository",
       "required_provenance": [

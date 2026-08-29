@@ -11,7 +11,7 @@ Last refreshed: 2026-08-29 (machine-routable portfolio contract)
 
 - Active branch: `claude/portfolio-routing-contract`, cut from current `main`.
 - The public kit and 100-source research ledger remain authoritative. The repository
-  ledger now holds 314 unique assessed public repositories, including 100 detailed
+  ledger now holds 311 unique assessed public repositories, including 100 detailed
   mechanism appraisals.
 
 ## In flight
@@ -38,8 +38,8 @@ holds 100 screened sources and 17 bounded claims. The detailed repository cohort
 performance. Full-text appraisal and code-traced upgrades remain future evidence work.
 
 ## What just landed
-**Public repository ledger correction (D-44).** Main contains 314 unique assessed
-public repositories: 100 detailed appraisals and 214 portable records. Public-only
+**Public repository ledger correction (D-44).** The current draft contains 311 unique assessed
+public repositories: 100 detailed appraisals and 211 portable-only records. Public-only
 filtering, stable provenance, duplicate collapse, and nonauthorization are enforced.
 
 **A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.

@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LANDSCAPE = ROOT / "docs" / "collaborative-intelligence-repository-landscape.json"
 PORTFOLIO_OWNER = "The-825/breadcrumbs"
 TRANSFER_SCHEMA_VERSION = "1.0"
+PRODUCER_CONTRACT_VERSION = "2.0"
 LANDSCAPE_SCHEMA_VERSION = "2.0"
 TRANSFER_RECORD_TYPE = "assessed_external_public_repository"
 TRANSFER_AUTHORITY = "evidence-only"
@@ -45,6 +46,14 @@ REQUIRED_TRANSFER_FIELDS = {
     "license",
     "upstream_revision",
     "authority",
+    "source_content_sha256",
+    "visibility",
+    "verification_source",
+    "verification_method",
+    "verification_date",
+    "source_revision",
+    "license_status",
+    "public_github_url",
 }
 FORBIDDEN_TRANSFER_FIELDS = {
     "source_path",
@@ -141,6 +150,10 @@ def sanitized_source(row: dict, repository_url: str) -> dict:
         "aliases": aliases,
         "authority": TRANSFER_AUTHORITY,
         "visibility_proof": "public-github-source-link",
+        "source_content_sha256": sorted(row["source_content_sha256"]),
+        "verification_source": row["verification_source"],
+        "verification_method": row["verification_method"],
+        "verification_date": row["verification_date"],
     }
 
 
@@ -170,13 +183,32 @@ def validate_transfer_record(row: dict) -> None:
         raise ValueError(f"{key}: stable assessment artifact IDs are required")
     if not isinstance(row.get("stable_id"), str) or not row["stable_id"]:
         raise ValueError(f"{key}: stable repository ID is required")
-    if "no authority" not in row["authority"].casefold():
-        raise ValueError(f"{key}: transfer must explicitly deny authority")
+    if row["authority"] != TRANSFER_AUTHORITY:
+        raise ValueError(f"{key}: transfer authority must remain evidence-only")
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", row["assessment_date"]):
         raise ValueError(f"{key}: assessment date must be explicit")
     revision = row["upstream_revision"]
     if revision != "unknown" and not re.fullmatch(r"[0-9a-f]{40}", revision):
         raise ValueError(f"{key}: upstream revision must be explicit or unknown")
+    if row["visibility"] != "public":
+        raise ValueError(f"{key}: visibility must be positively verified public")
+    if row["public_github_url"].casefold() != expected_url:
+        raise ValueError(f"{key}: verified public URL does not match canonical identity")
+    verification_targets = {
+        f"https://api.github.com/repos/{row['owner']}/{row['repo']}".casefold(),
+        *{
+            f"https://api.github.com/repos/{alias['key']}".casefold()
+            for alias in row.get("aliases", [])
+            if isinstance(alias, dict) and alias.get("key")
+        },
+    }
+    if row["verification_source"].casefold() not in verification_targets:
+        raise ValueError(f"{key}: GitHub verification source does not match identity")
+    if row["source_revision"] != revision or revision == "unknown":
+        raise ValueError(f"{key}: verified source revision must match upstream revision")
+    hashes = row["source_content_sha256"]
+    if not hashes or any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes):
+        raise ValueError(f"{key}: canonical source content hashes are required")
     for alias in row.get("aliases", []):
         if not isinstance(alias, dict) or not alias.get("key") or not alias.get("evidence"):
             raise ValueError(f"{key}: aliases require public-safe evidence")
@@ -205,6 +237,8 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
     manifest, source_rows = rows[0], rows[1:]
     if manifest.get("schema_version") != TRANSFER_SCHEMA_VERSION:
         raise ValueError("unsupported transfer schema")
+    if manifest.get("producer_contract_version") != PRODUCER_CONTRACT_VERSION:
+        raise ValueError("unsupported producer contract")
     if manifest.get("intended_owner") != PORTFOLIO_OWNER:
         raise ValueError("transfer is not addressed to the Breadcrumbs owner contract")
     if not re.fullmatch(r"[0-9a-f]{40}", handoff_revision):
@@ -239,9 +273,18 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
             row.get("deduplication", {}).get("assessment_source_count", 1)
             for row in rows_for_key
         )
-        if key in existing:
+        matched_keys = {key} if key in existing else set()
+        matched_keys.update(
+            canonical_key(alias["key"])
+            for row in rows_for_key
+            for alias in row.get("aliases", [])
+            if canonical_key(alias["key"]) in existing
+        )
+        if len(matched_keys) > 1:
+            raise ValueError(f"{key}: aliases resolve to multiple existing repositories")
+        if matched_keys:
             overlap += 1
-            current = existing[key]
+            current = existing[next(iter(matched_keys))]
             current["portable_assessments"] = sorted(
                 {item["id"]: item for item in [*current.get("portable_assessments", []), *sources]}.values(),
                 key=lambda item: item["id"],
@@ -249,6 +292,14 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
             current.setdefault("assessment_status", "mechanism-screened")
             current.setdefault("license_status", "unknown")
             current.setdefault("aliases", [])
+            if key != canonical_key(current["repository"]):
+                current["aliases"] = sorted(
+                    {alias["key"]: alias for alias in [
+                        *current["aliases"],
+                        {"key": key, "evidence": sources[0]["verification_source"]},
+                    ]}.values(),
+                    key=lambda alias: alias["key"],
+                )
             continue
 
         first = rows_for_key[0]
@@ -305,6 +356,7 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
     data["snapshot_date"] = "2026-08-29"
     data["import_summary"] = {
         "transfer_schema_version": manifest["schema_version"],
+        "producer_contract_version": manifest["producer_contract_version"],
         "transfer_sha256": hashlib.sha256(handoff_bytes).hexdigest(),
         "transfer_upstream_revision": handoff_revision,
         "transfer_record_count": len(source_rows),
@@ -327,6 +379,9 @@ def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dic
         "excluded_portfolio_repository_count": manifest.get("counts", {}).get(
             "operated_repository_count_excluded", 0
         ),
+        "unverified_or_nonpublic_repository_count_excluded": manifest.get(
+            "counts", {}
+        ).get("unverified_or_nonpublic_repository_count_excluded", 0),
         "license_unknown_count": sum(
             row.get("license_status") == "unknown" for row in data["repositories"]
         ),

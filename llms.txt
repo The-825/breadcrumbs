@@ -106,7 +106,7 @@ are separate evidence classes.
 - [docs/collaborative-intelligence-repository-landscape-method.md](docs/collaborative-intelligence-repository-landscape-method.md):
   reproduce or extend the repository appraisal without ranking products.
 - [docs/collaborative-intelligence-repository-landscape.json](docs/collaborative-intelligence-repository-landscape.json):
-  machine-readable 314-repository ledger with pinned mechanism appraisals,
+  machine-readable 311-repository ledger with pinned mechanism appraisals,
   portable public assessment evidence, exclusion counts, and import counts.
 - [scripts/repository_landscape.py](scripts/repository_landscape.py):
   deterministic public-only transfer importer and ledger validator.
