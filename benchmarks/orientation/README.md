@@ -47,6 +47,24 @@ python benchmarks/orientation/hf_runner.py requests.jsonl `
 The dry run makes no network calls. It should report 16 planned calls: four cases,
 two context conditions, and two model tiers.
 
+Before any matrix run, make one provider call with one model and fail fast if the
+transport, authentication, or account capacity is not usable:
+
+```powershell
+python benchmarks/orientation/hf_runner.py requests.jsonl `
+  --model light=REPLACE_WITH_CURRENT_LIGHT_MODEL_ID `
+  --output preflight.jsonl `
+  --max-calls 1 `
+  --preflight `
+  --confirm-billable
+```
+
+Inspect and score the preflight result before authorizing a larger run. A successful
+offline dry run does not establish live response compatibility or available credits.
+The Granite 4.2 profile runs with thinking disabled and the model-card sampling defaults
+so the output budget measures the requested orientation answer rather than an unobserved
+reasoning trace.
+
 ## Live Hugging Face run
 
 Live inference requires a Hugging Face account, remaining Inference Providers credits,

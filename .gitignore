@@ -4,3 +4,7 @@ __pycache__/
 .DS_Store
 .provenance-terms
 site/data/
+/preflight.jsonl
+/requests.jsonl
+/responses.jsonl
+/results.json
