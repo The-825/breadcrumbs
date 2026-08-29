@@ -41,7 +41,10 @@ DEFAULT_EXCLUDE = ("ci-kit/guards/tests/bad_fixtures/", "/.git/", "__pycache__",
 EXTS = (".json", ".csv", ".ndjson", ".py", ".js", ".sql", ".txt", ".yaml", ".yml")
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@" + re.escape(EMAIL_DOMAIN), re.IGNORECASE)
-ID_RE = re.compile(r"(?<!\d)\d{" + str(ID_DIGITS) + r"}(?!\d)")
+# A digit run embedded in a public handle or slug is not a person identifier.
+# Requiring a non-alphanumeric boundary keeps the detector focused on
+# standalone ID-shaped values without corrupting canonical repository names.
+ID_RE = re.compile(r"(?<![A-Za-z0-9])\d{" + str(ID_DIGITS) + r"}(?![A-Za-z0-9])")
 GIT_OBJECT_RE = re.compile(r"(?<![0-9A-Fa-f])[0-9A-Fa-f]{40}(?![0-9A-Fa-f])")
 
 

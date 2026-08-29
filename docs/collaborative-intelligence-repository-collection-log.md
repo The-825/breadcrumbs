@@ -1,5 +1,22 @@
 # Collaborative intelligence repository collection log
 
+## 2026-08-29: public assessment transfer
+
+**Mode:** deterministic public-only import into the existing repository
+landscape.
+
+The transfer contained 226 assessment sources representing 224 unique public
+repositories. Two duplicates collapsed inside the transfer, ten repositories
+matched the existing 100-record landscape, and 214 new identities entered the
+ledger. The result is 314 unique assessed repositories.
+
+Operated repositories, private portfolio identities, internal paths, and
+private evidence were excluded before import. Nineteen supporting-only
+references, four unresolved identities, and nine operated repositories are
+reported only as aggregate exclusions. Portable records carry evidence-only provenance
+and cannot install software, grant authority, create work, or inherit a
+detailed mechanism review.
+
 ## Wave R1, 2026-08-27
 
 **Mode:** purposive, gap-directed landscape scan.

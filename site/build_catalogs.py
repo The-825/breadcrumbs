@@ -68,19 +68,23 @@ def research_catalog() -> list[dict[str, object]]:
 def repository_catalog() -> list[dict[str, object]]:
     landscape = json.loads((DOCS / "collaborative-intelligence-repository-landscape.json").read_text(encoding="utf-8"))
     output = landscape["repositories"]
-    output.sort(key=lambda item: (-item["stars_observed"], item["repository"]))
+    output.sort(key=lambda item: (item["stars_observed"] is None, -(item["stars_observed"] or 0), item["repository"]))
     category_counts: dict[str, int] = {}
     for rank, item in enumerate(output, 1):
-        item["popularityOrder"] = rank
+        item["catalogOrder"] = rank
+        item["popularityOrder"] = rank if item["stars_observed"] is not None else None
         category = item["category"]
         category_counts[category] = category_counts.get(category, 0) + 1
-        item["categoryPopularityOrder"] = category_counts[category]
+        item["categoryPopularityOrder"] = category_counts[category] if item["stars_observed"] is not None else None
         item["visibleMechanisms"] = sum(value == "V" for value in item["mechanisms"].values())
         item["partialMechanisms"] = sum(value == "P" for value in item["mechanisms"].values())
+        item["unknownMechanisms"] = sum(value == "U" for value in item["mechanisms"].values())
         item["mechanismTotal"] = len(item["mechanisms"])
         item["claimCount"] = len(item["claims"])
         item["lastReviewed"] = item["snapshot_date"]
         item["starsObservedDate"] = landscape["popularity_observed_date"]
+        item["ledgerRepositoryCount"] = len(output)
+        item["detailedReviewCount"] = sum(row["evidence_depth"] != "source-assessment" for row in output)
     totals: dict[str, int] = {}
     for item in output:
         totals[item["category"]] = totals.get(item["category"], 0) + 1

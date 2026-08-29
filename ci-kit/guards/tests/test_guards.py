@@ -73,6 +73,17 @@ class TestGuardsBite(unittest.TestCase):
             )
         self.assertEqual(good_res.returncode, 0, good_res.stdout + good_res.stderr)
 
+    def test_pii_guard_allows_digits_inside_a_public_repository_handle(self):
+        guard = os.path.join(_GUARDS_DIR, "guard_no_pii_in_fixtures.py")
+        res = subprocess.run(
+            [sys.executable, guard, "--stdin"],
+            input='{"repository":"Mark393295827/public-tool"}',
+            cwd=_REPO,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

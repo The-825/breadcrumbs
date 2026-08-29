@@ -498,3 +498,15 @@ final content, so the benchmark now disables thinking explicitly and uses the mo
 sampling defaults. The prevention check is a passing preflight artifact with non-empty
 final content before any matrix authorization.
 Source: live benchmark correction, 2026-08-28.
+
+## D-44 · 2026-08-29 · Breadcrumbs owns the portable public repository ledger
+
+Ruling: Breadcrumbs is the authoritative owner of the reusable, public repository
+assessment ledger. Imports use case-insensitive owner/repository keys, preserve
+evidence-only aliases and unknown fields, collapse duplicates, and never grant
+authority. Operated repositories, private portfolio identities, internal paths, and
+private evidence remain outside the public artifact and are reported only as aggregate
+exclusions.
+Why: a reusable public assessment layer belongs with the public pattern kit, while
+restricted systems retain only their own evidence and data.
+Source: operator repository-ownership correction, 2026-08-29.

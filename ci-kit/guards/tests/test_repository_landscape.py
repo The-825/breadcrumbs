@@ -16,15 +16,20 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_cohort_is_unique_and_pinned(self):
         rows = self.data["repositories"]
-        self.assertEqual(len(rows), 100)
+        self.assertEqual(len(rows), 314)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertEqual(len({row["repository"].lower() for row in rows}), len(rows))
         for row in rows:
             self.assertRegex(row["id"], r"^R-\d{3}$")
-            self.assertRegex(row["snapshot_commit"], r"^[0-9a-f]{40}$")
+            if row["evidence_depth"] == "source-assessment":
+                self.assertIsNone(row["snapshot_commit"])
+                self.assertIsNone(row["stars_observed"])
+                self.assertEqual(set(row["mechanisms"].values()), {"U"})
+            else:
+                self.assertRegex(row["snapshot_commit"], r"^[0-9a-f]{40}$")
+                self.assertGreater(row["stars_observed"], 0)
             self.assertRegex(row["snapshot_date"], r"^\d{4}-\d{2}-\d{2}$")
             self.assertEqual(row["url"], f"https://github.com/{row['repository']}")
-            self.assertGreater(row["stars_observed"], 0)
             self.assertTrue(row["selection_aspect"])
 
     def test_mechanism_profiles_are_complete_without_scores(self):
@@ -40,18 +45,20 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_claim_links_use_method_v2_ids(self):
         for row in self.data["repositories"]:
-            self.assertTrue(row["claims"])
+            if row["evidence_depth"] != "source-assessment":
+                self.assertTrue(row["claims"])
             for claim in row["claims"]:
                 match = re.fullmatch(r"CI-(\d{3})", claim)
                 self.assertIsNotNone(match)
                 self.assertIn(int(match.group(1)), range(1, 18))
 
     def test_wave_does_not_overstate_depth_or_lifecycle(self):
-        allowed_lifecycle = {"current", "maintenance", "research-artifact"}
+        allowed_lifecycle = {"current", "maintenance", "research-artifact", "unknown"}
         for row in self.data["repositories"]:
             self.assertIn(row["lifecycle"], allowed_lifecycle)
-            self.assertEqual(row["evidence_depth"], "readme-screened")
-            self.assertIn(row["evidence_pointer"], {"README.md", "README.MD"})
+            self.assertIn(row["evidence_depth"], {"readme-screened", "source-assessment"})
+            if row["evidence_depth"] == "readme-screened":
+                self.assertIn(row["evidence_pointer"], {"README.md", "README.MD"})
         maintenance = [row["repository"] for row in self.data["repositories"] if row["lifecycle"] == "maintenance"]
         self.assertEqual(maintenance, ["microsoft/graphrag", "microsoft/autogen"])
 
@@ -68,6 +75,36 @@ class TestRepositoryLandscape(unittest.TestCase):
     def test_popularity_is_dated_and_not_a_score(self):
         self.assertEqual(self.data["popularity_observed_date"], "2026-08-27")
         self.assertIn("not a quality score", self.data["popularity_boundary"])
+
+    def test_public_transfer_is_deduplicated_and_non_authorizing(self):
+        summary = self.data["import_summary"]
+        self.assertEqual(summary["transfer_record_count"], 224)
+        self.assertEqual(summary["assessment_source_count"], 226)
+        self.assertEqual(summary["unique_resolved_transfer_repositories"], 224)
+        self.assertEqual(summary["overlap_collapsed"], 10)
+        self.assertEqual(summary["new_repositories_imported"], 214)
+        self.assertEqual(summary["unique_repository_count_after"], 314)
+        self.assertEqual(summary["transfer_duplicate_collapse_count"], 2)
+        self.assertEqual(summary["unresolved_identity_count"], 0)
+        self.assertEqual(summary["unresolved_identity_count_excluded"], 4)
+        self.assertEqual(summary["supporting_reference_repository_count_excluded"], 19)
+        self.assertEqual(summary["excluded_portfolio_repository_count"], 9)
+        self.assertEqual(summary["license_unknown_count"], 312)
+        self.assertEqual(summary["upstream_revision_unknown_count"], 212)
+        self.assertEqual(summary["authority"], "descriptive-only")
+        self.assertRegex(summary["transfer_upstream_revision"], r"^[0-9a-f]{40}$")
+        self.assertNotIn("operated_repositories", self.data)
+        for row in self.data["repositories"]:
+            for source in row.get("portable_assessments", []):
+                self.assertEqual(source["authority"], "evidence-only")
+                self.assertTrue(source["source_links"])
+                self.assertTrue(source["repository_stable_id"])
+                self.assertTrue(source["assessment_artifact_ids"])
+                self.assertNotIn("source_path", source)
+
+    def test_unresolved_identities_are_excluded_from_public_ledger(self):
+        rows = self.data["unresolved_identities"]
+        self.assertEqual(rows, [])
 
 
 if __name__ == "__main__":

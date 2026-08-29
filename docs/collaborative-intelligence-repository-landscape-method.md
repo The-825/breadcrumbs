@@ -18,10 +18,10 @@ They are volatile, reflect project age and audience size, and do not measure
 quality, safety, research validity, or collaboration benefit. Every recorded
 star count carries an observation date.
 
-## Unit of appraisal
+## Units of evidence
 
-The unit is a repository snapshot, not a vendor, paper, package download count,
-or current website. Every included record binds:
+The detailed appraisal unit is a repository snapshot, not a vendor, paper,
+package download count, or current website. Every detailed record binds:
 
 - the canonical public repository;
 - one 40-character commit SHA and its commit date;
@@ -32,6 +32,17 @@ or current website. Every included record binds:
 
 A repository update does not silently rewrite an appraisal. It creates a new
 snapshot or a recorded recheck.
+
+The wider ledger may also preserve a public source assessment before a detailed
+mechanism review exists. Such a record binds a canonical public repository
+identity, assessment date and disposition, public source links, evidence-only
+aliases, license status, and upstream revision. Missing licenses, revisions,
+claims, categories, popularity, and mechanisms remain `unknown`. A portable
+assessment cannot inherit the stronger evidence depth of a detailed appraisal.
+
+Transfers are filtered before import. Operated repositories, private portfolio
+identities, internal paths, private evidence, and sensitive records never enter
+the public ledger. The import records only an aggregate exclusion count.
 
 ## Inclusion and exclusion
 
@@ -104,10 +115,14 @@ README-screened observation even when the repository contains tests elsewhere.
 | `P` | Partially visible, adjacent, or missing an important boundary |
 | `N` | Not observed in the material reviewed at the stated depth |
 | `O` | Outside the repository's stated layer or purpose |
+| `U` | Unknown because the portable assessment did not establish the field |
 
 `N` never means the mechanism is absent from the entire project. It means the
 review did not observe it at the recorded depth. Only a code-traced review may
 make a bounded absence claim about a named path.
+
+`U` is not `N`. It means no mechanism observation was imported, so the ledger
+cannot make even a reviewed-depth statement about the field.
 
 ## Mechanism dimensions
 
