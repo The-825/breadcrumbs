@@ -7,13 +7,14 @@
 #
 # What it does: the operator comments the approval word ("greenlight", or the
 # short form "gl") on a PR, from any device, and this workflow applies the
-# approval label. Useful when the operator is reviewing from a phone, where
-# the label UI takes four taps and a comment takes one line.
+# approval label, then asks your merge gate to re-evaluate immediately.
+# Useful when the operator is reviewing from a phone, where the label UI
+# takes four taps and a comment takes one line.
 #
-# Human in the loop: this workflow only APPLIES the label. It never merges.
-# The merge gate evaluates separately, with its own fail-closed guards. The
-# comment is the operator's approval action, so authorization is the whole
-# point of this file:
+# Human in the loop: this workflow only APPLIES the label and REQUESTS
+# re-evaluation. It never merges. The merge gate evaluates separately, with
+# its own fail-closed guards. The comment is the operator's approval action,
+# so authorization is the whole point of this file:
 #
 #   * Authorization is checked against the VERIFIED event payload
 #     (github.event.comment.user.login), never against anything written in
@@ -26,13 +27,15 @@
 #     shell treats it as data, not code.
 #
 # LIMITATION (read before adopting): labels added with the default
-# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard). A
+# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard), so a
 # merge gate with a pull_request(labeled) trigger will NOT fire from this
-# workflow's label-add, and a gate that reads labels from the frozen event
-# payload sees the new label only on the PR's NEXT event: a new commit,
-# ready_for_review, or a manual label toggle in the UI. The label lands now;
-# the merge follows on the next event. Full explanation:
-# MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha".
+# workflow's label-add on its own. The re-evaluation step below closes that
+# gap IF your merge gate accepts a workflow_dispatch `pr_number` input and
+# resolves PR state (including labels) live rather than from a frozen event
+# payload; see MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha". If
+# your gate does not support that, delete the re-evaluation step: the label
+# still lands, and the gate picks it up on the PR's next event (a new
+# commit, ready_for_review, or a manual label toggle in the UI).
 
 name: Greenlight comment command
 
@@ -44,6 +47,7 @@ permissions:
   pull-requests: write
   issues: write
   contents: read
+  actions: write   # required only for the re-evaluation step; drop it if you delete that step
 
 jobs:
   greenlight:
@@ -97,6 +101,18 @@ jobs:
           # Remove-then-add so a stale label is refreshed cleanly.
           gh pr edit "$N" --repo "$REPO" --remove-label "$APPROVAL_LABEL" 2>/dev/null || true
           gh pr edit "$N" --repo "$REPO" --add-label "$APPROVAL_LABEL"
-          # Label applied; the merge gate evaluates it on the PR's next event
-          # (new commit, ready_for_review, or a manual label toggle in the
-          # UI). See the LIMITATION note at the top.
+
+      - name: Request re-evaluation
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          N: ${{ github.event.issue.number }}
+          MERGE_GATE_WORKFLOW: automerge.yml   # EDIT ME: your merge gate's filename, or delete this step
+        run: |
+          set -uo pipefail
+          # Re-evaluate now instead of waiting for the PR's next event.
+          # Requires your merge gate to accept a `pr_number` dispatch input
+          # and resolve PR state (including the label just added) live.
+          # Harmless no-op (via || true) if your gate lacks that input.
+          gh workflow run "$MERGE_GATE_WORKFLOW" --repo "$REPO" -f pr_number="$N" || true

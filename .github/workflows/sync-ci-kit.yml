@@ -1,0 +1,209 @@
+# =============================================================
+# Sync CI kit: reusable workflow that keeps a downstream repo's greenlight
+# workflows in step with the canonical templates in this repo.
+# =============================================================
+# PUBLIC, generic, parameterized. Any repo (not just ones in this family) can
+# call this via `uses: The-825/breadcrumbs/.github/workflows/sync-ci-kit.yml@main`
+# from a thin wrapper workflow. See ci-kit/workflows/ for what gets synced and
+# why: greenlight-all.yml and greenlight-command.yml are hand-maintained here
+# and every adopting repo used to drift from each other and from this file
+# independently (same bug fixed N times, comment wording forking every time).
+# This workflow renders the two EDIT ME templates with the caller's own
+# values and opens (or updates) one PR in the caller repo when they differ.
+#
+# What this workflow does NOT do: merge anything. The rendered PR still goes
+# through the caller repo's own merge gate like any other change; workflow
+# files are conventionally never label-free/auto-mergeable, so this is not a
+# bypass of that policy, just automation of the PR that asks for review.
+#
+# Nothing in this file is repo-specific. Identity (approved_logins) and any
+# repo-specific overrides are supplied by the caller's `with:` block, not
+# hardcoded here.
+
+name: Sync CI kit templates (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      approved_logins:
+        description: >
+          JSON array string of GitHub logins allowed to run the greenlight
+          comment command, e.g. '["your-github-login"]'. Required: this is
+          identity data and has no safe default.
+        required: true
+        type: string
+      approval_label:
+        description: The operator approval label.
+        required: false
+        type: string
+        default: greenlight
+      agent_prefix:
+        description: Branch namespace the greenlight-all sweep filters on.
+        required: false
+        type: string
+        default: 'claude/'
+      merge_gate_workflow:
+        description: Filename of the caller's merge gate workflow.
+        required: false
+        type: string
+        default: automerge.yml
+      source_ref:
+        description: Ref of this repo (breadcrumbs) to pull templates from.
+        required: false
+        type: string
+        default: main
+      sync_branch:
+        description: Branch name used for the sync PR in the caller repo.
+        required: false
+        type: string
+        default: chore/sync-ci-kit
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    name: Render templates and sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout caller repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Checkout breadcrumbs (template source)
+        uses: actions/checkout@v4
+        with:
+          repository: The-825/breadcrumbs
+          ref: ${{ inputs.source_ref }}
+          path: _cikit-src
+          sparse-checkout: |
+            ci-kit/workflows
+
+      - name: Render templates with this repo's values
+        id: render
+        env:
+          APPROVAL_LABEL: ${{ inputs.approval_label }}
+          AGENT_PREFIX: ${{ inputs.agent_prefix }}
+          MERGE_GATE_WORKFLOW: ${{ inputs.merge_gate_workflow }}
+          APPROVED_LOGINS_JSON: ${{ inputs.approved_logins }}
+        run: |
+          python3 - <<'PY'
+          import os, re, pathlib
+
+          src_dir = pathlib.Path("_cikit-src/ci-kit/workflows")
+          dst_dir = pathlib.Path(".github/workflows")
+          dst_dir.mkdir(parents=True, exist_ok=True)
+
+          approval_label = os.environ["APPROVAL_LABEL"]
+          agent_prefix = os.environ["AGENT_PREFIX"]
+          merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
+          approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
+
+          banner = (
+              "# =============================================================\n"
+              "# {title}\n"
+              "# =============================================================\n"
+              "# SYNCED from The-825/breadcrumbs ci-kit/workflows/{fname} by\n"
+              "# .github/workflows/sync-ci-kit.yml. Do not hand-edit the generated\n"
+              "# sections below: a hand edit survives until the next scheduled sync,\n"
+              "# which proposes reverting it. Fix the source template in breadcrumbs\n"
+              "# instead, or override this repo's own values in its sync-ci-kit.yml\n"
+              "# wrapper (`with:` block).\n"
+          )
+
+          def render(fname, title, subs):
+              text = (src_dir / fname).read_text()
+              lines = text.splitlines(keepends=True)
+              # The hand-authored template banner is the leading comment block
+              # (lines starting with '#', plus the blank line after it); real
+              # content starts at the first line that is neither.
+              i = 0
+              while i < len(lines) and (lines[i].startswith("#") or lines[i].strip() == ""):
+                  i += 1
+              body = "".join(lines[i:])
+              for pattern, repl in subs:
+                  body, n = re.subn(pattern, repl, body, count=1, flags=re.MULTILINE)
+                  if n != 1:
+                      raise SystemExit(f"{fname}: expected exactly 1 match for {pattern!r}, got {n}")
+              rendered = banner.format(title=title, fname=fname) + "\n" + body
+              out_path = dst_dir / fname
+              changed = not out_path.exists() or out_path.read_text() != rendered
+              out_path.write_text(rendered)
+              return changed
+
+          changed_all = render(
+              "greenlight-all.yml",
+              "Greenlight all green agent PRs",
+              [
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*AGENT_PREFIX:\s*)\S+(.*)$', lambda m: m.group(1) + agent_prefix + m.group(2)),
+                  (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
+              ],
+          )
+          changed_cmd = render(
+              "greenlight-command.yml",
+              "Greenlight comment command",
+              [
+                  (r"fromJSON\('.*?'\)", lambda m: "fromJSON('" + approved_logins_json + "')"),
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
+              ],
+          )
+
+          gh_output = os.environ.get("GITHUB_OUTPUT")
+          with open(gh_output, "a") as f:
+              f.write(f"changed={'true' if (changed_all or changed_cmd) else 'false'}\n")
+          PY
+
+      - name: Diff against tracked files
+        id: diff
+        run: |
+          set -uo pipefail
+          if git diff --quiet -- .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update the sync PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ inputs.sync_branch }}
+        run: |
+          set -euo pipefail
+          git config user.name "ci-kit-sync"
+          git config user.email "actions@github.com"
+
+          git checkout -B "$BRANCH"
+          git add .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml
+          git commit -m "ci: sync greenlight workflows from breadcrumbs ci-kit"
+          git push -u origin "$BRANCH" --force-with-lease
+
+          if gh pr view "$BRANCH" --repo "$REPO" >/dev/null 2>&1; then
+            echo "Existing sync PR updated (new commit pushed to $BRANCH)."
+          else
+            gh pr create --repo "$REPO" \
+              --head "$BRANCH" \
+              --title "ci: sync CI kit templates from breadcrumbs" \
+              --body "$(cat <<'BODY'
+          Rendered from The-825/breadcrumbs ci-kit/workflows/{greenlight-all,greenlight-command}.yml
+          via .github/workflows/sync-ci-kit.yml. Diffs the canonical templates against this
+          repo's copies and opens this PR only when they differ.
+
+          ## Summary
+          Picks up upstream fixes and wording changes to the shared greenlight workflows.
+
+          ## Test plan
+          YAML is machine-rendered from a template already exercised in this repo family;
+          review the diff for correctness of the substituted values (label, branch prefix,
+          approved logins, merge gate filename).
+
+          ## What's NOT in scope
+          Any other workflow file. Only greenlight-all.yml and greenlight-command.yml are synced.
+          BODY
+          )"
+          fi
