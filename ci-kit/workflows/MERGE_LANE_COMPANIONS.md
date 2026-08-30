@@ -78,6 +78,16 @@ waiting for an instant merge after a batch labeling run; that is not how the eve
 works. For a same-instant merge on one PR, toggle the label by hand in the UI, which does
 emit the event.
 
+**Closing the gap instead of just documenting it.** If your merge gate accepts a
+`workflow_dispatch` `pr_number` input and resolves PR state (labels included) live rather
+than from the frozen event payload, both labeler templates now add a re-evaluation step
+right after the label: `gh workflow run <merge-gate> -f pr_number=<n>`. That dispatch run
+sees the label because it reads live, closing the gap without waiting for an unrelated
+event. It costs one more `actions: write` permission and one more line; delete the step if
+your gate has no dispatch trigger; the label still lands either way. Learned in production
+the same way the gotcha itself was: hand-added independently to several downstream repos
+before it made it back into this template.
+
 The honest version of this note belongs in your own workflow headers too. A teammate who
 runs the batch labeler and sees nothing merge will conclude the lane is broken unless the
 file itself says "the label lands now, the merge follows on the next event."

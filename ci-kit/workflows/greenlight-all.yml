@@ -6,27 +6,29 @@
 # ("The operator-label gate"). How the set fits together: MERGE_LANE_COMPANIONS.md.
 #
 # What it does: on manual dispatch, apply the approval label to every open,
-# non-draft agent PR whose checks are all green on the head SHA. One click
-# from the Actions tab releases a whole wave of ready PRs instead of the
-# operator labeling each one by hand.
+# non-draft agent PR whose checks are all green on the head SHA, then ask
+# your merge gate to re-evaluate each one immediately. One click from the
+# Actions tab releases a whole wave of ready PRs instead of the operator
+# labeling each one by hand and waiting for the next natural event.
 #
-# Human in the loop: this workflow only APPLIES the label. It never merges.
-# The merge gate (your automerge workflow) evaluates separately, with its own
-# fail-closed guards, exactly as if the operator had clicked the label in the
-# UI. Dispatching this workflow IS the operator's approval action, which is
-# why the only trigger is workflow_dispatch and why this file should be
-# treated as merge machinery (human-gated) if you use a protected-paths
-# policy.
+# Human in the loop: this workflow only APPLIES the label and REQUESTS
+# re-evaluation. It never merges. The merge gate (your automerge workflow)
+# evaluates separately, with its own fail-closed guards, exactly as if the
+# operator had clicked the label in the UI. Dispatching this workflow IS the
+# operator's approval action, which is why the only trigger is
+# workflow_dispatch and why this file should be treated as merge machinery
+# (human-gated) if you use a protected-paths policy.
 #
 # LIMITATION (read before adopting): labels added with the default
-# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard). A
+# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard), so a
 # merge gate with a pull_request(labeled) trigger will NOT fire from this
-# workflow's label-add, and a gate that reads labels from the frozen event
-# payload sees the new label only on the PR's NEXT event: a new commit,
-# ready_for_review, or a manual label toggle in the UI. The label lands now;
-# the merge follows on the next event. For a same-instant merge, toggle the
-# label by hand in the UI (user-initiated label events do fire workflows).
-# Full explanation: MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha".
+# workflow's label-add on its own. The re-evaluation step below closes that
+# gap IF your merge gate accepts a workflow_dispatch `pr_number` input and
+# resolves PR state (including labels) live rather than from a frozen event
+# payload; see MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha". If
+# your gate does not support that, delete the re-evaluation step: the label
+# still lands, and the gate picks it up on the PR's next event (a new
+# commit, ready_for_review, or a manual label toggle in the UI).
 
 name: Greenlight all green agent PRs
 
@@ -35,24 +37,28 @@ on:
 
 # An explicit permissions block zeroes every unlisted scope. checks: read is
 # required; without it the check-runs read below fails, and the step is
-# written to fail LOUDLY in that case rather than sweep silently.
+# written to fail LOUDLY in that case rather than sweep silently. actions:
+# write is required only for the re-evaluation step (gh workflow run); drop
+# it if you delete that step.
 permissions:
   pull-requests: write
   issues: write
   contents: read
   checks: read
+  actions: write
 
 jobs:
   greenlight:
     name: Label green agent PRs
     runs-on: ubuntu-latest
     steps:
-      - name: Sweep and label
+      - name: Sweep, label, re-evaluate
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
           AGENT_PREFIX: agent/         # EDIT ME: your agent branch namespace
+          MERGE_GATE_WORKFLOW: automerge.yml   # EDIT ME: your merge gate's filename, or delete this line and the re-evaluation step below
         run: |
           set -uo pipefail
           {
@@ -113,5 +119,12 @@ jobs:
               gh pr edit "$N" --repo "$REPO" --remove-label "$APPROVAL_LABEL" 2>/dev/null || true
               gh pr edit "$N" --repo "$REPO" --add-label "$APPROVAL_LABEL"
 
-              echo "| #$N | $HEAD | green | label applied; the merge gate evaluates it on the PR's next event |" >> "$GITHUB_STEP_SUMMARY"
+              # Re-evaluate now instead of waiting for the PR's next event.
+              # Requires your merge gate to accept a `pr_number` dispatch
+              # input and resolve PR state (including the label just added)
+              # live rather than from the frozen event payload. Harmless
+              # no-op (via || true) if your gate lacks that input.
+              gh workflow run "$MERGE_GATE_WORKFLOW" --repo "$REPO" -f pr_number="$N" || true
+
+              echo "| #$N | $HEAD | green | label applied; re-evaluation requested |" >> "$GITHUB_STEP_SUMMARY"
             done
