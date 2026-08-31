@@ -44,6 +44,12 @@ Transfers are filtered before import. Operated repositories, private portfolio
 identities, internal paths, private evidence, and sensitive records never enter
 the public ledger. The import records only an aggregate exclusion count.
 
+The versioned `portfolio_contract` in [`kit.json`](../kit.json) is the routing
+contract for this boundary. It names Breadcrumbs as the owner of portable public
+intake, requires positive public visibility and stable provenance, keeps source
+evidence and operational authority in the source repository, and points to the
+fail-closed importer. Portable intake may expand without claiming detailed review.
+
 ## Inclusion and exclusion
 
 Include a repository when it is public, canonical for the project, contains
@@ -180,3 +186,8 @@ replace the claim register, and they are not added into one score.
 The output is a gap-directed research map. Strong claims still require the
 confidence profile, contrary evidence, null case, and owning-system test defined
 by [Method v2.0](collaborative-intelligence-method-v2.md).
+
+The 100-repository saturation rule applies to promoted detailed appraisals. It
+does not cap portable public identity and provenance intake. Promotion from
+`source-assessment` to `readme-screened` still requires a named mechanism gap and
+the detailed evidence process above.

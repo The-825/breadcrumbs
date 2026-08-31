@@ -9,6 +9,71 @@
     "shell": "POSIX (hooks and runner scripts)",
     "platform_assumptions": "git repo; GitHub Actions for the workflow templates; Claude Code for the command/hook templates (adapt for other harnesses)"
   },
+  "portfolio_contract": {
+    "schema_version": "1.0",
+    "canonical_owner": "The-825/breadcrumbs",
+    "role": "reusable-public-pattern-and-assessment-owner",
+    "owns": [
+      "reusable-public-patterns-and-templates",
+      "assessed-external-public-repository-metadata",
+      "portable-repository-identity-and-provenance-intake"
+    ],
+    "source_retains": [
+      "source-evidence",
+      "private-records",
+      "operational-authority"
+    ],
+    "accepted_data_classes": [
+      "public-verified-repository-identity-and-provenance",
+      "public-github-links",
+      "public-license-and-upstream-revision",
+      "public-safe-evidence-linked-aliases",
+      "explicit-unknown-values",
+      "generalized-workflows-and-mechanisms",
+      "public-or-synthetic-tests"
+    ],
+    "prohibited_data_classes": [
+      "private-repository-identities",
+      "operated-repository-identities",
+      "source-context-repository-identity-as-transfer-row",
+      "ferpa-student-or-staff-records",
+      "internal-paths",
+      "private-evidence",
+      "credentials",
+      "personal-or-household-data",
+      "production-bound-schemas-or-queries"
+    ],
+    "transfer_contract": {
+      "entrypoint": "scripts/repository_landscape.py",
+      "source_schema_version": "1.0",
+      "producer_contract_version": "2.0",
+      "destination_schema_version": "2.0",
+      "required_record_type": "assessed_external_public_repository",
+      "required_provenance": [
+        "stable-repository-id",
+        "stable-assessment-artifact-ids",
+        "positive-public-visibility-proof",
+        "public-source-links",
+        "source-revision",
+        "source-content-sha256",
+        "explicit-nonauthorization"
+      ],
+      "authority": "evidence-only",
+      "fail_closed": true
+    },
+    "evidence_classes": {
+      "portable_intake": {
+        "evidence_depth": "source-assessment",
+        "may_expand": true,
+        "claims_detailed_mechanism_review": false
+      },
+      "detailed_appraisal": {
+        "evidence_depth": "readme-screened",
+        "saturation_baseline_count": 100,
+        "promotion_requires": "named-mechanism-gap"
+      }
+    }
+  },
   "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. CI runs the same set (.github/workflows/ci.yml).",
   "problems": {
     "my agent forgets everything between sessions": [
@@ -78,6 +143,13 @@
     ]
   },
   "artifacts": [
+    {
+      "path": "ci-kit/kit_manifest_check.py",
+      "kind": "guard",
+      "what": "Validates artifact routes and the versioned portfolio ownership contract, including public-only intake, retained source authority, importer agreement, and distinct portable versus detailed evidence classes.",
+      "assumes": "kit.json, the repository landscape, and the canonical transfer importer remain in this repository.",
+      "selftest": "python3 ci-kit/kit_manifest_check.py --selftest"
+    },
     {
       "path": "templates/ledger-tools/retrieval_exam.py",
       "kind": "tool",

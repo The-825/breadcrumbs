@@ -5,21 +5,21 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-29 (repository ledger ownership correction)
+Last refreshed: 2026-08-29 (machine-routable portfolio contract)
 
 ## Current state
 
-- Active branch: `claude/repository-ledger-ownership`, cut from current `main`.
+- Active branch: `claude/portfolio-routing-contract`, cut from current `main`.
 - The public kit and 100-source research ledger remain authoritative. The repository
-  ledger now holds 314 unique assessed public repositories, including 100 detailed
+  ledger now holds 311 unique assessed public repositories, including 100 detailed
   mechanism appraisals.
 
 ## In flight
 
-**Public repository ledger correction (D-44).** Breadcrumbs now owns the
-portable public assessment layer. The current branch imports only assessed
-external public repositories, preserves unknowns, collapses duplicate
-identities, and excludes operated or private portfolio records.
+**Portfolio routing contract (D-45).** `kit.json` now exposes the owner,
+accepted and prohibited data classes, canonical transfer entrypoint, retained
+source authority, and separate portable versus detailed evidence classes. CI
+checks the contract against the importer and the committed ledger.
 
 **Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
 searchable catalogs, item profiles, related links, and a public evaluation-request queue.
@@ -38,6 +38,10 @@ holds 100 screened sources and 17 bounded claims. The detailed repository cohort
 performance. Full-text appraisal and code-traced upgrades remain future evidence work.
 
 ## What just landed
+**Public repository ledger correction (D-44).** The current draft contains 311 unique assessed
+public repositories: 100 detailed appraisals and 211 portable-only records. Public-only
+filtering, stable provenance, duplicate collapse, and nonauthorization are enforced.
+
 **A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.
 
 ## Next steps / watch
@@ -77,4 +81,4 @@ performance. Full-text appraisal and code-traced upgrades remain future evidence
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-44 is the latest ruling: Breadcrumbs owns the portable public repository ledger.
+- D-45 is the latest ruling: portfolio ownership is machine-routable through `kit.json`.

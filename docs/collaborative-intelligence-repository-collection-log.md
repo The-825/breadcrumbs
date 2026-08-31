@@ -2,10 +2,25 @@
 
 ## 2026-08-29: public assessment transfer
 
+### Hardened reconciliation
+
+The producer contract 2.0 transfer contains 225 assessment sources representing
+223 positively public-verified repositories. Two duplicate assessments collapse
+inside the transfer. Twelve repositories match the 100-record detailed landscape
+through canonical keys or evidence-backed aliases, and 211 remain portable-only.
+The reconciled public ledger therefore contains 311 unique repositories.
+
+One candidate from the earlier transfer is now aggregate-only. Independent public
+GitHub verification did not establish that it met the positive-public contract,
+so its identity is not published. The producer also excludes 19 supporting-only
+references, four unresolved identities, and nine operated repositories.
+
+### Initial transfer history
+
 **Mode:** deterministic public-only import into the existing repository
 landscape.
 
-The transfer contained 226 assessment sources representing 224 unique public
+The initial transfer contained 226 assessment sources representing 224 public
 repositories. Two duplicates collapsed inside the transfer, ten repositories
 matched the existing 100-record landscape, and 214 new identities entered the
 ledger. The result is 314 unique assessed repositories.

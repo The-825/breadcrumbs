@@ -16,7 +16,7 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_cohort_is_unique_and_pinned(self):
         rows = self.data["repositories"]
-        self.assertEqual(len(rows), 314)
+        self.assertEqual(len(rows), 311)
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertEqual(len({row["repository"].lower() for row in rows}), len(rows))
         for row in rows:
@@ -78,19 +78,21 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_public_transfer_is_deduplicated_and_non_authorizing(self):
         summary = self.data["import_summary"]
-        self.assertEqual(summary["transfer_record_count"], 224)
-        self.assertEqual(summary["assessment_source_count"], 226)
-        self.assertEqual(summary["unique_resolved_transfer_repositories"], 224)
-        self.assertEqual(summary["overlap_collapsed"], 10)
-        self.assertEqual(summary["new_repositories_imported"], 214)
-        self.assertEqual(summary["unique_repository_count_after"], 314)
+        self.assertEqual(summary["producer_contract_version"], "2.0")
+        self.assertEqual(summary["transfer_record_count"], 223)
+        self.assertEqual(summary["assessment_source_count"], 225)
+        self.assertEqual(summary["unique_resolved_transfer_repositories"], 223)
+        self.assertEqual(summary["overlap_collapsed"], 12)
+        self.assertEqual(summary["new_repositories_imported"], 211)
+        self.assertEqual(summary["unique_repository_count_after"], 311)
         self.assertEqual(summary["transfer_duplicate_collapse_count"], 2)
         self.assertEqual(summary["unresolved_identity_count"], 0)
         self.assertEqual(summary["unresolved_identity_count_excluded"], 4)
         self.assertEqual(summary["supporting_reference_repository_count_excluded"], 19)
         self.assertEqual(summary["excluded_portfolio_repository_count"], 9)
-        self.assertEqual(summary["license_unknown_count"], 312)
-        self.assertEqual(summary["upstream_revision_unknown_count"], 212)
+        self.assertEqual(summary["unverified_or_nonpublic_repository_count_excluded"], 1)
+        self.assertEqual(summary["license_unknown_count"], 100)
+        self.assertEqual(summary["upstream_revision_unknown_count"], 0)
         self.assertEqual(summary["authority"], "descriptive-only")
         self.assertRegex(summary["transfer_upstream_revision"], r"^[0-9a-f]{40}$")
         self.assertNotIn("operated_repositories", self.data)
@@ -100,6 +102,8 @@ class TestRepositoryLandscape(unittest.TestCase):
                 self.assertTrue(source["source_links"])
                 self.assertTrue(source["repository_stable_id"])
                 self.assertTrue(source["assessment_artifact_ids"])
+                self.assertTrue(source["source_content_sha256"])
+                self.assertEqual(source["verification_method"], "github-rest-repository-and-default-branch-head")
                 self.assertNotIn("source_path", source)
 
     def test_unresolved_identities_are_excluded_from_public_ledger(self):

@@ -15,9 +15,9 @@ class CatalogTests(unittest.TestCase):
 
     def test_all_reviewed_records_are_present(self):
         self.assertEqual(100, len(self.research))
-        self.assertEqual(314, len(self.repositories))
+        self.assertEqual(311, len(self.repositories))
         self.assertEqual(100, len({item["id"] for item in self.research}))
-        self.assertEqual(314, len({item["id"] for item in self.repositories}))
+        self.assertEqual(311, len({item["id"] for item in self.repositories}))
         self.assertEqual(17, len(self.claims))
 
     def test_profiles_keep_signals_separate(self):
@@ -45,7 +45,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
-        self.assertEqual(214, len(portable))
+        self.assertEqual(211, len(portable))
         for item in portable:
             self.assertIsNone(item["stars_observed"])
             self.assertIsNone(item["popularityOrder"])

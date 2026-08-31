@@ -16,3 +16,6 @@ Do not duplicate policy into this file. It is a router only; durable rules
 stay in CLAUDE.md, and a ruling that lands in chat is captured in the ledger
 the same turn. Every agent follows the same branch, PR, and merge conventions
 CLAUDE.md defines; no vendor default overrides them.
+
+For cross-repository routing, read `kit.json` → `portfolio_contract`. It is the
+machine-readable ownership and public-data boundary for this repository.
