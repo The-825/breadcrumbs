@@ -70,6 +70,7 @@
       "detailed_appraisal": {
         "evidence_depth": "readme-screened",
         "saturation_baseline_count": 100,
+        "current_count": 206,
         "promotion_requires": "named-mechanism-gap"
       }
     }
@@ -140,6 +141,12 @@
       "docs/collaborative-intelligence-repository-landscape.json",
       "docs/collaborative-intelligence-repository-collection-log.md",
       "scripts/repository_landscape.py"
+    ],
+    "I need to discover and route reusable public agent workflows": [
+      "docs/workflow-registry.json",
+      "docs/workflow-registry.md",
+      "docs/jarvis-workflow-routing.json",
+      "scripts/workflow_registry.py"
     ]
   },
   "artifacts": [

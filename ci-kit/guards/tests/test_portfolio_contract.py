@@ -83,12 +83,13 @@ class PortfolioContractTests(unittest.TestCase):
         detailed = [row for row in rows if row["evidence_depth"] == "readme-screened"]
         portable = [row for row in rows if row["evidence_depth"] == "source-assessment"]
         evidence = self.manifest["portfolio_contract"]["evidence_classes"]
-        self.assertEqual(
+        self.assertGreaterEqual(
             len(detailed),
             evidence["detailed_appraisal"]["saturation_baseline_count"],
         )
-        self.assertEqual(len(detailed), 100)
-        self.assertEqual(len(portable), 211)
+        self.assertEqual(len(detailed), evidence["detailed_appraisal"]["current_count"])
+        self.assertEqual(len(detailed), 206)
+        self.assertEqual(len(portable), 105)
         self.assertTrue(evidence["portable_intake"]["may_expand"])
         self.assertFalse(
             evidence["portable_intake"]["claims_detailed_mechanism_review"]

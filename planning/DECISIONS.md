@@ -524,3 +524,21 @@ Why: prose made the correct destination inferable but not deterministic for an a
 The machine contract prevents local repository context from silently becoming ownership.
 Source: cross-repository ownership incident review and operator-approved prevention work,
 2026-08-29.
+
+## D-46 — Workflow discovery and detailed review promotion remain evidence-staged
+
+Date: 2026-09-01
+
+Decision: Breadcrumbs keeps positively verified public repository identities in
+the portable ledger even when they do not qualify for detailed promotion. Wave
+R4 promotes 106 identities only after pinned README screening and preserves all
+hardened transfer provenance, bringing the ledger to 206 detailed appraisals and
+105 portable-only records without changing the 311 total. Community workflow
+posts enter a separate versioned registry as discovery evidence. Popularity is
+not a quality score, and a screened description is not reproduced or adopted.
+Jarvis receives a public routing projection while live state and authority remain
+in their owning repositories.
+
+Why: deleting non-promoted identities would collapse discovery coverage into an
+appraisal shortlist. Treating community posts as proven workflows would make the
+same evidence-depth error in the opposite direction.
