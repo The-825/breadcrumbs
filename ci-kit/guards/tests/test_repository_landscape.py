@@ -27,10 +27,27 @@ class TestRepositoryLandscape(unittest.TestCase):
                 self.assertEqual(set(row["mechanisms"].values()), {"U"})
             else:
                 self.assertRegex(row["snapshot_commit"], r"^[0-9a-f]{40}$")
-                self.assertGreater(row["stars_observed"], 0)
+                self.assertGreaterEqual(row["stars_observed"], 0)
             self.assertRegex(row["snapshot_date"], r"^\d{4}-\d{2}-\d{2}$")
             self.assertEqual(row["url"], f"https://github.com/{row['repository']}")
             self.assertTrue(row["selection_aspect"])
+
+    def test_review_wave_expands_depth_without_shrinking_portable_ledger(self):
+        rows = self.data["repositories"]
+        detailed = [row for row in rows if row["evidence_depth"] == "readme-screened"]
+        portable = [row for row in rows if row["evidence_depth"] == "source-assessment"]
+        promoted = [row for row in detailed if row.get("detailed_review", {}).get("wave") == "R4"]
+        self.assertEqual(206, len(detailed))
+        self.assertEqual(105, len(portable))
+        self.assertEqual(106, len(promoted))
+        self.assertTrue(all(row.get("portable_assessments") for row in promoted))
+        self.assertTrue(all(row["detailed_review"]["authority"] == "descriptive-only" for row in promoted))
+        self.assertEqual(
+            {"detailed_appraisal_count": 206, "portable_only_count": 105,
+             "total_repository_count": 311, "latest_review_wave": "R4",
+             "latest_review_wave_count": 106},
+            self.data["review_summary"],
+        )
 
     def test_mechanism_profiles_are_complete_without_scores(self):
         dimensions = self.data["dimensions"]

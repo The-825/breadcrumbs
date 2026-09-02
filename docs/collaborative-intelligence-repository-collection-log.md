@@ -10,6 +10,15 @@ inside the transfer. Twelve repositories match the 100-record detailed landscape
 through canonical keys or evidence-backed aliases, and 211 remain portable-only.
 The reconciled public ledger therefore contains 311 unique repositories.
 
+### Wave R4 detailed-review promotion
+
+One hundred six of those portable identities now have pinned, README-screened
+mechanism appraisals. The promotion preserves each hardened transfer source,
+stable identity, alias, source revision, content hash, and evidence-only authority.
+The public ledger remains 311 repositories: 206 detailed appraisals and 105
+portable-only records. A record that is not promoted remains in discovery intake;
+triage never deletes a positively verified public identity from the ledger.
+
 One candidate from the earlier transfer is now aggregate-only. Independent public
 GitHub verification did not establish that it met the positive-public contract,
 so its identity is not published. The producer also excludes 19 supporting-only

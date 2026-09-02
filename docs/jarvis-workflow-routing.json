@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "owner": "The-825/breadcrumbs",
+  "boundary": "Public routing patterns only. Live Jarvis state, private context, and operational authority remain in their owning repositories.",
+  "authority": "descriptive-only",
+  "routes": [
+    {"id": "JR-001", "signal": "orient-to-repository", "workflow_ids": ["WF-001"], "context_capsule": ["index", "architecture", "map", "conventions", "gotchas"], "completion_test": "links and size budgets pass"},
+    {"id": "JR-002", "signal": "recall-governed-context", "workflow_ids": ["WF-002"], "context_capsule": ["scope", "facts", "provenance", "corrections"], "completion_test": "scoped expected and forbidden recall tests pass"},
+    {"id": "JR-003", "signal": "execute-specialized-workflow", "workflow_ids": ["WF-003"], "context_capsule": ["entry-condition", "skill", "guardrails", "done-criteria"], "completion_test": "stage gates and authority checks pass"},
+    {"id": "JR-004", "signal": "implement-bounded-change", "workflow_ids": ["WF-004"], "context_capsule": ["objective", "scope", "tests", "handoff"], "completion_test": "bounded diff, tests, and evidence-bearing handoff exist"},
+    {"id": "JR-005", "signal": "bridge-design-to-code", "workflow_ids": ["WF-005"], "context_capsule": ["approved-intent", "source-evidence", "implementation-contract", "return-gate"], "completion_test": "implementation evidence maps back to the approved brief"}
+  ]
+}

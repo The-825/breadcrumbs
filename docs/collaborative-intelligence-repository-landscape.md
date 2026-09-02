@@ -1,7 +1,7 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public ledger of 311 assessed repositories. One hundred records are
-pinned, README-screened mechanism appraisals. Another 211 are portable-only
+**Status:** public ledger of 311 assessed repositories. Two hundred six records are
+pinned, README-screened mechanism appraisals. Another 105 are portable-only
 records preserving positively verified public identity and assessment evidence.
 None are runtime tests, product
 endorsements, or proof that collaboration improves outcomes.
@@ -18,6 +18,9 @@ The table below preserves the first 25 repositories. The
 lists the 75 additions across orchestration, multi-agent research, memory,
 retrieval, evaluation, guardrails, gateways, sandboxes, protocols, and coding
 agents.
+The [Wave R4 review manifest](collaborative-intelligence-repository-wave-r4-reviews.json)
+adds 106 pinned reviews while preserving the portable assessment provenance on
+every promoted record.
 
 ## Cohort
 
@@ -56,24 +59,28 @@ Stars were observed on 2026-08-27. They explain discovery priority, not quality.
 The hardened public-only transfer contributed 225 assessment sources representing
 223 unique repositories. Two repeated identities collapsed inside the transfer,
 and twelve matched existing Breadcrumbs records through canonical keys or
-evidence-backed aliases. The result adds 211 portable-only repositories to the
-existing 100, for 311 unique repositories. The transfer
+evidence-backed aliases. The transfer initially added 211 portable-only
+repositories to the existing 100, for 311 unique repositories. Wave R4 then
+promoted 106 records after pinned README screening, leaving 206 detailed and
+105 portable-only records without changing the total. The transfer
 excluded 19 supporting-only references, four unresolved identity mentions, and
 nine operated repositories before import. One additional unverified or nonpublic
 candidate remains aggregate-only after independent public verification did not
 establish eligibility. Those identities do not appear in
 the machine or human views.
 
-The 211 additions are discovery records, not mechanism appraisals. Their
-mechanism fields use `U` for unknown, and popularity remains unreported.
+The remaining 105 portable-only records are discovery records, not mechanism
+appraisals. Their mechanism fields use `U` for unknown, and popularity remains
+unreported.
 
-## What the 100-repository detailed cohort says
+## What the 206-repository detailed cohort says
 
 ### Mechanism profile at a glance
 
 The register uses `V` for verified at the current evidence depth, `P` for
 partial, `N` for not found, and `O` for out of scope. These counts summarize
-the 100 pinned README-level appraisals. They are not product scores.
+the original 100 pinned README-level appraisals. They are not product scores.
+Wave R4 profiles are available in the machine-readable register and generated site.
 
 | Mechanism | V | P | N | O |
 | --- | ---: | ---: | ---: | ---: |

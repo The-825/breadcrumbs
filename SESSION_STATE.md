@@ -5,16 +5,21 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-08-29 (machine-routable portfolio contract)
+Last refreshed: 2026-09-01 (Wave R4 and workflow registry)
 
 ## Current state
 
-- Active branch: `claude/portfolio-routing-contract`, cut from current `main`.
+- Active branch: `claude/workflow-registry-wave-r4`, cut from current `main`.
 - The public kit and 100-source research ledger remain authoritative. The repository
-  ledger now holds 311 unique assessed public repositories, including 100 detailed
-  mechanism appraisals.
+  ledger holds 311 unique assessed public repositories, including 206 detailed
+  mechanism appraisals and 105 portable-only records.
 
 ## In flight
+
+**Workflow registry and review promotion (D-46).** Five public workflow patterns
+from r/ClaudeWorkflows are evidence-screened and machine-routed without treating
+community votes as quality. Wave R4 promotes 106 portable identities into pinned
+detailed appraisals while preserving their hardened portable provenance.
 
 **Portfolio routing contract (D-45).** `kit.json` now exposes the owner,
 accepted and prohibited data classes, canonical transfer entrypoint, retained
@@ -34,12 +39,13 @@ evaluator, score, or authority.
 
 **Research and detailed landscape (D-32 through D-35).** The public research ledger
 holds 100 screened sources and 17 bounded claims. The detailed repository cohort pins
-100 README-screened appraisals without treating stars as quality or claiming runtime
+206 README-screened appraisals without treating stars as quality or claiming runtime
 performance. Full-text appraisal and code-traced upgrades remain future evidence work.
 
 ## What just landed
-**Public repository ledger correction (D-44).** The current draft contains 311 unique assessed
-public repositories: 100 detailed appraisals and 211 portable-only records. Public-only
+**Public repository ledger correction (D-44).** Main established 311 unique assessed
+public repositories. This branch deepens that same ledger to 206 detailed appraisals
+and 105 portable-only records without changing the total. Public-only
 filtering, stable provenance, duplicate collapse, and nonauthorization are enforced.
 
 **A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.

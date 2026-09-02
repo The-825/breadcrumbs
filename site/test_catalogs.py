@@ -45,11 +45,16 @@ class CatalogTests(unittest.TestCase):
 
     def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
-        self.assertEqual(211, len(portable))
+        self.assertEqual(105, len(portable))
         for item in portable:
             self.assertIsNone(item["stars_observed"])
             self.assertIsNone(item["popularityOrder"])
             self.assertEqual(item["unknownMechanisms"], item["mechanismTotal"])
+
+    def test_detailed_repository_review_count_exceeds_original_saturation_baseline(self):
+        detailed = [item for item in self.repositories if item["evidence_depth"] == "readme-screened"]
+        self.assertEqual(206, len(detailed))
+        self.assertGreater(len(detailed), 100)
 
     def test_table_headers_do_not_float_over_rows(self):
         css = (SITE / "app.css").read_text(encoding="utf-8")
