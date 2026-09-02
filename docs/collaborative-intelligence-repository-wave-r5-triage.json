@@ -1,0 +1,1060 @@
+{
+  "schema_version": "1.0",
+  "review_wave": "R5",
+  "source_ref": "90fb58da1c33241131fb3ad4f9d54478e89d8105",
+  "triage_count": 105,
+  "promotion_boundary": "screened-not-promoted is a relevance disposition, not a quality score",
+  "authority": "descriptive-only",
+  "reviews": [
+    {
+      "repository_id": "R-101",
+      "repository": "1771-technologies/lytenyte",
+      "source_url": "https://github.com/1771-technologies/lytenyte",
+      "status": "screened-not-promoted",
+      "reason": "React data grid library; AI agent skills are an incidental developer-productivity feature, not a documented collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-106",
+      "repository": "actions/dependency-review-action",
+      "source_url": "https://github.com/actions/dependency-review-action",
+      "status": "screened-not-promoted",
+      "reason": "GitHub Action for dependency-vulnerability and license scanning in PRs; a static-analysis tool with no agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-110",
+      "repository": "agent-rl/recall",
+      "source_url": "https://github.com/agent-rl/recall",
+      "status": "screened-not-promoted",
+      "reason": "Single-agent RL training framework for tool-use; documents benchmark evaluation but no human-AI or multi-agent collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-113",
+      "repository": "akullpp/awesome-java",
+      "source_url": "https://github.com/akullpp/awesome-java",
+      "status": "screened-not-promoted",
+      "reason": "Curated awesome-list of Java frameworks and libraries, not software with a collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-114",
+      "repository": "alexiocassanifm/anthropic-certifications",
+      "source_url": "https://github.com/alexiocassanifm/anthropic-certifications",
+      "status": "screened-not-promoted",
+      "reason": "A certification study kit/curriculum (wiki notes, practice questions) delivered via Claude Code skills, not a collaboration-mechanism implementation.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-115",
+      "repository": "amrmkayid/friday",
+      "source_url": "https://github.com/amrmkayid/friday",
+      "status": "screened-not-promoted",
+      "reason": "Zero-star, two-commit personal project with no accessible README content or documented mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-117",
+      "repository": "anthropics/claude-cookbooks",
+      "source_url": "https://github.com/anthropics/claude-cookbooks",
+      "status": "screened-not-promoted",
+      "reason": "Collection of illustrative Jupyter notebooks demonstrating Claude API usage patterns; not a single software system with its own collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-118",
+      "repository": "anthropics/claude-plugins-official",
+      "source_url": "https://github.com/anthropics/claude-plugins-official",
+      "status": "screened-not-promoted",
+      "reason": "A plugin marketplace/directory with submission and installation rules; the README does not itself document an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-119",
+      "repository": "anthropics/courses",
+      "source_url": "https://github.com/anthropics/courses",
+      "status": "screened-not-promoted",
+      "reason": "A curated set of educational courses on the Claude API, not software implementing a collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-120",
+      "repository": "anthropics/skills",
+      "source_url": "https://github.com/anthropics/skills",
+      "status": "screened-not-promoted",
+      "reason": "Single-agent instruction/skill library for Claude; README documents no collaboration topology, workflow state, memory, or authority mechanism beyond loading a skill into one agent's context.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-122",
+      "repository": "arkivanov/decompose",
+      "source_url": "https://github.com/arkivanov/decompose",
+      "status": "screened-not-promoted",
+      "reason": "Kotlin Multiplatform lifecycle/navigation library for app UI architecture, unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-123",
+      "repository": "asgeirtj/system_prompts_leaks",
+      "source_url": "https://github.com/asgeirtj/system_prompts_leaks",
+      "status": "screened-not-promoted",
+      "reason": "A collection of leaked AI system prompts; a dataset archive, not software with a collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-125",
+      "repository": "avelino/awesome-go",
+      "source_url": "https://github.com/avelino/awesome-go",
+      "status": "screened-not-promoted",
+      "reason": "Curated awesome-list of Go libraries, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-126",
+      "repository": "aws/serverless-application-model",
+      "source_url": "https://github.com/aws/serverless-application-model",
+      "status": "screened-not-promoted",
+      "reason": "Infrastructure-as-code CloudFormation macro for serverless resources; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-127",
+      "repository": "ayghri/i-have-adhd",
+      "source_url": "https://github.com/ayghri/i-have-adhd",
+      "status": "screened-not-promoted",
+      "reason": "An output-formatting style skill for coding-agent responses; personal utility, no documented agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-130",
+      "repository": "binhnguyennus/awesome-scalability",
+      "source_url": "https://github.com/binhnguyennus/awesome-scalability",
+      "status": "screened-not-promoted",
+      "reason": "A curated awesome-list of scalability resources and articles, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-133",
+      "repository": "blakeblackshear/frigate",
+      "source_url": "https://github.com/blakeblackshear/frigate",
+      "status": "screened-not-promoted",
+      "reason": "NVR/object-detection software for IP cameras; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-137",
+      "repository": "bradautomates/claude-video",
+      "source_url": "https://github.com/bradautomates/claude-video",
+      "status": "screened-not-promoted",
+      "reason": "Single-purpose Claude Skill that extracts video frames/transcripts for analysis; documents no human-authority, memory, or collaboration-topology mechanism, only a fixed ingestion pipeline.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-139",
+      "repository": "btw-so/open-source-alternatives",
+      "source_url": "https://github.com/btw-so/open-source-alternatives",
+      "status": "screened-not-promoted",
+      "reason": "A curated directory of open-source SaaS alternatives, not software with an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-141",
+      "repository": "cathrynlavery/diagram-design",
+      "source_url": "https://github.com/cathrynlavery/diagram-design",
+      "status": "screened-not-promoted",
+      "reason": "Diagram-rendering skill/template pack for coding agents; documents visual output formatting only, no collaboration mechanism observed in the README.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-143",
+      "repository": "cdmorozov/claude-tutors",
+      "source_url": "https://github.com/cdmorozov/claude-tutors",
+      "status": "screened-not-promoted",
+      "reason": "Tutoring skills for Claude on math/programming subjects; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-145",
+      "repository": "cloud-custodian/cloud-custodian",
+      "source_url": "https://github.com/cloud-custodian/cloud-custodian",
+      "status": "screened-not-promoted",
+      "reason": "Cloud governance/compliance rules engine for AWS/Azure/GCP; README documents no AI-agent collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-146",
+      "repository": "cncf/landscape",
+      "source_url": "https://github.com/cncf/landscape",
+      "status": "screened-not-promoted",
+      "reason": "Curated dataset/taxonomy powering the CNCF Cloud Native Landscape visualization, not agent-collaboration software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-147",
+      "repository": "codecrafters-io/build-your-own-x",
+      "source_url": "https://github.com/codecrafters-io/build-your-own-x",
+      "status": "screened-not-promoted",
+      "reason": "A curated curriculum of tutorials for rebuilding technologies from scratch, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-149",
+      "repository": "composiohq/awesome-claude-skills",
+      "source_url": "https://github.com/composiohq/awesome-claude-skills",
+      "status": "screened-not-promoted",
+      "reason": "Curated directory of 1000+ Claude skills/plugins with links to external implementations, not a single software system with its own mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-154",
+      "repository": "datakind/student-success-tool",
+      "source_url": "https://github.com/datakind/student-success-tool",
+      "status": "screened-not-promoted",
+      "reason": "Predictive-modeling tool for student-advising insights; documents human decision authority but no agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-155",
+      "repository": "datopian/portal-apple",
+      "source_url": "https://github.com/datopian/portal-apple",
+      "status": "screened-not-promoted",
+      "reason": "A CKAN data-portal frontend template; unrelated to agent-collaboration mechanisms beyond an optional supplementary chat widget.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-158",
+      "repository": "dbeaver/dbeaver",
+      "source_url": "https://github.com/dbeaver/dbeaver",
+      "status": "screened-not-promoted",
+      "reason": "A universal database GUI client; its bolted-on AI chat feature is not a documented agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-159",
+      "repository": "decalage2/awesome-security-hardening",
+      "source_url": "https://github.com/decalage2/awesome-security-hardening",
+      "status": "screened-not-promoted",
+      "reason": "A curated awesome-list of security hardening resources, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-160",
+      "repository": "deepseek-ai/deepseek-harness",
+      "source_url": "https://github.com/deepseek-ai/deepseek-harness",
+      "status": "screened-not-promoted",
+      "reason": "Developer-preview agent harness whose README documents only a generic plugin/extension architecture and a compatibility-breaking-changes warning; no collaboration topology, authority, memory, or evaluation mechanism described in usable detail.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-161",
+      "repository": "devoteamgcloud/dataform-assertions",
+      "source_url": "https://github.com/devoteamgcloud/dataform-assertions",
+      "status": "screened-not-promoted",
+      "reason": "SQL-based data-quality assertion package for Dataform; no agent/AI collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-164",
+      "repository": "donnemartin/system-design-primer",
+      "source_url": "https://github.com/donnemartin/system-design-primer",
+      "status": "screened-not-promoted",
+      "reason": "A curated curriculum, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-165",
+      "repository": "dovamir/awesome-design-patterns",
+      "source_url": "https://github.com/dovamir/awesome-design-patterns",
+      "status": "screened-not-promoted",
+      "reason": "Curated awesome-list of design-pattern resources, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-167",
+      "repository": "easystats/report",
+      "source_url": "https://github.com/easystats/report",
+      "status": "screened-not-promoted",
+      "reason": "An R package for automated statistical reporting; unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-168",
+      "repository": "ebookfoundation/free-programming-books",
+      "source_url": "https://github.com/ebookfoundation/free-programming-books",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of freely available programming books and courses, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-169",
+      "repository": "eriklindernoren/ml-from-scratch",
+      "source_url": "https://github.com/eriklindernoren/ml-from-scratch",
+      "status": "screened-not-promoted",
+      "reason": "Educational NumPy implementations of ML algorithms, not software addressing agent collaboration mechanisms.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-170",
+      "repository": "etiennepasteur/jean-claude",
+      "source_url": "https://github.com/etiennepasteur/jean-claude",
+      "status": "screened-not-promoted",
+      "reason": "HTTPS MITM proxy for stubbing/freezing Claude Code's own API responses; a single-tool debugging/config utility, not a collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-172",
+      "repository": "featbit/featbit",
+      "source_url": "https://github.com/featbit/featbit",
+      "status": "screened-not-promoted",
+      "reason": "Feature-flag management platform, does not document an agent-collaboration-specific mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-175",
+      "repository": "flowiseai/flowise",
+      "source_url": "https://github.com/flowiseai/flowise",
+      "status": "screened-not-promoted",
+      "reason": "Archived, no-code agent-workflow builder; the actual README documents no agent-collaboration mechanism at review depth, only install steps and a pointer to external docs.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-181",
+      "repository": "gokumohandas/made-with-ml",
+      "source_url": "https://github.com/gokumohandas/made-with-ml",
+      "status": "screened-not-promoted",
+      "reason": "Educational course/curriculum for building production ML systems, not an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-182",
+      "repository": "googlecloudplatform/cloud-data-quality",
+      "source_url": "https://github.com/googlecloudplatform/cloud-data-quality",
+      "status": "screened-not-promoted",
+      "reason": "A BigQuery data-quality validation CLI; unrelated to agent collaboration mechanisms.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-183",
+      "repository": "googlecloudplatform/generative-ai",
+      "source_url": "https://github.com/googlecloudplatform/generative-ai",
+      "status": "screened-not-promoted",
+      "reason": "A curated collection of sample notebooks and tutorials for Google Cloud generative AI products; the README does not itself document a collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-184",
+      "repository": "googlecloudplatform/knowledge-catalog",
+      "source_url": "https://github.com/googlecloudplatform/knowledge-catalog",
+      "status": "screened-not-promoted",
+      "reason": "Minimal samples/toolbox repo for a GCP catalog product; README documents no collaboration mechanism at review depth.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-185",
+      "repository": "googlecloudplatform/terraform-google-dataplex-auto-data-quality",
+      "source_url": "https://github.com/googlecloudplatform/terraform-google-dataplex-auto-data-quality",
+      "status": "screened-not-promoted",
+      "reason": "Terraform module for deploying GCP Dataplex data-quality rules; infrastructure-as-code, unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-187",
+      "repository": "hack-with-github/awesome-hacking",
+      "source_url": "https://github.com/hack-with-github/awesome-hacking",
+      "status": "screened-not-promoted",
+      "reason": "A curated collection of awesome lists, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-189",
+      "repository": "hesreallyhim/awesome-claude-code",
+      "source_url": "https://github.com/hesreallyhim/awesome-claude-code",
+      "status": "screened-not-promoted",
+      "reason": "A curated awesome-list of Claude Code resources, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-192",
+      "repository": "huggingface/transformers",
+      "source_url": "https://github.com/huggingface/transformers",
+      "status": "screened-not-promoted",
+      "reason": "General-purpose model-definition library for ML inference and training; README documents no agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-195",
+      "repository": "immo2n/friday-ai",
+      "source_url": "https://github.com/immo2n/friday-ai",
+      "status": "screened-not-promoted",
+      "reason": "Thin personal hobby assistant project with no collaboration mechanism beyond basic SQLite caching.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-197",
+      "repository": "ismailsaoulaj/reddit-mcp-server",
+      "source_url": "https://github.com/ismailsaoulaj/reddit-mcp-server",
+      "status": "screened-not-promoted",
+      "reason": "A Reddit-access MCP tool server operating in request-response mode; the README explicitly states no multi-agent handoff or orchestration framework is supported.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-198",
+      "repository": "jamiepine/voicebox",
+      "source_url": "https://github.com/jamiepine/voicebox",
+      "status": "screened-not-promoted",
+      "reason": "A local voice-cloning/TTS studio with an MCP speak/transcribe tool add-on; the core product does not document an agent-collaboration mechanism beyond basic tool exposure.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-199",
+      "repository": "jaspersoft/jasperreports",
+      "source_url": "https://github.com/jaspersoft/jasperreports",
+      "status": "screened-not-promoted",
+      "reason": "Java reporting/PDF-generation library; no AI agent or human-AI collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-202",
+      "repository": "jcarterjohnson/vibecoded-design-tells",
+      "source_url": "https://github.com/jcarterjohnson/vibecoded-design-tells",
+      "status": "screened-not-promoted",
+      "reason": "A Reddit-derived dataset and analysis toolkit ranking AI-generated design tells; no documented agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-203",
+      "repository": "jobsta/reportbro-lib",
+      "source_url": "https://github.com/jobsta/reportbro-lib",
+      "status": "screened-not-promoted",
+      "reason": "PDF/Excel report generation library, no agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-204",
+      "repository": "julian-ivanov/jarvis-voice-assistant",
+      "source_url": "https://github.com/julian-ivanov/jarvis-voice-assistant",
+      "status": "screened-not-promoted",
+      "reason": "Single-agent voice assistant with a linear speech-to-action pipeline; no state, memory, evaluation, or authority-boundary mechanisms documented beyond direct voice-command control.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-205",
+      "repository": "kedacore/keda",
+      "source_url": "https://github.com/kedacore/keda",
+      "status": "screened-not-promoted",
+      "reason": "Kubernetes event-driven autoscaling infrastructure; unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-206",
+      "repository": "kepano/obsidian-skills",
+      "source_url": "https://github.com/kepano/obsidian-skills",
+      "status": "screened-not-promoted",
+      "reason": "Agent-skill library teaching a single agent to read/write Obsidian file formats (Markdown, Bases, JSON Canvas); no collaboration topology, workflow state, or authority mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-209",
+      "repository": "kilimchoi/engineering-blogs",
+      "source_url": "https://github.com/kilimchoi/engineering-blogs",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of engineering blogs, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-211",
+      "repository": "kristenzhang/triggerbench-official",
+      "source_url": "https://github.com/kristenzhang/triggerbench-official",
+      "status": "screened-not-promoted",
+      "reason": "Placeholder repository stating code and dataset will be released soon; nothing reviewable exists yet.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-214",
+      "repository": "makenotion/notion-mcp-server",
+      "source_url": "https://github.com/makenotion/notion-mcp-server",
+      "status": "screened-not-promoted",
+      "reason": "Stateless single-tool MCP wrapper around the Notion API; no collaboration topology, workflow state, or authority boundary beyond generic read-only token scoping.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-222",
+      "repository": "milvus-io/milvus",
+      "source_url": "https://github.com/milvus-io/milvus",
+      "status": "screened-not-promoted",
+      "reason": "Already screened out in Wave R3 as storage overlap (2026-08-27): the wave avoids counting multiple vector databases as distinct collaboration mechanisms. Wave R4's independent triage initially included it before this precedent was checked; removed for consistency.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-223",
+      "repository": "mohammedayanrafiq/friday",
+      "source_url": "https://github.com/mohammedayanrafiq/friday",
+      "status": "screened-not-promoted",
+      "reason": "Conceptual voice-assistant placeholder with implementation restricted to private access; no documented collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-224",
+      "repository": "mono424/punktraster",
+      "source_url": "https://github.com/mono424/punktraster",
+      "status": "screened-not-promoted",
+      "reason": "Personal utility (a canvas loading-animation library) unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-228",
+      "repository": "multica-ai/andrej-karpathy-skills",
+      "source_url": "https://github.com/multica-ai/andrej-karpathy-skills",
+      "status": "screened-not-promoted",
+      "reason": "A single CLAUDE.md prompting-guideline file shaping one coding agent's behavior; documents no collaboration topology, workflow state, authority, or memory mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-229",
+      "repository": "neeeophytee/agent-stylebooks",
+      "source_url": "https://github.com/neeeophytee/agent-stylebooks",
+      "status": "screened-not-promoted",
+      "reason": "Portable writing-style guide skills for AI agents; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-232",
+      "repository": "netlify-templates/astro-platform-starter",
+      "source_url": "https://github.com/netlify-templates/astro-platform-starter",
+      "status": "screened-not-promoted",
+      "reason": "Netlify/Astro web starter template, unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-236",
+      "repository": "nilbuild/developer-roadmap",
+      "source_url": "https://github.com/nilbuild/developer-roadmap",
+      "status": "screened-not-promoted",
+      "reason": "A curated collection of career/skill roadmaps and educational content, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-238",
+      "repository": "obra/superpowers-skills",
+      "source_url": "https://github.com/obra/superpowers-skills",
+      "status": "screened-not-promoted",
+      "reason": "Archived skills library auto-cloned by a Claude Code plugin; README documents no agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-239",
+      "repository": "ollama/ollama",
+      "source_url": "https://github.com/ollama/ollama",
+      "status": "screened-not-promoted",
+      "reason": "Local LLM inference runtime; README documents model serving and ecosystem integrations, not an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-244",
+      "repository": "ossf/scorecard",
+      "source_url": "https://github.com/ossf/scorecard",
+      "status": "screened-not-promoted",
+      "reason": "Automated OSS security-posture scorer; does not document an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-245",
+      "repository": "ossu/computer-science",
+      "source_url": "https://github.com/ossu/computer-science",
+      "status": "screened-not-promoted",
+      "reason": "A self-directed computer science degree curriculum, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-247",
+      "repository": "papers-we-love/papers-we-love",
+      "source_url": "https://github.com/papers-we-love/papers-we-love",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of computer science papers for reading groups, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-249",
+      "repository": "pentaho/pentaho-reporting",
+      "source_url": "https://github.com/pentaho/pentaho-reporting",
+      "status": "screened-not-promoted",
+      "reason": "Java business-intelligence reporting engine, unrelated to AI or agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-250",
+      "repository": "philterd/phileas",
+      "source_url": "https://github.com/philterd/phileas",
+      "status": "screened-not-promoted",
+      "reason": "A general-purpose Java PII/PHI redaction engine with no documented AI-agent collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-251",
+      "repository": "pilastdigit/code-with-claude",
+      "source_url": "https://github.com/pilastdigit/code-with-claude",
+      "status": "screened-not-promoted",
+      "reason": "Conference transcript archive, not software with an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-253",
+      "repository": "practical-tutorials/project-based-learning",
+      "source_url": "https://github.com/practical-tutorials/project-based-learning",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of project-based tutorials, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-255",
+      "repository": "public-apis/public-apis",
+      "source_url": "https://github.com/public-apis/public-apis",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of free public APIs, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-257",
+      "repository": "rasbt/llms-from-scratch",
+      "source_url": "https://github.com/rasbt/llms-from-scratch",
+      "status": "screened-not-promoted",
+      "reason": "Code companion to a book on building LLMs from scratch; an educational curriculum, not a collaboration-mechanism implementation.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-259",
+      "repository": "redis/redis",
+      "source_url": "https://github.com/redis/redis",
+      "status": "screened-not-promoted",
+      "reason": "General-purpose in-memory database, does not document an agent-collaboration-specific mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-261",
+      "repository": "rhysd/actionlint",
+      "source_url": "https://github.com/rhysd/actionlint",
+      "status": "screened-not-promoted",
+      "reason": "A static syntax/security checker for GitHub Actions workflow files; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-263",
+      "repository": "ripienaar/free-for-dev",
+      "source_url": "https://github.com/ripienaar/free-for-dev",
+      "status": "screened-not-promoted",
+      "reason": "A curated list of free-tier cloud/SaaS/PaaS/IaaS offerings, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-264",
+      "repository": "rohanadwankar/ws-term",
+      "source_url": "https://github.com/rohanadwankar/ws-term",
+      "status": "screened-not-promoted",
+      "reason": "WebSocket terminal-tunneling utility for restricted VMs; no agent/AI collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-266",
+      "repository": "sagar-tamang/friday-tony-stark-demo",
+      "source_url": "https://github.com/sagar-tamang/friday-tony-stark-demo",
+      "status": "screened-not-promoted",
+      "reason": "A personal voice-assistant demo with basic MCP tool-calling; no documented workflow state, human-authority, or memory mechanism beyond function calling.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-268",
+      "repository": "sdmg15/best-websites-a-programmer-should-visit",
+      "source_url": "https://github.com/sdmg15/best-websites-a-programmer-should-visit",
+      "status": "screened-not-promoted",
+      "reason": "Curated list of external links for programmers; archived by its owner, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-270",
+      "repository": "shadcn-ui/ui",
+      "source_url": "https://github.com/shadcn-ui/ui",
+      "status": "screened-not-promoted",
+      "reason": "A UI component library; unrelated to agent collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-271",
+      "repository": "shanraisshan/claude-code-best-practice",
+      "source_url": "https://github.com/shanraisshan/claude-code-best-practice",
+      "status": "screened-not-promoted",
+      "reason": "A curated documentation/knowledge-base repository aggregating Claude Code practices from other projects, not software implementing a collaboration mechanism itself.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-273",
+      "repository": "sindresorhus/awesome",
+      "source_url": "https://github.com/sindresorhus/awesome",
+      "status": "screened-not-promoted",
+      "reason": "The master curated index of awesome-lists, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-275",
+      "repository": "sohailkhan0525/skills",
+      "source_url": "https://github.com/sohailkhan0525/skills",
+      "status": "screened-not-promoted",
+      "reason": "Personal skill library; documents only basic skill routing, too thin to inform any listed claim.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-276",
+      "repository": "sqlfluff/sqlfluff",
+      "source_url": "https://github.com/sqlfluff/sqlfluff",
+      "status": "screened-not-promoted",
+      "reason": "SQL linter/auto-formatter; no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-278",
+      "repository": "sruthik27/creating-claude-md",
+      "source_url": "https://github.com/sruthik27/creating-claude-md",
+      "status": "screened-not-promoted",
+      "reason": "A skill that generates CLAUDE.md documentation files; does not document an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-280",
+      "repository": "stanford-earth/stanford_r25",
+      "source_url": "https://github.com/stanford-earth/stanford_r25",
+      "status": "screened-not-promoted",
+      "reason": "Drupal module integrating with a room-reservation system; unrelated to agent/AI collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-281",
+      "repository": "step-security/harden-runner",
+      "source_url": "https://github.com/step-security/harden-runner",
+      "status": "screened-not-promoted",
+      "reason": "General GitHub Actions runner security/EDR tool (network egress, file-integrity, process monitoring); not specific to AI agent or human-AI collaboration.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-283",
+      "repository": "sukeesh/jarvis",
+      "source_url": "https://github.com/sukeesh/jarvis",
+      "status": "screened-not-promoted",
+      "reason": "CLI personal-assistant plugin framework; no state, memory, evaluation, or authority-boundary mechanisms documented beyond direct user commands.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-284",
+      "repository": "supabase/supabase",
+      "source_url": "https://github.com/supabase/supabase",
+      "status": "screened-not-promoted",
+      "reason": "A Postgres backend-as-a-service platform (auth, REST/GraphQL, realtime, storage); no agent-collaboration mechanism documented.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-286",
+      "repository": "teng-lin/notebooklm-py",
+      "source_url": "https://github.com/teng-lin/notebooklm-py",
+      "status": "screened-not-promoted",
+      "reason": "Unofficial Python/CLI wrapper exposing NotebookLM's web features to agents via undocumented APIs; documents no collaboration topology, authority, or verification mechanism of its own.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-291",
+      "repository": "thomaspoignant/go-feature-flag",
+      "source_url": "https://github.com/thomaspoignant/go-feature-flag",
+      "status": "screened-not-promoted",
+      "reason": "Feature-flag management system for software rollout control; not an agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-292",
+      "repository": "tiimgreen/github-cheat-sheet",
+      "source_url": "https://github.com/tiimgreen/github-cheat-sheet",
+      "status": "screened-not-promoted",
+      "reason": "A Git/GitHub tips and features cheat sheet, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-294",
+      "repository": "tl-its-umich-edu/my-learning-analytics",
+      "source_url": "https://github.com/tl-its-umich-edu/my-learning-analytics",
+      "status": "screened-not-promoted",
+      "reason": "Student-facing learning-analytics dashboard for Canvas LMS; no AI agent or collaboration mechanism described.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-295",
+      "repository": "trimstray/the-book-of-secret-knowledge",
+      "source_url": "https://github.com/trimstray/the-book-of-secret-knowledge",
+      "status": "screened-not-promoted",
+      "reason": "Curated collection of cheatsheets, manuals, and tool links, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-296",
+      "repository": "uber/piranha",
+      "source_url": "https://github.com/uber/piranha",
+      "status": "screened-not-promoted",
+      "reason": "Deterministic AST-based static-analysis tool for removing stale feature-flag code; no AI/LLM or agent-collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-297",
+      "repository": "unitime/unitime",
+      "source_url": "https://github.com/unitime/unitime",
+      "status": "screened-not-promoted",
+      "reason": "A traditional academic scheduling/timetabling system with no AI-agent involvement.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-298",
+      "repository": "unleash/unleash",
+      "source_url": "https://github.com/unleash/unleash",
+      "status": "screened-not-promoted",
+      "reason": "Feature-flag management platform, does not document an agent-collaboration-specific mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-299",
+      "repository": "ussumant/useful-agent-skills",
+      "source_url": "https://github.com/ussumant/useful-agent-skills",
+      "status": "screened-not-promoted",
+      "reason": "Single published skill (quota-based model switching); too thin to document a broader collaboration mechanism.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-302",
+      "repository": "vinta/awesome-python",
+      "source_url": "https://github.com/vinta/awesome-python",
+      "status": "screened-not-promoted",
+      "reason": "Curated awesome-list of Python libraries and tools, not software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-307",
+      "repository": "voltagent/awesome-agent-skills",
+      "source_url": "https://github.com/voltagent/awesome-agent-skills",
+      "status": "screened-not-promoted",
+      "reason": "A curated awesome-list of 1000+ agent skills, explicitly a hand-picked compilation rather than software.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    },
+    {
+      "repository_id": "R-311",
+      "repository": "zizmorcore/zizmor",
+      "source_url": "https://github.com/zizmorcore/zizmor",
+      "status": "screened-not-promoted",
+      "reason": "General GitHub Actions/CI security static-analysis linter, explicitly not specific to AI agent workflows.",
+      "review_date": "2026-09-01",
+      "review_basis": "public-readme-relevance-triage",
+      "authority": "descriptive-only"
+    }
+  ]
+}

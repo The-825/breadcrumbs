@@ -64,7 +64,9 @@ jobs:
           python3 ci-kit/kit_manifest_check.py
           python3 scripts/repository_landscape.py --check
           python3 scripts/repository_review_promotions.py --check
+          python3 scripts/repository_triage.py --check
           python3 scripts/workflow_registry.py --check
+          python3 scripts/workflow_reproduction.py --check
 
       - name: Ledger-tool self-tests
         run: |

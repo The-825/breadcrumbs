@@ -19,6 +19,14 @@ The public ledger remains 311 repositories: 206 detailed appraisals and 105
 portable-only records. A record that is not promoted remains in discovery intake;
 triage never deletes a positively verified public identity from the ledger.
 
+### Wave R5 portable-only triage closure
+
+All 105 remaining portable-only records have a public README relevance disposition
+in the [Wave R5 triage manifest](collaborative-intelligence-repository-wave-r5-triage.json).
+They remain discoverable because the disposition is not a quality judgment and does
+not undo their verified public identity or prior assessment provenance. Promotion
+still requires a claim-relevant mechanism and a pinned detailed appraisal.
+
 One candidate from the earlier transfer is now aggregate-only. Independent public
 GitHub verification did not establish that it met the positive-public contract,
 so its identity is not published. The producer also excludes 19 supporting-only

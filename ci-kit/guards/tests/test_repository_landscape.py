@@ -42,12 +42,12 @@ class TestRepositoryLandscape(unittest.TestCase):
         self.assertEqual(106, len(promoted))
         self.assertTrue(all(row.get("portable_assessments") for row in promoted))
         self.assertTrue(all(row["detailed_review"]["authority"] == "descriptive-only" for row in promoted))
-        self.assertEqual(
-            {"detailed_appraisal_count": 206, "portable_only_count": 105,
-             "total_repository_count": 311, "latest_review_wave": "R4",
-             "latest_review_wave_count": 106},
-            self.data["review_summary"],
-        )
+        self.assertEqual(206, self.data["review_summary"]["detailed_appraisal_count"])
+        self.assertEqual(105, self.data["review_summary"]["portable_only_count"])
+        self.assertEqual(311, self.data["review_summary"]["total_repository_count"])
+        self.assertEqual(105, self.data["review_summary"]["portable_only_triaged_count"])
+        self.assertTrue(all(row.get("detailed_review_triage", {}).get("status") == "screened-not-promoted" for row in portable))
+        self.assertTrue(all(row["detailed_review_triage"]["authority"] == "descriptive-only" for row in portable))
 
     def test_mechanism_profiles_are_complete_without_scores(self):
         dimensions = self.data["dimensions"]

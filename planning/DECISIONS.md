@@ -542,3 +542,17 @@ in their owning repositories.
 Why: deleting non-promoted identities would collapse discovery coverage into an
 appraisal shortlist. Treating community posts as proven workflows would make the
 same evidence-depth error in the opposite direction.
+
+## D-47 — Close triage separately from appraisal and adoption
+
+Date: 2026-09-01
+
+Decision: every portable-only record receives an explicit public relevance
+disposition, but remains in the registry unless the public identity or provenance
+is invalidated. Workflow patterns may move to reproduced after their local public
+contract passes deterministic synthetic tests. Reproduced does not mean adopted,
+externally effective, installed, or authorized.
+
+Why: complete coverage requires a disposition for every record, while evidence
+honesty requires separate stages for identity intake, relevance triage, detailed
+appraisal, local reproduction, and operational adoption.

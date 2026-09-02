@@ -2,7 +2,13 @@
   "schema_version": "1.0",
   "authority": "descriptive-only",
   "evidence_boundary": "Community workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.",
-  "adoption_states": ["discovered", "screened", "reproduced", "adopted", "rejected"],
+  "adoption_states": [
+    "discovered",
+    "screened",
+    "reproduced",
+    "adopted",
+    "rejected"
+  ],
   "workflows": [
     {
       "id": "WF-001",
@@ -10,17 +16,41 @@
       "source_url": "https://www.reddit.com/r/ClaudeWorkflows/comments/1uy1c2s/workflow_claude_code_workflow_structured/",
       "source_type": "community-post",
       "observed_date": "2026-09-01",
-      "categories": ["context", "repository-orientation"],
+      "categories": [
+        "context",
+        "repository-orientation"
+      ],
       "problem": "Agents repeatedly rediscover architecture, conventions, and known traps.",
       "pattern": "Maintain a bounded index, architecture map, glossary, conventions, patterns, gotchas, area flows, and validation reports.",
-      "requirements": ["size budgets", "relative-link validation", "repository-owned updates"],
-      "evidence_level": "screened-description",
-      "validation_signals": ["context files are linked", "budgets are enforced", "stale links fail validation"],
-      "limitations": ["AI-maintained context can preserve errors unless evidence and review are required"],
-      "community_signal": {"kind": "reddit-voting", "value": "not-used-as-quality-score"},
-      "adoption_state": "screened",
-      "jarvis_routes": ["JR-001"],
-      "authority": "descriptive-only"
+      "requirements": [
+        "size budgets",
+        "relative-link validation",
+        "repository-owned updates"
+      ],
+      "evidence_level": "public-synthetic-reproduction",
+      "validation_signals": [
+        "context files are linked",
+        "budgets are enforced",
+        "stale links fail validation"
+      ],
+      "limitations": [
+        "AI-maintained context can preserve errors unless evidence and review are required"
+      ],
+      "community_signal": {
+        "kind": "reddit-voting",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "reproduced",
+      "jarvis_routes": [
+        "JR-001"
+      ],
+      "authority": "descriptive-only",
+      "reproduction": {
+        "command": "ci-kit/guards/guard_context_budget.py --selftest",
+        "result": "passed",
+        "date": "2026-09-01",
+        "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      }
     },
     {
       "id": "WF-002",
@@ -28,17 +58,41 @@
       "source_url": "https://www.reddit.com/r/ClaudeWorkflows/comments/1vtdsy9/workflow_gitmanaged_agent_memory_a_scalable/",
       "source_type": "community-post",
       "observed_date": "2026-09-01",
-      "categories": ["memory", "provenance"],
+      "categories": [
+        "memory",
+        "provenance"
+      ],
       "problem": "Agent memory becomes opaque, over-broad, or difficult to correct.",
       "pattern": "Store atomic facts in explicit persona, shared, and workspace scopes with on-demand recall and Git review.",
-      "requirements": ["facts remain separate from tasks", "scope is explicit", "changes are reviewable"],
-      "evidence_level": "screened-description",
-      "validation_signals": ["scoped recall tests", "correction history", "reviewable memory changes"],
-      "limitations": ["Git history alone does not establish truth or authorization"],
-      "community_signal": {"kind": "reddit-voting", "value": "not-used-as-quality-score"},
-      "adoption_state": "screened",
-      "jarvis_routes": ["JR-002"],
-      "authority": "descriptive-only"
+      "requirements": [
+        "facts remain separate from tasks",
+        "scope is explicit",
+        "changes are reviewable"
+      ],
+      "evidence_level": "public-synthetic-reproduction",
+      "validation_signals": [
+        "scoped recall tests",
+        "correction history",
+        "reviewable memory changes"
+      ],
+      "limitations": [
+        "Git history alone does not establish truth or authorization"
+      ],
+      "community_signal": {
+        "kind": "reddit-voting",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "reproduced",
+      "jarvis_routes": [
+        "JR-002"
+      ],
+      "authority": "descriptive-only",
+      "reproduction": {
+        "command": "templates/ledger-tools/scoped_context.py --selftest",
+        "result": "passed",
+        "date": "2026-09-01",
+        "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      }
     },
     {
       "id": "WF-003",
@@ -46,17 +100,42 @@
       "source_url": "https://www.reddit.com/r/ClaudeWorkflows/comments/1uys8jg/workflow_structured_sdlc_workflows_with_claude/",
       "source_type": "community-post",
       "observed_date": "2026-09-01",
-      "categories": ["workflow", "skills", "quality-control"],
+      "categories": [
+        "workflow",
+        "skills",
+        "quality-control"
+      ],
       "problem": "General agent instructions are too broad to enforce task-specific quality gates.",
       "pattern": "Express bounded development stages as task-specific rules or skills with guardrails and specialist roles.",
-      "requirements": ["explicit entry conditions", "completion tests", "bounded specialist authority"],
-      "evidence_level": "screened-description",
-      "validation_signals": ["stage gates execute", "specialists cannot widen scope", "completion criteria are testable"],
-      "limitations": ["more roles can add coordination cost without measured benefit"],
-      "community_signal": {"kind": "reddit-voting", "value": "not-used-as-quality-score"},
-      "adoption_state": "screened",
-      "jarvis_routes": ["JR-003"],
-      "authority": "descriptive-only"
+      "requirements": [
+        "explicit entry conditions",
+        "completion tests",
+        "bounded specialist authority"
+      ],
+      "evidence_level": "public-synthetic-reproduction",
+      "validation_signals": [
+        "stage gates execute",
+        "specialists cannot widen scope",
+        "completion criteria are testable"
+      ],
+      "limitations": [
+        "more roles can add coordination cost without measured benefit"
+      ],
+      "community_signal": {
+        "kind": "reddit-voting",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "reproduced",
+      "jarvis_routes": [
+        "JR-003"
+      ],
+      "authority": "descriptive-only",
+      "reproduction": {
+        "command": "-m unittest discover -s ci-kit/workflows/tests",
+        "result": "passed",
+        "date": "2026-09-01",
+        "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      }
     },
     {
       "id": "WF-004",
@@ -64,17 +143,41 @@
       "source_url": "https://www.reddit.com/r/ClaudeWorkflows/comments/1vtzhka/workflow_workflow_for_effective_claude_code/",
       "source_type": "community-post",
       "observed_date": "2026-09-01",
-      "categories": ["implementation", "handoff"],
+      "categories": [
+        "implementation",
+        "handoff"
+      ],
       "problem": "Long sessions blur completion state and accumulate unverified assumptions.",
       "pattern": "Keep scope small, define done before editing, run tests, then compact or hand off before starting another task.",
-      "requirements": ["one bounded objective", "explicit done criteria", "evidence-bearing handoff"],
-      "evidence_level": "screened-description",
-      "validation_signals": ["bounded diff", "tests tied to done criteria", "handoff names remaining work"],
-      "limitations": ["small slices still require a coordinator to preserve program-level coherence"],
-      "community_signal": {"kind": "reddit-voting", "value": "not-used-as-quality-score"},
-      "adoption_state": "screened",
-      "jarvis_routes": ["JR-004"],
-      "authority": "descriptive-only"
+      "requirements": [
+        "one bounded objective",
+        "explicit done criteria",
+        "evidence-bearing handoff"
+      ],
+      "evidence_level": "public-synthetic-reproduction",
+      "validation_signals": [
+        "bounded diff",
+        "tests tied to done criteria",
+        "handoff names remaining work"
+      ],
+      "limitations": [
+        "small slices still require a coordinator to preserve program-level coherence"
+      ],
+      "community_signal": {
+        "kind": "reddit-voting",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "reproduced",
+      "jarvis_routes": [
+        "JR-004"
+      ],
+      "authority": "descriptive-only",
+      "reproduction": {
+        "command": "ci-kit/preflight/preflight.py --selftest",
+        "result": "passed",
+        "date": "2026-09-01",
+        "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      }
     },
     {
       "id": "WF-005",
@@ -82,17 +185,42 @@
       "source_url": "https://www.reddit.com/r/ClaudeWorkflows/comments/1u8wozt/workflow_hybrid_claude_chat_code_workflow_for/",
       "source_type": "community-post",
       "observed_date": "2026-09-01",
-      "categories": ["cross-model", "orchestration"],
+      "categories": [
+        "cross-model",
+        "orchestration"
+      ],
       "problem": "Design reasoning and implementation execution lose context across tools.",
       "pattern": "Use a structured brief to transfer approved design intent into a bounded implementation session and return code evidence through a gate.",
-      "requirements": ["model-neutral brief", "source links", "code gate", "separate attribution"],
-      "evidence_level": "screened-description",
-      "validation_signals": ["brief fields are complete", "implementation maps to approved intent", "results return with evidence"],
-      "limitations": ["a handoff does not prove the receiving model understood or completed the task"],
-      "community_signal": {"kind": "reddit-voting", "value": "not-used-as-quality-score"},
-      "adoption_state": "screened",
-      "jarvis_routes": ["JR-005"],
-      "authority": "descriptive-only"
+      "requirements": [
+        "model-neutral brief",
+        "source links",
+        "code gate",
+        "separate attribution"
+      ],
+      "evidence_level": "public-synthetic-reproduction",
+      "validation_signals": [
+        "brief fields are complete",
+        "implementation maps to approved intent",
+        "results return with evidence"
+      ],
+      "limitations": [
+        "a handoff does not prove the receiving model understood or completed the task"
+      ],
+      "community_signal": {
+        "kind": "reddit-voting",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "reproduced",
+      "jarvis_routes": [
+        "JR-005"
+      ],
+      "authority": "descriptive-only",
+      "reproduction": {
+        "command": "scripts/workflow_registry.py --check",
+        "result": "passed",
+        "date": "2026-09-01",
+        "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      }
     }
   ]
 }
