@@ -21,10 +21,8 @@ are separate evidence classes.
   skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
 - [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
   selftest commands, for programmatic adoption.
-- [docs/workflow-registry.json](docs/workflow-registry.json): versioned,
-  evidence-bounded public workflow discovery records.
-- [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json):
-  model-neutral public routing patterns for Jarvis consumers.
+- [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
+- [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
 
 ## Memory that survives the session
 
@@ -115,6 +113,8 @@ are separate evidence classes.
 - [scripts/repository_landscape.py](scripts/repository_landscape.py):
   deterministic public-only transfer importer and ledger validator.
 - [scripts/repository_review_promotions.py](scripts/repository_review_promotions.py): deterministic promotion of portable identities into pinned detailed reviews.
+- [scripts/repository_triage.py](scripts/repository_triage.py): closes the portable-only queue with explicit public relevance dispositions.
+- [scripts/workflow_reproduction.py](scripts/workflow_reproduction.py): runs bounded synthetic reproductions without claiming external effectiveness.
 
 ## Optional
 

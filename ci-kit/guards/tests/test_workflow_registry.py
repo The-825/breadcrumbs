@@ -18,10 +18,11 @@ class TestWorkflowRegistry(unittest.TestCase):
         self.assertTrue(all(set(row["jarvis_routes"]) <= route_ids for row in registry["workflows"]))
         self.assertTrue(all(set(row["workflow_ids"]) <= workflow_ids for row in routing["routes"]))
 
-    def test_screened_is_not_reproduced_or_adopted(self):
+    def test_reproduced_is_not_adopted_or_claimed_effective(self):
         registry = json.loads((ROOT / "docs" / "workflow-registry.json").read_text(encoding="utf-8"))
-        self.assertEqual({"screened"}, {row["adoption_state"] for row in registry["workflows"]})
-        self.assertTrue(all(row["evidence_level"] == "screened-description" for row in registry["workflows"]))
+        self.assertEqual({"reproduced"}, {row["adoption_state"] for row in registry["workflows"]})
+        self.assertTrue(all(row["evidence_level"] == "public-synthetic-reproduction" for row in registry["workflows"]))
+        self.assertTrue(all("not external effectiveness" in row["reproduction"]["claim_boundary"] for row in registry["workflows"]))
 
 
 if __name__ == "__main__":

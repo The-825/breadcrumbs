@@ -4374,7 +4374,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "React data grid library; AI agent skills are an incidental developer-productivity feature, not a documented collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-102",
@@ -4704,7 +4712,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "GitHub Action for dependency-vulnerability and license scanning in PRs; a static-analysis tool with no agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-107",
@@ -4969,7 +4985,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Single-agent RL training framework for tool-use; documents benchmark evaluation but no human-AI or multi-agent collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-111",
@@ -5164,7 +5188,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated awesome-list of Java frameworks and libraries, not software with a collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-114",
@@ -5222,7 +5254,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A certification study kit/curriculum (wiki notes, practice questions) delivered via Claude Code skills, not a collaboration-mechanism implementation.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-115",
@@ -5280,7 +5320,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Zero-star, two-commit personal project with no accessible README content or documented mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-116",
@@ -5405,7 +5453,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Collection of illustrative Jupyter notebooks demonstrating Claude API usage patterns; not a single software system with its own collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-118",
@@ -5463,7 +5519,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A plugin marketplace/directory with submission and installation rules; the README does not itself document an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-119",
@@ -5521,7 +5585,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated set of educational courses on the Claude API, not software implementing a collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-120",
@@ -5579,7 +5651,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Single-agent instruction/skill library for Claude; README documents no collaboration topology, workflow state, memory, or authority mechanism beyond loading a skill into one agent's context.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-121",
@@ -5705,7 +5785,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Kotlin Multiplatform lifecycle/navigation library for app UI architecture, unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-123",
@@ -5763,7 +5851,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A collection of leaked AI system prompts; a dataset archive, not software with a collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-124",
@@ -5888,7 +5984,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated awesome-list of Go libraries, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-126",
@@ -5946,7 +6050,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Infrastructure-as-code CloudFormation macro for serverless resources; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-127",
@@ -6004,7 +6116,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "An output-formatting style skill for coding-agent responses; personal utility, no documented agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-128",
@@ -6198,7 +6318,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated awesome-list of scalability resources and articles, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-131",
@@ -6394,7 +6522,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "NVR/object-detection software for IP cameras; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-134",
@@ -6657,7 +6793,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Single-purpose Claude Skill that extracts video frames/transcripts for analysis; documents no human-authority, memory, or collaboration-topology mechanism, only a fixed ingestion pipeline.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-138",
@@ -6784,7 +6928,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated directory of open-source SaaS alternatives, not software with an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-140",
@@ -6912,7 +7064,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Diagram-rendering skill/template pack for coding agents; documents visual output formatting only, no collaboration mechanism observed in the README.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-142",
@@ -7040,7 +7200,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Tutoring skills for Claude on math/programming subjects; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-144",
@@ -7165,7 +7333,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Cloud governance/compliance rules engine for AWS/Azure/GCP; README documents no AI-agent collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-146",
@@ -7223,7 +7399,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated dataset/taxonomy powering the CNCF Cloud Native Landscape visualization, not agent-collaboration software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-147",
@@ -7281,7 +7465,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated curriculum of tutorials for rebuilding technologies from scratch, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-148",
@@ -7408,7 +7600,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated directory of 1000+ Claude skills/plugins with links to external implementations, not a single software system with its own mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-150",
@@ -7739,7 +7939,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Predictive-modeling tool for student-advising insights; documents human decision authority but no agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-155",
@@ -7797,7 +8005,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A CKAN data-portal frontend template; unrelated to agent-collaboration mechanisms beyond an optional supplementary chat widget.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-156",
@@ -7990,7 +8206,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A universal database GUI client; its bolted-on AI chat feature is not a documented agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-159",
@@ -8048,7 +8272,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated awesome-list of security hardening resources, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-160",
@@ -8106,7 +8338,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Developer-preview agent harness whose README documents only a generic plugin/extension architecture and a compatibility-breaking-changes warning; no collaboration topology, authority, memory, or evaluation mechanism described in usable detail.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-161",
@@ -8164,7 +8404,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "SQL-based data-quality assertion package for Dataform; no agent/AI collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-162",
@@ -8359,7 +8607,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated curriculum, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-165",
@@ -8417,7 +8673,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated awesome-list of design-pattern resources, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-166",
@@ -8544,7 +8808,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "An R package for automated statistical reporting; unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-168",
@@ -8602,7 +8874,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of freely available programming books and courses, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-169",
@@ -8660,7 +8940,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Educational NumPy implementations of ML algorithms, not software addressing agent collaboration mechanisms.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-170",
@@ -8718,7 +9006,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "HTTPS MITM proxy for stubbing/freezing Claude Code's own API responses; a single-tool debugging/config utility, not a collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-171",
@@ -8845,7 +9141,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Feature-flag management platform, does not document an agent-collaboration-specific mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-173",
@@ -9041,7 +9345,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Archived, no-code agent-workflow builder; the actual README documents no agent-collaboration mechanism at review depth, only install steps and a pointer to external docs.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-176",
@@ -9452,7 +9764,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Educational course/curriculum for building production ML systems, not an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-182",
@@ -9510,7 +9830,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A BigQuery data-quality validation CLI; unrelated to agent collaboration mechanisms.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-183",
@@ -9568,7 +9896,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated collection of sample notebooks and tutorials for Google Cloud generative AI products; the README does not itself document a collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-184",
@@ -9626,7 +9962,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Minimal samples/toolbox repo for a GCP catalog product; README documents no collaboration mechanism at review depth.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-185",
@@ -9684,7 +10028,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Terraform module for deploying GCP Dataplex data-quality rules; infrastructure-as-code, unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-186",
@@ -9810,7 +10162,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated collection of awesome lists, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-188",
@@ -9937,7 +10297,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated awesome-list of Claude Code resources, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-190",
@@ -10133,7 +10501,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "General-purpose model-definition library for ML inference and training; README documents no agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-193",
@@ -10328,7 +10704,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Thin personal hobby assistant project with no collaboration mechanism beyond basic SQLite caching.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-196",
@@ -10455,7 +10839,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A Reddit-access MCP tool server operating in request-response mode; the README explicitly states no multi-agent handoff or orchestration framework is supported.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-198",
@@ -10513,7 +10905,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A local voice-cloning/TTS studio with an MCP speak/transcribe tool add-on; the core product does not document an agent-collaboration mechanism beyond basic tool exposure.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-199",
@@ -10571,7 +10971,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Java reporting/PDF-generation library; no AI agent or human-AI collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-200",
@@ -10774,7 +11182,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A Reddit-derived dataset and analysis toolkit ranking AI-generated design tells; no documented agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-203",
@@ -10832,7 +11248,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "PDF/Excel report generation library, no agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-204",
@@ -10890,7 +11314,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Single-agent voice assistant with a linear speech-to-action pipeline; no state, memory, evaluation, or authority-boundary mechanisms documented beyond direct voice-command control.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-205",
@@ -10948,7 +11380,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Kubernetes event-driven autoscaling infrastructure; unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-206",
@@ -11008,7 +11448,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Agent-skill library teaching a single agent to read/write Obsidian file formats (Markdown, Bases, JSON Canvas); no collaboration topology, workflow state, or authority mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-207",
@@ -11204,7 +11652,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of engineering blogs, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-210",
@@ -11330,7 +11786,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Placeholder repository stating code and dataset will be released soon; nothing reviewable exists yet.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-212",
@@ -11526,7 +11990,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Stateless single-tool MCP wrapper around the Notion API; no collaboration topology, workflow state, or authority boundary beyond generic read-only token scoping.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-215",
@@ -12080,7 +12552,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Already screened out in Wave R3 as storage overlap (2026-08-27): the wave avoids counting multiple vector databases as distinct collaboration mechanisms. Wave R4's independent triage initially included it before this precedent was checked; removed for consistency.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-223",
@@ -12138,7 +12618,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Conceptual voice-assistant placeholder with implementation restricted to private access; no documented collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-224",
@@ -12196,7 +12684,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Personal utility (a canvas loading-animation library) unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-225",
@@ -12469,7 +12965,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A single CLAUDE.md prompting-guideline file shaping one coding agent's behavior; documents no collaboration topology, workflow state, authority, or memory mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-229",
@@ -12527,7 +13031,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Portable writing-style guide skills for AI agents; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-230",
@@ -12724,7 +13236,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Netlify/Astro web starter template, unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-233",
@@ -12999,7 +13519,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated collection of career/skill roadmaps and educational content, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-237",
@@ -13126,7 +13654,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Archived skills library auto-cloned by a Claude Code plugin; README documents no agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-239",
@@ -13184,7 +13720,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Local LLM inference runtime; README documents model serving and ecosystem integrations, not an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-240",
@@ -13513,7 +14057,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Automated OSS security-posture scorer; does not document an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-245",
@@ -13571,7 +14123,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A self-directed computer science degree curriculum, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-246",
@@ -13700,7 +14260,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of computer science papers for reading groups, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-248",
@@ -13826,7 +14394,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Java business-intelligence reporting engine, unrelated to AI or agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-250",
@@ -13884,7 +14460,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A general-purpose Java PII/PHI redaction engine with no documented AI-agent collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-251",
@@ -13942,7 +14526,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Conference transcript archive, not software with an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-252",
@@ -14069,7 +14661,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of project-based tutorials, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-254",
@@ -14197,7 +14797,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of free public APIs, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-256",
@@ -14324,7 +14932,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Code companion to a book on building LLMs from scratch; an educational curriculum, not a collaboration-mechanism implementation.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-258",
@@ -14451,7 +15067,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "General-purpose in-memory database, does not document an agent-collaboration-specific mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-260",
@@ -14578,7 +15202,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A static syntax/security checker for GitHub Actions workflow files; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-262",
@@ -14705,7 +15337,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated list of free-tier cloud/SaaS/PaaS/IaaS offerings, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-264",
@@ -14763,7 +15403,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "WebSocket terminal-tunneling utility for restricted VMs; no agent/AI collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-265",
@@ -14891,7 +15539,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A personal voice-assistant demo with basic MCP tool-calling; no documented workflow state, human-authority, or memory mechanism beyond function calling.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-267",
@@ -15019,7 +15675,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated list of external links for programmers; archived by its owner, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-269",
@@ -15146,7 +15810,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A UI component library; unrelated to agent collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-271",
@@ -15204,7 +15876,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated documentation/knowledge-base repository aggregating Claude Code practices from other projects, not software implementing a collaboration mechanism itself.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-272",
@@ -15332,7 +16012,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "The master curated index of awesome-lists, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-274",
@@ -15458,7 +16146,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Personal skill library; documents only basic skill routing, too thin to inform any listed claim.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-276",
@@ -15516,7 +16212,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "SQL linter/auto-formatter; no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-277",
@@ -15642,7 +16346,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A skill that generates CLAUDE.md documentation files; does not document an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-279",
@@ -15768,7 +16480,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Drupal module integrating with a room-reservation system; unrelated to agent/AI collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-281",
@@ -15826,7 +16546,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "General GitHub Actions runner security/EDR tool (network egress, file-integrity, process monitoring); not specific to AI agent or human-AI collaboration.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-282",
@@ -15954,7 +16682,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "CLI personal-assistant plugin framework; no state, memory, evaluation, or authority-boundary mechanisms documented beyond direct user commands.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-284",
@@ -16012,7 +16748,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A Postgres backend-as-a-service platform (auth, REST/GraphQL, realtime, storage); no agent-collaboration mechanism documented.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-285",
@@ -16139,7 +16883,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Unofficial Python/CLI wrapper exposing NotebookLM's web features to agents via undocumented APIs; documents no collaboration topology, authority, or verification mechanism of its own.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-287",
@@ -16471,7 +17223,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Feature-flag management system for software rollout control; not an agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-292",
@@ -16529,7 +17289,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A Git/GitHub tips and features cheat sheet, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-293",
@@ -16656,7 +17424,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Student-facing learning-analytics dashboard for Canvas LMS; no AI agent or collaboration mechanism described.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-295",
@@ -16714,7 +17490,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated collection of cheatsheets, manuals, and tool links, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-296",
@@ -16772,7 +17556,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Deterministic AST-based static-analysis tool for removing stale feature-flag code; no AI/LLM or agent-collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-297",
@@ -16830,7 +17622,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A traditional academic scheduling/timetabling system with no AI-agent involvement.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-298",
@@ -16888,7 +17688,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Feature-flag management platform, does not document an agent-collaboration-specific mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-299",
@@ -16946,7 +17754,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Single published skill (quota-based model switching); too thin to document a broader collaboration mechanism.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-300",
@@ -17142,7 +17958,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "Curated awesome-list of Python libraries and tools, not software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-303",
@@ -17475,7 +18299,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "A curated awesome-list of 1000+ agent skills, explicitly a hand-picked compilation rather than software.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     },
     {
       "id": "R-308",
@@ -17748,7 +18580,15 @@
           "verification_method": "github-rest-repository-and-default-branch-head",
           "verification_date": "2026-08-29"
         }
-      ]
+      ],
+      "detailed_review_triage": {
+        "wave": "R5",
+        "status": "screened-not-promoted",
+        "reason": "General GitHub Actions/CI security static-analysis linter, explicitly not specific to AI agent workflows.",
+        "review_date": "2026-09-01",
+        "review_basis": "public-readme-relevance-triage",
+        "authority": "descriptive-only"
+      }
     }
   ],
   "unresolved_identities": [],
@@ -17779,6 +18619,7 @@
     "portable_only_count": 105,
     "total_repository_count": 311,
     "latest_review_wave": "R4",
-    "latest_review_wave_count": 106
+    "latest_review_wave_count": 106,
+    "portable_only_triaged_count": 105
   }
 }

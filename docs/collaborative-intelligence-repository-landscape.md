@@ -71,7 +71,9 @@ the machine or human views.
 
 The remaining 105 portable-only records are discovery records, not mechanism
 appraisals. Their mechanism fields use `U` for unknown, and popularity remains
-unreported.
+unreported. Each now has an explicit, public-safe relevance disposition in the
+[Wave R5 triage manifest](collaborative-intelligence-repository-wave-r5-triage.json),
+so portable-only means reviewed but not eligible for detailed promotion.
 
 ## What the 206-repository detailed cohort says
 

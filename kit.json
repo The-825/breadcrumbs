@@ -146,7 +146,8 @@
       "docs/workflow-registry.json",
       "docs/workflow-registry.md",
       "docs/jarvis-workflow-routing.json",
-      "scripts/workflow_registry.py"
+      "scripts/workflow_registry.py",
+      "scripts/workflow_reproduction.py"
     ]
   },
   "artifacts": [

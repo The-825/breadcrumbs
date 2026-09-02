@@ -5,11 +5,10 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-09-01 (Wave R4 and workflow registry)
-
+Last refreshed: 2026-09-01 (Wave R5 triage and workflow reproduction)
 ## Current state
 
-- Active branch: `claude/workflow-registry-wave-r4`, cut from current `main`.
+- Active branch: `claude/workflow-reproduction-wave-r5`, cut from current `main`.
 - The public kit and 100-source research ledger remain authoritative. The repository
   ledger holds 311 unique assessed public repositories, including 206 detailed
   mechanism appraisals and 105 portable-only records.
@@ -17,17 +16,18 @@ Last refreshed: 2026-09-01 (Wave R4 and workflow registry)
 ## In flight
 
 **Workflow registry and review promotion (D-46).** Five public workflow patterns
-from r/ClaudeWorkflows are evidence-screened and machine-routed without treating
-community votes as quality. Wave R4 promotes 106 portable identities into pinned
-detailed appraisals while preserving their hardened portable provenance.
+are evidence-screened and machine-routed without treating community votes as quality.
+Wave R4 promotes 106 identities while preserving hardened portable provenance.
 
-**Portfolio routing contract (D-45).** `kit.json` now exposes the owner,
-accepted and prohibited data classes, canonical transfer entrypoint, retained
-source authority, and separate portable versus detailed evidence classes. CI
-checks the contract against the importer and the committed ledger.
+**Triage closure and reproduction (D-47).** All 105 portable-only records have a
+relevance disposition. Five workflows pass bounded synthetic reproduction, but
+none is labeled adopted or effective.
 
-**Breadcrumbs public site (D-36).** A GitHub Pages front door presents the Trail Map,
-searchable catalogs, item profiles, related links, and a public evaluation-request queue.
+**Portfolio routing contract (D-45).** `kit.json` exposes ownership, data classes,
+the transfer entrypoint, retained source authority, and evidence classes. CI checks it.
+
+**Breadcrumbs public site (D-36).** GitHub Pages presents the Trail Map, searchable
+catalogs, item profiles, related links, and a public evaluation-request queue.
 The D-37 brand uses forest, jade, antique-gold, ivory, and editorial-serif styling.
 D-38 separates catalog signals and fixes the header overlay. D-39 adds public-safe
 Jarvis and mechanism maps without copying the private Operator Board.
