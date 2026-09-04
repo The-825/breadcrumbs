@@ -252,5 +252,4 @@ here first if you want to see the shape of the output; this repo's own run is in
 
 Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
 
-*I'm also writing the longer story of the system this came from, From Archivist to
-Architect. More on that another day; the repo stands on its own.*
+*The longer story behind this work is [From Archivist to Architect](https://the825.co/archivist-to-architect/). The Kindle eBook is awaiting Amazon review; this repo remains free and stands on its own.*
