@@ -252,5 +252,7 @@ here first if you want to see the shape of the output; this repo's own run is in
 
 Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
 
-*I'm also writing the longer story of the system this came from, From Archivist to
-Architect. More on that another day; the repo stands on its own.*
+*The longer story of the system this came from is now available in
+[*From Archivist to Architect*](https://www.amazon.com/dp/B0HHZS6K32). The repo stands
+on its own, and the book explains the path from maintaining records to designing the
+system beneath them.*
