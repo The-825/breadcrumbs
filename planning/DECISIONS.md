@@ -556,3 +556,12 @@ externally effective, installed, or authorized.
 Why: complete coverage requires a disposition for every record, while evidence
 honesty requires separate stages for identity intake, relevance triage, detailed
 appraisal, local reproduction, and operational adoption.
+
+## D-48 · 2026-09-06 · Point readers to the live Book 1 listing
+
+Ruling: The README links the existing one-paragraph Book 1 pointer to the verified
+Amazon Kindle listing at https://www.amazon.com/dp/B0HHZS6K32. It does not copy book
+content or turn this public kit into a marketing repository.
+Why: The listing is live, and the companion repository should complete the promised
+reader path while preserving its standalone purpose and public-content boundary.
+Source: Live KDP verification and Jovan's launch instruction, 2026-09-06.
