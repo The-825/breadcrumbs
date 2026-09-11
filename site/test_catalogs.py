@@ -20,6 +20,15 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(311, len({item["id"] for item in self.repositories}))
         self.assertEqual(17, len(self.claims))
 
+    def test_orch_remains_a_bounded_candidate(self):
+        ledger = (SITE.parent / "docs" / "collaborative-intelligence-research-ledger.md").read_text(encoding="utf-8")
+        appraisals = (SITE.parent / "docs" / "collaborative-intelligence-source-appraisals.md").read_text(encoding="utf-8")
+        self.assertIn("https://arxiv.org/abs/2609.11737", ledger)
+        self.assertIn("| C-001 |", ledger)
+        self.assertIn("not promoted or adopted", ledger)
+        self.assertIn("claims not validated", appraisals)
+        self.assertFalse(any(item["url"] == "https://arxiv.org/abs/2609.11737" for item in self.research))
+
     def test_profiles_keep_signals_separate(self):
         for item in self.research:
             self.assertIn(item["directness"][:2], {"D0", "D1", "D2", "D3"})
