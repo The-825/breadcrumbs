@@ -157,6 +157,23 @@ pretending they were written under the new method.
 | 099 | Bernal Jimenez Gutierrez et al., ["HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models"](https://proceedings.neurips.cc/paper_files/paper/2024/hash/6ddc001d07ca4f319af96a3024f6dbd1-Abstract-Conference.html), *NeurIPS*, 2024 | Retrieval and memory; graph retrieval evaluated on multi-hop QA | A knowledge graph plus Personalized PageRank improved reported multi-hop retrieval quality and efficiency over selected RAG baselines. | **Watch** graph retrieval for cross-document association. **Reject** biological analogy or QA gains as governed-memory validation. | Benchmark graphs do not establish provenance, source precedence, deletion, or access control. Next: how should graph edges inherit source authority and tombstones? |
 | 100 | Darren Edge et al., ["From Local to Global: A Graph RAG Approach to Query-Focused Summarization"](https://www.microsoft.com/en-us/research/publication/from-local-to-global-a-graph-rag-approach-to-query-focused-summarization/), Microsoft Research preprint, 2024 | Retrieval and corpus synthesis; graph indexing and community summaries evaluated on global sensemaking questions | Graph-based community summaries improved reported comprehensiveness and diversity over conventional RAG for global questions over large corpora. | **Watch** global-versus-local retrieval modes. **Reject** model-generated graph structure or summaries as canonical repository truth. | This is a builder-authored preprint with model-based evaluation. Next: can independent evaluators reproduce gains while tracing each synthesis claim to versioned sources? |
 
+### Candidate intake
+
+Candidates remain outside the 100-source reviewed catalog until a claim-specific
+full-text appraisal justifies promotion. Source verification confirms identity and
+reported study scope. It does not validate the paper's claims or a Jarvis capability.
+
+Search record: gap-directed screening for `organizational principles embodied
+multi-agent teams` on arXiv, 2026-09-11. The target was CI-016. Inclusion required a
+public primary record, a task-specific organizational intervention, and comparative
+multi-agent outcomes. Repository and private-session evidence were excluded. The
+screen found one source, no duplicate title or arXiv ID in the ledger, and no known
+shared author family with sources 087-093. Only the abstract was screened.
+
+| Candidate ID | Source | Level and evidence | First-pass finding | Possible relevance | Boundary and next question | Status |
+|---|---|---|---|---|---|---|
+| C-001 | Zhengran Ji, Jonathan Hyun, and Boyuan Chen, ["ORCH: Organizational Principles Enable Collective Intelligence in Embodied AI"](https://arxiv.org/abs/2609.11737), arXiv preprint, 2026 | Task and organization; simulated wildfire-response missions with heterogeneous embodied agents | The abstract reports that task-specific hierarchies combining concurrent and prerequisite-dependent work outperformed four compared multi-agent approaches across the simulated missions. | **Watch** organizational structure as a task-specific coordination candidate for CI-016. | Preprint, abstract-only screen, simulated environment, builder evaluation, and no real Jarvis or mature-repository test. Next: does the full study support an equal-cost comparison against one strong agent on unseen tasks? | Candidate; not promoted or adopted |
+
 ### Entry metadata
 
 | ID | Identity verification | Decision context | Corroboration and contradiction | Method |

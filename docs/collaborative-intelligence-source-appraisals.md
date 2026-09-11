@@ -115,6 +115,15 @@ and `not observed` means the source does not measure behavior over time.
 | 099 | Conference graph-retrieval benchmarks | D2 adjacent | RETRIEVAL | technical | multi-hop QA; biological analogy; no tombstones | CI-009, CI-014 |
 | 100 | Preprint builder evaluation of graph summarization | D2 adjacent | RETRIEVAL | technical | builder-authored; model-generated graphs and judges | CI-009, CI-014 |
 
+## Candidate appraisal
+
+This preliminary screen uses the existing appraisal dimensions but remains outside
+the 100 reviewed rows and the generated public catalog.
+
+| Candidate ID | Design and publication state | Directness | Evidence family | Horizon | Visible risk or transfer flags | Linked claims | Status |
+|---|---|---|---|---|---|---|---|
+| C-001 | ArXiv preprint; abstract-screened simulated embodied-agent evaluation | D2 adjacent | MULTIAGENT | technical | abstract-only; builder-evaluated; simulated wildfire missions; comparator and cost equivalence not fully appraised; no real Jarvis validation | CI-016 | candidate; source identity verified, claims not validated |
+
 ## Re-evaluation result
 
 The backfill changes the interpretation of the collection in four ways.
