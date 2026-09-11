@@ -125,6 +125,12 @@
       "docs/floating-memory.md",
       "docs/multi-agent-hygiene.md"
     ],
+    "shared work loses exact state between agents and restarts": [
+      "templates/ledger-tools/shared_work_checkpoint.py",
+      "templates/ledger-tools/shared-work-checkpoint-v1.schema.json",
+      "templates/ledger-tools/fixtures/shared-work-checkpoint-v1.json",
+      "templates/hooks/work_checkpoint_load.py"
+    ],
     "I cannot tell whether an agent is ready for delegation": [
       "templates/breadcrumb-score/README.md",
       "templates/breadcrumb-score/breadcrumb_score.py",
@@ -171,6 +177,13 @@
       "what": "Three-tier runnable memory: working state, append-only episodes with stable provenance handles, and semantic facts that can cite their source episodes. Facts name their asserting actor and authority; verification requires evidence plus a distinct tool or human verifier, while agent authority and self-verification are refused. Compaction flushes down before shrinking; overwrites log the prior value as a supersession episode first; rejected values leave tombstones that block silent re-assertion; deterministic retrieval fuses lexical, action/tag, and recency ranks; build_context takes an as-of cutoff (learned-at replay), a valid-at moment (world-time windows), and an audience (public/internal/regulated scope filter at assembly; the unscoped episodic tier is omitted under any audience).",
       "assumes": "Local filesystem; single operator.",
       "selftest": "python3 templates/ledger-tools/memory_engine.py --selftest"
+    },
+    {
+      "path": "templates/ledger-tools/shared_work_checkpoint.py",
+      "kind": "tool",
+      "what": "Portable append-only shared-work checkpoints: strict versioned plans, exact planning and implementation model evidence, scoped progress and recovery events, bounded restart manifests with load receipts, and exact-head release verification.",
+      "assumes": "Python 3.9+ standard library; an adopter-owned JSONL path; trusted model and release evidence supplied by the host; an adopter-supplied process lock for concurrent writers. External sessions without the lifecycle seam remain uninstrumented.",
+      "selftest": "python3 templates/ledger-tools/shared_work_checkpoint.py --selftest"
     },
     {
       "path": "templates/ledger-tools/scoped_context.py",
@@ -266,7 +279,7 @@
     {
       "path": "templates/hooks",
       "kind": "template-suite",
-      "what": "Harness-side hooks: pre-compact save, post-compact pointer, outbound PII screen, batch cadence, model routing.",
+      "what": "Harness-side hooks: pre-compact save, post-compact pointer, bounded shared-work checkpoint loading, outbound PII screen, batch cadence, model routing.",
       "assumes": "Claude Code hook events; each file names its own event.",
       "selftest": null
     },

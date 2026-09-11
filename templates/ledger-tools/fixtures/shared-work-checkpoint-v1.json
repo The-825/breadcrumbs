@@ -1,0 +1,111 @@
+{
+  "scope": {
+    "work_id": "synthetic-work-1",
+    "project_id": "synthetic-project",
+    "repository": "example/repository",
+    "worktree": "worktree-a"
+  },
+  "authority": {
+    "level": "change-and-release-through-gates",
+    "source": "operator_request",
+    "evidence_ref": "task:synthetic-work-1"
+  },
+  "planning_members": [
+    {
+      "principal": "jovan",
+      "role": "owner",
+      "evidence": null
+    },
+    {
+      "principal": "claude",
+      "role": "planner",
+      "evidence": {
+        "requested": {"state": "verified", "model": "claude-fable-5-1", "source": "request:fixture"},
+        "configured": {"state": "verified", "model": "claude-fable-5-1", "source": "config:fixture"},
+        "observed": {"state": "verified", "model": "claude-fable-5-1", "source": "provider:fixture"}
+      }
+    },
+    {
+      "principal": "codex",
+      "role": "reviewer",
+      "evidence": {
+        "requested": {"state": "verified", "model": "gpt-6-astra", "source": "request:fixture"},
+        "configured": {"state": "verified", "model": "gpt-6-astra", "source": "config:fixture"},
+        "observed": {"state": "verified", "model": "gpt-6-astra", "source": "provider:fixture"}
+      }
+    }
+  ],
+  "implementation_members": [
+    {
+      "principal": "claude",
+      "role": "subagent",
+      "evidence": {
+        "requested": {"state": "verified", "model": "claude-sonnet-5", "source": "request:fixture"},
+        "configured": {"state": "verified", "model": "claude-sonnet-5", "source": "config:fixture"},
+        "observed": {"state": "verified", "model": "claude-sonnet-5", "source": "provider:fixture"}
+      }
+    },
+    {
+      "principal": "codex",
+      "role": "worker",
+      "evidence": {
+        "requested": {"state": "verified", "model": "gpt-5.6-sol", "source": "request:fixture"},
+        "configured": {"state": "verified", "model": "gpt-5.6-sol", "source": "config:fixture"},
+        "observed": {"state": "verified", "model": "gpt-5.6-sol", "source": "provider:fixture"}
+      }
+    }
+  ],
+  "plan": {
+    "objective": "Verify a synthetic shared checkpoint contract",
+    "deliverables": ["checkpoint ledger", "conformance evidence"],
+    "scope": {
+      "included": ["synthetic local records"],
+      "exclusions": ["external actions"],
+      "affected_repositories": ["example/repository"],
+      "dependencies": ["Python standard library"]
+    },
+    "constraints": ["bounded records", "explicit authority"],
+    "completion_evidence": ["selftest passes"],
+    "milestones": ["save plan", "verify restart", "verify release"],
+    "alternatives": [
+      {
+        "approach": "reuse append-only JSONL",
+        "tradeoffs": "adopter supplies a concurrent-writer lock",
+        "reuse_or_no_change": true
+      },
+      {
+        "approach": "add a database",
+        "tradeoffs": "adds dependencies and migration work",
+        "reuse_or_no_change": false
+      }
+    ],
+    "selected_approach": "reuse append-only JSONL",
+    "adversarial": {
+      "failure_modes": ["partial process failure"],
+      "contradictory_evidence": ["configured model differs from provider receipt"],
+      "edge_cases": ["duplicate delivery", "changed pull request head"],
+      "privacy_authority": ["store bounded synthetic control evidence only"],
+      "recovery": ["restart from durable rows and retest original behavior"],
+      "disproof_tests": ["unknown observed model", "merge without exact-head approval"]
+    },
+    "unresolved_issues": []
+  },
+  "freshness": {
+    "state": "current",
+    "source_revision": "1111111111111111111111111111111111111111",
+    "invalidated_by": ["source revision changes", "provider evidence changes"]
+  },
+  "failure": {
+    "attempted_action": "run required checks",
+    "observation": "one synthetic check failed",
+    "known_cause": "unknown",
+    "suspected_cause": "fixture mismatch",
+    "side_effects": "none observed",
+    "blocker": "required checks are not passing"
+  },
+  "workaround": {
+    "rationale": "repair only the mismatched fixture",
+    "checks": ["rerun the failed check"],
+    "residual_limits": ["external provider behavior remains uninstrumented"]
+  }
+}

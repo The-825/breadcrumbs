@@ -565,3 +565,13 @@ content or turn this public kit into a marketing repository.
 Why: The listing is live, and the companion repository should complete the promised
 reader path while preserving its standalone purpose and public-content boundary.
 Source: Live KDP verification and Jovan's launch instruction, 2026-09-06.
+
+## D-49 · 2026-09-11 · Shared-work checkpoints remain adopter-owned control evidence
+
+Ruling: Breadcrumbs ships the shared-work checkpoint v1 contract as a strict,
+copy-and-adapt ledger tool, schema, synthetic fixture, and lifecycle load seam.
+Adopters retain their ledger and source records. Exact model and release claims
+require trusted runtime receipts, and uninstrumented external sessions stay unknown.
+Why: portable interfaces can prevent stale handoffs without turning this public kit
+into an operational memory store or treating configured state as observed evidence.
+Source: Jovan's authorized portable checkpoint implementation request, 2026-09-11.
