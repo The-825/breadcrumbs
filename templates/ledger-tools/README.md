@@ -12,6 +12,7 @@ The capture habit gets a conclusions ledger written ([docs/decision-capture.md](
 | [retrieval_exam.py](retrieval_exam.py) | Retrieval exam: per-entry reachability verdicts against your real tree, an injection-lane probe, a use-stamp readout, and a ratchetable baseline. Asks whether entries can be SEEN, where the auditor asks whether they are still TRUE |
 | [sample_probes.json](sample_probes.json) | Four session-start conditions for the exam's lane probe, written against the sample ledger |
 | [memory_engine.py](memory_engine.py) | Three-tier runnable memory (working state, append-only episodes, semantic facts with asserted-vs-verified status): compaction flushes down instead of deleting, facts can cite their exact source episodes, contradiction checks produce typed review-only proposals and keep evaluator failures unknown, verification requires a distinct tool or human authority so agent repetition cannot self-promote, rejected values leave tombstones that block silent re-assertion, and deterministic retrieval fuses lexical, action/tag, and recency ranks while preserving as-of replay, valid-at windows, and audience scoping |
+| [shared_work_checkpoint.py](shared_work_checkpoint.py) | Adopter-owned shared-work control ledger with strict saved plans, exact model evidence, scoped checkpoint and recovery events, bounded restart receipts, and exact-head release verification. The companion [schema](shared-work-checkpoint-v1.schema.json) and [fixture](fixtures/shared-work-checkpoint-v1.json) are public and synthetic |
 | [scoped_context.py](scoped_context.py) | Trusted-principal authorization seam for memory assembly: the host resolves identity, fixed policy derives clearance, ungranted principals fail closed, and requests cannot assert or widen their audience |
 | [memory_engine_exam.py](memory_engine_exam.py) + [memory_engine_golden.json](memory_engine_golden.json) | Golden-query regression exam over the runnable memory engine: expected and forbidden hits for deterministic fusion, public-scope exclusion, learned-time replay, valid-time windows, and verification-time masking |
 | [governed_replay.py](governed_replay.py) | Offline replay sampler, typed proposal queue, and counterfactual rehearsal: correction signals, exact recurrence, and recency select episodes deterministically; an external evaluator may propose a fact, skill, watch, or correction; explicit expected and forbidden outcomes can then be rehearsed, but failure stays unknown and even a passing proposal remains source-linked, pending review, and non-mutating |
@@ -42,6 +43,7 @@ python3 templates/ledger-tools/retrieval_exam.py templates/ledger-tools/sample_c
     --root . --probes templates/ledger-tools/sample_probes.json
 python3 templates/ledger-tools/retrieval_exam.py --selftest
 python3 templates/ledger-tools/scoped_context.py --selftest
+python3 templates/ledger-tools/shared_work_checkpoint.py --selftest
 ```
 
 On the sample that reports one unreachable entry (the retired path, which the auditor

@@ -5,52 +5,33 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-09-01 (Wave R5 triage and workflow reproduction)
+Last refreshed: 2026-09-11 UTC by Codex
 ## Current state
 
-- Active branch: `claude/workflow-reproduction-wave-r5`, cut from current `main`.
+- Active branch: `claude/shared-work-checkpoint-v1`, at `2ffb87c` from
+  `origin/main` `f5c7d5b`.
+- Open PR: none. Push, PR checks, approval, and merge are pending.
+- In-flight edits: none. The task-owned change is committed.
 - The public kit and 100-source research ledger remain authoritative. The repository
   ledger holds 311 unique assessed public repositories, including 206 detailed
   mechanism appraisals and 105 portable-only records.
 
 ## In flight
 
-**Workflow registry and review promotion (D-46).** Five public workflow patterns
-are evidence-screened and machine-routed without treating community votes as quality.
-Wave R4 promotes 106 identities while preserving hardened portable provenance.
-
-**Triage closure and reproduction (D-47).** All 105 portable-only records have a
-relevance disposition. Five workflows pass bounded synthetic reproduction, but
-none is labeled adopted or effective.
-
-**Portfolio routing contract (D-45).** `kit.json` exposes ownership, data classes,
-the transfer entrypoint, retained source authority, and evidence classes. CI checks it.
-
-**Breadcrumbs public site (D-36).** GitHub Pages presents the Trail Map, searchable
-catalogs, item profiles, related links, and a public evaluation-request queue.
-The D-37 brand uses forest, jade, antique-gold, ivory, and editorial-serif styling.
-D-38 separates catalog signals and fixes the header overlay. D-39 adds public-safe
-Jarvis and mechanism maps without copying the private Operator Board.
-
-**Cooperative evaluation protocol (D-31).** A public, pattern-only method and owning
-repository template now evaluate orientation, handoff, correction, ownership, and
-recovery separately from throughput, quality, cost, and burden. The kit adds no runtime
-evaluator, score, or authority.
-
-**Research and detailed landscape (D-32 through D-35).** The public research ledger
-holds 100 screened sources and 17 bounded claims. The detailed repository cohort pins
-206 README-screened appraisals without treating stars as quality or claiming runtime
-performance. Full-text appraisal and code-traced upgrades remain future evidence work.
+**Portable shared-work checkpoint v1 (D-49).** The committed change adds a strict
+copy-and-adapt ledger tool, schema, synthetic fixture, lifecycle load seam, and CI
+conformance tests. The configured implementation model is `gpt-5.6-sol`; the host
+does not expose a provider-observed model receipt, so that observation remains unknown.
 
 ## What just landed
-**Public repository ledger correction (D-44).** Main established 311 unique assessed
-public repositories. This branch deepens that same ledger to 206 detailed appraisals
-and 105 portable-only records without changing the total. Public-only
-filtering, stable provenance, duplicate collapse, and nonauthorization are enforced.
 
-**A2A score export and work-governance related work (D-27).** Both are merged on `main`. Breadcrumb Score remains evidence-scoped and publication-gated.
+- 2026-09-11: planning and checkpoint guidance updates merged in PRs #131 and #132.
+- 2026-09-06: the Book 1 listing pointer merged in PR #129.
 
 ## Next steps / watch
+
+- Push `2ffb87c`, open the PR, observe checks for its exact head, apply only an
+  already-authorized approval, and verify the merge on `main`.
 
 - Run the evaluation template in an owning system with a safe, bounded work item, one
   agent, a multi-agent variant only when the task is decomposable, and a no-AI baseline
@@ -87,4 +68,5 @@ filtering, stable provenance, duplicate collapse, and nonauthorization are enfor
 ## Pending decisions
 
 - The figure-citation checker: build or label. See above.
-- D-45 is the latest ruling: portfolio ownership is machine-routable through `kit.json`.
+- D-49 is the latest ruling: shared-work control evidence stays adopter-owned and
+  external uninstrumented sessions remain unknown.

@@ -8,6 +8,7 @@ A rule that lives only in the rules file holds only while the model remembers it
 | [batch-cadence.md](batch-cadence.md) | The pattern behind it: two good rules that fight, the window rule, the unconditional safety checks, and the durability trick that survives launcher re-provisioning |
 | [pre-compact-save.sh](pre-compact-save.sh) | PreCompact hook that copies the full transcript to a local save directory before compaction can lose detail |
 | [post-compact-pointer.sh](post-compact-pointer.sh) | SessionStart companion (matcher "compact") that tells the post-compaction session where the save landed |
+| [work_checkpoint_load.py](work_checkpoint_load.py) | Trusted SessionStart seam that loads a bounded shared-work manifest, writes a receipt, and reports missing instrumentation without claiming progress |
 | [model-routing-prompt-hook.sh](model-routing-prompt-hook.sh) | UserPromptSubmit hook that classifies the prompt's task shape and injects a one-line model-tier hint; continuation replies stay silent |
 | [task_shape.py](task_shape.py) | The classifier behind it (LOOKUP / SHIP / COMPLEX, mirroring the model-check table); fail-open, at most one line of output |
 | [outbound-pii-screen.sh](outbound-pii-screen.sh) | PreToolUse gate on non-git outbound tool calls (email, cloud-drive, publish); screens the payload with the shared PII detector before it leaves the building |
