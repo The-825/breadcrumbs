@@ -42,8 +42,8 @@ async function init() {
   const claimsById = Object.fromEntries(claims.map(claim => [claim.id, claim]));
   const item = current.find(candidate => candidate.id === id);
   if (!item) throw Error();
-  document.title = `${item.title || item.repository} | Breadcrumbs`;
+  document.title = `${item.title || item.repository} | StaleToast`;
   document.querySelector("main").innerHTML = type === "research" ? research(item, researchItems, repositories, claimsById) : repository(item, repositories, researchItems, claimsById);
 }
 
-init().catch(() => { document.querySelector("main").innerHTML = '<p class="eyebrow">Not found</p><h1>This breadcrumb is missing.</h1><p><a href="index.html">Return to the Trail Map</a></p>'; });
+init().catch(() => { document.querySelector("main").innerHTML = '<p class="eyebrow">Not found</p><h1>This profile is missing.</h1><p><a href="index.html">Return to the Trail Map</a></p>'; });

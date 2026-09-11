@@ -1,7 +1,7 @@
-# Breadcrumbs web visual system
+# StaleToast web visual system
 
 Status: ships with the public site. The tokens extend the established 825 and
-Architect's Sandbox visual language to Breadcrumbs.
+Architect's Sandbox visual language to StaleToast.
 
 ## Palette
 
