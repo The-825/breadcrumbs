@@ -28,12 +28,23 @@ Any review ledger or punch-list this session advanced: statuses ticked, rulings 
 
 Run `/checkpoint` (with `$ARGUMENTS` as the note if given). That command owns the session handoff file: current branch, in-flight edits, next steps, pending decisions, the irreplaceable-values section preserved verbatim. Do not duplicate its work here.
 
+Record failures and workarounds before calling recovery complete. A successful
+detour proves only the detour. Verify the original protected behavior, or carry the
+failure forward with its blocker, residual limit, and next action.
+
+If this task is authorized through release, account for its task-owned commit,
+push, PR, checks and review against the current PR head, authorized approval, and
+verified merge. Keep deployment separate. Enabled automerge is pending until the
+base branch contains the change.
+
 ## 6. Report: the three-way ledger
 
 End with a three-way ledger, not a prose recap (this is the answer to "anything else to close out?"):
 
 - **(a) Done and verified**: each item merged AND rollout-verified (or explicitly "merged, awaiting the next batched deploy"), with the toggle state it shipped in (flag name + hop, from step 2).
 - **(b) Operator-side steps**: anything only the operator can run, as exact copy-paste blocks with real values, naming WHICH host or console each runs on. No placeholders in a handoff block; resolve the real values first.
-- **(c) Parked on their call**: items awaiting a ruling, an approval, or a pointer, each with a one-line "what unblocks it." This is the board the operator pulls from days later; keep it complete.
+- **(c) Parked or unfinished**: items awaiting a ruling, approval, CI, review,
+  merge, deployment, or pointer, each with its blocker and next action. This is
+  the board the operator pulls from days later; keep it complete.
 
 Plus rulings captured (count), ledgers ticked, checkpoint done.
