@@ -1,8 +1,10 @@
 # CLAUDE.md
 
-> Resuming work? Read [`SESSION_STATE.md`](SESSION_STATE.md) at the repo root FIRST: the
-> living handoff (active branch, in-flight edits, next steps, pending decisions). Refresh
-> it fully when the operator says "checkpoint". Durable rulings go in
+> Resuming work? Resolve the owning checkout, then read
+> [`SESSION_STATE.md`](SESSION_STATE.md) at the repo root FIRST as the candidate
+> handoff. Read this file completely, then verify repository identity, branch,
+> worktree, source revisions, and current PR state before acting. Refresh the handoff
+> fully when the operator says "checkpoint". Durable rulings go in
 > [`planning/DECISIONS.md`](planning/DECISIONS.md) the same turn they land. Known issues
 > are tracked as GitHub issues on this repo, not in a file.
 
@@ -129,6 +131,16 @@ say "no drift" and change nothing. Drift found but out of scope for the current 
 goes in the issue ledger, not a silent pass. The full procedure is
 [`checklists/continuity-sweep.md`](checklists/continuity-sweep.md).
 
+The portable planning and checkpoint contract lives in
+[`templates/CLAUDE_TEMPLATE.md`](templates/CLAUDE_TEMPLATE.md),
+[`templates/SESSION_STATE_TEMPLATE.md`](templates/SESSION_STATE_TEMPLATE.md), and
+[`templates/commands/checkpoint.md`](templates/commands/checkpoint.md). These are
+behavioral templates. They do not prove that a hook, model gate, or external action ran.
+Agents working in this repository must follow that plan and checkpoint contract.
+The standing model split is Astra 6 or Fable 5.1 for planning and review, and Sol
+or independently verified Sonnet 5 for implementation. Verify the selected model
+from current host or provider metadata and never silently substitute another model.
+
 ---
 
 ## RETRO
@@ -160,7 +172,9 @@ Applies to docs, templates, code comments, PR bodies, and commit messages.
 
 - Grep to locate, then read the narrow range. Do not read a whole file when 30 lines
   answer the question.
-- Never re-read a file in the same session; the harness tracks file state.
+- Reuse a prior read only while its source revision and dependent assumptions are
+  unchanged. Re-read the affected range after an edit, branch change, pull, merge,
+  generated-file refresh, or conflicting evidence.
 - Cap tool output (`| head -30`, `--limit`).
 - No "let me check X" preface before a tool call. Run the tool.
 - End-of-turn summary: two sentences or fewer. Corrections: one.

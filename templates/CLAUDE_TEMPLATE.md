@@ -22,9 +22,10 @@ What each section is for, so you fill it with intent instead of copying blind:
 ````markdown
 # CLAUDE.md · <project name>
 
-> Resuming work? Read `SESSION_STATE.md` (repo root) FIRST: the living handoff
-> (active branch, in-flight work, next steps, pending decisions). Refresh it when
-> <operator name> says "checkpoint".
+> Resuming work? Resolve the owning checkout, then read `SESSION_STATE.md` FIRST
+> as the candidate handoff. Read this file completely, then verify repository
+> identity, branch, worktree, source revisions, and current PR state before acting.
+> Refresh the handoff when <operator name> says "checkpoint".
 
 This file is the single source of behavioral truth for this repo. Read it top to
 bottom before touching anything.
@@ -101,6 +102,12 @@ a change that breaks one; if a rule has to break, stop and ask <operator name> f
 - Verify before you push: re-read the full diff, run the cheapest check that
   covers the change, confirm the diff matches the stated scope.
 
+For an authorized task, follow the task-owned commit through push, PR, checks and
+review for the current PR head, any already-authorized approval, and verified merge
+to the base branch. Record deployment separately. Do not stage unrelated files,
+bypass gates, treat enabled automerge as a completed merge, or delete a branch
+without confirmation.
+
 ---
 
 ## OPERATOR PREFERENCES
@@ -121,10 +128,43 @@ messages, code comments.
 ## SESSION EFFICIENCY
 
 - Read narrow line ranges: grep to locate, then read just those lines.
-- Never re-read a file in the same session.
+- Reuse a prior read only while its source revision and dependent assumptions are
+  unchanged. Re-read the affected range after an edit, branch change, pull, merge,
+  generated-file refresh, or conflicting evidence.
 - Cap tool output (`| head -30`, `--limit`).
 - End-of-turn summary: two sentences or less. Corrections: one sentence.
 - No "let me check X" preface before tool calls. Run the tool.
+
+---
+
+## WORK PLAN AND CHECKPOINTS
+
+- Save a plan before implementation. Scale it to the task and name the goal,
+  owned and excluded scope, completion checks, and exact intended files. Add
+  milestones, dependencies, risks, authority, model constraints, and release
+  steps when they matter. Revise it when scope or evidence changes.
+- Checkpoint material decisions, corrections, milestones, blockers, source
+  changes, handoffs, and evidence-backed completion. A finished milestone does
+  not finish its parent task automatically.
+- Record verified, unverified, pending, and blocked state with provenance. Name
+  source revisions, assumptions, superseded claims, unfinished work, and the next
+  executable step. Old memory is context, not new authority.
+- A failure record separates the attempted action, observation, known cause,
+  suspected cause, side effects, blocker, and next action. A workaround links the
+  failure, rationale, tests, and residual limits. Attempted recovery is not
+  verified recovery.
+- Delegated workers inherit the goal, exact scope, exclusions, authority, required
+  model or routing constraint, checkpoint duties, and completion evidence. A
+  dispatch or worker response is not integration. The parent verifies the diff
+  and evidence. Never silently substitute a required model.
+- Define the planning and review model separately from the implementation model:
+  `<planner model and effort>` for planning and review, `<worker model and
+  effort>` for implementation. Use exact identifiers only when current host or
+  provider metadata verifies them. Record the selected model from that metadata,
+  not from model-authored prose.
+- Reuse bounded source-linked evidence only while its revision and assumptions
+  remain current. A changed PR head invalidates older checks. Never invent token
+  counts. Markdown guidance does not prove runtime enforcement.
 
 ---
 

@@ -9,8 +9,9 @@ One debugging session cost about twice what it should have, and the overage trac
 
 1. Grep to locate, then read narrow line ranges. Never read a whole file
    when 30 lines answer the question.
-2. Never re-read a file in the same session. The harness tracks file
-   state; a second read pays tokens for no new information.
+2. Reuse a prior read while its source revision and dependent assumptions are
+   unchanged. Re-read only the affected range after an edit, branch change,
+   pull, merge, generated-file refresh, or conflicting evidence.
 3. Cap tool output. Pipe diagnostics through `| head -30`, pass `--limit`
    flags on logs, use value-only output formats for one-shot queries.
    Pulling 30 lines when 5 diagnose the problem is waste.

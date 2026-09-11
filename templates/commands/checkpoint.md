@@ -1,5 +1,5 @@
 ---
-description: Refresh SESSION_STATE.md, the living handoff file, on the operator's "checkpoint" trigger. Repopulates branch, in-flight work, next steps, and pending decisions; preserves the irreplaceable-values section verbatim.
+description: Refresh SESSION_STATE.md from current, source-linked evidence while preserving irreplaceable values and superseded history.
 argument-hint: "[optional note, e.g. 'mid-refactor', folded into current state]"
 allowed-tools: Bash, Grep, Read, Edit, Write
 ---
@@ -10,19 +10,31 @@ The file follows the session-state template (see `templates/SESSION_STATE_TEMPLA
 
 ## Step 1: Gather current reality
 
-1. Open PRs: `gh pr list --state open --limit 20`
-2. Current branch: `git branch --show-current`
-3. Working tree (uncommitted, in-flight edits): `git status -s`
-4. Commits ahead of the base: `git log --oneline origin/<main-branch>..HEAD 2>/dev/null | head -10`
-5. Last 5 merges: `git log --oneline --merges -5`
+1. Confirm the bounded working directory and repository identity.
+2. Current branch, HEAD, base revision, and working tree.
+3. Open PR, current PR head, checks, review, and merge state. If the head changed,
+   invalidate checks recorded for an older head.
+4. Commits ahead of the base and only the recent merges needed to resolve state.
+5. Sources and assumptions used by in-flight decisions. Mark unavailable evidence
+   unknown instead of filling it from memory.
 
 ## Step 2: Rewrite against reality
 
 Read the current `SESSION_STATE.md`. Repopulate these sections from Step 1 plus what this session knows, REPLACING stale content rather than appending:
 
-- **Current state:** last-refreshed date, active branch, open PR numbers (or "none"), and the in-flight uncommitted edits as `file path: what is half-done in it`, one line each. Fold in `$ARGUMENTS` if given.
+- **Current state:** observed time, verification status, owning repository and
+  directory, source revisions, branch, open PR, current-head checks and review,
+  merge, deployment, and in-flight edits. Keep deployment separate from merge.
 - **Next steps:** the concrete next actions, in order, each specific enough to execute cold.
 - **Pending decisions:** anything parked on the operator's input, phrased so a yes/no or a pointer unblocks it.
+- **Decisions, corrections, and supersession:** cite the source and name the prior
+  claim superseded. Do not erase history.
+- **Failures and workarounds:** record the action, observation, known versus
+  suspected cause, side effects, blocker, next action, workaround rationale,
+  checks, and residual limits. Attempted recovery is not verified recovery.
+- **Assumptions and evidence validity:** say what source or assumption change
+  invalidates reused evidence.
+- **Unfinished work:** keep its owner, state, next action, and needed proof visible.
 - **Recently landed:** trim to the last handful; move anything genuinely done out to the changelog and delete it here.
 
 ## Step 3: Preserve the irreplaceable-values section verbatim
@@ -32,9 +44,15 @@ That section is the reserve for exact values that cannot be re-derived from the 
 ## Step 4: Discipline
 
 - Keep every entry terse. This file is a handoff, NOT a changelog and NOT the priority list.
+- A completed milestone does not complete its parent task automatically.
+- Old memory supplies context, not new authority.
+- Record a runtime receipt only when the runtime returned one. Markdown does not
+  prove that a hook or external action ran.
 - Do not duplicate what `<roadmap-file>` already tracks; note only the slice being actively touched.
 - Move truly-done items out. `SESSION_STATE.md` must never grow into a log; a stale or bloated handoff is worse than none, because the next session will trust it.
 
 ## Step 5: Write it
 
-Apply the edits to `SESSION_STATE.md`. This is a doc refresh: no commit, no push, no PR, unless the operator asks. End with a one-line confirmation of what changed in the handoff.
+Apply the edits to `SESSION_STATE.md`. Follow the repository's current authority
+and release rules. Do not infer new authority from this command. End with a one-line
+confirmation of what changed in the handoff.
