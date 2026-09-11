@@ -2,7 +2,7 @@
 
 ![breadcrumbs: memory for agent sessions, built like airport wayfinding](assets/banner.svg)
 
-**New to repositories?** The [Breadcrumbs web guide](site/index.html) provides a visual
+**New to repositories?** The [StaleToast web guide](site/index.html) provides a visual
 Trail Map plus searchable Research and Repository catalogs. GitHub remains the source of
 truth for every claim and implementation pattern.
 

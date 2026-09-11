@@ -575,3 +575,12 @@ require trusted runtime receipts, and uninstrumented external sessions stay unkn
 Why: portable interfaces can prevent stale handoffs without turning this public kit
 into an operational memory store or treating configured state as observed evidence.
 Source: Jovan's authorized portable checkpoint implementation request, 2026-09-11.
+
+## D-50 · 2026-09-11 · StaleToast names the public research catalog
+
+Ruling: The public research catalog displays the name StaleToast. Breadcrumbs remains
+the repository, codebase, governed-memory kit, paper identity, and GitHub Pages path.
+Jarvis remains the applied runtime profiled by the catalog.
+Why: a distinct display name separates the public evidence catalog from the reusable
+Breadcrumbs kit without breaking repository links or technical consumers.
+Source: Jovan's authorized public catalog rename, 2026-09-11.

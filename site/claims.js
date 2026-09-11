@@ -7,7 +7,7 @@ function inspector(item) {
 fetch("data/claims.json").then(response => response.json()).then(claims => {
   const themes = [...new Set(claims.map(item => item.theme))];
   const nodes = themes.map(theme => `<section class="claim-cluster"><h2>${escClaim(theme)}</h2><div>${claims.filter(item => item.theme === theme).map(item => `<button class="claim-node" data-claim="${escClaim(item.id)}"><small>${escClaim(item.id)}</small><strong>${escClaim(item.title)}</strong></button>`).join("")}</div></section>`).join("");
-  document.querySelector("#claims").innerHTML = `<div class="claim-graph" aria-label="Interactive landscape of seventeen collaborative-intelligence claims">${nodes}<div class="claim-core" aria-hidden="true">Breadcrumbs<br><span>17 bounded claims</span></div></div><aside id="claim-inspector" class="detail claim-inspector">${inspector(claims[0])}</aside>`;
+  document.querySelector("#claims").innerHTML = `<div class="claim-graph" aria-label="Interactive landscape of seventeen collaborative-intelligence claims">${nodes}<div class="claim-core" aria-hidden="true">StaleToast<br><span>17 bounded claims</span></div></div><aside id="claim-inspector" class="detail claim-inspector">${inspector(claims[0])}</aside>`;
   const byId = Object.fromEntries(claims.map(item => [item.id, item]));
   const select = id => {
     document.querySelectorAll(".claim-node").forEach(node => node.classList.toggle("selected", node.dataset.claim === id));
