@@ -139,13 +139,20 @@ messages, code comments.
 
 ## WORK PLAN AND CHECKPOINTS
 
-- Save a plan before implementation. Scale it to the task and name the goal,
-  owned and excluded scope, completion checks, and exact intended files. Add
-  milestones, dependencies, risks, authority, model constraints, and release
-  steps when they matter. Revise it when scope or evidence changes.
+- Save a plan before implementation. Scale it to the task and state the objective
+  and deliverables, scope and exclusions, affected repositories and dependencies,
+  constraints, completion evidence, milestones, and exact intended files. Add
+  risks, authority, model constraints, and release steps when they matter. Revise
+  it when scope or evidence changes.
+- Record the selected approach and credible alternatives, including reuse or no
+  change when relevant. State their tradeoffs and why the selected approach fits
+  the evidence and constraints.
+- Challenge assumptions, likely failures, contradictory evidence, edge cases,
+  privacy and authority boundaries, recovery, and tests that could disprove
+  success. Record unresolved issues and how each will be resolved.
 - Checkpoint material decisions, corrections, milestones, blockers, source
-  changes, handoffs, and evidence-backed completion. A finished milestone does
-  not finish its parent task automatically.
+  changes, handoffs, objections, scope revisions, and evidence-backed completion.
+  A finished milestone does not finish its parent task automatically.
 - Record verified, unverified, pending, and blocked state with provenance. Name
   source revisions, assumptions, superseded claims, unfinished work, and the next
   executable step. Old memory is context, not new authority.
@@ -165,6 +172,10 @@ messages, code comments.
 - Reuse bounded source-linked evidence only while its revision and assumptions
   remain current. A changed PR head invalidates older checks. Never invent token
   counts. Markdown guidance does not prove runtime enforcement.
+- Scale planning depth to the task, but do not omit the considerations above.
+  Filled fields do not prove substantive review. Do not add a reviewer only to
+  satisfy the template. If one is useful, apply the planning-model policy and
+  record what the reviewer actually tested.
 
 ---
 
