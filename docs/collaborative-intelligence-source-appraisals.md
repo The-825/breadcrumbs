@@ -123,6 +123,8 @@ the 100 reviewed rows and the generated public catalog.
 | Candidate ID | Design and publication state | Directness | Evidence family | Horizon | Visible risk or transfer flags | Linked claims | Status |
 |---|---|---|---|---|---|---|---|
 | C-001 | ArXiv preprint; abstract-screened simulated embodied-agent evaluation | D2 adjacent | MULTIAGENT | technical | abstract-only; builder-evaluated; simulated wildfire missions; comparator and cost equivalence not fully appraised; no real Jarvis validation | CI-016 | candidate; source identity verified, claims not validated |
+| C-002 | Journal article; publisher-page and abstract-screened human explanation-choice experiment | D2 adjacent | EXPLANATION | short sequence | publisher-page screen only; constrained argument-selection task; preference is not decision quality, calibrated reliance, or kit effectiveness | CI-012 | candidate; source identity verified, claims not validated |
+| C-003 | Journal article; publisher-page-screened TruthfulQA benchmark with automated extraction, verification, and judging | D2 adjacent | CALIBRATION | technical | small single-benchmark evaluation; fixed calibration and held-out split; one model family; no human participants; closest calibrated baseline differences require caution; self-verification is not independent evidence | CI-003, CI-017 | candidate; source identity verified, claims not validated |
 
 ## Re-evaluation result
 
