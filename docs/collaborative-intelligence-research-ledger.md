@@ -170,9 +170,19 @@ multi-agent outcomes. Repository and private-session evidence were excluded. The
 screen found one source, no duplicate title or arXiv ID in the ledger, and no known
 shared author family with sources 087-093. Only the abstract was screened.
 
+Search record: gap-directed public publisher screening for explanation selection and
+claim-level verification, 2026-09-14. The targets were CI-012, CI-003, and CI-017.
+Inclusion required a public primary publisher record, an empirical evaluation, and a
+directly stated transfer limit. Both Springer URLs were checked; the second publisher
+page required DOI-title search recovery. Title and DOI checks found no duplicates in
+the ledger. The screen was limited to public publisher-page material and did not
+perform a full-text risk-of-bias appraisal or test either concept in this kit.
+
 | Candidate ID | Source | Level and evidence | First-pass finding | Possible relevance | Boundary and next question | Status |
 |---|---|---|---|---|---|---|
 | C-001 | Zhengran Ji, Jonathan Hyun, and Boyuan Chen, ["ORCH: Organizational Principles Enable Collective Intelligence in Embodied AI"](https://arxiv.org/abs/2609.11737), arXiv preprint, 2026 | Task and organization; simulated wildfire-response missions with heterogeneous embodied agents | The abstract reports that task-specific hierarchies combining concurrent and prerequisite-dependent work outperformed four compared multi-agent approaches across the simulated missions. | **Watch** organizational structure as a task-specific coordination candidate for CI-016. | Preprint, abstract-only screen, simulated environment, builder evaluation, and no real Jarvis or mature-repository test. Next: does the full study support an equal-cost comparison against one strong agent on unseen tasks? | Candidate; not promoted or adopted |
+| C-002 | Roos Scheffers, Floris Bex, and Matthieu Brinkhuis, ["Empirically Testing Explanation Preferences in Computational Argumentation"](https://doi.org/10.1007/s12559-026-10654-y), *Cognitive Computation* 18, 2026 | Task and interaction; experiment comparing participant-selected arguments with formal explanation definitions | The abstract reports a preference for short explanations made from related arguments, with participant explanations often shorter than the formal definitions produced. | **Watch** concise explanation plus separately retained justification as a hypothesis for CI-012. | An explanation-choice experiment does not show that shorter explanations improve decisions, trust calibration, or kit effectiveness. Next: does a concise visible explanation with inspectable supporting evidence improve a named review behavior without hiding material limits? | Candidate; not promoted or adopted |
+| C-003 | Abhigyan Pal, ["Improving Reliability of Large Language Models via Claim-Level Self-Verification and Uncertainty Calibration"](https://doi.org/10.1007/s44163-026-02240-w), *Discover Artificial Intelligence* 6, 2026 | Task; small TruthfulQA benchmark with a fixed calibration and held-out split, automated claim extraction, verification, and judging | The publisher record reports that decomposing answers into claims produced a useful uncertainty signal, while raw estimates still required post-hoc calibration. | **Watch** claim-level evidence and calibration as a candidate measurement approach for CI-003 and CI-017. | One small benchmark, one answer and verifier model family, automated judging, and no human participants do not establish human trust, independent verification, or kit gains. Next: does the signal remain calibrated across models, datasets, evidence sources, and human review decisions? | Candidate; not promoted or adopted |
 
 ### Entry metadata
 
