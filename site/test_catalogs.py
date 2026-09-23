@@ -1,4 +1,5 @@
 import json
+from html.parser import HTMLParser
 import unittest
 from pathlib import Path
 
@@ -7,6 +8,29 @@ SITE = Path(__file__).resolve().parent
 
 
 class CatalogTests(unittest.TestCase):
+    def test_starter_links_resolve_to_shipped_files(self):
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.hrefs = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "a":
+                    self.hrefs.extend(value for key, value in attrs if key == "href")
+
+        links = Links()
+        links.feed((SITE / "start.html").read_text(encoding="utf-8"))
+        for href in links.hrefs:
+            if href.startswith("#"):
+                continue
+            if href.startswith("https://github.com/The-825/breadcrumbs/"):
+                relative = href.split("/main/", 1)[1]
+                target = SITE.parent / relative
+            else:
+                target = SITE / href
+            self.assertTrue(target.exists(), href)
+        self.assertIn('href="start.html"', (SITE / "index.html").read_text(encoding="utf-8"))
+
     @classmethod
     def setUpClass(cls):
         cls.research = json.loads((SITE / "data" / "research.json").read_text(encoding="utf-8"))
@@ -85,7 +109,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("Last reviewed", detail)
 
     def test_every_page_has_accessible_navigation(self):
-        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
+        for name in ("index.html", "start.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)

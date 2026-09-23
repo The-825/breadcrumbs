@@ -2,7 +2,10 @@
 
 ![breadcrumbs: memory for agent sessions, built like airport wayfinding](assets/banner.svg)
 
-**New to repositories?** The [StaleToast web guide](site/index.html) provides a visual
+**Start with one useful file:** [build your first handoff](https://the-825.github.io/breadcrumbs/start.html)
+with the free templates, then check whether a fresh session can find its next step.
+
+**New to repositories?** The [StaleToast web guide](https://the-825.github.io/breadcrumbs/) provides a visual
 Trail Map plus searchable Research and Repository catalogs. GitHub remains the source of
 truth for every claim and implementation pattern.
 

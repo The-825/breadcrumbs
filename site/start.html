@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Start with one useful handoff | StaleToast</title>
+  <meta name="description" content="Copy free Breadcrumbs templates, preserve one task's state, and test whether a fresh agent session can find its next step.">
+  <link rel="stylesheet" href="app.css?v=20260828-5">
+</head>
+<body class="trail-bg">
+  <a class="skip" href="#main">Skip to content</a>
+  <header><div class="nav"><a class="brand" href="index.html">Stale<span>Toast</span></a><nav aria-label="Primary"><a href="index.html">Trail Map</a><a aria-current="page" href="start.html">Start here</a><a href="research.html">Research</a><a href="repositories.html">Repositories</a><a href="methodology.html">Method</a></nav></div></header>
+  <main id="main">
+    <p class="eyebrow">Your first useful result</p>
+    <h1>Leave a handoff the next session can use.</h1>
+    <p class="lede">A new agent session should find your task, its current state, and the next action without making you repeat the whole conversation. Begin with a single task and a file you control.</p>
+    <p class="note">Ships: editable Markdown templates under the MIT license. Assumes: a text editor and a repository you own. No install, account, or API key required for this starter. Your agent must be told to read the file; copying it does not create automatic memory.</p>
+    <section class="section" aria-labelledby="starter-title">
+      <h2 id="starter-title">1. Copy one file into your project.</h2>
+      <p><a class="button" href="https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md">Open the handoff template</a></p>
+      <p>On GitHub, find "The template" and copy the contents of its Markdown code block. Paste them into a text file named <code>SESSION_STATE.md</code> in the top-level folder of your own project, beside its README. Do not include the surrounding triple-backtick markers.</p>
+      <p>If that file already exists, update its relevant sections instead of replacing it. No command or installation is needed.</p>
+    </section>
+    <section class="section" aria-labelledby="fill-title">
+      <h2 id="fill-title">2. Fill in one current task.</h2>
+      <p>Replace the placeholders with the task you want to resume. Record what is complete, the file or test that supports that claim, what is unfinished, and the next action. Use "unknown" or "not applicable" where you cannot provide a value.</p>
+      <p class="note">For example, a fictional task could say: "The help-page draft is in <code>docs/help.md</code>. It has not been reviewed. Next action: check the setup instructions against the application." A saved draft is evidence of writing, not evidence of review or deployment.</p>
+      <p>Save the file. Your output from this step is a current, local handoff you can inspect yourself.</p>
+    </section>
+    <section class="section" aria-labelledby="check-title">
+      <h2 id="check-title">3. Ask a fresh session to read it.</h2>
+      <p>Open a new session in your coding agent with this project folder selected. Paste the prompt below. If the agent cannot access local files, use a fictional handoff for this exercise or attach only information approved for that service.</p>
+      <blockquote class="note">Read SESSION_STATE.md in this project's top-level folder and any existing project rules. Before changing anything, tell me the current task, what evidence supports its status, what remains uncertain, and the next action. Cite the file and section for each answer. If the files do not answer something or you cannot read them, say so.</blockquote>
+    </section>
+    <section class="section" aria-labelledby="outcome-title">
+      <h2 id="outcome-title">4. Check the answer before continuing.</h2>
+      <div class="grid">
+        <article class="card"><h3>Ready to continue</h3><p>The task and next action match your file. Completed work has a real evidence reference. Unknowns stay unknown. Confirm the next action before the agent changes anything.</p></article>
+        <article class="card"><h3>Fix the handoff</h3><p>The agent guesses, misses a blocker, or calls unfinished work complete. Correct the relevant section, save it, and repeat the check in a fresh session.</p></article>
+        <article class="card"><h3>Fix file access</h3><p>The agent cannot read the file. Check the selected project folder, filename, and access settings, then retry. Do not treat a plausible answer as proof it read your handoff.</p></article>
+      </div>
+      <p>When you finish the task or change direction, update the handoff again. One successful trial shows this handoff worked for that session; it does not establish general reliability.</p>
+    </section>
+    <section class="section" aria-labelledby="optional-title">
+      <h2 id="optional-title">Add these only when you need them.</h2>
+      <div class="related">
+        <article class="card"><h3>Repeatedly missed conventions?</h3><p>Adapt the rules template to your project using the filename your agent reads, such as <code>AGENTS.md</code> or <code>CLAUDE.md</code>. Add a pointer to your handoff. Preserve any existing rules.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/CLAUDE_TEMPLATE.md">Open the rules template</a></article>
+        <article class="card"><h3>Settled choices keep reopening?</h3><p>Record one decision, its reason, and its source in a local decision ledger. Link to it from your rules file so later sessions know where to look.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/DECISIONS_TEMPLATE.md">Open the decision template</a></article>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="next-title">
+      <h2 id="next-title">Choose your next trail.</h2>
+      <div class="grid">
+        <article class="card"><h3>Understand the evidence</h3><p>StaleToast is the public research guide. Use it to inspect a claim's sources and limits before treating it as a design requirement.</p><a href="claims.html">Explore bounded claims</a></article>
+        <article class="card"><h3>Add enforcement</h3><p>Breadcrumbs includes runnable guards and self-tests. Each file states its assumptions; adapt the checks to your project before enabling them.</p><a href="https://github.com/The-825/breadcrumbs/tree/main/ci-kit">Inspect the CI kit</a></article>
+        <article class="card"><h3>Study the patterns</h3><p>The essays explain mechanisms, including patterns that are not shipped as software. Check each artifact's status before planning an integration.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/docs/README.md">Read the pattern guide</a></article>
+      </div>
+    </section>
+    <section class="section"><p class="note">The kit is public. Keep credentials, personal information, and private operational details out of public issues and contributions. Copying the templates does not require sending your task or handoff to this site.</p></section>
+  </main>
+  <footer>StaleToast is the public evidence guide. Breadcrumbs is the free copy-and-adapt kit. <a href="https://github.com/The-825/breadcrumbs/blob/main/LICENSE">MIT license</a>.</footer>
+</body>
+</html>
