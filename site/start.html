@@ -16,18 +16,37 @@
     <p class="lede">A new agent session should find your task, its current state, and the next action without making you repeat the whole conversation. Begin with a single task and a file you control.</p>
     <p class="note">Ships: editable Markdown templates under the MIT license. Assumes: a text editor and a repository you own. No install, account, or API key required for this starter. Your agent must be told to read the file; copying it does not create automatic memory.</p>
     <section class="section" aria-labelledby="starter-title">
-      <h2 id="starter-title">Start with the handoff. Add structure when you need it.</h2>
-      <div class="grid">
-        <article class="card"><p class="eyebrow">1. Preserve the next step</p><h3>Session state</h3><p>Open the file and copy the Markdown block under "The template" into a local file named <code>SESSION_STATE.md</code>. Fill in the current task, evidence of completed work, unfinished work, and the next action. Keep this copy in your own repository.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md">Open the handoff template</a></article>
-        <article class="card"><p class="eyebrow">2. Make boundaries explicit</p><h3>Rules file</h3><p>If sessions keep missing your conventions, adapt the rules template to your project. Use the filename your agent reads, such as <code>AGENTS.md</code> or <code>CLAUDE.md</code>. Link it to your session-state file.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/CLAUDE_TEMPLATE.md">Open the rules template</a></article>
-        <article class="card"><p class="eyebrow">3. Keep decisions findable</p><h3>Decision ledger</h3><p>If a settled choice keeps getting reopened, record the ruling, why it was made, and its source. Start with one real decision instead of importing an entire chat history.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/DECISIONS_TEMPLATE.md">Open the decision template</a></article>
-      </div>
+      <h2 id="starter-title">1. Copy one file into your project.</h2>
+      <p><a class="button" href="https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md">Open the handoff template</a></p>
+      <p>On GitHub, find "The template" and copy the contents of its Markdown code block. Paste them into a text file named <code>SESSION_STATE.md</code> in the top-level folder of your own project, beside its README. Do not include the surrounding triple-backtick markers.</p>
+      <p>If that file already exists, update its relevant sections instead of replacing it. No command or installation is needed.</p>
+    </section>
+    <section class="section" aria-labelledby="fill-title">
+      <h2 id="fill-title">2. Fill in one current task.</h2>
+      <p>Replace the placeholders with the task you want to resume. Record what is complete, the file or test that supports that claim, what is unfinished, and the next action. Use "unknown" or "not applicable" where you cannot provide a value.</p>
+      <p class="note">For example, a fictional task could say: "The help-page draft is in <code>docs/help.md</code>. It has not been reviewed. Next action: check the setup instructions against the application." A saved draft is evidence of writing, not evidence of review or deployment.</p>
+      <p>Save the file. Your output from this step is a current, local handoff you can inspect yourself.</p>
     </section>
     <section class="section" aria-labelledby="check-title">
-      <h2 id="check-title">Check the result in a fresh session.</h2>
-      <p>Ask your agent to read the rules and session-state files, then use this prompt:</p>
-      <blockquote class="note">Before changing anything, tell me the current task, what evidence supports its status, what remains uncertain, and the next action. Cite the file and section for each answer. If the files do not answer something, say so.</blockquote>
-      <p>Your first result is a checkable handoff, not a memory score. Compare the reply with the files yourself. If the agent guesses or cannot find the next step, make that part of the handoff explicit and try again. One successful trial does not establish reliability.</p>
+      <h2 id="check-title">3. Ask a fresh session to read it.</h2>
+      <p>Open a new session in your coding agent with this project folder selected. Paste the prompt below. If the agent cannot access local files, use a fictional handoff for this exercise or attach only information approved for that service.</p>
+      <blockquote class="note">Read SESSION_STATE.md in this project's top-level folder and any existing project rules. Before changing anything, tell me the current task, what evidence supports its status, what remains uncertain, and the next action. Cite the file and section for each answer. If the files do not answer something or you cannot read them, say so.</blockquote>
+    </section>
+    <section class="section" aria-labelledby="outcome-title">
+      <h2 id="outcome-title">4. Check the answer before continuing.</h2>
+      <div class="grid">
+        <article class="card"><h3>Ready to continue</h3><p>The task and next action match your file. Completed work has a real evidence reference. Unknowns stay unknown. Confirm the next action before the agent changes anything.</p></article>
+        <article class="card"><h3>Fix the handoff</h3><p>The agent guesses, misses a blocker, or calls unfinished work complete. Correct the relevant section, save it, and repeat the check in a fresh session.</p></article>
+        <article class="card"><h3>Fix file access</h3><p>The agent cannot read the file. Check the selected project folder, filename, and access settings, then retry. Do not treat a plausible answer as proof it read your handoff.</p></article>
+      </div>
+      <p>When you finish the task or change direction, update the handoff again. One successful trial shows this handoff worked for that session; it does not establish general reliability.</p>
+    </section>
+    <section class="section" aria-labelledby="optional-title">
+      <h2 id="optional-title">Add these only when you need them.</h2>
+      <div class="related">
+        <article class="card"><h3>Repeatedly missed conventions?</h3><p>Adapt the rules template to your project using the filename your agent reads, such as <code>AGENTS.md</code> or <code>CLAUDE.md</code>. Add a pointer to your handoff. Preserve any existing rules.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/CLAUDE_TEMPLATE.md">Open the rules template</a></article>
+        <article class="card"><h3>Settled choices keep reopening?</h3><p>Record one decision, its reason, and its source in a local decision ledger. Link to it from your rules file so later sessions know where to look.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/DECISIONS_TEMPLATE.md">Open the decision template</a></article>
+      </div>
     </section>
     <section class="section" aria-labelledby="next-title">
       <h2 id="next-title">Choose your next trail.</h2>
