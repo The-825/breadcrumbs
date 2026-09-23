@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Start with one useful handoff | StaleToast</title>
+  <meta name="description" content="Copy free Breadcrumbs templates, preserve one task's state, and test whether a fresh agent session can find its next step.">
+  <link rel="stylesheet" href="app.css?v=20260828-5">
+</head>
+<body class="trail-bg">
+  <a class="skip" href="#main">Skip to content</a>
+  <header><div class="nav"><a class="brand" href="index.html">Stale<span>Toast</span></a><nav aria-label="Primary"><a href="index.html">Trail Map</a><a aria-current="page" href="start.html">Start here</a><a href="research.html">Research</a><a href="repositories.html">Repositories</a><a href="methodology.html">Method</a></nav></div></header>
+  <main id="main">
+    <p class="eyebrow">Your first useful result</p>
+    <h1>Leave a handoff the next session can use.</h1>
+    <p class="lede">A new agent session should find your task, its current state, and the next action without making you repeat the whole conversation. Begin with a single task and a file you control.</p>
+    <p class="note">Ships: editable Markdown templates under the MIT license. Assumes: a text editor and a repository you own. No install, account, or API key required for this starter. Your agent must be told to read the file; copying it does not create automatic memory.</p>
+    <section class="section" aria-labelledby="starter-title">
+      <h2 id="starter-title">Start with the handoff. Add structure when you need it.</h2>
+      <div class="grid">
+        <article class="card"><p class="eyebrow">1. Preserve the next step</p><h3>Session state</h3><p>Open the file and copy the Markdown block under "The template" into a local file named <code>SESSION_STATE.md</code>. Fill in the current task, evidence of completed work, unfinished work, and the next action. Keep this copy in your own repository.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md">Open the handoff template</a></article>
+        <article class="card"><p class="eyebrow">2. Make boundaries explicit</p><h3>Rules file</h3><p>If sessions keep missing your conventions, adapt the rules template to your project. Use the filename your agent reads, such as <code>AGENTS.md</code> or <code>CLAUDE.md</code>. Link it to your session-state file.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/CLAUDE_TEMPLATE.md">Open the rules template</a></article>
+        <article class="card"><p class="eyebrow">3. Keep decisions findable</p><h3>Decision ledger</h3><p>If a settled choice keeps getting reopened, record the ruling, why it was made, and its source. Start with one real decision instead of importing an entire chat history.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/templates/DECISIONS_TEMPLATE.md">Open the decision template</a></article>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="check-title">
+      <h2 id="check-title">Check the result in a fresh session.</h2>
+      <p>Ask your agent to read the rules and session-state files, then use this prompt:</p>
+      <blockquote class="note">Before changing anything, tell me the current task, what evidence supports its status, what remains uncertain, and the next action. Cite the file and section for each answer. If the files do not answer something, say so.</blockquote>
+      <p>Your first result is a checkable handoff, not a memory score. Compare the reply with the files yourself. If the agent guesses or cannot find the next step, make that part of the handoff explicit and try again. One successful trial does not establish reliability.</p>
+    </section>
+    <section class="section" aria-labelledby="next-title">
+      <h2 id="next-title">Choose your next trail.</h2>
+      <div class="grid">
+        <article class="card"><h3>Understand the evidence</h3><p>StaleToast is the public research guide. Use it to inspect a claim's sources and limits before treating it as a design requirement.</p><a href="claims.html">Explore bounded claims</a></article>
+        <article class="card"><h3>Add enforcement</h3><p>Breadcrumbs includes runnable guards and self-tests. Each file states its assumptions; adapt the checks to your project before enabling them.</p><a href="https://github.com/The-825/breadcrumbs/tree/main/ci-kit">Inspect the CI kit</a></article>
+        <article class="card"><h3>Study the patterns</h3><p>The essays explain mechanisms, including patterns that are not shipped as software. Check each artifact's status before planning an integration.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/docs/README.md">Read the pattern guide</a></article>
+      </div>
+    </section>
+    <section class="section"><p class="note">The kit is public. Keep credentials, personal information, and private operational details out of public issues and contributions. Copying the templates does not require sending your task or handoff to this site.</p></section>
+  </main>
+  <footer>StaleToast is the public evidence guide. Breadcrumbs is the free copy-and-adapt kit. <a href="https://github.com/The-825/breadcrumbs/blob/main/LICENSE">MIT license</a>.</footer>
+</body>
+</html>
