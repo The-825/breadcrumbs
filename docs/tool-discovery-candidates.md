@@ -21,3 +21,17 @@ each identity and mechanism with the complete repository ledger and its aliases,
 document overlap, and allocate the next stable ID through the normal importer.
 No ID or rank is assigned by this document. Follow the
 [evidence transfer loop](evidence-transfer-loop.md) for reproduction and adoption.
+
+## Existing research candidates: source recheck
+
+The September 27, 2026 recheck below preserves existing research candidate IDs.
+It does not promote them, change their evidence order, or claim full-text appraisal.
+
+| Existing candidate | Public source observation | Bounded next question |
+|---|---|---|
+| C-001, Organizational Principles Enable Collective Intelligence in Embodied AI | [arXiv v2](https://arxiv.org/abs/2609.11737v2), revised September 20, 2026. The abstract describes task-specific hierarchies combining concurrent and prerequisite-dependent work in simulated wildfire missions. | Does full-text evidence support an equal-cost comparison with one strong agent on unseen tasks? Simulation results do not establish an advantage in an operational portfolio. |
+| C-005, Looking for Something Weird to Happen | [arXiv v1](https://arxiv.org/abs/2609.16051v1), submitted September 13, 2026. The abstract describes observational agent-network output analysis, interviews and a survey. | Can an owning-system comparison separate human input diversity, output diversity, quality and effort? Association does not establish causation or a transferable intervention. |
+
+The source-linked [research ledger](collaborative-intelligence-research-ledger.md)
+remains the canonical record. These observations reopen review questions; they
+are not independent corroboration of the authors' own results.
