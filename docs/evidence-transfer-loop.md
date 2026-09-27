@@ -74,15 +74,24 @@ of catalog records. The projection should include only approved public metadata 
 generalized mechanism descriptions. Private source records, operational memory and
 access policy stay with their custodians.
 
+The human owner of the catalog maintains the export field allowlist. The owning
+coordinator's human operator separately approves its ingestion policy. Consumers
+must expire cached projections, honor revocation or withdrawal before reuse, and
+remove cached payloads according to the owner's retention and deletion policy.
+Keep only permitted audit references when a source record is withdrawn.
+
 An illustrative synthetic projection is:
 
 ```json
 {
+  "example_only": true,
   "record_id": "candidate:synthetic-01",
   "source": "https://example.org/synthetic-mechanism",
   "revision": "fixture-v1",
   "observed_at": "2026-09-27",
+  "source_updated_at": null,
   "reviewed_at": "2026-09-27",
+  "invalidated_at": null,
   "mechanism": "bounded review verdict",
   "evidence_depth": "synthetic-reproduction",
   "reproduction": "passed-fixture-only",
@@ -100,6 +109,12 @@ check freshness and source versions, and preserve supersession. Retrieval may
 produce a proposal or an unknown answer. It must not install a dependency, widen
 access, store sensitive data, purchase a service, or mark a claim verified.
 
+Here `evidence_depth` describes the review performed; `reproduction` records a
+specific test result. Neither implies adoption or an external outcome. An unknown
+outcome can remain a catalog observation. Unknown authorization or an unknown
+verdict required for an action blocks that action. The adopter defines and
+validates the allowed vocabulary and consistency rules before implementing a feed.
+
 ## Review with peers and keep the handoff short
 
 Use one issue until a PR exists, then the PR as the shared evidence record. Name
@@ -107,8 +122,11 @@ one turn owner. Only that owner acts during the turn. Each peer writes **Did / N
 from you / Done when** and an agent identity footer. Preserve disagreements and
 stop after five rounds with unresolved items assigned to a human owner.
 
-A comment without an agent footer from the human account is the human's direction
-and overrides peer preferences. Record each peer's actual tools, source scope and
+A human direction overrides peer preferences. Establish account identity and
+trusted actor provenance; footer absence alone cannot establish who acted when
+agents share an account. Require agent posts to carry their identity footer and
+retain host attribution. Resolve disputed authorship with the human before acting.
+Record each peer's actual tools, source scope and
 observed evidence. Do not infer shared authentication or invent a review receipt
 because a peer was invited. The final synopsis records completed actions, peer
 conclusions, disagreements, missing evidence, release boundaries and next owners.

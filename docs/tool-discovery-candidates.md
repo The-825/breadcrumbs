@@ -5,13 +5,18 @@ No candidate here was installed or executed for this intake. Public repository
 documentation was inspected September 25, 2026. Recheck identity, license and pin
 a revision before mechanism appraisal. Benchmark claims remain source claims.
 
+License and revision status for all three rows is **unknown in this intake**.
+The observations concern mutable documentation, not reproducible pinned appraisals.
+They cannot support an installation or code-copy decision. Fill those fields from
+the primary repository before promotion.
+
 **Assumptions:** an adopter can evaluate a public tool using synthetic fixtures
 without granting it access to real records or credentials. This document is free
 to copy and adapt under the kit's MIT license; upstream software has its own license.
 
 | Candidate and attribution | Named mechanism gap | Review limit and next test |
 |---|---|---|
-| [apify/mcpc](https://github.com/apify/mcpc), [discovery post](https://www.reddit.com/comments/1wqaxpm) | Progressive tool discovery and bounded persistent MCP sessions | The README describes persistent sessions, JSON output, OAuth, keychain custody and a sandbox proxy. Trace project configuration, environment interpolation, proxy isolation and expiry using fake credentials. No claim of demonstrated secret isolation. |
+| [apify/mcpc](https://github.com/apify/mcpc), [discovery post](https://www.reddit.com/comments/1wqaxpm) | Progressive tool discovery and bounded persistent MCP sessions | The README describes persistent sessions, JSON output, OAuth, keychain custody and a sandbox proxy. Trace configuration, interpolation, isolation and expiry using synthetic credentials with a local stub issuer, temporary fake credential store, denied external network and no real account access. No claim of demonstrated secret isolation. |
 | [merijjeyn/jive](https://github.com/merijjeyn/jive), [discovery post](https://www.reddit.com/comments/1wp8ugp) | Executable task DAG retained separately from narrative trace | The README describes graph calls and reports speed/token benchmarks. Reproduce a fixed task with equal accounting and independent output review before citing a benefit. One candidate record regardless of how often it is discovered. |
 | [tacticocc/Jevbridge](https://github.com/tacticocc/Jevbridge), [discovery post](https://www.reddit.com/comments/1wmsfao) | Typed execute, confirm, escalate and abort decisions | The README warns that the heuristic fallback is a smoke test rather than a safety signal. Test unsupported, ambiguous and adversarial inputs before treating a gate as reliable. |
 
