@@ -168,73 +168,68 @@ These rules are method-shaping. They do not certify a runtime implementation.
 
 The ongoing research watch has surfaced several additional ideas that are relevant enough
 to shape experiments and writing, but have **not yet been promoted into the public claim
-register through the full source-appraisal process**. They remain provisional until that
-review is complete.
+register through the full source-appraisal process**. The proposals below do not yet
+have claim-specific source mappings in this section. Treat them as questions for
+evaluation, not summaries of established findings. Promotion requires primary-source
+citations at the point of claim, appraisal, contrary evidence, and transfer limits.
 
 ### Relational alignment is not epistemic warrant
 
-Recent human-subject work suggests that agreement, value congruence, familiarity, and
-feeling understood can increase willingness to accept AI advice. The working hypothesis
+Test whether agreement, value congruence, familiarity, and feeling understood change
+willingness to accept AI advice independently of its correctness. The working hypothesis
 is that collaboration should distinguish **relational alignment** from **epistemic
 warrant**. A system can fit the person well without thereby earning stronger evidentiary
 status for its claims.
 
-**Status:** interpretation supported by emerging experiments; not yet a promoted
-Breadcrumbs claim.
+**Status:** research hypothesis awaiting source mapping and appraisal.
 
 ### Reliability should be case-conditioned
 
-Recent clinical and decision-support work suggests that behavioral stability,
-applicability, evidence quality, consequence severity, and verification availability can
-all matter when deciding whether to act, ask, escalate, or abstain. Stability can be
-useful without being independent corroboration: a model that agrees with itself several
-times can still be consistently wrong.
+Test behavioral stability, applicability, evidence quality, consequence severity, and
+verification availability as separate inputs to act, ask, escalate, or abstain decisions.
+Do not count repeated agreement from one model as independent corroboration.
 
-**Status:** emerging design direction; thresholds and transfer conditions are not
-established.
+**Status:** research hypothesis awaiting source mapping and appraisal; thresholds and
+transfer conditions are not established.
 
 ### Unknown and ambiguity should be actionable states
 
-Open-set recognition and human-robot dialogue work suggest that a system should be able
-to represent that the current case falls outside its known categories or contains a
-specific ambiguity, rather than forcing every state into the nearest known answer.
+Test whether representing an unknown category or a specific ambiguity improves
+decisions compared with assigning every case to a known category.
 
 A candidate interaction sequence is:
 
 **uncertain → classify ambiguity or non-applicability → ask / confirm / observe / refuse /
 escalate / act under constraint**
 
-**Status:** promising cross-domain hypothesis; live human-AI validation remains limited.
+**Status:** research hypothesis awaiting source mapping and appraisal.
 
-### Role structure matters more than agent count
+### Test role structure separately from agent count
 
-Recent multi-agent studies increasingly separate role diversity, capability diversity,
-model diversity, and evidence diversity. Structured specialization, critique, and
-reconciliation can improve selected tasks, while generic critic agents or additional
-agents can add cost or reduce quality.
+Compare role diversity, capability diversity, model diversity, and evidence diversity
+separately under matched budgets. Test structured specialization, critique, and
+reconciliation against a strong single-agent baseline, including cost and failures.
 
-**Status:** technically supported in bounded benchmarks and selected domain studies;
-human-AI transfer remains an open question.
+**Status:** research hypothesis awaiting source mapping and appraisal; no benefit or
+human-AI transfer claim is established here.
 
 ### Verification capacity may constrain safe complementarity
 
-A recurring pattern is that people can benefit from AI most where they lack knowledge,
-while that same gap can reduce their ability to independently validate the help. The
-working hypothesis is to represent **need for assistance** and **capacity to verify** as
+Test whether gaps in task knowledge affect both the benefit from AI assistance and the
+ability to validate it. The working hypothesis is to represent **need for assistance**
+and **capacity to verify** as
 different variables. High need plus low verification capacity may justify stronger
 grounding, independent review, or escalation rather than greater autonomy.
 
-**Status:** interpretation of emerging human-subject evidence; not yet a promoted claim.
+**Status:** research hypothesis awaiting source mapping and appraisal.
 
 ### Shared state is a governed commons
 
-Recent multi-agent work shows that shared artifacts can coordinate participants who never
-directly interact, but can also amplify bad conventions, exploits, or correlated
-assumptions. Provenance supports detection, but governance may also require challenge,
-quarantine, supersession, retraction, and propagation control.
+Test whether shared artifacts help participants coordinate and whether they propagate
+bad conventions or correlated assumptions. Compare provenance alone with challenge,
+quarantine, supersession, retraction, and propagation controls using synthetic cases.
 
-**Status:** strong architecture hypothesis from agent-system evidence; human-team evidence
-is still limited.
+**Status:** research hypothesis awaiting source mapping and appraisal.
 
 ### Evaluation evidence needs its own provenance
 
@@ -243,7 +238,7 @@ proxies do not carry the same evidentiary weight as real-world human behavior. A
 evaluation record should therefore state the environment, comparator, evaluator, proxy
 role, uncertainty, transfer boundary, and failure modes a metric can conceal.
 
-**Status:** methodological refinement supported by recent reviews and benchmark work;
+**Status:** proposed evaluation-record design awaiting source mapping and appraisal;
 specific minimum standards remain open.
 
 These provisional refinements should be promoted only after the
