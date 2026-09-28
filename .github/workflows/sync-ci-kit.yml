@@ -90,7 +90,7 @@ jobs:
           APPROVED_LOGINS_JSON: ${{ inputs.approved_logins }}
         run: |
           python3 - <<'PY'
-          import os, re, pathlib
+          import json, os, re, pathlib
 
           src_dir = pathlib.Path("_cikit-src/ci-kit/workflows")
           dst_dir = pathlib.Path(".github/workflows")
@@ -100,6 +100,16 @@ jobs:
           agent_prefix = os.environ["AGENT_PREFIX"]
           merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
           approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
+          try:
+              approved_logins = json.loads(approved_logins_json)
+          except json.JSONDecodeError as exc:
+              raise SystemExit(f"approved_logins must be JSON: {exc}")
+          if (not isinstance(approved_logins, list) or not approved_logins
+                  or any(not isinstance(login, str) or
+                         not re.fullmatch(r"[A-Za-z0-9-]+", login)
+                         for login in approved_logins)):
+              raise SystemExit("approved_logins must be a nonempty array of GitHub logins")
+          approved_logins_json = json.dumps(approved_logins, separators=(",", ":"))
 
           banner = (
               "# =============================================================\n"
@@ -137,7 +147,8 @@ jobs:
               "greenlight-all.yml",
               "Greenlight all green agent PRs",
               [
-                  (r"fromJSON\('.*?'\)", lambda m: "fromJSON('" + approved_logins_json + "')"),
+                  (r"contains\(fromJSON\('.*?'\), github\.actor\)",
+                   lambda m: "contains(fromJSON('" + approved_logins_json + "'), github.actor)"),
                   (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
                   (r'^(\s*AGENT_PREFIX:\s*)\S+(.*)$', lambda m: m.group(1) + agent_prefix + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
@@ -147,7 +158,8 @@ jobs:
               "greenlight-command.yml",
               "Greenlight comment command",
               [
-                  (r"fromJSON\('.*?'\)", lambda m: "fromJSON('" + approved_logins_json + "')"),
+                  (r"contains\(fromJSON\('.*?'\), github\.event\.comment\.user\.login\)",
+                   lambda m: "contains(fromJSON('" + approved_logins_json + "'), github.event.comment.user.login)"),
                   (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
               ],
