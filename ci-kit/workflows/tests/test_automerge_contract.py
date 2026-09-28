@@ -24,10 +24,11 @@ for (const line of lines.slice(start + 1)) {
 const run = new Function('github', 'context', 'core', 'require',
   'return (async () => {\n' + body.join('\n') + '\n})()');
 
-async function scenario(ref, draft, labeled, moveHead) {
+async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null) {
   let currentHead = 'sha-checked';
   let merged = false;
   let attemptedSha = null;
+  let warnings = 0;
   const pr = {
     number: 12, draft, state: 'open', head: { ref, sha: currentHead },
     labels: labeled ? [{ name: 'greenlight' }] : [],
@@ -37,11 +38,15 @@ async function scenario(ref, draft, labeled, moveHead) {
       status: 'modified' }],
     rest: {
       pulls: {
-        get: async () => ({ data: pr }),
+        get: async () => ({ data: { ...pr,
+          head: { ...pr.head, sha: currentHead } } }),
         listFiles: async () => ({}),
         merge: async ({ sha }) => {
           attemptedSha = sha;
-          if (sha !== currentHead) throw new Error('head changed');
+          if (mergeErrorStatus) throw Object.assign(
+            new Error('merge failed'), { status: mergeErrorStatus });
+          if (sha !== currentHead) throw Object.assign(
+            new Error('head changed'), { status: 409 });
           merged = true;
         },
       },
@@ -62,12 +67,9 @@ async function scenario(ref, draft, labeled, moveHead) {
     if (name === 'fs') return { writeFileSync: () => {} };
     return require(name);
   };
-  try {
-    await run(github, context, { info: () => {} }, runtimeRequire);
-  } catch (e) {
-    if (!moveHead || e.message !== 'head changed') throw e;
-  }
-  return { merged, attemptedSha };
+  await run(github, context, { info: () => {},
+    warning: () => { warnings += 1; } }, runtimeRequire);
+  return { merged, attemptedSha, warnings };
 }
 
 (async () => {
@@ -76,8 +78,16 @@ async function scenario(ref, draft, labeled, moveHead) {
     if (!ready.merged || ready.attemptedSha !== 'sha-checked')
       throw new Error(ref + ' failed eligible merge');
     const raced = await scenario(ref, false, true, true);
-    if (raced.merged || raced.attemptedSha !== 'sha-checked')
-      throw new Error(ref + ' merged a changed head');
+    if (raced.merged || raced.attemptedSha !== 'sha-checked' || raced.warnings !== 1)
+      throw new Error(ref + ' failed to skip a changed head');
+    for (const status of [405, 409]) {
+      try {
+        await scenario(ref, false, true, false, status);
+        throw new Error('unrelated merge error was swallowed');
+      } catch (e) {
+        if (e.status !== status) throw e;
+      }
+    }
   }
   for (const [ref, draft, labeled] of [
     ['other/example', false, true],

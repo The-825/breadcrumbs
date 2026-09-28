@@ -192,13 +192,24 @@ jobs:
                 return;
               }
               core.info(`Squash-merging PR #${pr.number} (${pr.head.ref}).`);
-              await github.rest.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                merge_method: "squash",
-                sha: pr.head.sha,
-              });
+              try {
+                await github.rest.pulls.merge({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  merge_method: "squash",
+                  sha: pr.head.sha,
+                });
+              } catch (error) {
+                if (error.status !== 409) throw error;
+                const { data: latest } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                });
+                if (latest.head.sha === pr.head.sha) throw error;
+                core.warning(`PR #${pr.number} head changed after checks; retry on the new head.`);
+              }
             };
 
             if (context.eventName === "workflow_run") {

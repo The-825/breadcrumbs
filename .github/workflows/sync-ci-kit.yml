@@ -90,19 +90,33 @@ jobs:
           APPROVED_LOGINS_JSON: ${{ inputs.approved_logins }}
         run: |
           python3 - <<'PY'
-          import os, re, pathlib
+          import json, os, re, pathlib
 
           src_dir = pathlib.Path("_cikit-src/ci-kit/workflows")
           dst_dir = pathlib.Path(".github/workflows")
           dst_dir.mkdir(parents=True, exist_ok=True)
 
           approval_label = os.environ["APPROVAL_LABEL"]
+          if not approval_label.strip() or "\n" in approval_label or "\r" in approval_label:
+              raise SystemExit("approval_label must be a nonempty, single-line label")
           agent_prefix = os.environ["AGENT_PREFIX"]
           prefixes = agent_prefix.split(",")
           if any(not re.fullmatch(r"[A-Za-z0-9._-]+/", p) for p in prefixes):
               raise SystemExit("agent_prefix must contain comma-separated branch prefixes like claude/,codex/")
           merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
+          if not re.fullmatch(r"[A-Za-z0-9._-]+\.ya?ml", merge_gate_workflow):
+              raise SystemExit("merge_gate_workflow must be a workflow YAML filename")
           approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
+          try:
+              approved_logins = json.loads(approved_logins_json)
+          except json.JSONDecodeError as exc:
+              raise SystemExit(f"approved_logins must be a JSON array: {exc}")
+          if (not isinstance(approved_logins, list) or not approved_logins
+                  or any(not isinstance(login, str)
+                         or not re.fullmatch(r"[A-Za-z0-9-]+", login)
+                         for login in approved_logins)):
+              raise SystemExit("approved_logins must contain GitHub login names")
+          approved_logins_json = json.dumps(approved_logins, separators=(",", ":"))
 
           banner = (
               "# =============================================================\n"
@@ -140,7 +154,7 @@ jobs:
               "greenlight-all.yml",
               "Greenlight all green agent PRs",
               [
-                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + json.dumps(approval_label) + m.group(2)),
                   (r'^(\s*AGENT_PREFIX:\s*)\S+(.*)$', lambda m: m.group(1) + agent_prefix + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
               ],
@@ -150,7 +164,7 @@ jobs:
               "Greenlight comment command",
               [
                   (r"fromJSON\('.*?'\)", lambda m: "fromJSON('" + approved_logins_json + "')"),
-                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + json.dumps(approval_label) + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
               ],
           )

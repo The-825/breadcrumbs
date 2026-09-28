@@ -45,7 +45,7 @@ GREEN = [
 ]
 
 
-def lane(files, labels=(), head="agent/feature", base="main", draft=False,
+def lane(files, labels=(), head="claude/feature", base="main", draft=False,
          require_label=False, **kw):
     """Rung-two lane call by default; tests for rung one pass require_label=True."""
     return ds.lane_decision(base, head, list(labels), draft, files,
@@ -73,6 +73,16 @@ class TestLaneScope(unittest.TestCase):
         verdict, _ = lane(["src/x.py"], head="feature/manual-work")
         self.assertEqual(verdict, "wait")
 
+    def test_permitted_branch_namespaces(self):
+        for head in ("claude/feature", "codex/feature"):
+            with self.subTest(head=head):
+                verdict, _ = lane(["src/x.py"], head=head)
+                self.assertEqual(verdict, "merge")
+        for head in ("agent/feature", "codexy/feature"):
+            with self.subTest(head=head):
+                verdict, _ = lane(["src/x.py"], head=head)
+                self.assertEqual(verdict, "wait")
+
 
 class TestMaturityLadder(unittest.TestCase):
     """Rung one (label-gated) vs rung two (label-free with protected paths)."""
@@ -81,7 +91,7 @@ class TestMaturityLadder(unittest.TestCase):
         # The kit ships REQUIRE_LABEL = True: a green unlabeled agent PR
         # waits. Graduating to label-free is a deliberate operator edit.
         self.assertTrue(ds.REQUIRE_LABEL)
-        verdict, reason = ds.lane_decision("main", "agent/x", [], False, ["src/x.py"])
+        verdict, reason = ds.lane_decision("main", "claude/x", [], False, ["src/x.py"])
         self.assertEqual(verdict, "wait")
         self.assertIn("rung one", reason)
 
@@ -443,7 +453,7 @@ class TestCLIContract(unittest.TestCase):
 
     def test_lane_verdict_line(self):
         code, out = self._run([
-            "lane", "--base", "main", "--head", "agent/x",
+            "lane", "--base", "main", "--head", "claude/x",
             "--labels-json", json.dumps([ds.APPROVAL_LABEL]),
             "--draft", "false"])
         self.assertEqual(code, 0)
@@ -453,7 +463,7 @@ class TestCLIContract(unittest.TestCase):
         # "wait" is a green outcome: the PR is waiting, not broken. A red
         # exit here would make every waiting PR look like a CI failure.
         code, out = self._run([
-            "lane", "--base", "main", "--head", "agent/x",
+            "lane", "--base", "main", "--head", "claude/x",
             "--labels-json", "[]", "--draft", "false", "--files-error"])
         self.assertEqual(code, 0)
         self.assertTrue(out.strip().endswith("verdict=wait"))
