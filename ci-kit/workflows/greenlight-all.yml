@@ -56,7 +56,7 @@ jobs:
     # EDIT ME: use the logins allowed to approve merges. Keep this in sync
     # with greenlight-command.yml. The re-run check prevents a different
     # writer from replaying an operator's earlier approval sweep.
-    if: |
+    if: >
       contains(fromJSON('["your-github-login"]'), github.actor) &&
       github.actor == github.triggering_actor
     runs-on: ubuntu-latest

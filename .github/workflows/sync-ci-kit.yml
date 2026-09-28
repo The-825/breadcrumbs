@@ -97,8 +97,17 @@ jobs:
           dst_dir.mkdir(parents=True, exist_ok=True)
 
           approval_label = os.environ["APPROVAL_LABEL"]
+          if not approval_label.strip() or "\n" in approval_label or "\r" in approval_label:
+              raise SystemExit("approval_label must be a nonempty, single-line label")
+          if "$" + "{{" in approval_label:
+              raise SystemExit("approval_label cannot contain a GitHub Actions expression")
           agent_prefix = os.environ["AGENT_PREFIX"]
+          prefixes = agent_prefix.split(",")
+          if any(not re.fullmatch(r"[A-Za-z0-9._-]+/", p) for p in prefixes):
+              raise SystemExit("agent_prefix must contain comma-separated branch prefixes like claude/,codex/")
           merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
+          if not re.fullmatch(r"[A-Za-z0-9._-]+\.ya?ml", merge_gate_workflow):
+              raise SystemExit("merge_gate_workflow must be a workflow YAML filename")
           approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
           try:
               approved_logins = json.loads(approved_logins_json)
@@ -149,7 +158,7 @@ jobs:
               [
                   (r"contains\(fromJSON\('.*?'\), github\.actor\)",
                    lambda m: "contains(fromJSON('" + approved_logins_json + "'), github.actor)"),
-                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + json.dumps(approval_label) + m.group(2)),
                   (r'^(\s*AGENT_PREFIX:\s*)\S+(.*)$', lambda m: m.group(1) + agent_prefix + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
               ],
@@ -160,7 +169,7 @@ jobs:
               [
                   (r"contains\(fromJSON\('.*?'\), github\.event\.comment\.user\.login\)",
                    lambda m: "contains(fromJSON('" + approved_logins_json + "'), github.event.comment.user.login)"),
-                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
+                  (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + json.dumps(approval_label) + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),
               ],
           )

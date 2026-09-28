@@ -20,7 +20,7 @@ RENDERER = ROOT / ".github/workflows/sync-ci-kit.yml"
 def _allowlist_from_job(text):
     match = re.search(
         r"name: Label green agent PRs\s+"
-        r"#.*?if: \|\s+"
+        r"#.*?if: >\s+"
         r"contains\(fromJSON\('([^']+)'\), github\.actor\) &&\s+"
         r"github\.actor == github\.triggering_actor",
         text,
@@ -32,7 +32,7 @@ def _allowlist_from_job(text):
 
 
 class GreenlightAllAuthorityTests(unittest.TestCase):
-    def render(self, approved_logins='["operator"]', unrelated=False):
+    def render(self, approved_logins='["operator"]', unrelated=False, **overrides):
         lines = RENDERER.read_text(encoding="utf-8").splitlines()
         start = next(i for i, line in enumerate(lines) if "python3 - <<'PY'" in line)
         end = next(i for i in range(start + 1, len(lines)) if lines[i].strip() == "PY")
@@ -59,6 +59,7 @@ class GreenlightAllAuthorityTests(unittest.TestCase):
                 "APPROVED_LOGINS_JSON": approved_logins,
                 "GITHUB_OUTPUT": str(root / "output.txt"),
             })
+            env.update(overrides)
             result = subprocess.run(
                 [sys.executable, "-c", script], cwd=root, env=env,
                 capture_output=True, text=True,
@@ -99,6 +100,17 @@ class GreenlightAllAuthorityTests(unittest.TestCase):
         for value in ('["operator\u0027s"]', '[]', 'not JSON'):
             with self.subTest(value=value):
                 result, _ = self.render(approved_logins=value)
+                self.assertNotEqual(result.returncode, 0)
+
+    def test_renderer_rejects_unsafe_other_inputs(self):
+        for value in (
+            {"APPROVAL_LABEL": "greenlight\nother: true"},
+            {"APPROVAL_LABEL": "${{ github.token }}"},
+            {"AGENT_PREFIX": "codex/,"},
+            {"MERGE_GATE_WORKFLOW": "automerge.yml\nother: true"},
+        ):
+            with self.subTest(value=value):
+                result, _ = self.render(**value)
                 self.assertNotEqual(result.returncode, 0)
 
 
