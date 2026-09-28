@@ -23,7 +23,7 @@
 # workflow_run conclusion.
 #
 # Two trigger paths, one gate. The workflow_run trigger fires when the checks
-# workflow completes. The pull_request(ready_for_review, labeled) trigger
+# workflow completes. The pull_request_target(ready_for_review, labeled) trigger
 # re-evaluates a PR when a draft is flipped to ready or a label is applied:
 # neither transition fires a new checks run, so without them a PR whose
 # checks went green DURING the draft window, or before the operator applied
@@ -46,7 +46,8 @@ on:
   workflow_run:
     workflows: ["Required checks"]   # EDIT ME: must match checks.yml `name:`
     types: [completed]
-  pull_request:
+  # Run the privileged gate from the base branch, never from the PR merge ref.
+  pull_request_target:
     types: [ready_for_review, labeled]
   # Both paths above are events, and GitHub sometimes drops events. When both
   # are dropped for the same PR, that PR sits green and unmergeable with
@@ -74,7 +75,7 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     if: >-
-      github.event_name == 'pull_request'
+      github.event_name == 'pull_request_target'
       || github.event_name == 'workflow_dispatch'
       || github.event.workflow_run.conclusion == 'success'
     steps:
@@ -89,6 +90,7 @@ jobs:
 
             // EDIT ME: your autonomous-agent branch namespaces.
             const ELIGIBLE_PREFIXES = ["claude/", "codex/"];
+            const BASE_BRANCH = "main"; // EDIT ME: protected target branch.
 
             // EDIT ME: the operator-label gate (AUTOMERGE_GOTCHAS.md, "The
             // operator-label gate"). With REQUIRE_LABEL true, a PR merges
@@ -153,6 +155,15 @@ jobs:
                 core.info(`PR #${pr.number} is not open; skipping.`);
                 return;
               }
+              if (pr.base?.ref !== BASE_BRANCH) {
+                core.info(`PR #${pr.number} targets an unexpected base; skipping.`);
+                return;
+              }
+              if (pr.base?.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}` ||
+                  pr.head?.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+                core.info(`PR #${pr.number} is not a same-repository PR; skipping.`);
+                return;
+              }
               if (!eligible(pr.head.ref)) {
                 core.info(`PR #${pr.number} head ${pr.head.ref} not an agent branch; skipping.`);
                 return;
@@ -210,7 +221,7 @@ jobs:
               return;
             }
 
-            if (context.eventName === "pull_request") {
+            if (context.eventName === "pull_request_target") {
               const pr = context.payload.pull_request;
               await considerPR(pr.number);
               return;

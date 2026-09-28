@@ -69,7 +69,7 @@ most surprising behavior in the set, learned in production rather than from the 
 GitHub's recursion guard, the same one behind the automerge deploy gotcha in
 `AUTOMERGE_GOTCHAS.md`. Two consequences:
 
-1. A merge gate with a `pull_request: [labeled]` trigger will not fire from these
+1. A merge gate with a `pull_request_target: [labeled]` trigger will not fire from these
    workflows' label-adds. The `labeled` event only starts runs when a user (or a PAT or
    GitHub App identity) applies the label.
 2. A gate that reads labels from its frozen event payload (the `github.event` snapshot
