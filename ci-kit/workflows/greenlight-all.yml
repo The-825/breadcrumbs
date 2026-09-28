@@ -66,7 +66,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
-          AGENT_PREFIX: agent/         # EDIT ME: your agent branch namespace
+          AGENT_PREFIX: claude/,codex/ # EDIT ME: comma-separated agent branch namespaces
           MERGE_GATE_WORKFLOW: automerge.yml   # EDIT ME: your merge gate's filename, or delete this line and the re-evaluation step below
         run: |
           set -uo pipefail
@@ -79,9 +79,11 @@ jobs:
 
           gh pr list --repo "$REPO" --state open \
             --json number,isDraft,headRefName,headRefOid --limit 100 \
-            | jq -c --arg prefix "$AGENT_PREFIX" \
+            | jq -c --arg prefixes "$AGENT_PREFIX" \
                 '.[] | select(.isDraft | not)
-                     | select(.headRefName | startswith($prefix))' \
+                     | select(.headRefName as $head
+                         | any(($prefixes | split(","))[];
+                               . as $prefix | $head | startswith($prefix)))' \
             | while read -r ROW; do
               N=$(jq -r '.number' <<<"$ROW")
               HEAD=$(jq -r '.headRefName' <<<"$ROW")

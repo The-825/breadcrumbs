@@ -38,10 +38,10 @@ on:
         type: string
         default: greenlight
       agent_prefix:
-        description: Branch namespace the greenlight-all sweep filters on.
+        description: Comma-separated branch namespaces the greenlight-all sweep filters on.
         required: false
         type: string
-        default: 'claude/'
+        default: 'claude/,codex/'
       merge_gate_workflow:
         description: Filename of the caller's merge gate workflow.
         required: false

@@ -26,6 +26,12 @@ workflow is the approval action. Repository writers can dispatch workflows, so t
 checks the trigger against the same operator-login allowlist as the comment command.
 It also rejects a re-run started by a different account. Set `approved_logins` in the
 sync wrapper, or edit the allowlist in the copied template, before using the sweep.
+Set `agent_prefix` in the caller's
+`sync-ci-kit.yml` wrapper to a comma-separated list such as `claude/,codex/` to
+cover both branch namespaces. The sync workflow renders this sweep, but it does
+not render a consumer's `automerge.yml`; update that local gate separately and
+bind its merge request to the checked head SHA. The sweep checks CI, not peer
+review evidence, so confirm any required peer gate before dispatch.
 
 ### `greenlight-command.yml`: apply the label from a comment
 
