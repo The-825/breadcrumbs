@@ -13,7 +13,7 @@ const label = value => value.replaceAll("-", " ").replace(/\b\w/g, letter => let
 function researchRow(item) {
   return `<tr>
     <td class="rank">${escapeHtml(item.id)}</td>
-    <td class="rank">${item.evidenceOrder}<small> / 100</small></td>
+    <td class="rank">${item.evidenceOrder}<small> / ${items.length}</small></td>
     <td><strong>${detailLink("research", item.id, item.title)}</strong><br><a href="${escapeHtml(item.url)}">Original source</a></td>
     <td><strong>${item.directnessValue} / 3</strong><br><span class="pill">${escapeHtml(item.directness)}</span></td>
     <td><strong>${item.horizonValue} / 3</strong><br><span class="pill">${escapeHtml(item.horizon)}</span></td>
@@ -69,6 +69,16 @@ async function catalog() {
   const response = await fetch(`data/${type}.json`);
   if (!response.ok) throw new Error("Catalog data unavailable");
   items = await response.json();
+  if (type === "research") {
+    document.querySelector(".catalog-head .eyebrow").textContent =
+      `Research Trail · ${items.length} reviewed sources and counting`;
+  } else {
+    const detailed = items.filter(item => item.evidence_depth !== "source-assessment").length;
+    document.querySelector(".catalog-head .eyebrow").textContent =
+      `Repository Trail · ${items.length} assessed repositories`;
+    document.querySelector(".catalog-head .lede").textContent =
+      `${detailed} repositories have pinned mechanism reviews. Another ${items.length - detailed} preserve portable-only public assessment evidence for deeper review. Unknown fields stay unknown, and popularity is shown only where it was actually observed.`;
+  }
   const claims = await fetch("data/claims.json").then(result => result.json());
   claimsById = Object.fromEntries(claims.map(item => [item.id, item]));
   addOptions(document.querySelector("#filter"), type === "research"

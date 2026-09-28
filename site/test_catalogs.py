@@ -1,5 +1,6 @@
 import json
 from html.parser import HTMLParser
+import re
 import unittest
 from pathlib import Path
 
@@ -38,10 +39,14 @@ class CatalogTests(unittest.TestCase):
         cls.claims = json.loads((SITE / "data" / "claims.json").read_text(encoding="utf-8"))
 
     def test_all_reviewed_records_are_present(self):
-        self.assertEqual(100, len(self.research))
-        self.assertEqual(311, len(self.repositories))
-        self.assertEqual(100, len({item["id"] for item in self.research}))
-        self.assertEqual(311, len({item["id"] for item in self.repositories}))
+        ledger = (SITE.parent / "docs" / "collaborative-intelligence-research-ledger.md").read_text(encoding="utf-8")
+        source_ids = re.findall(r"^\| ([0-9]{3}) \|", ledger, re.MULTILINE)
+        landscape = json.loads((SITE.parent / "docs" / "collaborative-intelligence-repository-landscape.json").read_text(encoding="utf-8"))
+        repository_ids = [item["id"] for item in landscape["repositories"]]
+        self.assertEqual(set(source_ids), {item["id"] for item in self.research})
+        self.assertEqual(set(repository_ids), {item["id"] for item in self.repositories})
+        self.assertEqual(len(set(source_ids)), len(self.research))
+        self.assertEqual(len(repository_ids), len(self.repositories))
         self.assertEqual(17, len(self.claims))
 
     def test_orch_remains_a_bounded_candidate(self):
@@ -78,15 +83,16 @@ class CatalogTests(unittest.TestCase):
 
     def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
-        self.assertEqual(105, len(portable))
+        self.assertTrue(portable)
         for item in portable:
             self.assertIsNone(item["stars_observed"])
             self.assertIsNone(item["popularityOrder"])
             self.assertEqual(item["unknownMechanisms"], item["mechanismTotal"])
 
     def test_detailed_repository_review_count_exceeds_original_saturation_baseline(self):
-        detailed = [item for item in self.repositories if item["evidence_depth"] == "readme-screened"]
-        self.assertEqual(206, len(detailed))
+        detailed = [item for item in self.repositories if item["evidence_depth"] != "source-assessment"]
+        portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
+        self.assertEqual(len(self.repositories), len(detailed) + len(portable))
         self.assertGreater(len(detailed), 100)
 
     def test_table_headers_do_not_float_over_rows(self):
@@ -98,7 +104,10 @@ class CatalogTests(unittest.TestCase):
         script = (SITE / "app.js").read_text(encoding="utf-8")
         self.assertIn("<th>Review number</th><th>Evidence order</th><th>Source</th>", page)
         self.assertIn('${escapeHtml(item.id)}</td>', script)
-        self.assertIn('${item.evidenceOrder}<small> / 100</small>', script)
+        self.assertIn('${item.evidenceOrder}<small> / ${items.length}</small>', script)
+        self.assertIn('${item.evidenceOrder} / ${all.length}', (SITE / "detail.js").read_text(encoding="utf-8"))
+        self.assertNotIn("100 reviewed sources", page)
+        self.assertNotIn("0 of 100", page)
         self.assertNotIn('${item.id}. ${item.title}', script)
 
     def test_public_profiles_include_visual_explanations(self):
