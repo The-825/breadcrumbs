@@ -22,7 +22,12 @@ checks that ALL check runs on the head SHA are completed and none failed (zero c
 counts as not green), and applies the approval label to the green ones. A run-summary
 table reports every PR touched or skipped and why. Use it when a review session ends with
 a wave of PRs the operator has looked at and wants released together: dispatching the
-workflow is the approval action.
+workflow is the approval action. Set `agent_prefix` in the caller's
+`sync-ci-kit.yml` wrapper to a comma-separated list such as `claude/,codex/` to
+cover both branch namespaces. The sync workflow renders this sweep, but it does
+not render a consumer's `automerge.yml`; update that local gate separately and
+bind its merge request to the checked head SHA. The sweep checks CI, not peer
+review evidence, so confirm any required peer gate before dispatch.
 
 ### `greenlight-command.yml`: apply the label from a comment
 

@@ -93,7 +93,7 @@ jobs:
           GH_TOKEN: ${{ secrets.AUTOMERGE_PAT || secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           BASE: main                          # EDIT ME: your base branch
-          AGENT_PREFIX: agent/                # EDIT ME: your agent branch namespace
+          AGENT_PREFIXES: claude/,codex/      # EDIT ME: align with automerge.yml ELIGIBLE_PREFIXES
           LABEL: needs-conflict-resolution    # EDIT ME: your conflict flag label
         run: |
           set -euo pipefail
@@ -136,12 +136,21 @@ jobs:
           }
 
           # --- Enumerate open agent PRs into the base (same-repo heads)
+          prefixes=$(jq -n -c --arg prefixes "$AGENT_PREFIXES" '
+            ($prefixes | split(",")) as $items
+            | if ($items | length > 0 and all(.[]; test("^[A-Za-z0-9._-]+/$")))
+              then $items
+              else error("AGENT_PREFIXES must contain comma-separated branch namespaces ending in /")
+              end')
           prs=$(gh api --paginate "repos/$REPO/pulls?state=open&base=$BASE&per_page=100" \
-            --jq ".[] | select(.head.repo.full_name == \"$REPO\")
-                      | select(.head.ref | startswith(\"$AGENT_PREFIX\"))
-                      | .number")
+            | jq -r --arg repo "$REPO" --argjson prefixes "$prefixes" '
+                .[] | select(.head.repo.full_name == $repo)
+                    | select(.head.ref as $head
+                        | any($prefixes[];
+                              . as $prefix | $head | startswith($prefix)))
+                    | .number')
 
-          [ -z "$prs" ] && { echo "No open $AGENT_PREFIX* PRs into $BASE."; exit 0; }
+          [ -z "$prs" ] && { echo "No open $AGENT_PREFIXES PRs into $BASE."; exit 0; }
 
           for n in $prs; do
             pr=$(gh api "repos/$REPO/pulls/$n")

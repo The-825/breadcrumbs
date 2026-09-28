@@ -101,8 +101,9 @@ import sys
 # The only base branch this gate merges into. Everything else waits.
 MAIN_BRANCH = "main"
 
-# Branch namespaces eligible for automerge at all.
-AGENT_PREFIXES = ("agent/",)
+# Branch namespaces eligible for automerge at all. EDIT ME: keep this tuple
+# aligned with automerge.yml ELIGIBLE_PREFIXES when adopting both gates.
+AGENT_PREFIXES = ("claude/", "codex/")
 
 # The operator's release label. Its role depends on REQUIRE_LABEL: on rung
 # one it is the gate (nothing merges without it); on rung two it is the
