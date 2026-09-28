@@ -99,8 +99,8 @@ jobs:
           approval_label = os.environ["APPROVAL_LABEL"]
           agent_prefix = os.environ["AGENT_PREFIX"]
           prefixes = agent_prefix.split(",")
-          if not prefixes or any(not p or p != p.strip() or not p.endswith("/") for p in prefixes):
-              raise SystemExit("agent_prefix must contain nonempty, comma-separated branch prefixes ending in /")
+          if any(not re.fullmatch(r"[A-Za-z0-9._-]+/", p) for p in prefixes):
+              raise SystemExit("agent_prefix must contain comma-separated branch prefixes like claude/,codex/")
           merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
           approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
 
