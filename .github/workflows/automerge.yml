@@ -6,7 +6,7 @@
 # one required job, "Kit self-tests", rather than the template's two-job
 # Static/E2E split (this repo has no backend or browser suite to gate).
 #
-# Squash-merges a claude/* PR once "Kit self-tests" is green on the PR head
+# Squash-merges a claude/* or codex/* PR once "Kit self-tests" is green on the PR head
 # SHA and a human has applied the "greenlight" label. Gated hard on
 # draft == false, so a PR opened as a DRAFT never self-merges.
 #
@@ -70,7 +70,7 @@ jobs:
             const REQUIRED_CHECKS = ["Kit self-tests"];
 
             // This repo's agent branch namespace.
-            const ELIGIBLE_PREFIXES = ["claude/"];
+            const ELIGIBLE_PREFIXES = ["claude/", "codex/"];
 
             // The operator-label gate (AUTOMERGE_GOTCHAS.md, "The operator-
             // label gate"). With REQUIRE_LABEL true, a PR merges only when a
@@ -197,6 +197,7 @@ jobs:
                 repo: context.repo.repo,
                 pull_number: pr.number,
                 merge_method: "squash",
+                sha: pr.head.sha,
               });
             };
 

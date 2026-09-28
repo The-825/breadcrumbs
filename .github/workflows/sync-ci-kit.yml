@@ -38,10 +38,10 @@ on:
         type: string
         default: greenlight
       agent_prefix:
-        description: Branch namespace the greenlight-all sweep filters on.
+        description: Comma-separated branch namespaces the greenlight-all sweep filters on.
         required: false
         type: string
-        default: 'claude/'
+        default: 'claude/,codex/'
       merge_gate_workflow:
         description: Filename of the caller's merge gate workflow.
         required: false
@@ -98,6 +98,9 @@ jobs:
 
           approval_label = os.environ["APPROVAL_LABEL"]
           agent_prefix = os.environ["AGENT_PREFIX"]
+          prefixes = agent_prefix.split(",")
+          if not prefixes or any(not p or p != p.strip() or not p.endswith("/") for p in prefixes):
+              raise SystemExit("agent_prefix must contain nonempty, comma-separated branch prefixes ending in /")
           merge_gate_workflow = os.environ["MERGE_GATE_WORKFLOW"]
           approved_logins_json = os.environ["APPROVED_LOGINS_JSON"]
 

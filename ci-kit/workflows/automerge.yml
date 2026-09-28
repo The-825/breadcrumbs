@@ -88,7 +88,7 @@ jobs:
             const REQUIRED_CHECKS = ["Static checks", "E2E checks"];
 
             // EDIT ME: your autonomous-agent branch namespaces.
-            const ELIGIBLE_PREFIXES = ["agent/"];
+            const ELIGIBLE_PREFIXES = ["claude/", "codex/"];
 
             // EDIT ME: the operator-label gate (AUTOMERGE_GOTCHAS.md, "The
             // operator-label gate"). With REQUIRE_LABEL true, a PR merges
@@ -179,6 +179,8 @@ jobs:
                 repo: context.repo.repo,
                 pull_number: pr.number,
                 merge_method: "squash",
+                // GitHub rejects the merge if the head changed after checks.
+                sha: pr.head.sha,
               });
             };
 
