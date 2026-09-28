@@ -27,9 +27,9 @@ on:
     inputs:
       approved_logins:
         description: >
-          JSON array string of GitHub logins allowed to run the greenlight
-          comment command, e.g. '["your-github-login"]'. Required: this is
-          identity data and has no safe default.
+          JSON array string of GitHub logins allowed to approve through the
+          greenlight command or manual sweep, e.g. '["your-github-login"]'.
+          Required: this is identity data and has no safe default.
         required: true
         type: string
       approval_label:
@@ -137,6 +137,7 @@ jobs:
               "greenlight-all.yml",
               "Greenlight all green agent PRs",
               [
+                  (r"fromJSON\('.*?'\)", lambda m: "fromJSON('" + approved_logins_json + "')"),
                   (r'^(\s*APPROVAL_LABEL:\s*)\S+(.*)$', lambda m: m.group(1) + approval_label + m.group(2)),
                   (r'^(\s*AGENT_PREFIX:\s*)\S+(.*)$', lambda m: m.group(1) + agent_prefix + m.group(2)),
                   (r'^(\s*MERGE_GATE_WORKFLOW:\s*)\S+(.*)$', lambda m: m.group(1) + merge_gate_workflow + m.group(2)),

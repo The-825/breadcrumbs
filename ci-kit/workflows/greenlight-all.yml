@@ -18,6 +18,9 @@
 # operator's approval action, which is why the only trigger is
 # workflow_dispatch and why this file should be treated as merge machinery
 # (human-gated) if you use a protected-paths policy.
+# Manual dispatch is available to repository writers, so the job also checks
+# the verified trigger identity against the operator allowlist. A re-run must
+# come from the same operator who dispatched the original run.
 #
 # LIMITATION (read before adopting): labels added with the default
 # GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard), so a
@@ -50,6 +53,12 @@ permissions:
 jobs:
   greenlight:
     name: Label green agent PRs
+    # EDIT ME: use the logins allowed to approve merges. Keep this in sync
+    # with greenlight-command.yml. The re-run check prevents a different
+    # writer from replaying an operator's earlier approval sweep.
+    if: |
+      contains(fromJSON('["your-github-login"]'), github.actor) &&
+      github.actor == github.triggering_actor
     runs-on: ubuntu-latest
     steps:
       - name: Sweep, label, re-evaluate

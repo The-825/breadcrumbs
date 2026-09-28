@@ -22,7 +22,10 @@ checks that ALL check runs on the head SHA are completed and none failed (zero c
 counts as not green), and applies the approval label to the green ones. A run-summary
 table reports every PR touched or skipped and why. Use it when a review session ends with
 a wave of PRs the operator has looked at and wants released together: dispatching the
-workflow is the approval action.
+workflow is the approval action. Repository writers can dispatch workflows, so the job
+checks the trigger against the same operator-login allowlist as the comment command.
+It also rejects a re-run started by a different account. Set `approved_logins` in the
+sync wrapper, or edit the allowlist in the copied template, before using the sweep.
 
 ### `greenlight-command.yml`: apply the label from a comment
 
