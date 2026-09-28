@@ -90,10 +90,26 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(item["unknownMechanisms"], item["mechanismTotal"])
 
     def test_detailed_repository_review_count_exceeds_original_saturation_baseline(self):
-        detailed = [item for item in self.repositories if item["evidence_depth"] != "source-assessment"]
+        depths = {item["evidence_depth"] for item in self.repositories}
+        self.assertEqual({"readme-screened", "source-assessment"}, depths)
+        detailed = [item for item in self.repositories if item["evidence_depth"] == "readme-screened"]
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]
         self.assertEqual(len(self.repositories), len(detailed) + len(portable))
+        self.assertTrue(all(item["detailedReviewCount"] == len(detailed) for item in self.repositories))
         self.assertGreater(len(detailed), 100)
+
+    def test_home_catalog_counts_load_from_data(self):
+        home = (SITE / "index.html").read_text(encoding="utf-8")
+        script = (SITE / "home.js").read_text(encoding="utf-8")
+        llms = (SITE.parent / "llms.txt").read_text(encoding="utf-8")
+        self.assertIn('id="research-total">Loading</div>', home)
+        self.assertIn('id="repository-total">Loading</div>', home)
+        self.assertIn('src="home.js?v=', home)
+        self.assertIn('readCatalog("research")', script)
+        self.assertIn('readCatalog("repositories")', script)
+        self.assertIn('item.evidence_depth === "readme-screened"', script)
+        self.assertIn('item.evidence_depth === "source-assessment"', script)
+        self.assertNotIn("311-repository ledger", llms)
 
     def test_table_headers_do_not_float_over_rows(self):
         css = (SITE / "app.css").read_text(encoding="utf-8")

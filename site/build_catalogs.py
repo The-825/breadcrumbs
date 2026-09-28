@@ -68,6 +68,9 @@ def research_catalog() -> list[dict[str, object]]:
 def repository_catalog() -> list[dict[str, object]]:
     landscape = json.loads((DOCS / "collaborative-intelligence-repository-landscape.json").read_text(encoding="utf-8"))
     output = landscape["repositories"]
+    unknown_depths = {item["evidence_depth"] for item in output} - {"readme-screened", "source-assessment"}
+    if unknown_depths:
+        raise ValueError(f"unknown repository evidence depths: {sorted(unknown_depths)}")
     output.sort(key=lambda item: (item["stars_observed"] is None, -(item["stars_observed"] or 0), item["repository"]))
     category_counts: dict[str, int] = {}
     for rank, item in enumerate(output, 1):
@@ -84,7 +87,7 @@ def repository_catalog() -> list[dict[str, object]]:
         item["lastReviewed"] = item["snapshot_date"]
         item["starsObservedDate"] = landscape["popularity_observed_date"]
         item["ledgerRepositoryCount"] = len(output)
-        item["detailedReviewCount"] = sum(row["evidence_depth"] != "source-assessment" for row in output)
+        item["detailedReviewCount"] = sum(row["evidence_depth"] == "readme-screened" for row in output)
     totals: dict[str, int] = {}
     for item in output:
         totals[item["category"]] = totals.get(item["category"], 0) + 1

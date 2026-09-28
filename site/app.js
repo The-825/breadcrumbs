@@ -73,11 +73,13 @@ async function catalog() {
     document.querySelector(".catalog-head .eyebrow").textContent =
       `Research Trail · ${items.length} reviewed sources and counting`;
   } else {
-    const detailed = items.filter(item => item.evidence_depth !== "source-assessment").length;
+    const detailed = items.filter(item => item.evidence_depth === "readme-screened").length;
+    const portable = items.filter(item => item.evidence_depth === "source-assessment").length;
+    if (detailed + portable !== items.length) throw new Error("Unknown repository evidence depth");
     document.querySelector(".catalog-head .eyebrow").textContent =
       `Repository Trail · ${items.length} assessed repositories`;
     document.querySelector(".catalog-head .lede").textContent =
-      `${detailed} repositories have pinned mechanism reviews. Another ${items.length - detailed} preserve portable-only public assessment evidence for deeper review. Unknown fields stay unknown, and popularity is shown only where it was actually observed.`;
+      `${detailed} repositories have pinned mechanism reviews. Another ${portable} preserve portable-only public assessment evidence for deeper review. Unknown fields stay unknown, and popularity is shown only where it was actually observed.`;
   }
   const claims = await fetch("data/claims.json").then(result => result.json());
   claimsById = Object.fromEntries(claims.map(item => [item.id, item]));
@@ -94,6 +96,8 @@ async function catalog() {
 }
 
 catalog().catch(() => {
+  const count = document.querySelector("#count");
+  if (count) count.textContent = "Unavailable";
   const empty = document.querySelector(".empty");
   if (empty) {
     empty.textContent = "The catalog could not load. Use the repository source files instead.";
