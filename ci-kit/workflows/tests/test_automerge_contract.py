@@ -88,6 +88,12 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null) 
         if (e.status !== status) throw e;
       }
     }
+    try {
+      await scenario(ref, false, true, true, 422);
+      throw new Error('moved-head validation error was swallowed');
+    } catch (e) {
+      if (e.status !== 422) throw e;
+    }
   }
   for (const [ref, draft, labeled] of [
     ['other/example', false, true],

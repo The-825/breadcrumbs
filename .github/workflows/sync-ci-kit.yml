@@ -99,6 +99,8 @@ jobs:
           approval_label = os.environ["APPROVAL_LABEL"]
           if not approval_label.strip() or "\n" in approval_label or "\r" in approval_label:
               raise SystemExit("approval_label must be a nonempty, single-line label")
+          if "$" + "{{" in approval_label:
+              raise SystemExit("approval_label cannot contain a GitHub Actions expression")
           agent_prefix = os.environ["AGENT_PREFIX"]
           prefixes = agent_prefix.split(",")
           if any(not re.fullmatch(r"[A-Za-z0-9._-]+/", p) for p in prefixes):

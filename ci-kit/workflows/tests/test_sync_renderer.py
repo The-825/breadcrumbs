@@ -63,6 +63,7 @@ class SyncRendererTests(unittest.TestCase):
             {"AGENT_PREFIX": "claude/,"},
             {"AGENT_PREFIX": "claude/\nMALICIOUS: true"},
             {"APPROVAL_LABEL": "review\nMALICIOUS: true"},
+            {"APPROVAL_LABEL": "$" + "{{ github.token }}"},
             {"MERGE_GATE_WORKFLOW": "automerge.yml\nMALICIOUS: true"},
             {"APPROVED_LOGINS_JSON": '["operator\u0027s"]'},
             {"APPROVED_LOGINS_JSON": '["operator"]\nMALICIOUS: true'},

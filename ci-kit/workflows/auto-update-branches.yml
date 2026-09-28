@@ -136,11 +136,17 @@ jobs:
           }
 
           # --- Enumerate open agent PRs into the base (same-repo heads)
+          prefixes=$(jq -n -c --arg prefixes "$AGENT_PREFIXES" '
+            ($prefixes | split(",")) as $items
+            | if ($items | length > 0 and all(.[]; test("^[A-Za-z0-9._-]+/$")))
+              then $items
+              else error("AGENT_PREFIXES must contain comma-separated branch namespaces ending in /")
+              end')
           prs=$(gh api --paginate "repos/$REPO/pulls?state=open&base=$BASE&per_page=100" \
-            | jq -r --arg repo "$REPO" --arg prefixes "$AGENT_PREFIXES" '
+            | jq -r --arg repo "$REPO" --argjson prefixes "$prefixes" '
                 .[] | select(.head.repo.full_name == $repo)
                     | select(.head.ref as $head
-                        | any(($prefixes | split(","))[];
+                        | any($prefixes[];
                               . as $prefix | $head | startswith($prefix)))
                     | .number')
 
