@@ -130,8 +130,27 @@ class CatalogTests(unittest.TestCase):
         jarvis = (SITE / "jarvis.html").read_text(encoding="utf-8")
         detail = (SITE / "detail.js").read_text(encoding="utf-8")
         self.assertIn('class="system-map"', jarvis)
+        self.assertIn('id="hidden-curriculum"', jarvis)
+        self.assertIn("Unknown is a state", jarvis)
+        self.assertIn("Adopt the gap", jarvis)
         self.assertIn("Mechanism profile", detail)
         self.assertIn("Last reviewed", detail)
+
+    def test_reddit_systems_intake_is_public_bounded_and_pinned(self):
+        intake = json.loads((SITE.parent / "docs" / "reddit-systems-intake-2026-09-29.json").read_text(encoding="utf-8"))
+        self.assertEqual("evidence-only", intake["authority"])
+        self.assertEqual(len(intake["candidates"]), len({item["id"] for item in intake["candidates"]}))
+        allowed = set(intake["status_codes"])
+        for item in intake["candidates"]:
+            self.assertIn(item["disposition"], allowed)
+            for field in ("concept", "source_url", "target_owner", "problem", "baseline", "success", "risk"):
+                self.assertTrue(item[field])
+            if item["canonical_repository"]:
+                self.assertRegex(item["source_revision"], r"^[a-f0-9]{40}$")
+                self.assertNotEqual("unknown", item["license_spdx"])
+        text = json.dumps(intake).lower()
+        for blocked in ("student record", "ferpa record", "household transcript", "customer record"):
+            self.assertNotIn(blocked, text)
 
     def test_every_page_has_accessible_navigation(self):
         for name in ("index.html", "start.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):

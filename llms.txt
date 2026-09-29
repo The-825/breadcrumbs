@@ -23,6 +23,8 @@ are separate evidence classes.
   selftest commands, for programmatic adoption.
 - [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
 - [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
+- [docs/reddit-systems-hidden-curriculum.md](docs/reddit-systems-hidden-curriculum.md): dated public field note on uncertain actions, scoped identity and memory, discovery budgets, and bounded native adoption.
+- [docs/reddit-systems-intake-2026-09-29.json](docs/reddit-systems-intake-2026-09-29.json): machine-readable source, revision, license, risk, baseline, success, owner, and disposition record.
 
 ## Memory that survives the session
 
