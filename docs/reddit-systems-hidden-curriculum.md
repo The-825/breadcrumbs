@@ -26,10 +26,8 @@ effect may have happened while the response was lost. The safe lifecycle is:
 An idempotency key binds identity. It does not grant permission to keep sending. A safe
 uncertain state remains non-retryable until another evidence source resolves it.
 
-The A2A Trust Plane is the owning implementation for this intake. Its
-[merged revision `7f25755`](https://github.com/The-825/a2a-trust-plane/commit/7f2575506fcf12c62ef87cb939d89d78e7da48b4)
-adds an inspectable uncertain event while preserving the existing reservation. The
-focused audit suite, repository checks, CI, peer review, and main-branch readback passed.
+This public note transfers the mechanism, not an operated system's identity, internal
+implementation evidence, or authority. Implementation status remains with its source.
 
 ## 2. Identity comes before shared context
 
@@ -40,9 +38,6 @@ it, publish it, or copy it into another project.
 
 This is why repository and project boundaries belong in code. The prompt can ask for a
 scope, but the authenticated host decides which scopes exist and which the caller holds.
-Jarvis records this pattern in BetterMe at
-[merged revision `3fb0f2c`](https://github.com/mrjvnsmth/BetterMe/commit/3fb0f2c4927b1aa52bade387047dd943c851f59c),
-grounded in its existing project, account-routing, and approval tests.
 
 ## 3. Memory needs an explanation path
 

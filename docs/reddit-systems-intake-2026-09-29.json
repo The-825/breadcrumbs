@@ -3,7 +3,7 @@
   "observed_date": "2026-09-29",
   "authority": "evidence-only",
   "boundary": "Public sources and generalized mechanisms only. No private Jarvis records, Reddit account data, customer data, household data, or protected institutional data.",
-  "status_codes": ["adopt-native", "existing-native", "experiment", "study", "backlog", "watch", "reject"],
+  "status_codes": ["publish-pattern", "experiment", "study", "backlog", "watch", "reject"],
   "candidates": [
     {
       "id": "reddit-1wrvr4h",
@@ -13,13 +13,16 @@
       "canonical_repository": null,
       "source_revision": null,
       "license_spdx": "unknown",
-      "target_owner": "The-825/a2a-trust-plane",
-      "disposition": "adopt-native",
+      "pattern_domain": "action-lifecycle",
+      "disposition": "publish-pattern",
       "problem": "A timeout or lost response can leave an external effect unknown and a retry can duplicate it.",
-      "baseline": "Before adoption, the Trust Plane reserved execution and blocked duplicate approval use but recorded post-dispatch errors as generic failures.",
+      "baseline": "A governed action pattern must distinguish a dispatched operation from a confirmed outcome.",
       "success": "A synthetic upstream is invoked once, the result is uncertain and inspectable, the payload is not exposed, and no resend path is created.",
       "risk": "The post is an operator self-report, not an independent evaluation.",
-      "adoption_evidence": "https://github.com/The-825/a2a-trust-plane/commit/7f2575506fcf12c62ef87cb939d89d78e7da48b4"
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://www.reddit.com/r/MCPservers/comments/1wrvr4h/six_design_patterns_from_running_an_mcp_server/",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "reddit-1wssogh",
@@ -29,13 +32,16 @@
       "canonical_repository": null,
       "source_revision": null,
       "license_spdx": "not-applicable",
-      "target_owner": "mrjvnsmth/BetterMe",
-      "disposition": "existing-native",
+      "pattern_domain": "identity-and-memory",
+      "disposition": "publish-pattern",
       "problem": "A group agent can leak or overwrite personal context when identity and sharing scopes are implicit.",
-      "baseline": "Jarvis already has project-scoped memory, account identity, routed Google sources, and permission-gated writes.",
-      "success": "Existing project-boundary, account-routing, and write-approval tests remain green.",
+      "baseline": "A shared-agent pattern must establish participant identity and keep personal and shared scopes distinct.",
+      "success": "Synthetic tests prove that identity, read scope, write scope, and sharing authority remain separate.",
       "risk": "An announcement describes Google's product design, not an independent outcome study.",
-      "adoption_evidence": "https://github.com/mrjvnsmth/BetterMe/commit/3fb0f2c4927b1aa52bade387047dd943c851f59c"
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://blog.google/innovation-and-ai/models-and-research/google-labs/cc-expanding-to-groups/",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-google-research-rrsi",
@@ -45,13 +51,16 @@
       "canonical_repository": "google-research/rrsi",
       "source_revision": "be50316e1db05914068a973f322770ef08ed7ba1",
       "license_spdx": "Apache-2.0",
-      "target_owner": "mrjvnsmth/BetterMe experiments",
+      "pattern_domain": "research-evaluation",
       "disposition": "experiment",
       "problem": "Self-improvement claims can overfit visible tasks, hide edit cost, or leak evaluation data.",
-      "baseline": "Jarvis has synthetic evaluations and checkpoints but no equivalent research-edit harness.",
+      "baseline": "A self-improvement experiment needs a fixed budget, an untouched holdout, and complete edit history.",
       "success": "A public-safe fixture uses a fixed budget, untouched holdout, complete edit history, leakage check, and stop rule.",
       "risk": "Reported results are author evaluations and have not been independently reproduced here.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/google-research/rrsi",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-apify-mcpc",
@@ -61,13 +70,16 @@
       "canonical_repository": "apify/mcpc",
       "source_revision": "a8c34fc1af1f89626218712d940b673206a69ed6",
       "license_spdx": "Apache-2.0",
-      "target_owner": "The-825/a2a-trust-plane experiments",
+      "pattern_domain": "tool-discovery",
       "disposition": "experiment",
       "problem": "Repeated tool discovery can consume calls and context without improving route quality.",
-      "baseline": "The Trust Plane already provides bounded discovery and registry-only routing.",
+      "baseline": "A discovery comparison needs a bounded registry and an explicit completeness measure.",
       "success": "A synthetic comparison reports discovery completeness, calls, bytes, latency, and unsafe over-discovery.",
       "risk": "A compact protocol can omit controls or encourage broader discovery than the task needs.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/apify/mcpc",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-merijjeyn-jive",
@@ -77,13 +89,16 @@
       "canonical_repository": "merijjeyn/jive",
       "source_revision": "7b12a061ac77aca94851a0c2f53e6140fae95e74",
       "license_spdx": "MIT",
-      "target_owner": "mrjvnsmth/BetterMe experiments",
+      "pattern_domain": "workflow-graphs",
       "disposition": "experiment",
       "problem": "Implicit workflow dependencies make recovery and inspection harder.",
-      "baseline": "Jarvis already has workflow and handoff dependency models.",
+      "baseline": "A workflow comparison needs explicit dependencies, recovery states, and inspection evidence.",
       "success": "An independent synthetic comparison beats the current runner on one named measure without weakening authority or recovery.",
-      "risk": "Author benchmarks require independent reproduction and may not match Jarvis workloads.",
-      "adoption_evidence": null
+      "risk": "Author benchmarks require independent reproduction and may not match other workloads.",
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/merijjeyn/jive",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-tacticocc-jevbridge",
@@ -93,13 +108,16 @@
       "canonical_repository": "tacticocc/Jevbridge",
       "source_revision": "d4e8f7d483b8a5649218970eedbaf4f4a1e1e832",
       "license_spdx": "MIT",
-      "target_owner": "mrjvnsmth/BetterMe",
+      "pattern_domain": "decision-receipts",
       "disposition": "study",
       "problem": "A decision output can hide its evidence, confidence, refusal, or authority boundary.",
-      "baseline": "Jarvis already records authority and decision receipts.",
+      "baseline": "A decision receipt pattern needs evidence, uncertainty, refusal, and named authority.",
       "success": "Any adopted schema preserves evidence, uncertainty, refusal, and named authority without treating a heuristic as truth.",
       "risk": "Heuristic fallbacks are not safety evidence.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/tacticocc/Jevbridge",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-srfrog-goldie-mcp",
@@ -109,13 +127,16 @@
       "canonical_repository": "srfrog/goldie-mcp",
       "source_revision": "79f85d74a9dd8d049ded97d38c5ed8245c8a3a20",
       "license_spdx": "MIT",
-      "target_owner": "The-825/breadcrumbs",
+      "pattern_domain": "memory-explanation",
       "disposition": "study",
       "problem": "Memory retrieval is hard to debug when paths and stop reasons are invisible.",
-      "baseline": "Jarvis and Breadcrumbs already preserve provenance, supersession, tombstones, ranking traces, and retrieval warnings.",
+      "baseline": "A memory explanation pattern needs provenance, correction state, retrieval paths, stop reasons, and warnings.",
       "success": "Only portable path and stop-reason fixtures that preserve the stronger authority and correction controls may cross.",
       "risk": "A flat shared pool and broad indexing do not establish project authority, retention, or supersession.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/srfrog/goldie-mcp",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-obot-platform-obot",
@@ -125,13 +146,16 @@
       "canonical_repository": "obot-platform/obot",
       "source_revision": "24de6258cf486dc188650776b18ac7950f4f82da",
       "license_spdx": "MIT",
-      "target_owner": "The-825/a2a-trust-plane",
+      "pattern_domain": "tool-gateway-governance",
       "disposition": "study",
       "problem": "Tool gateways need visible policy, isolation, registry, and audit boundaries.",
-      "baseline": "The Trust Plane already has registry-only routing, policy, tenant isolation, and audit receipts.",
+      "baseline": "A gateway assessment needs visible registry, policy, isolation, and audit boundaries.",
       "success": "A named gap is demonstrated before any bounded experiment.",
-      "risk": "The platform is much broader than the current need, and development modes can expose powerful local surfaces.",
-      "adoption_evidence": null
+      "risk": "The platform is much broader than the pattern, and development modes can expose powerful local surfaces.",
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/obot-platform/obot",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-debpalash-voicestudio",
@@ -141,13 +165,16 @@
       "canonical_repository": "debpalash/VoiceStudio",
       "source_revision": "eef0e2304be21c9bfd08cfca0254918522105b06",
       "license_spdx": "AGPL-3.0",
-      "target_owner": "mrjvnsmth/BetterMe experiments",
+      "pattern_domain": "voice-safety",
       "disposition": "backlog",
       "problem": "A local voice surface could reduce remote disclosure while preserving operator control.",
-      "baseline": "Jarvis has local voice surfaces but no approved voice-cloning workflow.",
+      "baseline": "A voice experiment starts from explicit rights, consent, network, retention, and model-license boundaries.",
       "success": "Synthetic voice only, explicit rights check, no biometric persistence, local network disabled, and every model license recorded.",
       "risk": "Repository license, model licenses, voice rights, consent, and biometric handling are separate requirements.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/debpalash/VoiceStudio",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-rohasnagpal-cfo",
@@ -157,13 +184,16 @@
       "canonical_repository": "rohasnagpal/cfo",
       "source_revision": "e63736237811b0e234d01cbba6d9a6a0cd925320",
       "license_spdx": "MIT",
-      "target_owner": "mrjvnsmth/BetterMe",
-      "disposition": "existing-native",
+      "pattern_domain": "evidence-labeling",
+      "disposition": "publish-pattern",
       "problem": "Financial or operating outputs can blur source facts, calculations, assumptions, and interpretation.",
-      "baseline": "Jarvis business reviews already separate evidence from interpretation.",
+      "baseline": "An evidence-labeling pattern must separate reported facts, calculations, assumptions, and interpretation.",
       "success": "A reviewed output shows every applicable label and keeps financial files local.",
       "risk": "The repository does not independently validate financial accuracy.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/rohasnagpal/cfo",
+      "visibility_observed_date": "2026-09-29"
     },
     {
       "id": "github-insane0777-awwwards-mcp",
@@ -173,13 +203,16 @@
       "canonical_repository": "INSANE0777/Awwards-mcp",
       "source_revision": "c7ee2df54bfeca5183785abdfdc8b8cb55ef36d2",
       "license_spdx": "MIT",
-      "target_owner": "The-825/breadcrumbs",
+      "pattern_domain": "design-comparison",
       "disposition": "study",
       "problem": "A design recommendation can become trend imitation when references and dates are hidden.",
       "baseline": "Current design review is manual and source-linked.",
       "success": "A public-safe comparison keeps source date and rights limits without scraping or capturing arbitrary URLs.",
       "risk": "Third-party imagery rights, scraping, browser capture, and dependency upkeep require separate review.",
-      "adoption_evidence": null
+      "implementation_status": "not-asserted",
+      "visibility": "public",
+      "visibility_verification_url": "https://api.github.com/repos/INSANE0777/Awwards-mcp",
+      "visibility_observed_date": "2026-09-29"
     }
   ],
   "rejected_leads": [

@@ -143,14 +143,29 @@ class CatalogTests(unittest.TestCase):
         allowed = set(intake["status_codes"])
         for item in intake["candidates"]:
             self.assertIn(item["disposition"], allowed)
-            for field in ("concept", "source_url", "target_owner", "problem", "baseline", "success", "risk"):
+            for field in ("concept", "source_url", "pattern_domain", "problem", "baseline", "success", "risk"):
                 self.assertTrue(item[field])
+            self.assertNotIn("target_owner", item)
+            self.assertNotIn("adoption_evidence", item)
+            self.assertEqual("not-asserted", item["implementation_status"])
+            self.assertEqual("public", item["visibility"])
+            self.assertEqual(intake["observed_date"], item["visibility_observed_date"])
+            self.assertTrue(item["visibility_verification_url"].startswith("https://"))
             if item["canonical_repository"]:
                 self.assertRegex(item["source_revision"], r"^[a-f0-9]{40}$")
                 self.assertNotEqual("unknown", item["license_spdx"])
+                self.assertEqual(
+                    f"https://api.github.com/repos/{item['canonical_repository']}",
+                    item["visibility_verification_url"],
+                )
         text = json.dumps(intake).lower()
-        for blocked in ("student record", "ferpa record", "household transcript", "customer record"):
+        for blocked in (
+            "student record", "ferpa record", "household transcript", "customer record",
+            "merged revision", "main-branch readback", "tests remain green",
+        ):
             self.assertNotIn(blocked, text)
+        note = (SITE.parent / "docs" / "reddit-systems-hidden-curriculum.md").read_text(encoding="utf-8")
+        self.assertNotIn("https://github.com/", note)
 
     def test_every_page_has_accessible_navigation(self):
         for name in ("index.html", "start.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
