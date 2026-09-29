@@ -11,7 +11,7 @@
 # draft == false, so a PR opened as a DRAFT never self-merges.
 #
 # Three trigger paths, one gate. The workflow_run trigger fires when the CI
-# workflow completes. The pull_request(ready_for_review, labeled) trigger
+# workflow completes. The pull_request_target(ready_for_review, labeled) trigger
 # re-evaluates a PR when a draft is flipped to ready or a label is applied:
 # neither transition fires a new CI run, so without them a PR whose checks
 # went green before the operator applied the label would sit unmerged until
@@ -24,7 +24,8 @@ on:
   workflow_run:
     workflows: ["CI"]   # must match ci.yml `name:`
     types: [completed]
-  pull_request:
+  # Run the privileged gate from main, never from the PR merge ref.
+  pull_request_target:
     types: [ready_for_review, labeled]
   # Both paths above are events, and GitHub sometimes drops events. When both
   # are dropped for the same PR, that PR sits green and unmergeable with
@@ -50,7 +51,7 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     if: >-
-      github.event_name == 'pull_request'
+      github.event_name == 'pull_request_target'
       || github.event_name == 'workflow_dispatch'
       || github.event.workflow_run.conclusion == 'success'
     steps:
@@ -132,6 +133,12 @@ jobs:
               }
               if (pr.state !== "open") {
                 core.info(`PR #${pr.number} is not open; skipping.`);
+                return;
+              }
+              if (pr.base?.ref !== "main" ||
+                  pr.base?.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}` ||
+                  pr.head?.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+                core.info(`PR #${pr.number} is not a same-repository PR against main; skipping.`);
                 return;
               }
               if (!eligible(pr.head.ref)) {
@@ -225,7 +232,7 @@ jobs:
               return;
             }
 
-            if (context.eventName === "pull_request") {
+            if (context.eventName === "pull_request_target") {
               const pr = context.payload.pull_request;
               await considerPR(pr.number);
               return;
