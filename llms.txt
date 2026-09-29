@@ -17,12 +17,12 @@ are separate evidence classes.
 ## Start here
 
 - [README.md](README.md): the problem, the one-afternoon adoption path, the map.
-- [templates/CLAUDE_TEMPLATE.md](templates/CLAUDE_TEMPLATE.md): the rules-file
-  skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
+- [templates/CLAUDE_TEMPLATE.md](templates/CLAUDE_TEMPLATE.md): the rules-file skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
 - [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
   selftest commands, for programmatic adoption.
 - [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
 - [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
+- [docs/reddit-systems-hidden-curriculum.md](docs/reddit-systems-hidden-curriculum.md) and [source intake](docs/reddit-systems-intake-2026-09-29.json): dated public lessons plus the machine-readable source, revision, risk, owner, and disposition record.
 
 ## Memory that survives the session
 

@@ -61,6 +61,44 @@ REQUIRED_PROVENANCE = {
 }
 
 
+def check_public_systems_intake(root: Path) -> list[str]:
+    """Fail closed when the public pattern intake carries operated identities."""
+    path = root / "docs" / "reddit-systems-intake-2026-09-29.json"
+    if not path.exists():
+        return []
+    try:
+        intake = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"public systems intake unreadable: {exc}"]
+
+    failures = []
+    if intake.get("authority") != "evidence-only":
+        failures.append("public systems intake must remain evidence-only")
+    if not intake.get("boundary"):
+        failures.append("public systems intake lacks an explicit boundary")
+    for index, item in enumerate(intake.get("candidates", [])):
+        label = item.get("id", f"row {index}")
+        for prohibited in ("target_owner", "adoption_evidence"):
+            if prohibited in item:
+                failures.append(f"public systems intake {label} carries prohibited field {prohibited}")
+        if item.get("implementation_status") != "not-asserted":
+            failures.append(f"public systems intake {label} asserts implementation status")
+        if item.get("visibility") != "public":
+            failures.append(f"public systems intake {label} lacks positive public visibility")
+        if item.get("visibility_observed_date") != intake.get("observed_date"):
+            failures.append(f"public systems intake {label} has stale visibility evidence")
+        verification = item.get("visibility_verification_url", "")
+        if not verification.startswith("https://"):
+            failures.append(f"public systems intake {label} lacks a public verification URL")
+        repository = item.get("canonical_repository")
+        if repository:
+            if verification != f"https://api.github.com/repos/{repository}":
+                failures.append(f"public systems intake {label} lacks GitHub visibility proof")
+            if not re.fullmatch(r"[0-9a-f]{40}", item.get("source_revision", "")):
+                failures.append(f"public systems intake {label} lacks a pinned source revision")
+    return failures
+
+
 def check_portfolio_contract(manifest: dict, root: Path) -> list[str]:
     failures = []
     contract = manifest.get("portfolio_contract")
@@ -180,6 +218,7 @@ def check(manifest_path: Path, root: Path):
             failures.append(f"companion file missing: {name}")
 
     failures.extend(check_portfolio_contract(manifest, root))
+    failures.extend(check_public_systems_intake(root))
 
     # The manifest also may not lie about CI. kit.json tells adopters the
     # selftests run in this repo's own gate; without this check the manifest
