@@ -204,7 +204,7 @@ half is proven. Do these in order and stop when you have had enough for the day:
    fail-closed automerge: merges happen only when every required check is green on the
    exact head commit, and only after a human applies an approval label. Read
    [`AUTOMERGE_GOTCHAS.md`](ci-kit/workflows/AUTOMERGE_GOTCHAS.md) first; the naive
-   version has fourteen non-obvious ways to fail.
+   version has fifteen non-obvious ways to fail.
 
 ## What is in here
 

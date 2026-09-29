@@ -1,4 +1,4 @@
-"""Exercise both merge workflows with mocked GitHub state and a moving head."""
+"""Exercise both merge workflows with mocked GitHub state, a moving head, and greenlight freshness."""
 
 import pathlib
 import subprocess
@@ -24,7 +24,11 @@ for (const line of lines.slice(start + 1)) {
 const run = new Function('github', 'context', 'core', 'require',
   'return (async () => {\n' + body.join('\n') + '\n})()');
 
-async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null) {
+const T = (s) => `2026-09-29T10:00:${String(s).padStart(2, '0')}Z`;
+const DEFAULT_TIMELINE = { runs: [T(10)], labeledAt: [T(20)], forcePushes: [], filler: 0 };
+
+async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
+                        timeline = DEFAULT_TIMELINE) {
   let currentHead = 'sha-checked';
   let merged = false;
   let attemptedSha = null;
@@ -34,9 +38,34 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null) 
     labels: labeled ? [{ name: 'greenlight' }] : [],
   };
   const github = {
-    paginate: async () => [{ filename: '.github/workflows/automerge.yml',
-      status: 'modified' }],
+    paginate: async (fn, params) => {
+      if (fn === 'runs') {
+        if (params.head_sha !== 'sha-checked') throw new Error('wrong run SHA');
+        return [...timeline.runs.map(created_at => ({ head_sha: 'sha-checked',
+          event: 'pull_request', pull_requests: [{ number: 12 }], created_at })),
+          // A run for the same SHA from another PR must not anchor the head.
+          { head_sha: 'sha-checked', event: 'pull_request',
+            pull_requests: [{ number: 99 }], created_at: T(1) },
+          // A push-triggered run is not evidence of this PR's head.
+          { head_sha: 'sha-checked', event: 'push',
+            pull_requests: [{ number: 12 }], created_at: T(2) }];
+      }
+      if (fn === 'timeline') return [
+        ...Array.from({ length: timeline.filler }, () => ({ event: 'commented',
+          created_at: T(0) })),
+        // committed items carry pusher-controlled dates and no created_at.
+        { event: 'committed', committer: { date: '2020-01-01T00:00:00Z' } },
+        { event: 'labeled', label: { name: 'not-greenlight-yet' }, created_at: T(59) },
+        ...timeline.labeledAt.map(created_at => ({ event: 'labeled',
+          label: { name: 'greenlight' }, created_at })),
+        ...timeline.forcePushes.map(created_at => ({ event: 'head_ref_force_pushed',
+          created_at })),
+      ];
+      return [{ filename: '.github/workflows/automerge.yml', status: 'modified' }];
+    },
     rest: {
+      actions: { listWorkflowRunsForRepo: 'runs' },
+      issues: { listEventsForTimeline: 'timeline' },
       pulls: {
         get: async () => ({ data: { ...pr,
           head: { ...pr.head, sha: currentHead } } }),
@@ -103,6 +132,25 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null) 
     const skipped = await scenario(ref, draft, labeled, false);
     if (skipped.merged || skipped.attemptedSha !== null)
       throw new Error(ref + ' bypassed branch, draft, or label gate');
+  }
+  // Greenlight must postdate the head, judged on server timestamps only.
+  const freshness = [
+    ['label after the head run', { runs: [T(10)], labeledAt: [T(20)] }, true],
+    ['commit dated early, pushed after the label', { runs: [T(30)], labeledAt: [T(20)] }, false],
+    ['label tied with the head run', { runs: [T(20)], labeledAt: [T(20)] }, false],
+    ['force push after the label', { runs: [T(10)], labeledAt: [T(20)], forcePushes: [T(25)] }, false],
+    ['label removed, push, label re-added', { runs: [T(30)], labeledAt: [T(20), T(40)] }, true],
+    ['re-added label still before a later force push', { runs: [T(10)], labeledAt: [T(20), T(30)], forcePushes: [T(35)] }, false],
+    ['no run for the head SHA', { runs: [], labeledAt: [T(20)] }, false],
+    ['unparseable run time', { runs: ['not-a-time'], labeledAt: [T(20)] }, false],
+    ['label only as a similar name', { runs: [T(10)], labeledAt: [] }, false],
+    ['more than 100 timeline events', { runs: [T(10)], labeledAt: [T(20)], filler: 150 }, true],
+  ];
+  for (const [name, spec, expected] of freshness) {
+    const result = await scenario('claude/example', false, true, false, null,
+      { forcePushes: [], filler: 0, ...spec });
+    if (result.merged !== expected)
+      throw new Error(`freshness: ${name}: expected merged=${expected}`);
   }
 })().catch(e => { console.error(e); process.exitCode = 1; });
 """
