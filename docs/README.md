@@ -7,6 +7,8 @@ the piece.
 
 | Essay | Why read it |
 |---|---|
+| [tool-discovery-candidates.md](tool-discovery-candidates.md) | Unranked public intake for compact tool discovery and typed graph/gate experiments, with source claims kept separate from adoption. |
+| [evidence-transfer-loop.md](evidence-transfer-loop.md) | Pattern-only loop from source discovery to bounded reproduction and owning-system adoption, with two living ledgers and an evidence-only coordinator feed. |
 | [portfolio-coordination.md](portfolio-coordination.md) | Pattern-only coordination across projects and providers: layered context, bounded delegation, owning-system pointers, authority receipts, milestone evidence, and human escalation. |
 | [breadcrumbs-whitepaper.md](breadcrumbs-whitepaper.md) | The working paper: cue-placement memory for agent fleets, the five mechanisms, the caught-itself case study, and the join protocol. Start here for the whole argument. |
 | [cooperative-intelligence.md](cooperative-intelligence.md) | The wider purpose behind the kit: a public research and pattern layer for people, AI systems, and the records they use together. It defines the promotion rule that keeps research, private implementations, and public claims separate. |
