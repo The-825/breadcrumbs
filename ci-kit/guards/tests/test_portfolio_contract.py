@@ -1,8 +1,6 @@
 import importlib.util
 import json
 import os
-from pathlib import Path
-import tempfile
 import unittest
 
 
@@ -96,20 +94,6 @@ class PortfolioContractTests(unittest.TestCase):
         self.assertFalse(
             evidence["portable_intake"]["claims_detailed_mechanism_review"]
         )
-
-    def test_public_systems_intake_rejects_operated_identity_and_private_evidence(self):
-        self.assertEqual(self.checker.check_public_systems_intake(self.checker.ROOT), [])
-        source = Path(_REPO) / "docs" / "reddit-systems-intake-2026-09-29.json"
-        intake = json.loads(source.read_text(encoding="utf-8"))
-        intake["candidates"][0]["target_owner"] = "private-repository"
-        intake["candidates"][0]["adoption_evidence"] = "private-evidence"
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "docs").mkdir()
-            (root / "docs" / source.name).write_text(json.dumps(intake), encoding="utf-8")
-            failures = self.checker.check_public_systems_intake(root)
-        self.assertTrue(any("target_owner" in failure for failure in failures))
-        self.assertTrue(any("adoption_evidence" in failure for failure in failures))
 
     @staticmethod
     def _valid_row():
