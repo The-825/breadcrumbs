@@ -53,6 +53,33 @@ class DeskFixture(unittest.TestCase):
 
 
 class TestLookup(DeskFixture):
+    def test_evidence_backed_identity_aliases_do_not_infer_initialism(self):
+        (self.dir / "identity-evidence.md").write_text(
+            "Synthetic fixture: entity-01 is Rowan Vale. The owner explicitly "
+            "records Ro and the blue notebook keeper as aliases. Entity-02 is "
+            "Rowan Voss. RV has no recorded identity mapping.\n",
+            encoding="utf-8",
+        )
+        self.append_row(
+            "Rowan Vale\tRo|the blue notebook keeper\tentity-01\t"
+            "identity-evidence.md\t-"
+        )
+        self.append_row(
+            "Rowan Voss\t\tentity-02\tidentity-evidence.md\t-"
+        )
+        for alias in ("Rowan Vale", "Ro", "the blue notebook keeper"):
+            with self.subTest(alias=alias):
+                result = run([alias], self.dir)
+                self.assertEqual(result.returncode, 0)
+                self.assertIn("entity-01", result.stdout)
+                self.assertIn("source: identity-evidence.md", result.stdout)
+                self.assertNotIn("entity-02", result.stdout)
+        ambiguous = run(["RV"], self.dir)
+        self.assertEqual(ambiguous.returncode, 1)
+        self.assertIn("no index hit", ambiguous.stdout)
+        self.assertNotIn("entity-01", ambiguous.stdout)
+        self.assertNotIn("entity-02", ambiguous.stdout)
+
     def test_exact_key_hit(self):
         r = run(["deploy", "gate"], self.dir)
         self.assertEqual(r.returncode, 0)
