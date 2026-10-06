@@ -21,6 +21,7 @@ are separate evidence classes.
   skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
 - [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
   selftest commands, for programmatic adoption.
+- [templates/workflow-worksheets/](templates/workflow-worksheets/README.md): capacity, change, and handoff worksheets.
 - [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
 - [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
 
@@ -46,8 +47,7 @@ are separate evidence classes.
   the append-only, path-keyed conclusions ledger format with supersession.
 - [templates/DECISIONS_TEMPLATE.md](templates/DECISIONS_TEMPLATE.md): the
   decisions ledger; [docs/decision-capture.md](docs/decision-capture.md) is why.
-- [templates/SESSION_STATE_TEMPLATE.md](templates/SESSION_STATE_TEMPLATE.md):
-  the living handoff between sessions.
+- [templates/SESSION_STATE_TEMPLATE.md](templates/SESSION_STATE_TEMPLATE.md): the living handoff between sessions.
 - [templates/ledger-tools/memory_engine.py](templates/ledger-tools/memory_engine.py):
   runnable three-tier memory; asserted vs verified, with a distinct tool or
   human authority required for promotion.
