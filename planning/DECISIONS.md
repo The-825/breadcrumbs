@@ -584,3 +584,14 @@ Jarvis remains the applied runtime profiled by the catalog.
 Why: a distinct display name separates the public evidence catalog from the reusable
 Breadcrumbs kit without breaking repository links or technical consumers.
 Source: Jovan's authorized public catalog rename, 2026-09-11.
+
+## D-51 · 2026-10-06 · Add portable workflow worksheets
+
+Ruling: Breadcrumbs includes copy-and-adapt worksheets for workflow capacity
+estimation, small-change requests, and routine maintenance handoffs. They are
+pattern-only documents and make no claim of software support or operational approval.
+
+Why: readers can use practical planning and handoff formats alongside the kit's
+repository and agent-operation patterns.
+
+Source: Jovan's request to prepare generic supporting worksheets, 2026-10-06.

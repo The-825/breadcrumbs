@@ -48,6 +48,9 @@ are separate evidence classes.
   decisions ledger; [docs/decision-capture.md](docs/decision-capture.md) is why.
 - [templates/SESSION_STATE_TEMPLATE.md](templates/SESSION_STATE_TEMPLATE.md):
   the living handoff between sessions.
+- [templates/workflow-worksheets/](templates/workflow-worksheets/README.md):
+  copy-and-adapt worksheets for workflow capacity estimates, small-change requests,
+  and routine maintenance handoffs.
 - [templates/ledger-tools/memory_engine.py](templates/ledger-tools/memory_engine.py):
   runnable three-tier memory; asserted vs verified, with a distinct tool or
   human authority required for promotion.

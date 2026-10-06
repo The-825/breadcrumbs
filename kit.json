@@ -83,6 +83,12 @@
       "templates/SESSION_STATE_TEMPLATE.md",
       "templates/ledger-tools/capture_nudge.py"
     ],
+    "I need to estimate workload, request a small process change, or hand off recurring upkeep": [
+      "templates/workflow-worksheets/README.md",
+      "templates/workflow-worksheets/workflow-capacity-estimator.md",
+      "templates/workflow-worksheets/small-change-request.md",
+      "templates/workflow-worksheets/workflow-maintenance-handoff.md"
+    ],
     "I cannot tell whether my memory layer actually works": [
       "docs/memory-measurement.md",
       "benchmarks/orientation/README.md",
