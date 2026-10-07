@@ -595,3 +595,15 @@ Why: readers can use practical planning and handoff formats alongside the kit's
 repository and agent-operation patterns.
 
 Source: Jovan's request to prepare generic supporting worksheets, 2026-10-06.
+
+## D-52 · 2026-10-07 · Name the workflow practice series
+
+Ruling: The public practice series is named Improve My Workflow and opens with
+Embrace the Principles. Keep it simple is the first principle. The sequence then
+examines current steps, automates one part, keeps human judgment, tests and
+validates results, builds a system, and applies what was learned to refine it.
+
+Why: readers should see a usable way to improve their own work without starting
+with tool mechanics or a complicated memory process.
+
+Source: Jovan's series naming and principles instruction, 2026-10-07.

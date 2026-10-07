@@ -1,4 +1,4 @@
-# Note what matters, then ask what changed
+# Keep it simple: note what matters
 
 **Status:** public, pattern-only exercise. This page ships as documentation. It does not enable persistent storage, capture messages, or grant an agent access to any account.
 
