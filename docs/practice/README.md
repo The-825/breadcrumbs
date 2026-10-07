@@ -1,14 +1,24 @@
-# One workflow at a time
+# Improve My Workflow
 
 **Status:** public, pattern-only practice series. These exercises ship as documentation. No inbox connection, data pipeline, release gate, or automation ships with them.
 
 **Assumes:** you can work with fictional messages, notes, and files in a text editor. An AI assistant is optional. Keep real records and access decisions in their owning systems.
 
-Work through one small handoff at a time. Save each reviewed artifact so the next exercise starts from something you can inspect. The human who owns the work checks facts and authorizes any action outside the exercise.
+## Embrace the Principles
+
+1. **Keep it simple.** Ask if there is an easier way to do this.
+2. **See the steps.** Describe how you do the work now, step by step.
+3. **Automate one part.** Pick a repeated step and improve that piece first.
+4. **Keep your role.** Decide what still needs your direct involvement.
+5. **Check before growing.** Test, confirm, repeat, and validate. Trust what you can inspect, then scale what works.
+6. **Build a system.** Connect the parts that work so the next task has a starting point.
+7. **Apply and refine.** Use it, notice what changed, and improve the next step.
+
+The exercises put these principles into practice. Save each small reviewed result so the next exercise starts with something you can inspect. The person who owns the work checks facts and authorizes any action outside the exercise.
 
 | Practice | Keep | Check |
 |---|---|---|
-| [Note what matters, then ask what changed](00-working-memory-card.md) | A short note | Check the note against the original messages |
+| [Keep it simple: note what matters](00-working-memory-card.md) | A short note | Check the original messages, then ask what changed |
 | [Inbox to briefing](01-inbox-to-briefing.md) | Reviewed briefing | Open the source behind each action |
 | [Meeting to action list](02-meeting-to-action-list.md) | Reviewed action list | Confirm assignments with participants |
 | [Automate one handoff](03-automate-one-handoff.md) | Handoff map | Check receipt and exceptions |
