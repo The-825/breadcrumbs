@@ -8,7 +8,7 @@ Work through one small handoff at a time. Save each reviewed artifact so the nex
 
 | Practice | Keep | Check |
 |---|---|---|
-| [Note what matters, then ask what changed](00-working-memory-card.md) | A short note | Check what changed in the original messages |
+| [Note what matters, then ask what changed](00-working-memory-card.md) | A short note | Check the note against the original messages |
 | [Inbox to briefing](01-inbox-to-briefing.md) | Reviewed briefing | Open the source behind each action |
 | [Meeting to action list](02-meeting-to-action-list.md) | Reviewed action list | Confirm assignments with participants |
 | [Automate one handoff](03-automate-one-handoff.md) | Handoff map | Check receipt and exceptions |

@@ -9,15 +9,13 @@ First principle: keep it simple. When you finish a conversation, note one thing 
 ## Fictional note
 
 ```text
-Topic: Saturday workshop.
-Remember: The room layout was requested by Thursday.
-Check next time: Who will bring the sign-in sheets? Did the workshop lead reply to the draft agenda?
-Where to look: Fictional messages M1, M3, and M4.
+Remember: M1 asks for the room layout by Thursday.
+Check next time: Who will bring the sign-in sheets? See M3.
 ```
 
 ## Your action
 
-Read the [fictional inbox](01-inbox-to-briefing.md#fictional-inbox), especially M1, M3, and M4. Copy the note into a temporary local file and check it against those messages. Then write your own two-line version: what matters now, and what you want to check when you return. Keep a message reference if it helps you find the original. Do not copy real inbox bodies, transcripts, or personal details into this exercise.
+Read the [fictional inbox](01-inbox-to-briefing.md#fictional-inbox), especially M1 and M3. Copy the note into a temporary local file and check it against those messages. Then write your own two lines: `Remember` and `Check next time`. Keep a message reference so you can find the original. Do not copy real inbox bodies, transcripts, personal details, or private links into this exercise.
 
 ## Human check
 
