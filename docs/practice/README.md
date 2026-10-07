@@ -14,11 +14,11 @@
 6. **Build a system.** Connect the parts that work so the next task has a starting point.
 7. **Apply and refine.** Use it, notice what changed, and improve the next step.
 
-The exercises put these principles into practice. Save each small result so the next exercise starts with something you can inspect. The person who owns the work checks facts and authorizes any action outside the exercise.
+The exercises put these principles into practice. Save each small reviewed result so the next exercise starts with something you can inspect. The person who owns the work checks facts and authorizes any action outside the exercise.
 
 | Practice | Keep | Check |
 |---|---|---|
-| [Keep it simple: note what matters](00-working-memory-card.md) | A short note | Ask what changed since last time |
+| [Keep it simple: note what matters](00-working-memory-card.md) | A short note | Check the original messages, then ask what changed |
 | [Inbox to briefing](01-inbox-to-briefing.md) | Reviewed briefing | Open the source behind each action |
 | [Meeting to action list](02-meeting-to-action-list.md) | Reviewed action list | Confirm assignments with participants |
 | [Automate one handoff](03-automate-one-handoff.md) | Handoff map | Check receipt and exceptions |
