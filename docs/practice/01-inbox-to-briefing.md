@@ -4,7 +4,7 @@
 
 **Assumes:** you have a text editor and the fictional messages below. An AI assistant may draft the table, but you review it. Use authorized access and keep real messages in their owning system.
 
-A tidy summary can hide an unanswered request. Start with the reviewed [working memory card](00-working-memory-card.md). Make a briefing that points back to each source and distinguishes what was said from what you propose.
+A tidy summary can hide an unanswered request. Start with the short [note from the last conversation](00-working-memory-card.md). Make a briefing that points back to each source and distinguishes what was said from what you propose.
 
 ## Fictional inbox
 
