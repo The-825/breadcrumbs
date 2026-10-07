@@ -16,4 +16,4 @@ For the rehearsal, make the first task: find the source row for the synthetic `p
 
 Ask someone who did not write the page to complete that safe task using only the handoff. Record where they pause, ask, or use a stale file, then revise the page. The test passes when they can find the source row, give the quantity, and identify the exception path without guessing. Do not infer that this rehearsal proves a real access setup works.
 
-**Next:** revisit the [working memory card](00-working-memory-card.md), then repeat the briefing with another synthetic batch using what the handoff test taught you. For larger shared work, use the kit's [cooperative evaluation method](../cooperative-intelligence-evaluation.md).
+**Next:** revisit the [short note](00-working-memory-card.md) and ask what changed, then repeat the briefing with another synthetic batch using what the handoff test taught you. For larger shared work, use the kit's [cooperative evaluation method](../cooperative-intelligence-evaluation.md).
