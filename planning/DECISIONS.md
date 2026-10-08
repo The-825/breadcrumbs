@@ -607,3 +607,20 @@ Why: readers should see a usable way to improve their own work without starting
 with tool mechanics or a complicated memory process.
 
 Source: Jovan's series naming and principles instruction, 2026-10-07.
+
+## D-53 · 2026-10-08 · Share one public current state and work board
+
+Ruling: `SESSION_STATE.md` remains the one shared current-state file for this
+repository. [Work Board #162](https://github.com/The-825/breadcrumbs/discussions/162)
+links already-public issues and PRs without duplicating their authority.
+Substantive work uses a named coordinator and actual, source-scoped Claude,
+local Codex, and Gemini input by default, with an explicit solo option that
+does not waive required gates. Private development remains with its owner;
+a prepared public version needs review and its own publication approval.
+
+Why: a short shared handoff and source-linked board reduce stale or conflicting
+status, while keeping private plans and unverified peer claims out of the public
+kit.
+
+Source: Jovan's scoped coordination rollout and public-content clarifications,
+2026-10-08; Work Board #162 creation and readback.
