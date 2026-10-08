@@ -10,21 +10,21 @@ Verified main revision: 9dc2f7eba3e0d59b845f2841b7afcd7ff4446e00
 ## Current state
 
 - Shared public navigation: [Breadcrumbs Work Board #162](https://github.com/The-825/breadcrumbs/discussions/162), created and read back on 2026-10-08. It links public maintenance issue #148. The linked issue wins if the board lags.
-- Current documentation change: branch `claude/shared-state-work-board` starts from the verified main revision above. Local Codex is the named turn owner and writer for this change. A PR and hosted checks are pending.
+- Current documentation change: branch `claude/shared-state-work-board` starts from the verified main revision above. Local Codex is the named turn owner and writer for this change. Draft [PR #163](https://github.com/The-825/breadcrumbs/pull/163) is open; hosted checks and exact-head peer review are pending. Verify its current head before acting.
 - Existing open public issues and PRs have separate owners and are not reviewed by this handoff. Read their current records before changing them.
 - This change is public guidance only. It adds no coordinator service, memory store, background watcher, product behavior, or release authority.
 
 ## Next steps
 
-1. Review the complete docs diff and run the repository's relevant guards.
-2. Open one scoped draft PR and request actual source-scoped Claude and Gemini input through verified routes. Record missing access and exact review limits.
-3. After the PR exists, link it from Work Board #162 and verify the board readback. Update this file when ownership, blocker, next action, or a verified milestone changes.
+1. Read the current head and checks on draft PR #163, then request source-scoped Claude and Gemini review through verified routes. Record missing access and exact review limits.
+2. Link PR #163 from Work Board #162 and verify the board readback.
+3. Update this file when ownership, blocker, next action, or a verified milestone changes.
 
 ## Boundaries and evidence
 
 - Only public Breadcrumbs maintenance and deliberately prepared public guidance belong here. Keep private development, raw source records, and internal plans in their owning systems. A public version needs source, privacy, and accuracy review plus its own publication approval.
 - A documented peer default is not a completed peer review. Relayed feedback on a generic description is not an exact-diff review. Required release, privacy, and security gates remain separate.
-- Implemented, tested, reviewed, merged, deployed, and live verified are separate states. This documentation change is local and unmerged at this snapshot.
+- Implemented, tested, reviewed, merged, deployed, and live verified are separate states. This documentation change is on a public draft PR and unmerged at this snapshot.
 
 ## Historical handoff
 
