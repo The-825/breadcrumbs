@@ -2,8 +2,8 @@
 
 Last refreshed: 2026-10-08 UTC by local Codex. This is a candidate snapshot. Verify the current PR head, checks, owner, and linked sources before acting.
 
-- Turn owner: local Codex for this documentation update. Next actor: the local Codex reviewer on [PR #163](https://github.com/The-825/breadcrumbs/pull/163). Review ownership is pending that reviewer's receipt in the PR; any merge decision stays separate under repository gates.
-- Current task: draft [PR #163](https://github.com/The-825/breadcrumbs/pull/163) on `claude/shared-state-work-board` updates the public coordination rules and handoff. It is unmerged. The PR is the source for exact head, checks, and review status.
+- Turn owner: local Codex for this documentation update. Next reviewers: Claude and Gemini for source-scoped review of [PR #163](https://github.com/The-825/breadcrumbs/pull/163). Local Codex reconciles their responses after receipt. No reviewer acknowledgment is recorded here; any merge decision stays separate under repository gates.
+- Current task: [PR #163](https://github.com/The-825/breadcrumbs/pull/163) contains the public coordination rules and handoff. The PR is the live source for its branch, head, checks, review, and merge status.
 - Public work navigation: [Breadcrumbs Work Board #162](https://github.com/The-825/breadcrumbs/discussions/162). Each linked issue or PR is authoritative for its own status.
 - Next action: obtain source-scoped Claude and Gemini review of the current PR head, reconcile findings, and then make a separate readiness or merge decision under repository gates.
 
