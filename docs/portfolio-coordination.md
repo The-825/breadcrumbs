@@ -14,6 +14,29 @@ owning system that can retain source records and enforce access. Examples below
 are synthetic. This is a design contract, not evidence of improved throughput,
 lower cost, or safe autonomous operation.
 
+## Keep the shared view small
+
+An old status note can contradict the issue that owns the work. Reuse one short
+current-state file per repository and link one manually maintained work-board
+Discussion, if that repository uses one. The board points to existing issues and
+PRs; those linked records remain authoritative for scope, review, and outcome.
+Name the current writer and check the source revision before changing shared
+state. A receiving owner acknowledges a handoff before taking over. Do not
+treat an assignee or a delivered message as an exclusive lock or acceptance.
+
+For substantive changes, the coordinator can ask the other two members of a
+Claude, local Codex, and Gemini trio for input at planning and review. Verify
+each route and source scope separately. An explicit solo choice skips optional
+consultation, not an independent release, privacy, or security gate. A typo or
+routine read-only check does not need a peer round. This is a pattern, not an
+automated review service or proof that any peer was reached.
+
+If development begins privately, keep its raw discussion and records there.
+Prepare a distinct public version only after checking source, privacy, accuracy,
+and reusable value, then obtain the publication approval required by the owner.
+Public navigation may link approved public work; it must not expose a private
+project through its title, URL, or copied status.
+
 ## 1. Layer context by the decision it supports
 
 A complete transcript sent to every worker gives each worker more sensitive data

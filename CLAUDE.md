@@ -141,6 +141,16 @@ The standing model split is Astra 6 or Fable 5.1 for planning and review, and So
 or independently verified Sonnet 5 for implementation. Verify the selected model
 from current host or provider metadata and never silently substitute another model.
 
+## SHARED STATE AND PEER WORK
+Use `SESSION_STATE.md` as one shared handoff: verify owner and source, name its writer, update material changes, and require receiver acknowledgment.
+[Work Board #162](https://github.com/The-825/breadcrumbs/discussions/162) links public issues and PRs; source records win.
+Substantive changes (shared state or public behavior) get actual Claude,
+local Codex, and Gemini input at planning and review in one issue or PR.
+Verify routes; self-review is not peer review. "Work solo" skips optional
+input, not required gates. One writer, Did / Need from you / Done when,
+identity footers, five rounds max. Private work stays with its owner;
+public versions need source, privacy, accuracy, and publication approval.
+
 ---
 
 ## RETRO
