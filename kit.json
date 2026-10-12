@@ -314,7 +314,7 @@
       "path": "checklists",
       "kind": "checklist-suite",
       "what": "Operational checklists: continuity sweep, PR discipline, pre-push, manual UI delivery evidence.",
-      "assumes": "Nothing.",
+      "assumes": "Operational checklists need a repository. UI delivery review also needs a runnable web interface, its revision and stated design direction.",
       "selftest": null
     },
     {
