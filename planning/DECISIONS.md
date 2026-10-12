@@ -607,3 +607,9 @@ Why: readers should see a usable way to improve their own work without starting
 with tool mechanics or a complicated memory process.
 
 Source: Jovan's series naming and principles instruction, 2026-10-07.
+
+## D-53 · 2026-10-11 · Ship a manual UI delivery evidence worksheet
+
+Ruling: Add a copy-and-adapt checklist for observed interface behavior, accessibility, supported claims and preserved copy meaning. Identify it as a manual worksheet, with omitted coverage and unverified results visible.
+Why: a passed build alone does not establish that users can complete their journeys.
+Source: Maintainer authorization to install the relevant scouted concepts, 2026-10-11; public anti-slop source linked in the checklist.

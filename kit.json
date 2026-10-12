@@ -313,7 +313,7 @@
     {
       "path": "checklists",
       "kind": "checklist-suite",
-      "what": "Operational checklists: continuity sweep, PR discipline, pre-push.",
+      "what": "Operational checklists: continuity sweep, PR discipline, pre-push, manual UI delivery evidence.",
       "assumes": "Nothing.",
       "selftest": null
     },

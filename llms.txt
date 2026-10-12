@@ -86,7 +86,7 @@ are separate evidence classes.
 - [skills/](skills/): session efficiency, data truth, flag lifecycle,
   regression layering, reuse-first, delivery protocol, and more; each opens
   with the failure it prevents.
-- [checklists/](checklists/): continuity sweep, PR discipline, pre-push.
+- [checklists/](checklists/): continuity sweep, PR discipline, pre-push, UI delivery evidence.
 
 ## Running many sessions (fleet patterns)
 
