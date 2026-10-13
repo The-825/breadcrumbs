@@ -2,9 +2,9 @@
   "schema_version": 1,
   "date": "2026-10-12",
   "kind": "derived appraisal routing projection, not a second findings ledger",
-  "research_source_sha256": "fd8344f1cfc12285709a3130df05e27cc9a3a9266422b21717f693131b0c818c",
-  "appraisal_source_sha256": "4478f187dfa9680dd6ef85166c43ec788607937dd0f3df6092a44bb38d945b10",
-  "repository_source_sha256": "903051bcb535a84e9bb7f5b2403d06594ad058cc3812b37290561ccd120b95a0",
+  "research_source_sha256": "a912c51877a24fdc23ae1ad414f3069238faf18ae52e864d0ec75bc10d685bdf",
+  "appraisal_source_sha256": "541fe71be3f8e09846985886f79568b5b927e6427f0e20fd7108d0474378a0a5",
+  "repository_source_sha256": "6661f707237154a2a559a4aca1aa065a82aef395b741911ec62fd8812c643349",
   "rank_meaning": "dense priority groups; ties remain ties, stable IDs order display only",
   "named_question": "Which evidence reduces uncertainty about handoff recovery, authority, revision-sensitive memory, and total evaluation burden?",
   "ordered_claim_gaps": [
@@ -9498,5 +9498,6 @@
       ],
       "priority_claim": "unknown"
     }
-  ]
+  ],
+  "source_hash_encoding": "UTF-8 with LF line endings, matching committed Git blob content"
 }

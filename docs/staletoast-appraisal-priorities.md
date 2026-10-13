@@ -4,7 +4,7 @@
 
 Every one of the 122 paper records and 334 repository records appears once below. The historical 100-source catalog remains distinct from 22 candidate papers; candidate inclusion here does not promote a finding. Repository coverage includes 229 README screens and 105 portable-only identity records.
 
-The [machine-readable projection](staletoast-appraisal-priorities.json) binds hashes of its three source files. Rebuild it after any source change. Priority groups order the named claim gaps, then paper directness/horizon or repository review depth/lifecycle. Ties share a dense rank; stable IDs order display only. Stars, citation counts, recency and summed mechanism codes do not decide this priority. Potential to change conclusions is still unknown pending validity review, and family independence is not a rank bonus.
+The [machine-readable projection](staletoast-appraisal-priorities.json) binds hashes of its three source files, using UTF-8 with LF line endings to match committed Git blob content. Rebuild it after any source change. Priority groups order the named claim gaps, then paper directness/horizon or repository review depth/lifecycle. Ties share a dense rank; stable IDs order display only. Stars, citation counts, recency and summed mechanism codes do not decide this priority. Potential to change conclusions is still unknown pending validity review, and family independence is not a rank bonus.
 
 The original research evidence-order chart and dated repository popularity orders remain separate views. This projection covers candidates and portable records that those views cannot fairly treat as fully appraised evidence.
 
