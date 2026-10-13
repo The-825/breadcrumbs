@@ -666,3 +666,8 @@ Source: Operator instruction to replace reader-facing CI-006, CI-012 and related
 Ruling: Resolve Pages releases from current main after direct main triggers or a successful merge-gate run with a matching main PR merged in its observation window. Build the exact revision, recheck main before upload and leave existing deployment alone when no new merge qualifies.
 Why: Token-authored merges did not produce the push-triggered Pages runs, so approved catalog updates stayed unpublished until a manual dispatch.
 Source: Observed releases for PR169 through PR176, GitHub workflow-event documentation and release-gate tests.
+
+## D-63 · 2026-10-13 · Prompts as reviewed reusable resources
+Ruling: Extend Breadcrumbs with a public prompt catalog for workflows, data stacks and systems, using original templates, named inputs, synthetic examples, expected output and concrete checks. Keep editorial selection separate from model-output evaluation, installed instructions and consumer adoption.
+Why: A reusable prompt needs a clear task and a way to judge its result; calling it best does not establish measured model performance.
+Source: Operator's expanded objective to include prompts for workflows, data stacks and systems.
