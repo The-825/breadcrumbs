@@ -636,3 +636,8 @@ Source: Operator-requested 10-paper/20-repository expansion and explicit next-ro
 Ruling: Publish the validated growth/provenance infrastructure and cumulative source intake through separate PRs and the repository merge workflow. Findings retain their existing appraisal limits; publication does not grant adoption or runtime authority.
 Why: The operator approved promotion to main after reviewing today's growth.
 Source: Operator instruction, "Lets promote to main."
+
+## D-57 · 2026-10-12 · Dated charts and practical workflow articles
+Ruling: Publish separate dated Research and Repository Hot 100 editions from the source-bound appraisal projection, preserving priority ties, candidate states and the uncapped archive. Publish practical workflow articles from the existing public registry with source evidence, synthetic examples and completion checks.
+Why: Readers need an ordered discovery surface and usable workflow instructions without confusing editorial attention with evidence strength or adoption permission.
+Source: Operator's chart and workflow-guide direction and renewed instruction to promote to main; implementation and content are reviewed through separate PRs.
