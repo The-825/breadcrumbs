@@ -1,6 +1,6 @@
 # Public workflow registry
 
-Community workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.
+Public community and primary-source workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.
 
 | ID | Workflow | State | Evidence | Jarvis route |
 |---|---|---|---|---|
@@ -9,6 +9,7 @@ Community workflows are discovery evidence, not authority, endorsements, install
 | WF-003 | [Structured SDLC rules and skills](https://www.reddit.com/r/ClaudeWorkflows/comments/1uys8jg/workflow_structured_sdlc_workflows_with_claude/) | reproduced | public-synthetic-reproduction | JR-003 |
 | WF-004 | [Small-scope implementation and handoff](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtzhka/workflow_workflow_for_effective_claude_code/) | reproduced | public-synthetic-reproduction | JR-004 |
 | WF-005 | [Design-to-code cross-model bridge](https://www.reddit.com/r/ClaudeWorkflows/comments/1u8wozt/workflow_hybrid_claude_chat_code_workflow_for/) | reproduced | public-synthetic-reproduction | JR-005 |
+| WF-006 | [Pause work for approval, then resume the approved revision](https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx) | screened | pinned-primary-documentation-screen | JR-006 |
 
 ## Promotion rule
 

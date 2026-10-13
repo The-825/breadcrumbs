@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "repository_id": "R-319",
+  "workflow_id": "WF-006",
+  "revision": "598fdf267005e5385fcdce0c663e6ff4ca07d68b",
+  "records": [
+    {
+      "path": "docs/wait-for-token.mdx",
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx",
+      "sha256": "e16fe6de0a1c352bdee11aeb7a8cd913658e68126b87510e60d76ca4258245e2",
+      "bytes": 14438,
+      "retrieved_date": "2026-10-13"
+    },
+    {
+      "path": "docs/guides/example-projects/human-in-the-loop-workflow.mdx",
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/guides/example-projects/human-in-the-loop-workflow.mdx",
+      "sha256": "74fddd5905634fb93de3381530cac973c0985cb0ce734e02da9b34c377cbe9b9",
+      "bytes": 5347,
+      "retrieved_date": "2026-10-13"
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/598fdf267005e5385fcdce0c663e6ff4ca07d68b/LICENSE",
+      "sha256": "9e9e22db5ae77f7ce1119294d0386cbbab2791cc77fb68d97c90627d7d96c5e1",
+      "bytes": 10935,
+      "retrieved_date": "2026-10-13"
+    }
+  ]
+}
