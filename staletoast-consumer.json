@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "canonical_owner": "The-825/staletoast",
+  "url": "https://the-825.github.io/staletoast/exports/845fa900b546ac61a81dd38339a0b6bb45a36355.json",
+  "source_revision": "845fa900b546ac61a81dd38339a0b6bb45a36355",
+  "sha256": "bf8145fd1ae7c97041166bf5b6ebf8d8f122ebd7e82efc564bd8b8ffa1950dbb",
+  "authority": "evidence-only",
+  "refresh": "Explicitly review and update this revision/digest together; no silent latest fallback"
+}

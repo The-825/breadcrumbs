@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "authority": "descriptive-only",
-  "evidence_boundary": "Community workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.",
+  "evidence_boundary": "Public community and primary-source workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.",
   "adoption_states": [
     "discovered",
     "screened",
@@ -50,6 +50,34 @@
         "result": "passed",
         "date": "2026-09-01",
         "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      },
+      "guide": {
+        "when_to_use": "A new person or agent needs to orient to a repository without reading every file.",
+        "when_to_skip": "The project already has a current, tested entry point; repair it instead of building another context system.",
+        "requirements": [
+          "An owned repository",
+          "A named maintainer for the entry point",
+          "A size budget for context files"
+        ],
+        "steps": [
+          "Write one index linking architecture, file map, conventions and known pitfalls.",
+          "Give each file a clear scope and keep detailed evidence behind links.",
+          "Run the context-budget guard and check every linked path.",
+          "Ask a fresh reader to identify the next safe task, then fix any missing route."
+        ],
+        "example": "A small public site has an index pointing to its build command, content map and release rules. A fresh reader finds the correct test and owner using those files alone.",
+        "completion_check": "The links and budgets pass, and a fresh reader can name the next action without guessing.",
+        "failure_modes": [
+          "The index points to old files.",
+          "Context notes repeat each other and drift.",
+          "A successful size check is mistaken for proof that the facts are true."
+        ],
+        "artifacts": [
+          {
+            "label": "Context-budget guard",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/ci-kit/guards/guard_context_budget.py"
+          }
+        ]
       }
     },
     {
@@ -92,6 +120,38 @@
         "result": "passed",
         "date": "2026-09-01",
         "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      },
+      "guide": {
+        "when_to_use": "Facts need to survive sessions while keeping scope, corrections and sources visible.",
+        "when_to_skip": "The information is temporary, sensitive or not approved for storage; use it only in the current session.",
+        "requirements": [
+          "A permitted storage scope",
+          "A source for each retained fact",
+          "A correction owner"
+        ],
+        "steps": [
+          "Separate facts from tasks and decisions.",
+          "Give each fact its source, scope and correction history.",
+          "Retrieve only the scope needed for the current question.",
+          "Test expected recall and forbidden cross-scope recall with synthetic facts."
+        ],
+        "example": "A synthetic project fact says the test command changed from A to B. The old fact remains marked superseded, and a new session retrieves B for that project only.",
+        "completion_check": "Current facts are retrieved, superseded facts are identified, and forbidden scopes stay out of the response.",
+        "failure_modes": [
+          "A retrieved fact is treated as permission.",
+          "Git history is treated as proof of truth.",
+          "A stale fact remains current after a correction."
+        ],
+        "artifacts": [
+          {
+            "label": "Scoped-context tests",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/templates/ledger-tools/scoped_context.py"
+          },
+          {
+            "label": "Memory desk",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/docs/memory-desk.md"
+          }
+        ]
       }
     },
     {
@@ -135,6 +195,34 @@
         "result": "passed",
         "date": "2026-09-01",
         "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      },
+      "guide": {
+        "when_to_use": "A repeatable development task needs explicit entry, review and completion gates.",
+        "when_to_skip": "A single small edit has no repeated decision or risk; use the existing checklist.",
+        "requirements": [
+          "A bounded task",
+          "A named turn owner",
+          "Evidence required at each gate"
+        ],
+        "steps": [
+          "Define the task, allowed changes and done condition.",
+          "Name the author, reviewer and release owner; give each a bounded role.",
+          "Work one stage at a time and attach test evidence before advancing.",
+          "Stop at an unresolved permission or evidence gap and record the next action."
+        ],
+        "example": "For a static-page change, one author edits the page, a reader checks links, and the release owner publishes only after the recorded checks pass.",
+        "completion_check": "Every completed stage has its evidence, and unfinished gates are visible rather than silently skipped.",
+        "failure_modes": [
+          "More roles add coordination cost without benefit.",
+          "A reviewer message grants authority it does not own.",
+          "A status flag substitutes for test evidence."
+        ],
+        "artifacts": [
+          {
+            "label": "Rules spine",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/docs/rules-spine.md"
+          }
+        ]
       }
     },
     {
@@ -177,6 +265,34 @@
         "result": "passed",
         "date": "2026-09-01",
         "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      },
+      "guide": {
+        "when_to_use": "A change or handoff needs a clear completion record before another task starts.",
+        "when_to_skip": "The same task is still running under an identified owner; inspect that work before launching a replacement.",
+        "requirements": [
+          "One bounded change",
+          "An observable done condition",
+          "An exact source revision"
+        ],
+        "steps": [
+          "Write the objective, scope and completion check before editing.",
+          "Make the smallest change that satisfies that objective.",
+          "Run the relevant checks and retain failures as well as passes.",
+          "Hand off the source revision, result, unresolved items and next owner."
+        ],
+        "example": "A synthetic CSV importer gets one date-format repair. The handoff names the commit, the passing date tests and the remaining deployment gate.",
+        "completion_check": "Another reader can verify the result and continue from the handoff without inferring that a publish or deployment happened.",
+        "failure_modes": [
+          "The completion message overstates release state.",
+          "A stale handoff launches duplicate work.",
+          "A small slice loses its link to the wider objective."
+        ],
+        "artifacts": [
+          {
+            "label": "Session handoff template",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md"
+          }
+        ]
       }
     },
     {
@@ -220,6 +336,127 @@
         "result": "passed",
         "date": "2026-09-01",
         "claim_boundary": "validates the local pattern contract, not external effectiveness"
+      },
+      "guide": {
+        "when_to_use": "An approved design needs to pass between reasoning and implementation tools.",
+        "when_to_skip": "The same owner and tool can complete the task with less coordination, or the destination route is unverified.",
+        "requirements": [
+          "Approved intent",
+          "A verified receiving owner and route",
+          "A return gate for implementation evidence"
+        ],
+        "steps": [
+          "Prepare a short brief with objective, constraints, source revision and acceptance checks.",
+          "Have the receiving owner acknowledge the scope and missing evidence.",
+          "Implement within that scope and return an exact diff and test results.",
+          "Review the result against the original brief before changing an adoption or release state."
+        ],
+        "example": "A public chart brief specifies exactly 100 visible positions and no invented prior movement. The implementer returns tests for count limits, new entries and retained history.",
+        "completion_check": "The returned implementation matches the approved brief, and any departure or unverified result is explicit.",
+        "failure_modes": [
+          "Delivery is confused with understanding.",
+          "The destination has different tools or permissions.",
+          "The returned tests cover only an easier substitute."
+        ],
+        "artifacts": [
+          {
+            "label": "Workflow worksheets",
+            "url": "https://github.com/The-825/breadcrumbs/tree/main/templates/workflow-worksheets"
+          }
+        ]
+      }
+    },
+    {
+      "id": "WF-006",
+      "title": "Pause work for approval, then resume the approved revision",
+      "source_url": "https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx",
+      "source_type": "repository-documentation",
+      "observed_date": "2026-10-13",
+      "source_pin": {
+        "canonical_url": "https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx",
+        "version": "598fdf267005e5385fcdce0c663e6ff4ca07d68b",
+        "retrieved_date": "2026-10-13",
+        "content_sha256": "e16fe6de0a1c352bdee11aeb7a8cd913658e68126b87510e60d76ca4258245e2",
+        "license_status": "Apache-2.0; repository LICENSE inspected; no upstream code copied"
+      },
+      "categories": [
+        "human-review",
+        "approval",
+        "workflow-recovery"
+      ],
+      "problem": "A long-running job needs a human decision before its next consequential step.",
+      "pattern": "Prepare the result, pause at a review checkpoint, and resume only after an explicit decision about the same revision.",
+      "requirements": [
+        "A workflow runner or an owned manual review queue",
+        "A named reviewer and a visible result",
+        "A decision deadline and a revision identifier"
+      ],
+      "evidence_level": "pinned-primary-documentation-screen",
+      "validation_signals": [
+        "The pinned documentation describes token creation, waiting, completion and timeout results",
+        "A separate pinned example places human summary review before speech generation",
+        "The proposed local completion test covers rejection, expiry, changed revisions and duplicate responses; it has not been run"
+      ],
+      "limitations": [
+        "The source describes a runtime mechanism, not proof of reviewer identity or decision quality.",
+        "The Trigger.dev implementation requires its SDK and service; the manual variant below does not reproduce that runtime.",
+        "Revision binding, reviewer authority and effect deduplication below are local safeguards proposed by this guide, not guarantees established by the upstream token API.",
+        "No upstream runtime, installation, local reproduction or consumer adoption was performed."
+      ],
+      "community_signal": {
+        "kind": "not-collected",
+        "value": "not-used-as-quality-score"
+      },
+      "adoption_state": "screened",
+      "jarvis_routes": [
+        "JR-006"
+      ],
+      "authority": "descriptive-only",
+      "related_repository_ids": [
+        "R-319"
+      ],
+      "related_claim_ids": [
+        "CI-006",
+        "CI-011"
+      ],
+      "overlap_review": "WF-003 describes stage gates and WF-004 describes handoffs; neither provides a concrete pause, decision deadline and resume sequence. Reuse those guides for broader change discipline.",
+      "guide": {
+        "when_to_use": "A draft or job output is ready, but publication or another consequential next step still needs an authorized human decision.",
+        "when_to_skip": "The next step is already authorized and unchanged, or a simple review of a completed file is sufficient.",
+        "requirements": [
+          "A reviewable draft and its exact version",
+          "A named decision owner",
+          "A deadline and a way to leave the work safely paused"
+        ],
+        "steps": [
+          "Prepare the draft and identify its exact version. Keep the consequential action paused.",
+          "Show the result and the proposed next action to the decision owner. Record a deadline.",
+          "Collect approve, reject or request-changes against that version. In a running system, a wait token can carry the response; a manual queue can record the same decision.",
+          "Before resuming, check that the owner, version and deadline still match. Changed work needs a fresh decision.",
+          "Resume the approved step once, or leave rejected and expired work paused. Record the outcome and a correction path."
+        ],
+        "example": "A public article draft is revision A. The editor asks for changes, producing revision B. An approval of A cannot publish B; the editor reviews B before the release continues.",
+        "completion_check": "In a synthetic rehearsal, only a current approval for the reviewed version permits the next step. Rejection, expiry, wrong owner, changed version and repeated responses produce no extra action. This rehearsal is proposed, not completed.",
+        "failure_modes": [
+          "Possession of a token is mistaken for reviewer authority.",
+          "An old approval is applied to a changed draft.",
+          "A repeated response starts the consequential step twice.",
+          "Waiting has no deadline or visible owner."
+        ],
+        "artifacts": [
+          {
+            "label": "Pinned upstream review example",
+            "url": "https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/guides/example-projects/human-in-the-loop-workflow.mdx"
+          },
+          {
+            "label": "Stage gates guide",
+            "url": "https://the-825.github.io/breadcrumbs/workflows.html#workflow=WF-003"
+          },
+          {
+            "label": "Workflow evidence contract",
+            "url": "https://github.com/The-825/breadcrumbs/blob/main/docs/workflow-source-contract.md"
+          }
+        ]
       }
     }
   ]

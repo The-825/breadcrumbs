@@ -8,6 +8,7 @@
     {"id": "JR-002", "signal": "recall-governed-context", "workflow_ids": ["WF-002"], "context_capsule": ["scope", "facts", "provenance", "corrections"], "completion_test": "scoped expected and forbidden recall tests pass"},
     {"id": "JR-003", "signal": "execute-specialized-workflow", "workflow_ids": ["WF-003"], "context_capsule": ["entry-condition", "skill", "guardrails", "done-criteria"], "completion_test": "stage gates and authority checks pass"},
     {"id": "JR-004", "signal": "implement-bounded-change", "workflow_ids": ["WF-004"], "context_capsule": ["objective", "scope", "tests", "handoff"], "completion_test": "bounded diff, tests, and evidence-bearing handoff exist"},
-    {"id": "JR-005", "signal": "bridge-design-to-code", "workflow_ids": ["WF-005"], "context_capsule": ["approved-intent", "source-evidence", "implementation-contract", "return-gate"], "completion_test": "implementation evidence maps back to the approved brief"}
+    {"id": "JR-005", "signal": "bridge-design-to-code", "workflow_ids": ["WF-005"], "context_capsule": ["approved-intent", "source-evidence", "implementation-contract", "return-gate"], "completion_test": "implementation evidence maps back to the approved brief"},
+    {"id": "JR-006", "signal": "pause-for-revision-bound-review", "workflow_ids": ["WF-006"], "context_capsule": ["reviewable-result", "revision", "decision-owner", "deadline", "next-action"], "completion_test": "A proposed synthetic rehearsal accepts only current, owner-bound approval for the exact revision; reject, expiry, changed revision and duplicate response cause no extra action. This route is descriptive, not an installed approval service."}
   ]
 }

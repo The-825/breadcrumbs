@@ -1,0 +1,148 @@
+{
+  "observed_at_utc": "2026-10-13T11:28:14.069287+00:00",
+  "execution_mode": "user-authorized on-demand scout; not a timer-trigger receipt",
+  "base_main": "c49341aff6857fa83002f537579d00afcc5ad34d",
+  "daily_unique_ingestion": {
+    "paper_candidates": 1,
+    "repositories": 1,
+    "ids": [
+      "C-025",
+      "R-336"
+    ],
+    "original_ingestion_pr": 181
+  },
+  "rerun_additions": 0,
+  "repeated_identity_counted_again": false,
+  "previous_repository_rows_and_import_summary_unchanged": true,
+  "paper_unique_and_absent_before_intake": true,
+  "pinned_repository_source_digests_freshly_verified": true,
+  "priority_and_frozen_chart_hashes_unchanged": {
+    "docs/staletoast-appraisal-priorities.json": "30d42b7b29684d990195ff6996767794d99bb5507657c295a18c0ae623a0c825",
+    "docs/staletoast-appraisal-priorities.md": "4d0724451d8424e52dab00b330af3c099098ef1193350f80d4bb29ea38fa63f7",
+    "docs/staletoast-chart-history/2026-10-12.json": "41aa3563f51c7de0d8e6c140a7f02bd8daae3822885d5e599c7da987df0fc422",
+    "docs/staletoast-chart-history/2026-10-13.json": "0e4030ab9311e2e3478a7d2f7fbca5053f79e202313998fe86589c571f234796"
+  },
+  "checks": [
+    {
+      "command": "python site/build_priorities.py --write --date 2026-10-13",
+      "exit_code": 0,
+      "output": "priorities: research=123 repositories=335"
+    },
+    {
+      "command": "python site/build_priorities.py --check",
+      "exit_code": 0,
+      "output": "priorities: research=123 repositories=335"
+    },
+    {
+      "command": "python site/build_catalogs.py",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": "python site/build_discovery.py --edition-date 2026-10-13",
+      "exit_code": 0,
+      "output": "discovery: research=100 repositories=100 workflows=6 prompts=6 editions=2"
+    },
+    {
+      "command": "python site/build_discovery.py --edition-date 2026-10-13 --check",
+      "exit_code": 0,
+      "output": "discovery: research=100 repositories=100 workflows=6 prompts=6 editions=2"
+    },
+    {
+      "command": "python -m unittest discover -s site -p test_*.py",
+      "exit_code": 0,
+      "output": "............................................\n----------------------------------------------------------------------\nRan 44 tests in 0.374s\n\nOK"
+    },
+    {
+      "command": "python -m unittest discover -s ci-kit/guards/tests",
+      "exit_code": 0,
+      "output": "guard_no_provenance_leak: 1 finding(s) in test\n\n  private term 'Acme'. It must not appear in public text.\n\nRule: silent about provenance, plain about the artifact.\n'Fixed the guard's false positives' is fine. 'Removed the employer\nexample' is not. The first describes the code; the second describes\nthe history you did not intend to publish.\nguard_no_provenance_leak: clean (test)\n............................................................\n----------------------------------------------------------------------\nRan 60 tests in 4.439s\n\nOK"
+    },
+    {
+      "command": "python ci-kit/kit_manifest_check.py --selftest",
+      "exit_code": 0,
+      "output": "ok    a true manifest is clean\n  ok    a missing artifact path fails\n  ok    a missing selftest script fails\n  ok    a missing problem route fails\n  ok    a missing portfolio owner fails closed\n  ok    an incomplete prohibited-data boundary fails closed\n  ok    a manifest selftest absent from ci.yml fails\n  ok    a manifest selftest present in ci.yml is clean\n  ok    unreadable json fails loudly, never passes\nselftest: 9/9 passed"
+    },
+    {
+      "command": "python ci-kit/kit_manifest_check.py",
+      "exit_code": 0,
+      "output": "kit_manifest_check: clean (every path and selftest resolves)"
+    },
+    {
+      "command": "python scripts/repository_landscape.py --check",
+      "exit_code": 0,
+      "output": "repository_landscape: repositories=335 unresolved=0"
+    },
+    {
+      "command": "python scripts/repository_review_promotions.py --check",
+      "exit_code": 0,
+      "output": "repository_review_promotions: detailed_appraisal_count=230 portable_only_count=105 total_repository_count=335 latest_review_wave=R4 latest_review_wave_count=106"
+    },
+    {
+      "command": "python scripts/repository_triage.py --check",
+      "exit_code": 0,
+      "output": "repository_triage: portable_only=105 triaged=105 authority=descriptive-only"
+    },
+    {
+      "command": "python scripts/workflow_registry.py --check",
+      "exit_code": 0,
+      "output": "workflow_registry: workflows=6 routes=6"
+    },
+    {
+      "command": "python scripts/workflow_reproduction.py --check",
+      "exit_code": 0,
+      "output": "workflow_reproduction: reproduced=5 adopted=0 effectiveness_claims=0"
+    }
+  ],
+  "rank_method": "existing source-bound appraisal, unchanged; editorial priority is not confidence",
+  "upstream_execution": "not-run",
+  "model_output_evaluation": "not-run",
+  "queries": [
+    "arxiv October 2026 agent workflow interruptible revision approval durable execution",
+    "github durable agent workflow human approval checkpoint replay versioned execution",
+    "site:arxiv.org 2026 agent memory revision conflicting evidence benchmark October",
+    "site:github.com 2026 agent workflow data stack prompt evaluation structured inputs approvals"
+  ],
+  "primary_screened_new_leads": 5,
+  "retained_pool_ids": [
+    "Q-NEXT-032",
+    "Q-NEXT-033",
+    "Q-NEXT-034",
+    "Q-NEXT-035",
+    "Q-NEXT-036"
+  ],
+  "previous_pool_records_unchanged": true,
+  "search_boundary": "Focused search, not systematic coverage. Primary identity/abstract for three papers and pinned README/license/selected documentation for two repositories. Other search hits were not fully screened. No provider calls or upstream execution.",
+  "sources": [
+    {
+      "pool_id": "Q-NEXT-032",
+      "url": "https://github.com/open-multi-agent/open-multi-agent",
+      "pin": "6ec5498643c7e431aa66751f17f47a529e7f927c",
+      "depth": "README and selected documentation screened; runtime not tested"
+    },
+    {
+      "pool_id": "Q-NEXT-033",
+      "url": "https://github.com/PJA-lab/Prompt-Foundry",
+      "pin": "5187654d586912f1e7936013c78c88bcd9a92a27",
+      "depth": "README and selected documentation screened; runtime not tested"
+    },
+    {
+      "pool_id": "Q-NEXT-034",
+      "url": "https://arxiv.org/abs/2609.26529v1",
+      "pin": "v1",
+      "depth": "primary abstract only"
+    },
+    {
+      "pool_id": "Q-NEXT-035",
+      "url": "https://arxiv.org/abs/2610.03902v1",
+      "pin": "v1",
+      "depth": "primary abstract only"
+    },
+    {
+      "pool_id": "Q-NEXT-036",
+      "url": "https://arxiv.org/abs/2610.08101v1",
+      "pin": "v1",
+      "depth": "primary abstract only"
+    }
+  ]
+}

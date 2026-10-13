@@ -1,6 +1,6 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public ledger of 311 assessed repositories. Two hundred six records are
+**Status:** public ledger of 335 assessed repositories. Two hundred thirty records are
 pinned, README-screened mechanism appraisals. Another 105 are portable-only
 records preserving positively verified public identity and assessment evidence.
 None are runtime tests, product
@@ -242,3 +242,28 @@ This cohort changes the research map, not Breadcrumbs runtime claims. A visible
 mechanism may become a reusable pattern only after the Method v2 promotion rule
 is met, including contrary evidence, a null case, a relevant owning-system test,
 and explicit change conditions.
+
+## Direct intake, 2026-10-11
+
+[R-313 ASReview](https://github.com/asreview/asreview) and
+[R-314 ASySD](https://github.com/camaradesuk/ASySD) add two pinned README screens
+for research screening and bibliographic deduplication. The current total is
+313 repositories: 208 detailed screens and 105 portable-only records. The
+historical import remains 311 records; direct intake is recorded separately.
+See the [dated scout record](staletoast-scout-2026-10-11.md) for source pins,
+family dependence, ranking limits, and the validation prerequisite.
+
+## Daily intake, 2026-10-12
+
+R-315 adds a pinned Restate Python SDK README screen. Current totals: 314 repositories, 209 detailed and 105 portable-only. The historical import remains unchanged. See the [dated scout record](staletoast-scout-2026-10-12.md).
+
+## Requested expansion, 2026-10-12
+
+The requested expansion adds 20 pinned README screens. At the October 12 expansion, totals were 334 repositories, 229 detailed records and 105 portable-only records. Prior rows and the historical import summary remain unchanged. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
+
+## Daily intake, 2026-10-13
+
+The [daily source record](staletoast-scout-2026-10-13.md) adds pinned Hatchet
+README screen R-336, with a license check and a version-bounded counterexample
+lead. The cumulative totals are 335 repositories, 230 detailed screens and 105
+portable-only records. No upstream runtime or adoption was performed.

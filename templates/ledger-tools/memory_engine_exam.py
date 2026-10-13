@@ -4,7 +4,9 @@
 Assumes the sibling memory_engine.py and a JSON corpus shaped like
 memory_engine_golden.json. The corpus is synthetic and public-safe. Each case
 names strings that must appear and strings that must not appear in the composed
-context. A repeated case must render identically every time.
+context for every query variant. A repeated query must render identically every
+time. Optional history expectations check retained episodes independently of the
+current context; scoped context omits the unscoped episodic tier.
 """
 import argparse
 import importlib.util
@@ -64,19 +66,24 @@ def run(corpus_path=DEFAULT_CORPUS):
             engine = MemoryEngine(tmp)
             build_case(engine, case)
             repeats = max(1, int(case.get("repeat", 1)))
+            queries = case.get("queries", [case.get("query", "")])
             outputs = [engine.build_context(
-                case.get("query", ""), **case.get("params", {})
-            ) for _ in range(repeats)]
-            output = outputs[0]
+                query, **case.get("params", {})
+            ) for query in queries for _ in range(repeats)]
             for expected in case.get("expect", []):
                 checks.append((case["id"], "expected", expected,
-                               expected in output))
+                               all(expected in result for result in outputs)))
             for forbidden in case.get("forbid", []):
                 checks.append((case["id"], "forbidden", forbidden,
-                               forbidden not in output))
+                               all(forbidden not in result for result in outputs)))
+            history = json.dumps(engine._load_episodes())
+            for expected in case.get("history_expect", []):
+                checks.append((case["id"], "history", expected,
+                               expected in history))
             if repeats > 1:
                 checks.append((case["id"], "deterministic", "identical output",
-                               len(set(outputs)) == 1))
+                               all(len(set(outputs[i:i + repeats])) == 1
+                                   for i in range(0, len(outputs), repeats))))
     for case_id, kind, needle, passed in checks:
         print(f"  {'PASS' if passed else 'FAIL'} {case_id}: {kind} {needle!r}")
     failed = [check for check in checks if not check[3]]

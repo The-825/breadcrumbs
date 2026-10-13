@@ -230,6 +230,8 @@ def reset_portable_import(data: dict) -> None:
 
 
 def import_handoff(data: dict, handoff_path: Path, handoff_revision: str) -> dict:
+    if data.get("post_import_repository_ids"):
+        raise ValueError("bulk reimport cannot preserve direct-intake provenance; reconcile those records before importing")
     handoff_bytes = handoff_path.read_bytes()
     rows = read_jsonl(handoff_path)
     if not rows or rows[0].get("record_type") != "manifest":
@@ -468,8 +470,28 @@ def validate(data: dict) -> list[str]:
     if "operated_repositories" in data:
         errors.append("operated repository inventory must not be public")
     summary = data.get("import_summary", {})
-    if summary and summary.get("unique_repository_count_after") != len(rows):
+    later_ids = data.get("post_import_repository_ids", [])
+    if not isinstance(later_ids, list) or any(not isinstance(value, str) for value in later_ids):
+        errors.append("post-import repository IDs must be a list of strings")
+        later_ids = []
+    if len(later_ids) != len(set(later_ids)) or not set(later_ids) <= set(ids):
+        errors.append("post-import repository IDs must be unique existing records")
+    if summary and summary.get("unique_repository_count_after") != len(rows) - len(later_ids):
         errors.append("import summary unique count is stale")
+    review = data.get("review_summary", {})
+    expected_counts = {
+        "total_repository_count": len(rows),
+        "detailed_appraisal_count": sum(row.get("evidence_depth") == "readme-screened" for row in rows),
+        "portable_only_count": sum(row.get("evidence_depth") == "source-assessment" for row in rows),
+    }
+    for field, expected in expected_counts.items():
+        if review.get(field) != expected:
+            errors.append(f"review summary {field} is stale")
+    for row in rows:
+        date = row.get("popularity_observed_date")
+        if row.get("id") in later_ids and row.get("stars_observed") is not None:
+            if not isinstance(date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+                errors.append(f"{row.get('id')}: direct intake popularity observation date is required")
     if summary and not re.fullmatch(
         r"[0-9a-f]{40}", summary.get("transfer_upstream_revision", "")
     ):
@@ -484,6 +506,8 @@ def main() -> int:
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if (ROOT / "staletoast-consumer.json").exists() and args.write:
+        parser.error("Research intake is owned by The-825/staletoast; this is a read-only migration archive")
     data = json.loads(LANDSCAPE.read_text(encoding="utf-8"))
     normalize_source_ids(data)
     if args.import_handoff:

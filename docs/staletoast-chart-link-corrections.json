@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "boundary": "Source-link corrections only; frozen editions, positions and evidence states remain unchanged. Review the pinned ledger evidence for the correction.",
+  "records": [
+    {
+      "edition_date": "2026-10-12",
+      "id": "059",
+      "recorded_date": "2026-10-13",
+      "original_url": "https://doi.org/10.1016/0005-1098(83",
+      "corrected_url": "https://doi.org/10.1016/0005-1098(83)90046-8",
+      "ledger_sha256": "a912c51877a24fdc23ae1ad414f3069238faf18ae52e864d0ec75bc10d685bdf",
+      "source_excerpt": "| 059 | Lisanne Bainbridge, [\"Ironies of Automation\"](https://doi.org/10.1016/0005-1098(83)90046-8), *Automatica*, 1983 | Workflow and control; foundational analysis of automated process supervision | Automation can leave people responsible for rare, difficult failures while reducing the practice and information needed to intervene effectively. | **Strengthen** recovery-readiness and skill-retention tests. **Reject** nominal takeover authority without practiced capability. | Industrial process control differs from generative knowledge work. Next: what low-cost rehearsal shows that a human can actually recover a current workflow? |",
+      "evidence_url": "https://github.com/The-825/breadcrumbs/blob/106b0d9221b695fe30e1dea91368b7829522d063/docs/collaborative-intelligence-research-ledger.md",
+      "reason": "The earlier link parser stopped at an inner parenthesis; this restores the complete DOI from the pinned source ledger."
+    }
+  ]
+}
