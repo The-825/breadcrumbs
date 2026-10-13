@@ -10,13 +10,13 @@
     "platform_assumptions": "git repo; GitHub Actions for the workflow templates; Claude Code for the command/hook templates (adapt for other harnesses)"
   },
   "portfolio_contract": {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "canonical_owner": "The-825/breadcrumbs",
-    "role": "reusable-public-pattern-and-assessment-owner",
+    "role": "reusable-public-pattern-owner",
     "owns": [
       "reusable-public-patterns-and-templates",
-      "assessed-external-public-repository-metadata",
-      "portable-repository-identity-and-provenance-intake"
+      "workflow-guides",
+      "prompt-library"
     ],
     "source_retains": [
       "source-evidence",
@@ -59,7 +59,9 @@
         "explicit-nonauthorization"
       ],
       "authority": "evidence-only",
-      "fail_closed": true
+      "fail_closed": true,
+      "archive_only": true,
+      "active_owner": "The-825/staletoast"
     },
     "evidence_classes": {
       "portable_intake": {
@@ -73,6 +75,13 @@
         "current_count": 230,
         "promotion_requires": "named-mechanism-gap"
       }
+    },
+    "research_catalog": {
+      "canonical_owner": "The-825/staletoast",
+      "consumer_config": "staletoast-consumer.json",
+      "authority": "evidence-only",
+      "legacy_records": "read-only migration archive",
+      "new_intake": "StaleToast only"
     }
   },
   "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. CI runs the same set (.github/workflows/ci.yml).",

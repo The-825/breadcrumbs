@@ -5,9 +5,10 @@
 **Start with one useful file:** [build your first handoff](https://the-825.github.io/breadcrumbs/start.html)
 with the free templates, then check whether a fresh session can find its next step.
 
-**New to repositories?** The [StaleToast web guide](https://the-825.github.io/breadcrumbs/) provides a visual
-Trail Map plus searchable Research and Repository catalogs. GitHub remains the source of
-truth for every claim and implementation pattern.
+**Find a workflow or prompt:** [Breadcrumbs](https://the-825.github.io/breadcrumbs/workflows.html) is the practical field guide.
+[StaleToast](https://the-825.github.io/staletoast/) separately owns research, repository
+appraisal and Hot100 charts. [Migration and ownership](docs/staletoast-separation.md)
+explain the pinned export and compatibility routes.
 
 *One person's working answer to a specific problem: how do I get the most out of AI
 coding models without re-explaining everything at the start of every session? Not a

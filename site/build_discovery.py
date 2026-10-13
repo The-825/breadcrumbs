@@ -199,6 +199,24 @@ def main():
     parser.add_argument("--edition-date")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if DOCS == ROOT / "docs" and (ROOT / "staletoast-consumer.json").exists():
+        if args.edition_date:
+            parser.error("Chart editions are owned by The-825/staletoast")
+        from catalog_consumer import load_export
+        charts = load_export()["catalogs"]["charts"]
+        workflows = workflow_catalog(read(DOCS / "workflow-registry.json"))
+        prompts = prompt_catalog(read(DOCS / "prompt-library.json"))
+        for name, payload in (("charts.json", charts), ("workflows.json", workflows), ("prompts.json", prompts)):
+            path = SITE / "data" / name
+            text = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+            if args.check:
+                if not path.exists() or path.read_text(encoding="utf-8") != text:
+                    raise ValueError("generated " + name + " is stale")
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text, encoding="utf-8")
+        print("discovery: StaleToast consumer; workflows=" + str(len(workflows)) + " prompts=" + str(len(prompts)))
+        return
     previous = editions()
     correction_path = DOCS / 'staletoast-chart-link-corrections.json'
     correction_catalog = read(correction_path) if correction_path.exists() else {'schema_version': '1.0', 'records': []}

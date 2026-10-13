@@ -506,6 +506,8 @@ def main() -> int:
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if (ROOT / "staletoast-consumer.json").exists() and args.write:
+        parser.error("Research intake is owned by The-825/staletoast; this is a read-only migration archive")
     data = json.loads(LANDSCAPE.read_text(encoding="utf-8"))
     normalize_source_ids(data)
     if args.import_handoff:

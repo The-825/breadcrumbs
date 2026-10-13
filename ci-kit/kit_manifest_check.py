@@ -66,14 +66,25 @@ def check_portfolio_contract(manifest: dict, root: Path) -> list[str]:
     contract = manifest.get("portfolio_contract")
     if not isinstance(contract, dict):
         return ["portfolio contract missing"]
-    if contract.get("schema_version") != "1.0":
-        failures.append("portfolio contract schema_version must be 1.0")
+    split = contract.get("schema_version") == "1.1"
+    if contract.get("schema_version") not in {"1.0", "1.1"}:
+        failures.append("portfolio contract schema_version must be 1.0 or 1.1")
     if contract.get("canonical_owner") != "The-825/breadcrumbs":
         failures.append("portfolio contract canonical owner is not Breadcrumbs")
-    if contract.get("role") != "reusable-public-pattern-and-assessment-owner":
+    expected_role = "reusable-public-pattern-owner" if split else "reusable-public-pattern-and-assessment-owner"
+    if contract.get("role") != expected_role:
         failures.append("portfolio contract role is incomplete")
-    if set(contract.get("owns", [])) != REQUIRED_OWNS:
+    expected_owns = {"reusable-public-patterns-and-templates", "workflow-guides", "prompt-library"} if split else REQUIRED_OWNS
+    if set(contract.get("owns", [])) != expected_owns:
         failures.append("portfolio contract ownership capabilities are incomplete")
+    if split:
+        routing = contract.get("research_catalog", {})
+        if routing.get("canonical_owner") != "The-825/staletoast" or routing.get("authority") != "evidence-only":
+            failures.append("split catalog must have one evidence-only StaleToast owner")
+        if routing.get("consumer_config") != "staletoast-consumer.json" or not (root / "staletoast-consumer.json").is_file():
+            failures.append("split catalog requires a committed pinned consumer config")
+        if contract.get("transfer_contract", {}).get("archive_only") is not True or contract.get("transfer_contract", {}).get("active_owner") != "The-825/staletoast":
+            failures.append("legacy intake must route new records to StaleToast")
     if set(contract.get("source_retains", [])) != {
         "source-evidence", "private-records", "operational-authority"
     }:
@@ -288,6 +299,21 @@ def selftest() -> int:
         del missing_owner["portfolio_contract"]["canonical_owner"]
         checks.append(("a missing portfolio owner fails closed",
                        bool(check_portfolio_contract(missing_owner, root))))
+
+        split = json.loads(json.dumps(good))
+        split_contract = split['portfolio_contract']
+        split_contract.update(schema_version='1.1', role='reusable-public-pattern-owner',
+                              owns=['reusable-public-patterns-and-templates', 'workflow-guides', 'prompt-library'],
+                              research_catalog={'canonical_owner': 'The-825/staletoast', 'authority': 'evidence-only',
+                                                'consumer_config': 'staletoast-consumer.json'})
+        split_contract['transfer_contract'].update(archive_only=True, active_owner='The-825/staletoast')
+        (root / 'staletoast-consumer.json').write_text('{}')
+        checks.append(('split ownership and archived importer are accepted', check_portfolio_contract(split, root) == []))
+        split_contract['research_catalog']['canonical_owner'] = 'The-825/breadcrumbs'
+        checks.append(('split duplicate research ownership fails closed', bool(check_portfolio_contract(split, root))))
+        split_contract['research_catalog']['canonical_owner'] = 'The-825/staletoast'
+        split_contract['transfer_contract']['archive_only'] = False
+        checks.append(('split active legacy writer fails closed', bool(check_portfolio_contract(split, root))))
 
         unsafe = json.loads(json.dumps(good))
         unsafe["portfolio_contract"]["prohibited_data_classes"].remove(
