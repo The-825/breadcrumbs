@@ -72,6 +72,12 @@ def repository_catalog() -> list[dict[str, object]]:
     if unknown_depths:
         raise ValueError(f"unknown repository evidence depths: {sorted(unknown_depths)}")
     output.sort(key=lambda item: (item["stars_observed"] is None, -(item["stars_observed"] or 0), item["repository"]))
+    popularity_count = sum(item["stars_observed"] is not None for item in output)
+    category_popularity_counts: dict[str, int] = {}
+    for item in output:
+        if item["stars_observed"] is not None:
+            category = item["category"]
+            category_popularity_counts[category] = category_popularity_counts.get(category, 0) + 1
     category_counts: dict[str, int] = {}
     for rank, item in enumerate(output, 1):
         item["catalogOrder"] = rank
@@ -85,7 +91,12 @@ def repository_catalog() -> list[dict[str, object]]:
         item["mechanismTotal"] = len(item["mechanisms"])
         item["claimCount"] = len(item["claims"])
         item["lastReviewed"] = item["snapshot_date"]
-        item["starsObservedDate"] = landscape["popularity_observed_date"]
+        item["starsObservedDate"] = (
+            item.get("popularity_observed_date", item.get("stars_observed_date", landscape["popularity_observed_date"]))
+            if item["stars_observed"] is not None else None
+        )
+        item["popularityCount"] = popularity_count
+        item["categoryPopularityCount"] = category_popularity_counts.get(category, 0)
         item["ledgerRepositoryCount"] = len(output)
         item["detailedReviewCount"] = sum(row["evidence_depth"] == "readme-screened" for row in output)
     totals: dict[str, int] = {}

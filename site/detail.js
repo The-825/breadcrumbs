@@ -25,8 +25,8 @@ function repository(item, all, researchItems, claimsById) {
   const partial = Object.entries(item.mechanisms).filter(([, value]) => value === "P").map(([key]) => key.replaceAll("_", " "));
   const unknown = Object.entries(item.mechanisms).filter(([, value]) => value === "U").map(([key]) => key.replaceAll("_", " "));
   const notObserved = item.mechanismTotal - visible.length - partial.length - unknown.length;
-  const popularity = item.popularityOrder ? `${item.popularityOrder} / ${item.detailedReviewCount}` : "Not collected";
-  const categoryRank = item.categoryPopularityOrder ? `${item.categoryPopularityOrder} / ${item.categoryRepositoryCount}` : "Not collected";
+  const popularity = item.popularityOrder ? `${item.popularityOrder} / ${item.popularityCount}` : "Not collected";
+  const categoryRank = item.categoryPopularityOrder ? `${item.categoryPopularityOrder} / ${item.categoryPopularityCount}` : "Not collected";
   const stars = item.stars_observed === null ? "Not collected" : Number(item.stars_observed).toLocaleString();
   return `<p class="eyebrow">Repository profile</p><h1>${esc(item.repository)}</h1><p class="lede">${esc(item.evidence_note)}</p>
     <div class="profile"><div class="meter"><small>Global popularity</small><strong>${popularity}</strong></div><div class="meter"><small>Within category</small><strong>${categoryRank}</strong><span>${esc(item.category.replaceAll("-", " "))}</span></div><div class="meter"><small>Stars observed</small><strong>${stars}</strong><span>${item.stars_observed === null ? "" : `on ${esc(item.starsObservedDate)}`}</span></div><div class="meter"><small>Last reviewed</small><strong>${esc(item.lastReviewed)}</strong><span>${esc(item.evidence_depth.replaceAll("-", " "))}</span></div></div>

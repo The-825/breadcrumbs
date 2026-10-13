@@ -26,9 +26,9 @@ function researchRow(item) {
 }
 
 function repositoryRow(item) {
-  const popularity = item.popularityOrder ? `${item.popularityOrder}<small> / ${item.detailedReviewCount}</small>` : "Not collected";
-  const categoryRank = item.categoryPopularityOrder ? `${item.categoryPopularityOrder} / ${item.categoryRepositoryCount}` : "Not collected";
-  const stars = item.stars_observed === null ? "Not collected" : `<strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.snapshot_date)}</small>`;
+  const popularity = item.popularityOrder ? `${item.popularityOrder}<small> / ${item.popularityCount}</small>` : "Not collected";
+  const categoryRank = item.categoryPopularityOrder ? `${item.categoryPopularityOrder} / ${item.categoryPopularityCount}` : "Not collected";
+  const stars = item.stars_observed === null ? "Not collected" : `<strong>${Number(item.stars_observed).toLocaleString()}</strong><br><small>observed ${escapeHtml(item.starsObservedDate)}</small>`;
   return `<tr>
     <td class="rank">${popularity}</td>
     <td><strong>${detailLink("repositories", item.id, item.repository)}</strong><br><a href="${escapeHtml(item.url)}">GitHub repository</a></td>
