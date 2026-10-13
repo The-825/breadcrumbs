@@ -157,6 +157,12 @@ def write(name: str, value: object) -> None:
 
 
 if __name__ == "__main__":
-    write("research.json", research_catalog())
-    write("repositories.json", repository_catalog())
-    write("claims.json", claim_catalog())
+    if (ROOT / "staletoast-consumer.json").exists():
+        from catalog_consumer import load_export
+        catalogs = load_export()["catalogs"]
+        for name in ("research", "repositories", "claims"):
+            write(name + ".json", catalogs[name])
+    else:
+        write("research.json", research_catalog())
+        write("repositories.json", repository_catalog())
+        write("claims.json", claim_catalog())

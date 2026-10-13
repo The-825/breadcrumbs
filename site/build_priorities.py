@@ -138,6 +138,13 @@ def main():
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
+    if (DOCS.parent / "staletoast-consumer.json").exists():
+        if args.write:
+            parser.error("Research ranking is owned by The-825/staletoast; this checkout retains an archive only")
+        from catalog_consumer import load_export
+        source = load_export()
+        print("priorities: consumer of StaleToast " + source["source_revision"])
+        return
     if args.write and args.check:
         parser.error('--write and --check are mutually exclusive')
     path = DOCS / 'staletoast-appraisal-priorities.json'

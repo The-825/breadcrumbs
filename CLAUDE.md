@@ -33,6 +33,13 @@ or production store.
 **Everything here is public and world-readable the moment it lands.** That is the single
 most important fact about this repo, and it drives most of the rules below.
 
+Research and repository catalog ownership moved to `The-825/staletoast`.
+Breadcrumbs owns workflow guides, reusable prompts and implementation templates.
+Its catalog builder consumes `staletoast-consumer.json`; legacy research source
+files and validators remain a read-only migration archive. New source intake,
+appraisals, rankings and chart freezes must run in the StaleToast checkout.
+Read `docs/staletoast-separation.md` before changing that boundary.
+
 **Audience:** working developers and analysts running coding agents against a codebase
 they cannot afford to break. Professional, direct, not academic and not dumbed down.
 

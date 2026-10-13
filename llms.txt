@@ -8,7 +8,7 @@
 > commands, plus the cross-repository ownership and public-data boundary:
 > kit.json → portfolio_contract.
 
-Route by the problem you arrived with. Every artifact states its own
+Research intake belongs to The-825/staletoast; Breadcrumbs owns workflows, prompts and templates. See staletoast-consumer.json and docs/staletoast-separation.md. Route by the problem you arrived with. Every artifact states its own
 assumptions in its header, and every runnable tool ships an offline selftest.
 Before sending work from another repository, resolve ownership through
 `kit.json` → `portfolio_contract`; portable public intake and detailed appraisal

@@ -686,3 +686,8 @@ Source: October 13 source collection, native validator results and comparison ag
 Ruling: An owner-requested immediate scout may execute the existing discovery and ranking workflow directly, counting each dated ingestion once and retaining additional leads for later appraisal. Record on-demand execution separately from the recurring timer trigger, and rerun frozen chart generation without rewriting an existing edition.
 Why: Waiting for the timer does not verify the requested immediate execution, while counting the same sources again would invent growth.
 Source: Owner request to run the daily scout now and verify the full ingestion and ranking workflow, primary-source screens and idempotent native rerun.
+
+## D-67 · 2026-10-13 · Separate StaleToast catalog ownership from Breadcrumbs
+Ruling: The-825/staletoast owns public research and repository intake, appraisals, rankings, chart history and retained leads. Breadcrumbs owns workflow guides, prompts and implementation patterns, consumes a revision/digest-pinned evidence-only export and preserves legacy records and URLs as compatibility routes.
+Why: Readers and maintainers need distinct product responsibilities and one authoritative research ledger without losing existing source IDs, links or history.
+Source: Owner instruction to create a standalone StaleToast repository and GitHub Pages site, followed by migration history, source-hash and immutable-export checks.

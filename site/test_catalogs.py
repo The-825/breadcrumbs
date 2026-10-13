@@ -31,6 +31,8 @@ class CatalogTests(unittest.TestCase):
             if href.startswith("https://github.com/The-825/breadcrumbs/"):
                 relative = href.split("/main/", 1)[1]
                 target = SITE.parent / relative
+            elif href.startswith("https://"):
+                continue
             else:
                 target = SITE / href
             self.assertTrue(target.exists(), href)
@@ -180,10 +182,10 @@ class CatalogTests(unittest.TestCase):
         synthesis = (SITE / "synthesis.html").read_text(encoding="utf-8")
         self.assertIn("Read the White Paper", index)
         self.assertIn("breadcrumbs-whitepaper.md", papers)
-        self.assertIn('href="synthesis.html"', index)
-        self.assertIn('href="synthesis.html"', research)
+        self.assertIn('href="https://the-825.github.io/staletoast/synthesis.html"', index)
+        self.assertIn('href="https://the-825.github.io/staletoast/synthesis.html"', research)
         self.assertIn("five evidence trails", synthesis.lower())
-        self.assertIn('href="claims.html#ci-017"', synthesis)
+        self.assertIn('href="https://the-825.github.io/staletoast/claims.html#ci-017"', synthesis)
         self.assertIn("Evidence boundary", synthesis)
         for page in (index, research, papers, synthesis):
             self.assertIn("Community</a>", page)

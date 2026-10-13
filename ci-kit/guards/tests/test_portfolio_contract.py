@@ -32,14 +32,14 @@ class PortfolioContractTests(unittest.TestCase):
         cls.importer = _load("repository_landscape", "scripts/repository_landscape.py")
         cls.checker = _load("kit_manifest_check", "ci-kit/kit_manifest_check.py")
 
-    def test_consumer_discovers_breadcrumbs_as_owner_from_machine_data(self):
+    def test_consumer_discovers_separate_pattern_and_research_owners(self):
         contract = self.manifest["portfolio_contract"]
-        capability = "portable-repository-identity-and-provenance-intake"
-        self.assertIn(capability, contract["owns"])
+        self.assertEqual({'reusable-public-patterns-and-templates', 'workflow-guides', 'prompt-library'}, set(contract['owns']))
+        self.assertNotIn('portable-repository-identity-and-provenance-intake', contract['owns'])
         self.assertEqual(contract["canonical_owner"], "The-825/breadcrumbs")
-        self.assertEqual(
-            contract["role"], "reusable-public-pattern-and-assessment-owner"
-        )
+        self.assertEqual(contract['role'], 'reusable-public-pattern-owner')
+        self.assertEqual(contract['research_catalog']['canonical_owner'], 'The-825/staletoast')
+        self.assertTrue(contract['transfer_contract']['archive_only'])
 
     def test_contract_matches_importer_and_source_keeps_authority(self):
         self.assertEqual(
