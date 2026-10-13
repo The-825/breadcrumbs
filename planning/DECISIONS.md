@@ -681,3 +681,8 @@ Source: Live-source audit of the chart and research catalog, pinned ledger readb
 Ruling: Add one abstract-screened candidate and one pinned README-screened repository through the existing canonical ledgers, retain counterevidence and deferred leads, and freeze a second dated chart edition from the reviewed all-source priorities. Preserve prior rows, import metadata and chart files unchanged.
 Why: A real intake and rank-history transition verify the growth path without mistaking documentation screens for runtime or finding validation.
 Source: October 13 source collection, native validator results and comparison against the October 12 edition.
+
+## D-66 · 2026-10-13 · Verify an on-demand daily scout without duplicate growth
+Ruling: An owner-requested immediate scout may execute the existing discovery and ranking workflow directly, counting each dated ingestion once and retaining additional leads for later appraisal. Record on-demand execution separately from the recurring timer trigger, and rerun frozen chart generation without rewriting an existing edition.
+Why: Waiting for the timer does not verify the requested immediate execution, while counting the same sources again would invent growth.
+Source: Owner request to run the daily scout now and verify the full ingestion and ranking workflow, primary-source screens and idempotent native rerun.

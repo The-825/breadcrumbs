@@ -395,6 +395,109 @@
       "next_check": "Inspect deterministic replay, side-effect handling and existing equivalents before drafting an article; do not claim runtime reproduction.",
       "evidence_depth": "prior repository screen; new workflow discovery only",
       "linked_identity": "R-316"
+    },
+    {
+      "pool_id": "Q-NEXT-032",
+      "kind": "workflow",
+      "title": "Exact-content approval across restart",
+      "discovery_url": "https://github.com/open-multi-agent/open-multi-agent",
+      "canonical_url": "https://github.com/open-multi-agent/open-multi-agent",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Potential extension to WF-006; serialized content binding does not bind live deployed code. Daily intake target already met; workflow appraisal deferred.",
+      "next_check": "Compare deployment-version binding, store atomicity, reviewer identity and recovery with WF-006 in a synthetic rehearsal.",
+      "linked_identity": null,
+      "snapshot_commit": "6ec5498643c7e431aa66751f17f47a529e7f927c",
+      "license_status": "MIT; root license collected at the pin; no code copied",
+      "evidence_depth": "README and selected documentation screened; runtime not tested",
+      "source_receipts": {
+        "README.md": {
+          "sha256": "381022ba9e35bc20860c20aa759c76cc3aa6e423b8a8282ab834b83afbb23ffb",
+          "bytes": 15307
+        },
+        "LICENSE": {
+          "sha256": "cd3977e512c4511479c9b9fa0655050d6ee74f6a497ec6f0300272936c5a4da4",
+          "bytes": 1123
+        },
+        "docs/durable-approvals.md": {
+          "sha256": "334db64e54e647635aac0ad3ca7268debbe18a93ffc7fae7d122c6dbaf4b51d0",
+          "bytes": 12654
+        }
+      }
+    },
+    {
+      "pool_id": "Q-NEXT-033",
+      "kind": "prompt-source",
+      "title": "Prompt evaluation cases and failure documentation",
+      "discovery_url": "https://github.com/PJA-lab/Prompt-Foundry",
+      "canonical_url": "https://github.com/PJA-lab/Prompt-Foundry",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Overlaps the existing prompt checks; no model-output evaluation observed. Daily target already met; compare distinct value before adapting.",
+      "next_check": "Compare missing, conflicting and adversarial input cases against the six native templates, with attribution and explicit evaluation limits.",
+      "linked_identity": null,
+      "snapshot_commit": "5187654d586912f1e7936013c78c88bcd9a92a27",
+      "license_status": "MIT; root license collected at the pin; no code copied",
+      "evidence_depth": "README and selected documentation screened; runtime not tested",
+      "source_receipts": {
+        "README.md": {
+          "sha256": "fee2af38fc6985ff66d4d38cf58f2f2eddf2d3f59156a8a2a449c2b6cdca4df5",
+          "bytes": 13714
+        },
+        "LICENSE": {
+          "sha256": "c113ba663f20d82d031624816e314e7f147a690feb862f343a70d1133e771046",
+          "bytes": 1084
+        },
+        "docs/EVALUATING_PROMPTS.md": {
+          "sha256": "022f2130090bfc50e5aa5996c523cf180d458f3cab967162b79970f386ba59cd",
+          "bytes": 3665
+        }
+      }
+    },
+    {
+      "pool_id": "Q-NEXT-034",
+      "kind": "paper",
+      "title": "From Approval to Execution: Reconstruction-Aware Repair Analysis for LLM-Agent Software",
+      "discovery_url": "https://arxiv.org/abs/2609.26529v1",
+      "canonical_url": "https://arxiv.org/abs/2609.26529v1",
+      "publication_version": "v1",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Primary abstract screened; daily target already met. Full methods and independent validity remain unappraised.",
+      "next_check": "Review object reconstruction, sink dependencies, oracle independence and version scope before candidate intake.",
+      "linked_identity": null,
+      "license_status": "Public bibliographic lead only; full-text reuse terms not appraised",
+      "evidence_depth": "primary abstract only"
+    },
+    {
+      "pool_id": "Q-NEXT-035",
+      "kind": "paper",
+      "title": "When Evidence Changes: Evaluating Memory Repair and Re-reading in Language-Model Agents",
+      "discovery_url": "https://arxiv.org/abs/2610.03902v1",
+      "canonical_url": "https://arxiv.org/abs/2610.03902v1",
+      "publication_version": "v1",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Primary abstract screened; daily target already met. Full methods and independent validity remain unappraised.",
+      "next_check": "Inspect source-filtered rereading baseline, end-to-end costs and clinical-task transfer without collecting patient records.",
+      "linked_identity": null,
+      "license_status": "Public bibliographic lead only; full-text reuse terms not appraised",
+      "evidence_depth": "primary abstract only"
+    },
+    {
+      "pool_id": "Q-NEXT-036",
+      "kind": "paper",
+      "title": "Beyond Corrected Memory: Execution Consistency in Multi-Agent Systems",
+      "discovery_url": "https://arxiv.org/abs/2610.08101v1",
+      "canonical_url": "https://arxiv.org/abs/2610.08101v1",
+      "publication_version": "v1",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Primary abstract screened; daily target already met. Full methods and independent validity remain unappraised.",
+      "next_check": "Inspect evidence-removal design, executor coverage, diagnosis and recovery comparators before candidate intake.",
+      "linked_identity": null,
+      "license_status": "Public bibliographic lead only; full-text reuse terms not appraised",
+      "evidence_depth": "primary abstract only"
     }
   ]
 }
