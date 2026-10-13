@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "date": "2026-10-12",
+  "date": "2026-10-13",
   "kind": "derived appraisal routing projection, not a second findings ledger",
-  "research_source_sha256": "a912c51877a24fdc23ae1ad414f3069238faf18ae52e864d0ec75bc10d685bdf",
-  "appraisal_source_sha256": "541fe71be3f8e09846985886f79568b5b927e6427f0e20fd7108d0474378a0a5",
-  "repository_source_sha256": "6661f707237154a2a559a4aca1aa065a82aef395b741911ec62fd8812c643349",
+  "research_source_sha256": "d18113e41be004aa76b61d6c1bdfe7a38052866bb000f41185f6cf9c7c54ef45",
+  "appraisal_source_sha256": "99283cdc25f3cdfe46c3968a583233db1f128442b3ba644ee97a558d24c05a77",
+  "repository_source_sha256": "b8a562d0f8ac13cac4f400094aa1ea047040de3e52ea1917f36e3484b08b925a",
   "rank_meaning": "dense priority groups; ties remain ties, stable IDs order display only",
   "named_question": "Which evidence reduces uncertainty about handoff recovery, authority, revision-sensitive memory, and total evaluation burden?",
   "ordered_claim_gaps": [
@@ -303,6 +303,28 @@
       "family": "AGENTASK",
       "horizon": "technical",
       "review_depth": "selected-full-text",
+      "record_state": "candidate-not-promoted",
+      "appraisal_priority_rank": 2,
+      "priority_key": [
+        0,
+        1,
+        3
+      ],
+      "priority_claim": "CI-006"
+    },
+    {
+      "id": "C-025",
+      "title": "Serving a Revisable World: Versioned Execution for Interruptible Agents",
+      "url": "https://arxiv.org/abs/2610.01160v1",
+      "claims": [
+        "CI-006",
+        "CI-007",
+        "CI-008"
+      ],
+      "directness": "D2 adjacent",
+      "family": "RETIRE-SERVING",
+      "horizon": "technical",
+      "review_depth": "abstract-only",
       "record_state": "candidate-not-promoted",
       "appraisal_priority_rank": 2,
       "priority_key": [
@@ -4761,6 +4783,27 @@
       "review_depth": "readme-screened",
       "lifecycle": "current",
       "selection_aspect": "failure-recovery-memory-and-evaluation",
+      "appraisal_priority_rank": 1,
+      "priority_key": [
+        0,
+        0,
+        0
+      ],
+      "priority_claim": "CI-006"
+    },
+    {
+      "id": "R-336",
+      "repository": "hatchet-dev/hatchet",
+      "url": "https://github.com/hatchet-dev/hatchet",
+      "claims": [
+        "CI-006",
+        "CI-008",
+        "CI-004"
+      ],
+      "family": "HATCHET",
+      "review_depth": "readme-screened",
+      "lifecycle": "current",
+      "selection_aspect": "revision-bound-recovery-and-obsolete-effects",
       "appraisal_priority_rank": 1,
       "priority_key": [
         0,

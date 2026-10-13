@@ -59,7 +59,7 @@ The detailed-appraisal saturation rule does not cap portable intake.
 
 ## Rolling chart and cumulative archive
 
-The proposed StaleToast view uses two dated editorial charts: one for
+The StaleToast view uses two dated editorial charts: one for
 collaborative-intelligence papers and one for public repositories that work
 with agentic methods, models, or concepts. The existing ledgers retain the
 cumulative archive behind both.
@@ -71,7 +71,10 @@ rank, movement, rank reasons, evidence state, and history link. A drop from a
 chart does not delete an archived source or reverse a prior appraisal. Re-rank
 only on a logged new source, claim need, contradiction, correction, or material
 change, and preserve the previous rank and date.
-Chart publication and rank history are not implemented in this change.
+Chart publication and dated history now ship through the
+[discovery builder and workflow guide](discovery-charts-and-workflows.md).
+Priority generation, source-link errata and archive retention follow that
+document's current contract.
 
 ## Reviewed downstream handoff
 
@@ -120,3 +123,15 @@ C-013 and C-014 are primary-abstract screened candidates; R-315 is README screen
 ## Requested expansion, 2026-10-12
 
 The requested expansion added C-015 through C-024 and R-316 through R-335 at their recorded review depth. All remaining discovery leads are retained in the next-round pool, including reason and next verification step. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
+
+## Daily intake, 2026-10-13
+
+Q-NEXT-018 now links to C-025 at primary-abstract depth; Hatchet is added as
+README-screened R-336. The pool retains unselected sources and prior dispositions.
+See [the dated receipt](staletoast-scout-2026-10-13.md). Neither ingestion changes
+the claim register or grants adoption authority.
+
+| Queue ID | Primary source and linked record | Disposition and next check |
+|---|---|---|
+| Q-P-005 | [Serving a Revisable World v1](https://arxiv.org/abs/2610.01160v1), C-025, retained lead Q-NEXT-018 | promoted into candidate intake at abstract depth; full methods remain to appraise |
+| Q-R-003 | [Hatchet pinned README](https://github.com/hatchet-dev/hatchet/blob/4a02006a40cff43180ca2f56c59113a1b12eca76/README.md), R-336 | promoted as a README screen; test current cancellation and recovery before any use |

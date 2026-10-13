@@ -676,3 +676,8 @@ Source: Operator's expanded objective to include prompts for workflows, data sta
 Ruling: Use one quoted-link and escaped-cell parser for research catalogs and editorial priorities. Restore the complete DOI for source 059 through an explicit, source-bound link erratum in derived chart data, preserving frozen editions, rankings and evidence states.
 Why: A regex stopped at an inner URL parenthesis, breaking a live source link; archive corrections must not silently rewrite history.
 Source: Live-source audit of the chart and research catalog, pinned ledger readback and parser/correction tests.
+
+## D-65 · 2026-10-13 · Complete a bounded daily intake and second chart edition
+Ruling: Add one abstract-screened candidate and one pinned README-screened repository through the existing canonical ledgers, retain counterevidence and deferred leads, and freeze a second dated chart edition from the reviewed all-source priorities. Preserve prior rows, import metadata and chart files unchanged.
+Why: A real intake and rank-history transition verify the growth path without mistaking documentation screens for runtime or finding validation.
+Source: October 13 source collection, native validator results and comparison against the October 12 edition.

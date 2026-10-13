@@ -201,3 +201,11 @@ Three canonical Restate repository identities were screened. sdk-python was incl
 ## Requested expansion, 2026-10-12
 
 The requested expansion appraises 20 new repository snapshots, with license and maintenance boundaries. Archived and superseded predecessors and inaccessible identities remain in the next-round pool. All 314 previous rows remain unchanged. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
+
+## Daily intake, 2026-10-13
+
+Hatchet is added as pinned README-screened R-336 after canonical identity,
+license, alias and overlap review. An open earlier-release cancellation report
+is retained as unverified counterevidence for this snapshot. Restate's reference
+agent remains deferred for an unresolved license. All 334 prior rows and the
+historical import summary remain unchanged. See [the dated scout record](staletoast-scout-2026-10-13.md).
