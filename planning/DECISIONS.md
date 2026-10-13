@@ -652,6 +652,11 @@ Ruling: Add an explicit workflow registry 1.1 contract for pinned primary docume
 Why: A workflow guide needs sources beyond community posts without silently relaxing its source or adoption boundary.
 Source: Workflow discovery implementation audit against the operator's guide and best-practice feedback goal.
 
+## D-60 · 2026-10-13 · First primary workflow article
+Ruling: Migrate the public workflow registry explicitly to 1.1 and add WF-006 from pinned primary approval-and-resume documentation, retaining screened status and all legacy records. Route its public proposal through JR-006 and retain the unselected recovery lead in the existing next-round pool.
+Why: The workflow guide should grow through source review and usable procedures while keeping observed documentation, proposed safeguards, reproduction and consumer adoption distinct.
+Source: Primary-source intake and overlap review for the operator's workflow discovery and best-practice feedback goal.
+
 ## D-61 · 2026-10-13 · Reader-facing evidence topics
 Ruling: Present plain-English topic labels in charts, catalog filters, links and claim pages. Preserve stable claim IDs in data and URLs, with an optional evidence-reference disclosure for traceability.
 Why: Readers should understand the subject without learning internal claim codes first.

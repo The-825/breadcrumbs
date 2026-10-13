@@ -35,4 +35,6 @@
 | Q-NEXT-029 | repository | [IsmailHatim/Surveyer](https://github.com/IsmailHatim/Surveyer) | verify: retained prior scout lead; no new selection in this round | Recheck canonical identity, license and distinct mechanism against the uncapped ledger. |
 | Q-NEXT-030 | repository | [CarinaSchoppe/PISMA-Literature-Review-Pipeline-Automation-Tool](https://github.com/CarinaSchoppe/PISMA-Literature-Review-Pipeline-Automation-Tool) | verify: retained prior scout lead; no new selection in this round | Recheck canonical identity, license and distinct mechanism against the uncapped ledger. |
 
+| Q-NEXT-031 | workflow | [Replay-safe recovery](https://github.com/temporalio/sdk-python/blob/93cb530461d90ab1ab9b150cef21ae1b4f33eca9/README.md) | verify: R-316 is already repository-screened; the workflow procedure remains unappraised | Inspect replay, side effects and existing equivalents before drafting an article. |
+
 Canonical metadata, source pins where known and alias targets are in the [pool JSON](staletoast-next-round-pool.json). Unknown identities and licenses remain unknown until a later primary check.

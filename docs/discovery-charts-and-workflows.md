@@ -51,9 +51,10 @@ visible. A local synthetic check does not establish workplace effectiveness.
 
 Submit public discoveries through the workflow discovery issue form. A reviewer
 checks source identity, overlap, assumptions, evidence and limitations before
-adding an article. The existing registry source contract remains unchanged.
-Submissions from other source types need an explicit contract change before
-registry ingestion. The submission form does not ingest records automatically.
+adding an article. Registry 1.1 accepts pinned primary documentation and research
+sources under the [versioned source contract](workflow-source-contract.md).
+Community records retain their earlier evidence limits. The submission form
+does not ingest records automatically.
 
 The daily research and repository scout remains a separate external workflow.
 Its unselected leads remain in the

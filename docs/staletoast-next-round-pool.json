@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "status": "discovery pool, not ledger additions or adoption authority",
   "records": [
     {
@@ -369,6 +369,18 @@
       "evidence_depth": "prior lead; no new primary appraisal",
       "pool_id": "Q-NEXT-030",
       "discovered_date": "2026-10-11 or earlier"
+    },
+    {
+      "pool_id": "Q-NEXT-031",
+      "kind": "workflow",
+      "title": "Replay-safe recovery for long-running work",
+      "discovery_url": "https://github.com/temporalio/sdk-python/blob/93cb530461d90ab1ab9b150cef21ae1b4f33eca9/README.md",
+      "discovered_date": "2026-10-13",
+      "state": "verify",
+      "reason": "Related repository R-316 is already README-screened; its workflow-specific procedure has not been appraised in this round.",
+      "next_check": "Inspect deterministic replay, side-effect handling and existing equivalents before drafting an article; do not claim runtime reproduction.",
+      "evidence_depth": "prior repository screen; new workflow discovery only",
+      "linked_identity": "R-316"
     }
   ]
 }
