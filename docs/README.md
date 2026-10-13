@@ -18,6 +18,7 @@ the piece.
 | [discovery-charts-and-workflows.md](discovery-charts-and-workflows.md) | Dated StaleToast charts, practical Breadcrumbs articles, build commands and the discovery review boundary. |
 | [workflow-source-contract.md](workflow-source-contract.md) | Versioned primary-source intake pins and evidence requirements for workflow discovery. |
 | [workflow-intake-2026-10-13.md](workflow-intake-2026-10-13.md) | First pinned primary workflow article, source receipts, overlap review and proposed consumer completion check. |
+| [prompt-library.md](prompt-library.md) | Original reusable prompts for workflows, data stacks and systems, with synthetic examples, explicit outputs and acceptance checks. [Machine catalog](prompt-library.json). |
 | [cooperative-intelligence-evaluation.md](cooperative-intelligence-evaluation.md) | Pattern-only evaluation for work shared by people and AI: compare the right baseline, then measure orientation, handoff, correction, ownership, and recovery separately. |
 | [governing-agents-that-act.md](governing-agents-that-act.md) | The operational half of the paper: what to log, what an agent may never decide alone, how to prove afterward that a correction landed, plus a ten-question self-assessment you can run on your own deployment. |
 | [versioning-is-not-governance.md](versioning-is-not-governance.md) | Git-backed agent memory is shipped by others now, so storage is the floor rather than the claim. What versioning answers, what it cannot, and how to tell which problem your last bad week actually was. |
