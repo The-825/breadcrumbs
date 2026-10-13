@@ -183,7 +183,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIn('href="synthesis.html"', index)
         self.assertIn('href="synthesis.html"', research)
         self.assertIn("five evidence trails", synthesis.lower())
-        self.assertIn("CI-017", synthesis)
+        self.assertIn('href="claims.html#ci-017"', synthesis)
         self.assertIn("Evidence boundary", synthesis)
         for page in (index, research, papers, synthesis):
             self.assertIn("Community</a>", page)
