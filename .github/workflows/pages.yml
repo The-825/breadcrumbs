@@ -22,6 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: python site/build_priorities.py --check
       - run: python site/build_catalogs.py
       - run: python site/build_discovery.py
       - run: python site/build_discovery.py --check
