@@ -651,3 +651,8 @@ Source: Chart and workflow-guide implementation audit following main promotion.
 Ruling: Add an explicit workflow registry 1.1 contract for pinned primary documentation and research sources, while preserving 1.0 community records and routing compatibility. Require source identity, version, retrieval date, content digest and license status for new primary sources; preserve descriptive authority and require evidence records for reproduced and adopted states.
 Why: A workflow guide needs sources beyond community posts without silently relaxing its source or adoption boundary.
 Source: Workflow discovery implementation audit against the operator's guide and best-practice feedback goal.
+
+## D-61 · 2026-10-13 · Reader-facing evidence topics
+Ruling: Present plain-English topic labels in charts, catalog filters, links and claim pages. Preserve stable claim IDs in data and URLs, with an optional evidence-reference disclosure for traceability.
+Why: Readers should understand the subject without learning internal claim codes first.
+Source: Operator instruction to replace reader-facing CI-006, CI-012 and related coding with human terms.

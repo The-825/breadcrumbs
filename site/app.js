@@ -7,7 +7,7 @@ let claimsById = {};
 
 const detailLink = (kind, id, label) =>
   `<a href="detail.html?type=${kind}&id=${encodeURIComponent(id)}">${escapeHtml(label)}</a>`;
-const claimLinks = claims => claims.map(claim => `<a class="pill" href="claims.html#${claim.toLowerCase()}">${escapeHtml(claimsById[claim]?.title || claim)}</a>`).join("");
+const claimLinks = claims => claims.map(claim => `<a class="pill" href="claims.html#${claim.toLowerCase()}">${escapeHtml(EvidenceTopics.label(claim))}</a>`).join("");
 const label = value => value.replaceAll("-", " ").replace(/\b\w/g, letter => letter.toUpperCase());
 
 function researchRow(item) {
@@ -19,9 +19,9 @@ function researchRow(item) {
     <td><strong>${item.horizonValue} / 3</strong><br><span class="pill">${escapeHtml(item.horizon)}</span></td>
     <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
     <td>${escapeHtml(item.citationSignal)}</td>
-    <td>${escapeHtml(item.finding)}</td>
-    <td>${escapeHtml(item.impact)}</td>
-    <td>${escapeHtml(item.flags)}</td>
+    <td>${escapeHtml(EvidenceTopics.text(item.finding))}</td>
+    <td>${escapeHtml(EvidenceTopics.text(item.impact))}</td>
+    <td>${escapeHtml(EvidenceTopics.text(item.flags))}</td>
   </tr>`;
 }
 
@@ -39,7 +39,7 @@ function repositoryRow(item) {
     <td><strong>${item.visibleMechanisms} / ${item.mechanismTotal}</strong> visible<br><strong>${item.partialMechanisms} / ${item.mechanismTotal}</strong> partial<br><strong>${item.unknownMechanisms} / ${item.mechanismTotal}</strong> unknown</td>
     <td><strong>${item.claimCount}</strong><br>${claimLinks(item.claims)}</td>
     <td><strong>Reviewed ${escapeHtml(item.lastReviewed)}</strong><br><span class="pill">${escapeHtml(label(item.evidence_depth))}</span></td>
-    <td>${escapeHtml(item.evidence_note)}</td>
+    <td>${escapeHtml(EvidenceTopics.text(item.evidence_note))}</td>
   </tr>`;
 }
 
@@ -49,7 +49,7 @@ function render() {
   const theme = document.querySelector("#theme").value;
   const claim = document.querySelector("#claim").value;
   const sort = document.querySelector("#sort").value;
-  let output = items.filter(item => JSON.stringify(item).toLowerCase().includes(query));
+  let output = items.filter(item => JSON.stringify([item, item.claims.map(id => EvidenceTopics.label(id))]).toLowerCase().includes(query));
   if (filter) output = output.filter(item => type === "research" ? item.directness.startsWith(filter) : item.category === filter);
   if (theme) output = output.filter(item => type === "research" ? item.family === theme : item.lifecycle === theme);
   if (claim) output = output.filter(item => item.claims.includes(claim));
@@ -82,6 +82,7 @@ async function catalog() {
       `${detailed} repositories have pinned mechanism reviews. Another ${portable} preserve portable-only public assessment evidence for deeper review. Unknown fields stay unknown, and popularity is shown only where it was actually observed.`;
   }
   const claims = await fetch("data/claims.json").then(result => result.json());
+  EvidenceTopics.install(claims);
   claimsById = Object.fromEntries(claims.map(item => [item.id, item]));
   addOptions(document.querySelector("#filter"), type === "research"
     ? ["D3", "D2", "D1", "D0"]
@@ -90,7 +91,7 @@ async function catalog() {
     ? [...new Set(items.map(item => item.family))].sort()
     : [...new Set(items.map(item => item.lifecycle))].sort());
   const claimControl = document.querySelector("#claim");
-  claimControl.innerHTML += [...new Set(items.flatMap(item => item.claims))].sort().map(value => `<option value="${escapeHtml(value)}">${escapeHtml(`${value}: ${claimsById[value]?.title || value}`)}</option>`).join("");
+  claimControl.innerHTML += [...new Set(items.flatMap(item => item.claims))].sort().map(value => `<option value="${escapeHtml(value)}">${escapeHtml(EvidenceTopics.label(value))}</option>`).join("");
   document.querySelectorAll("input, select").forEach(control => control.addEventListener("input", render));
   render();
 }
