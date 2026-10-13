@@ -65,7 +65,7 @@ editions remain unchanged. Prior positions, peaks and appearances come from
 actual stored history; off-chart records remain in the archive. Rank changes
 reflect this logged source intake, not a change in scientific confidence.
 
-Validation includes the repository landscape, historical promotion and triage
+Validation includes the portfolio manifest, repository landscape, historical promotion and triage
 checks, both priority views, catalog/discovery builds and the site tests. Public
 release uses the existing exact-head PR review and main publication path. The
 next scheduled scout should deduplicate against this dated receipt and existing
