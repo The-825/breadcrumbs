@@ -51,6 +51,7 @@ jobs:
 
       - name: Catalog build and tests
         run: |
+          python3 site/build_priorities.py --check
           python3 site/build_catalogs.py
           python3 site/build_discovery.py
           python3 site/build_discovery.py --check

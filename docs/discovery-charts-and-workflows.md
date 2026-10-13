@@ -26,16 +26,20 @@ The site builder ships with the chart interface. It assumes Python 3 and uses
 only the standard library. Build the catalog and discovery data with:
 
 ```sh
+python site/build_priorities.py --check
 python site/build_catalogs.py
 python site/build_discovery.py
 python site/build_discovery.py --check
 ```
 
 To freeze a later edition, first refresh and review the appraisal projection
-against its owning ledgers. Run `python site/build_discovery.py --edition-date
+against its owning ledgers with `python site/build_priorities.py --write --date
+YYYY-MM-DD`. This regenerates both the JSON projection and its Markdown view,
+preserving the existing editorial method. Run `python site/build_discovery.py --edition-date
 YYYY-MM-DD`, then review the new JSON through a PR. The builder rejects stale
 source hashes and changes to an existing dated edition. It does not scout sources,
-regenerate appraisal priorities or schedule releases.
+schedule releases. The priority builder rejects unmatched source/appraisal IDs,
+duplicate IDs, malformed rows and unknown claim or appraisal dimensions.
 
 ## Workflow articles
 
