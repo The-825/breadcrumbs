@@ -2,7 +2,7 @@
 
 **Status:** derived routing projection of the existing ledgers, public-source appraisal routing. It is not a second findings ledger, a scientific confidence score or an adoption recommendation. Assumes Method v2.0 and the named recovery/authority/memory/burden question.
 
-Every one of the 122 paper records and 334 repository records appears once below. The historical 100-source catalog remains distinct from 22 candidate papers; candidate inclusion here does not promote a finding. Repository coverage includes 229 README screens and 105 portable-only identity records.
+Every one of the 123 paper records and 335 repository records appears once below. The historical 100-source catalog remains distinct from 23 candidate papers; candidate inclusion here does not promote a finding. Repository coverage includes 230 README screens and 105 portable-only identity records.
 
 The [machine-readable projection](staletoast-appraisal-priorities.json) binds hashes of its three source files, using UTF-8 with LF line endings to match committed Git blob content. Rebuild it after any source change. Priority groups order the named claim gaps, then paper directness/horizon or repository review depth/lifecycle. Ties share a dense rank; stable IDs order display only. Stars, citation counts, recency and summed mechanism codes do not decide this priority. Potential to change conclusions is still unknown pending validity review, and family independence is not a rank bonus.
 
@@ -25,6 +25,7 @@ The original research evidence-order chart and dated repository popularity order
 | 2 | C-014 | [STAR: Failure-Aware Markovian Routing for Multi-Agent Spatiotemporal Reasoning](https://arxiv.org/abs/2605.10057v3) | candidate-not-promoted; prior-screened-candidate | D2 adjacent / technical | CI-006 |
 | 2 | C-015 | [Why Do Multi-Agent LLM Systems Fail?](https://arxiv.org/abs/2503.13657v3) | candidate-not-promoted; selected-full-text | D2 adjacent / technical | CI-006 |
 | 2 | C-016 | [AgentAsk: Multi-Agent Systems Need to Ask](https://aclanthology.org/2026.acl-long.1294/) | candidate-not-promoted; selected-full-text | D2 adjacent / technical | CI-006 |
+| 2 | C-025 | [Serving a Revisable World: Versioned Execution for Interruptible Agents](https://arxiv.org/abs/2610.01160v1) | candidate-not-promoted; abstract-only | D2 adjacent / technical | CI-006 |
 | 3 | 075 | [Expanding Explainability: Towards Social Transparency in AI Systems](https://research.ibm.com/publications/expanding-explainability-towards-social-transparency-in-ai-systems) | reviewed-catalog; screened-structural | D1 analog / single | CI-006 |
 | 4 | 006 | [Ten Challenges for Making Automation a Team Player in Joint Human-Agent Activity](https://doi.org/10.1109/MIS.2004.74) | reviewed-catalog; screened-structural | D0 conceptual / not observed | CI-006 |
 | 4 | 056 | [Is There a Big Five in Teamwork?](https://doi.org/10.1177/1046496405277134) | reviewed-catalog; screened-structural | D0 conceptual / not observed | CI-006 |
@@ -232,6 +233,7 @@ The original research evidence-order chart and dated repository popularity order
 | 1 | R-331 | [open-telemetry/opentelemetry-python](https://github.com/open-telemetry/opentelemetry-python) | readme-screened | current | CI-006 |
 | 1 | R-332 | [AgentOps-AI/agentops](https://github.com/AgentOps-AI/agentops) | readme-screened | current | CI-006 |
 | 1 | R-333 | [pydantic/logfire](https://github.com/pydantic/logfire) | readme-screened | current | CI-006 |
+| 1 | R-336 | [hatchet-dev/hatchet](https://github.com/hatchet-dev/hatchet) | readme-screened | current | CI-006 |
 | 2 | R-082 | [microsoft/autogen](https://github.com/microsoft/autogen) | readme-screened | maintenance | CI-006 |
 | 2 | R-083 | [microsoft/JARVIS](https://github.com/microsoft/JARVIS) | readme-screened | research-artifact | CI-006 |
 | 2 | R-099 | [SalesforceAIResearch/AgentLite](https://github.com/SalesforceAIResearch/AgentLite) | readme-screened | research-artifact | CI-006 |

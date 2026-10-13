@@ -1,6 +1,6 @@
 # Collaborative intelligence repository landscape
 
-**Status:** public ledger of 334 assessed repositories. Two hundred twenty-nine records are
+**Status:** public ledger of 335 assessed repositories. Two hundred thirty records are
 pinned, README-screened mechanism appraisals. Another 105 are portable-only
 records preserving positively verified public identity and assessment evidence.
 None are runtime tests, product
@@ -259,4 +259,11 @@ R-315 adds a pinned Restate Python SDK README screen. Current totals: 314 reposi
 
 ## Requested expansion, 2026-10-12
 
-The requested expansion adds 20 pinned README screens. Current totals are 334 repositories, 229 detailed records and 105 portable-only records. Prior rows and the historical import summary remain unchanged. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
+The requested expansion adds 20 pinned README screens. At the October 12 expansion, totals were 334 repositories, 229 detailed records and 105 portable-only records. Prior rows and the historical import summary remain unchanged. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
+
+## Daily intake, 2026-10-13
+
+The [daily source record](staletoast-scout-2026-10-13.md) adds pinned Hatchet
+README screen R-336, with a license check and a version-bounded counterexample
+lead. The cumulative totals are 335 repositories, 230 detailed screens and 105
+portable-only records. No upstream runtime or adoption was performed.

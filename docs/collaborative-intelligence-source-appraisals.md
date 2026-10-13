@@ -191,3 +191,9 @@ Method v2.0; 10 new screened candidates. Nine received selected full-text review
 | C-024 | arXiv v2, revised 2025-05-27 | D2 adjacent | RE-BENCH | technical | selected-full-text: Small, selected engineering environments, noisy rare successes, test feedback and costly GPU access limit generalization. Reported token/labor comparisons exclude GPU cost in the cited figure. | CI-001, CI-004, CI-005 |
 
 MemoryAgentBench and MemoryArena share authors and a research lineage; reused LongMemEval data is not new independent support. Paper/repository pairs retain shared families. See [the expansion receipt](staletoast-expansion-2026-10-12.md).
+
+## Daily intake, 2026-10-13
+
+| ID | Design and publication state | Directness | Evidence family | Horizon | Limits and reviewed depth | Linked claims |
+|---|---|---|---|---|---|---|
+| C-025 | arXiv v1, submitted 2026-10-01; serving control-plane proposal | D2 adjacent | RETIRE-SERVING | technical | abstract-only: full methods, correctness envelope, comparator fairness and total resource burden are unreviewed. Serving publication authority is narrower than human authorization. | CI-006, CI-007, CI-008 |

@@ -236,12 +236,22 @@
       "kind": "paper",
       "title": "Serving a Revisable World: Versioned Execution for Interruptible Agents",
       "discovery_url": "https://arxiv.org/abs/2610.01160",
-      "state": "verify",
-      "reason": "discovery lead, not primary-appraised in this expansion",
-      "next_check": "Appraise versioned execution and interruption replay",
-      "evidence_depth": "discovery-only",
+      "state": "promoted",
+      "reason": "Primary-abstract screened and ingested as candidate C-025; no finding promotion or adoption.",
+      "next_check": "Inspect full methods and revision-boundary tests before claim-specific finding promotion.",
+      "evidence_depth": "primary-abstract screen, 2026-10-13",
       "pool_id": "Q-NEXT-018",
-      "discovered_date": "2026-10-12"
+      "discovered_date": "2026-10-12",
+      "disposition_history": [
+        {
+          "recorded_date": "2026-10-13",
+          "prior_state": "verify",
+          "prior_reason": "discovery lead, not primary-appraised in this expansion",
+          "prior_next_check": "Appraise versioned execution and interruption replay"
+        }
+      ],
+      "linked_identity": "C-025",
+      "canonical_url": "https://arxiv.org/abs/2610.01160v1"
     },
     {
       "kind": "paper",
@@ -328,7 +338,11 @@
       "next_check": "Recheck canonical identity, license and distinct mechanism against the uncapped ledger.",
       "evidence_depth": "prior lead; no new primary appraisal",
       "pool_id": "Q-NEXT-026",
-      "discovered_date": "2026-10-11 or earlier"
+      "discovered_date": "2026-10-11 or earlier",
+      "latest_check": {
+        "date": "2026-10-13",
+        "result": "Canonical public identity and maintenance metadata rechecked; GitHub license metadata remains null. Keep code-use and detailed selection held."
+      }
     },
     {
       "kind": "repository",

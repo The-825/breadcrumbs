@@ -19543,6 +19543,59 @@
       "upstream_commit_date": "2026-10-11T04:40:12Z",
       "maintenance_observed_pushed_at": "2026-10-12T20:24:41Z",
       "readme_content_sha256": "7b5e24d0974e623c44209361019746167d4938dff76e847f3d5b5a1157cf805c"
+    },
+    {
+      "id": "R-336",
+      "repository": "hatchet-dev/hatchet",
+      "url": "https://github.com/hatchet-dev/hatchet",
+      "snapshot_commit": "4a02006a40cff43180ca2f56c59113a1b12eca76",
+      "snapshot_date": "2026-10-13",
+      "stars_observed": 8107,
+      "popularity_observed_date": "2026-10-13",
+      "selection_aspect": "revision-bound-recovery-and-obsolete-effects",
+      "category": "workflow-runtime",
+      "lifecycle": "current",
+      "evidence_depth": "readme-screened",
+      "evidence_pointer": "README.md",
+      "evidence_note": "Pinned README describes durable tasks, Postgres-backed execution history, retries, pause/resume and worker routing. These expose recovery mechanisms, not safe supersession or agent collaboration benefit. Open issue 4900 reports old retry work advancing after replacement on an earlier release; current-head behavior was not tested. Requires a server and data-retention review before any operational use.",
+      "claims": [
+        "CI-006",
+        "CI-008",
+        "CI-004"
+      ],
+      "mechanisms": {
+        "collaboration_topology": "P",
+        "workflow_state": "V",
+        "human_authority": "P",
+        "memory_context": "O",
+        "trace_recovery": "V",
+        "evaluation_surface": "P",
+        "collaboration_baseline": "N",
+        "cost_burden": "P",
+        "change_expiry": "P",
+        "independent_verification": "N",
+        "interoperability": "V"
+      },
+      "upstream_revision": "4a02006a40cff43180ca2f56c59113a1b12eca76",
+      "assessment_status": "mechanism-screened",
+      "license_status": "MIT; pinned root LICENSE inspected; retain notices for future reuse",
+      "aliases": [],
+      "evidence_family": "HATCHET",
+      "related_paper_ids": [
+        "C-025"
+      ],
+      "upstream_commit_date": "2026-10-12T21:24:15Z",
+      "maintenance_observed_pushed_at": "2026-10-13T08:56:50Z",
+      "readme_content_sha256": "556bd5fb646095bbaf9dfb0c91fbaefa52a9d0fd6739fe82b15b71708c56d8a9",
+      "license_content_sha256": "7388b34bd1ad4b9db3c72dcb73f434ea27c88e5ca8f02a24d4f970c906d79be3",
+      "counterevidence": [
+        {
+          "url": "https://github.com/hatchet-dev/hatchet/issues/4900",
+          "observed_date": "2026-10-13",
+          "state": "open",
+          "boundary": "Publicly reported behavior on an earlier release; not reproduced or verified on this snapshot."
+        }
+      ]
     }
   ],
   "unresolved_identities": [],
@@ -19569,9 +19622,9 @@
     "authority": "descriptive-only"
   },
   "review_summary": {
-    "detailed_appraisal_count": 229,
+    "detailed_appraisal_count": 230,
     "portable_only_count": 105,
-    "total_repository_count": 334,
+    "total_repository_count": 335,
     "latest_review_wave": "R4",
     "latest_review_wave_count": 106,
     "portable_only_triaged_count": 105
@@ -19599,6 +19652,7 @@
     "R-332",
     "R-333",
     "R-334",
-    "R-335"
+    "R-335",
+    "R-336"
   ]
 }
