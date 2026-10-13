@@ -88,8 +88,8 @@ class PortfolioContractTests(unittest.TestCase):
             evidence["detailed_appraisal"]["saturation_baseline_count"],
         )
         self.assertEqual(len(detailed), evidence["detailed_appraisal"]["current_count"])
-        self.assertEqual(len(detailed), 206)
-        self.assertEqual(len(portable), 105)
+        self.assertEqual(len(detailed) + len(portable), len(rows))
+        self.assertEqual(len(portable), self.ledger["review_summary"]["portable_only_count"])
         self.assertTrue(evidence["portable_intake"]["may_expand"])
         self.assertFalse(
             evidence["portable_intake"]["claims_detailed_mechanism_review"]

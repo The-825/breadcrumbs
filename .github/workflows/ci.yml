@@ -49,6 +49,11 @@ jobs:
       - name: Decision-gate tests
         run: python3 -m unittest discover -s ci-kit/workflows/tests
 
+      - name: Catalog build and tests
+        run: |
+          python3 site/build_catalogs.py
+          python3 site/test_catalogs.py
+
       - name: Memory-desk tests and integrity gate
         run: |
           python3 templates/memory-desk/tests/test_mem.py

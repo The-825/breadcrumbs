@@ -2,7 +2,11 @@ import json
 from html.parser import HTMLParser
 import re
 import unittest
+from unittest.mock import patch
+from tempfile import TemporaryDirectory
 from pathlib import Path
+
+import build_catalogs
 
 
 SITE = Path(__file__).resolve().parent
@@ -78,8 +82,37 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(item["claimCount"], len(item["claims"]))
             self.assertEqual(item["unknownMechanisms"], sum(value == "U" for value in item["mechanisms"].values()))
             self.assertEqual(item["snapshot_date"], item["lastReviewed"])
-            self.assertTrue(item["starsObservedDate"])
+            if item["stars_observed"] is None:
+                self.assertIsNone(item["starsObservedDate"])
+            else:
+                self.assertTrue(item["starsObservedDate"])
             self.assertNotIn("score", item)
+
+    def test_popularity_uses_observed_cohort_and_its_own_date(self):
+        def record(identity, stars, **extra):
+            return dict(id=identity, repository=f"example/{identity}",
+                        evidence_depth="readme-screened", stars_observed=stars,
+                        category="research-framework", mechanisms={"memory_context": "U"},
+                        claims=[], snapshot_date="2026-10-07", **extra)
+
+        data = dict(popularity_observed_date="2026-08-27", repositories=[
+            record("A", 10, popularity_observed_date="2026-09-01"),
+            record("B", None), record("C", 0),
+        ])
+        with TemporaryDirectory() as directory:
+            docs = Path(directory)
+            (docs / "collaborative-intelligence-repository-landscape.json").write_text(
+                json.dumps(data), encoding="utf-8")
+            with patch.object(build_catalogs, "DOCS", docs):
+                rows = build_catalogs.repository_catalog()
+        self.assertEqual(["A", "C", "B"], [row["id"] for row in rows])
+        self.assertEqual([1, 2, None], [row["popularityOrder"] for row in rows])
+        self.assertEqual([1, 2, None], [row["categoryPopularityOrder"] for row in rows])
+        self.assertTrue(all(row["popularityCount"] == 2 for row in rows))
+        self.assertTrue(all(row["categoryPopularityCount"] == 2 for row in rows))
+        self.assertTrue(all(row["detailedReviewCount"] == 3 for row in rows))
+        self.assertEqual(["2026-09-01", "2026-08-27", None],
+                         [row["starsObservedDate"] for row in rows])
 
     def test_portable_assessments_do_not_fake_popularity_or_mechanism_review(self):
         portable = [item for item in self.repositories if item["evidence_depth"] == "source-assessment"]

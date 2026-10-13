@@ -1,11 +1,17 @@
 import json
+import copy
+import importlib.util
 import os
 import re
 import unittest
+from pathlib import Path
 
 
 _REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 _REGISTER = os.path.join(_REPO, "docs", "collaborative-intelligence-repository-landscape.json")
+_SPEC = importlib.util.spec_from_file_location("repository_landscape", os.path.join(_REPO, "scripts", "repository_landscape.py"))
+_LANDSCAPE = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(_LANDSCAPE)
 
 
 class TestRepositoryLandscape(unittest.TestCase):
@@ -16,7 +22,7 @@ class TestRepositoryLandscape(unittest.TestCase):
 
     def test_cohort_is_unique_and_pinned(self):
         rows = self.data["repositories"]
-        self.assertEqual(len(rows), 311)
+        self.assertEqual(len(rows), self.data["review_summary"]["total_repository_count"])
         self.assertEqual(len({row["id"] for row in rows}), len(rows))
         self.assertEqual(len({row["repository"].lower() for row in rows}), len(rows))
         for row in rows:
@@ -37,14 +43,14 @@ class TestRepositoryLandscape(unittest.TestCase):
         detailed = [row for row in rows if row["evidence_depth"] == "readme-screened"]
         portable = [row for row in rows if row["evidence_depth"] == "source-assessment"]
         promoted = [row for row in detailed if row.get("detailed_review", {}).get("wave") == "R4"]
-        self.assertEqual(206, len(detailed))
+        self.assertGreaterEqual(len(detailed), 206)
         self.assertEqual(105, len(portable))
         self.assertEqual(106, len(promoted))
         self.assertTrue(all(row.get("portable_assessments") for row in promoted))
         self.assertTrue(all(row["detailed_review"]["authority"] == "descriptive-only" for row in promoted))
-        self.assertEqual(206, self.data["review_summary"]["detailed_appraisal_count"])
+        self.assertEqual(len(detailed), self.data["review_summary"]["detailed_appraisal_count"])
         self.assertEqual(105, self.data["review_summary"]["portable_only_count"])
-        self.assertEqual(311, self.data["review_summary"]["total_repository_count"])
+        self.assertEqual(len(rows), self.data["review_summary"]["total_repository_count"])
         self.assertEqual(105, self.data["review_summary"]["portable_only_triaged_count"])
         self.assertTrue(all(row.get("detailed_review_triage", {}).get("status") == "screened-not-promoted" for row in portable))
         self.assertTrue(all(row["detailed_review_triage"]["authority"] == "descriptive-only" for row in portable))
@@ -59,6 +65,46 @@ class TestRepositoryLandscape(unittest.TestCase):
                 self.assertTrue(set(row["mechanisms"].values()) <= allowed)
                 self.assertNotIn("score", row)
                 self.assertNotIn("rank", row)
+
+    def test_direct_intake_preserves_historical_import_count(self):
+        self.assertEqual([], _LANDSCAPE.validate(self.data))
+        fixture = copy.deepcopy(self.data)
+        added = copy.deepcopy(fixture["repositories"][0])
+        added.update(id="R-TEST", repository="example/intake", url="https://github.com/example/intake", aliases=[])
+        fixture["repositories"].append(added)
+        fixture.setdefault("post_import_repository_ids", []).append("R-TEST")
+        added["popularity_observed_date"] = "2026-10-12"
+        fixture["review_summary"]["total_repository_count"] += 1
+        fixture["review_summary"]["detailed_appraisal_count"] += 1
+        self.assertEqual([], _LANDSCAPE.validate(fixture))
+        for invalid in ([], ["R-MISSING"], ["R-TEST", "R-TEST"], "R-TEST", [None]):
+            with self.subTest(post_import_repository_ids=invalid):
+                changed = copy.deepcopy(fixture)
+                changed["post_import_repository_ids"] = invalid
+                self.assertTrue(_LANDSCAPE.validate(changed))
+
+    def test_live_counts_and_direct_observation_dates_are_required(self):
+        for field in ("total_repository_count", "detailed_appraisal_count", "portable_only_count"):
+            changed = copy.deepcopy(self.data)
+            changed["review_summary"][field] += 1
+            self.assertTrue(_LANDSCAPE.validate(changed), field)
+        changed = copy.deepcopy(self.data)
+        row = copy.deepcopy(changed["repositories"][0])
+        row.update(id="R-DATE", repository="example/date", url="https://github.com/example/date", aliases=[])
+        row.pop("popularity_observed_date", None)
+        changed["repositories"].append(row)
+        changed.setdefault("post_import_repository_ids", []).append("R-DATE")
+        changed["review_summary"]["total_repository_count"] += 1
+        changed["review_summary"]["detailed_appraisal_count"] += 1
+        self.assertTrue(_LANDSCAPE.validate(changed))
+
+    def test_bulk_reimport_cannot_erase_direct_intake(self):
+        fixture = copy.deepcopy(self.data)
+        fixture["post_import_repository_ids"] = [fixture["repositories"][-1]["id"]]
+        before = copy.deepcopy(fixture)
+        with self.assertRaisesRegex(ValueError, "direct-intake provenance"):
+            _LANDSCAPE.import_handoff(fixture, Path("not-read.jsonl"), "0" * 40)
+        self.assertEqual(before, fixture)
 
     def test_claim_links_use_method_v2_ids(self):
         for row in self.data["repositories"]:
@@ -75,7 +121,7 @@ class TestRepositoryLandscape(unittest.TestCase):
             self.assertIn(row["lifecycle"], allowed_lifecycle)
             self.assertIn(row["evidence_depth"], {"readme-screened", "source-assessment"})
             if row["evidence_depth"] == "readme-screened":
-                self.assertIn(row["evidence_pointer"], {"README.md", "README.MD"})
+                self.assertRegex(row["evidence_pointer"], r"(?i)^README\.(md|rst)$")
         maintenance = [row["repository"] for row in self.data["repositories"] if row["lifecycle"] == "maintenance"]
         self.assertEqual(maintenance, ["microsoft/graphrag", "microsoft/autogen"])
 
@@ -87,7 +133,7 @@ class TestRepositoryLandscape(unittest.TestCase):
         self.assertGreaterEqual(len(categories), 10)
         artifacts = [row for row in rows if row["lifecycle"] == "research-artifact"]
         self.assertGreaterEqual(len(artifacts), 4)
-        self.assertTrue(all(row["category"] == "research-framework" for row in artifacts))
+        self.assertTrue(all(row["category"] in {"research-framework", "evaluation-platform"} for row in artifacts))
 
     def test_popularity_is_dated_and_not_a_score(self):
         self.assertEqual(self.data["popularity_observed_date"], "2026-08-27")
