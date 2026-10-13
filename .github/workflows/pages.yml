@@ -4,21 +4,51 @@ on:
     branches: [main]
     paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", "docs/collaborative-intelligence-claim-register.md", "docs/workflow-registry.json", "docs/staletoast-chart-history/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Auto-merge agent PRs"]
+    types: [completed]
 permissions:
   contents: read
   pages: write
   id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
 jobs:
+  resolve:
+    if: >-
+      github.event_name != 'workflow_run'
+      || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    outputs:
+      publish: ${{ steps.release.outputs.publish }}
+      sha: ${{ steps.release.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python ci-kit/workflows/pages_release_gate.py
   deploy:
+    needs: resolve
+    if: needs.resolve.outputs.publish == 'true'
+    concurrency:
+      group: pages
+      cancel-in-progress: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -27,6 +57,11 @@ jobs:
       - run: python site/build_discovery.py
       - run: python site/build_discovery.py --check
       - run: python -m unittest discover -s site -p 'test_*.py'
+      - name: Confirm main has not changed during the build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ needs.resolve.outputs.sha }}
+        run: python ci-kit/workflows/pages_release_gate.py --verify-sha "$RELEASE_SHA"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
