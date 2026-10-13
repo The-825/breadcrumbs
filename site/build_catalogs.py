@@ -3,10 +3,30 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+from ledger_markdown import cells, source_link
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITE = ROOT / "site"
+READER_TOPICS = {
+    "CI-001": "When collaboration helps",
+    "CI-002": "Check each step of the work",
+    "CI-003": "When to trust or question AI",
+    "CI-004": "Time and effort required",
+    "CI-005": "Match abilities to the task",
+    "CI-006": "Understand and recover from failures",
+    "CI-007": "Who can approve each action",
+    "CI-008": "Recheck evidence when things change",
+    "CI-009": "Remember decisions and context",
+    "CI-010": "Use enough context with less private data",
+    "CI-011": "Keep people in control",
+    "CI-012": "Explanations that help people act",
+    "CI-013": "Know when to hand work to a person",
+    "CI-014": "Choose the right way to find information",
+    "CI-015": "Keep ideas and perspectives varied",
+    "CI-016": "Use more agents only when they help",
+    "CI-017": "Check AI improvements independently",
+}
 
 
 def table_rows(path: Path, width: int) -> list[list[str]]:
@@ -14,15 +34,10 @@ def table_rows(path: Path, width: int) -> list[list[str]]:
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.startswith("|") or line.startswith("|---"):
             continue
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-        if len(cells) == width and cells[0] not in {"ID", "---"}:
-            found.append(cells)
+        row = cells(line)
+        if len(row) == width and row[0] not in {"ID", "---"}:
+            found.append(row)
     return found
-
-
-def source_link(value: str) -> tuple[str, str]:
-    match = re.search(r'\["([^"]+)"\]\((https?://[^)]+)\)', value)
-    return (match.group(1), match.group(2)) if match else (value, "")
 
 
 def research_catalog() -> list[dict[str, object]]:
@@ -72,6 +87,12 @@ def repository_catalog() -> list[dict[str, object]]:
     if unknown_depths:
         raise ValueError(f"unknown repository evidence depths: {sorted(unknown_depths)}")
     output.sort(key=lambda item: (item["stars_observed"] is None, -(item["stars_observed"] or 0), item["repository"]))
+    popularity_count = sum(item["stars_observed"] is not None for item in output)
+    category_popularity_counts: dict[str, int] = {}
+    for item in output:
+        if item["stars_observed"] is not None:
+            category = item["category"]
+            category_popularity_counts[category] = category_popularity_counts.get(category, 0) + 1
     category_counts: dict[str, int] = {}
     for rank, item in enumerate(output, 1):
         item["catalogOrder"] = rank
@@ -85,7 +106,12 @@ def repository_catalog() -> list[dict[str, object]]:
         item["mechanismTotal"] = len(item["mechanisms"])
         item["claimCount"] = len(item["claims"])
         item["lastReviewed"] = item["snapshot_date"]
-        item["starsObservedDate"] = landscape["popularity_observed_date"]
+        item["starsObservedDate"] = (
+            item.get("popularity_observed_date", item.get("stars_observed_date", landscape["popularity_observed_date"]))
+            if item["stars_observed"] is not None else None
+        )
+        item["popularityCount"] = popularity_count
+        item["categoryPopularityCount"] = category_popularity_counts.get(category, 0)
         item["ledgerRepositoryCount"] = len(output)
         item["detailedReviewCount"] = sum(row["evidence_depth"] == "readme-screened" for row in output)
     totals: dict[str, int] = {}
@@ -115,7 +141,7 @@ def claim_catalog() -> list[dict[str, str]]:
             return " ".join(found.group(1).split()) if found else ""
         claim = re.search(r"\*\*Claim\.\*\*\s*(.*?)(?=\n\n- \*\*)", body, flags=re.DOTALL)
         output.append({
-            "id": match.group(1), "title": match.group(2), "theme": themes.get(match.group(1), "Other"),
+            "id": match.group(1), "title": match.group(2), "readerLabel": READER_TOPICS[match.group(1)], "theme": themes.get(match.group(1), "Other"),
             "claim": " ".join(claim.group(1).split()) if claim else "",
             "supports": field("Supports"), "profile": field("Profile"),
             "disposition": field("Disposition").replace("`", ""),
@@ -131,6 +157,12 @@ def write(name: str, value: object) -> None:
 
 
 if __name__ == "__main__":
-    write("research.json", research_catalog())
-    write("repositories.json", repository_catalog())
-    write("claims.json", claim_catalog())
+    if (ROOT / "staletoast-consumer.json").exists():
+        from catalog_consumer import load_export
+        catalogs = load_export()["catalogs"]
+        for name in ("research", "repositories", "claims"):
+            write(name + ".json", catalogs[name])
+    else:
+        write("research.json", research_catalog())
+        write("repositories.json", repository_catalog())
+        write("claims.json", claim_catalog())

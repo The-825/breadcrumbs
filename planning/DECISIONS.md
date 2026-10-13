@@ -584,3 +584,110 @@ Jarvis remains the applied runtime profiled by the catalog.
 Why: a distinct display name separates the public evidence catalog from the reusable
 Breadcrumbs kit without breaking repository links or technical consumers.
 Source: Jovan's authorized public catalog rename, 2026-09-11.
+
+## D-51 · 2026-10-06 · Add portable workflow worksheets
+
+Ruling: Breadcrumbs includes copy-and-adapt worksheets for workflow capacity
+estimation, small-change requests, and routine maintenance handoffs. They are
+pattern-only documents and make no claim of software support or operational approval.
+
+Why: readers can use practical planning and handoff formats alongside the kit's
+repository and agent-operation patterns.
+
+Source: Jovan's request to prepare generic supporting worksheets, 2026-10-06.
+
+## D-52 · 2026-10-07 · Name the workflow practice series
+
+Ruling: The public practice series is named Improve My Workflow and opens with
+Embrace the Principles. Keep it simple is the first principle. The sequence then
+examines current steps, automates one part, keeps human judgment, tests and
+validates results, builds a system, and applies what was learned to refine it.
+
+Why: readers should see a usable way to improve their own work without starting
+with tool mechanics or a complicated memory process.
+
+Source: Jovan's series naming and principles instruction, 2026-10-07.
+
+## D-53 · 2026-10-11 · Daily research intake targets
+
+Ruling: Daily StaleToast scouting targets one or two new research articles and
+one or two public repositories through identity verification, deduplication,
+bounded appraisal, ledger ingestion, and recorded editorial reassessment. Quality
+gates take precedence over the count target; record shortfalls rather than filler.
+The cumulative ledgers remain uncapped, and public sharing requires the normal
+review boundary. This kit does not implement the external daily scheduler.
+
+Why: discovery should produce reviewable ledger growth while preserving source
+depth, historical evidence, and the difference between priority and adoption.
+
+Source: maintainer instruction, 2026-10-11.
+
+## D-54 · 2026-10-12 · Validate cumulative intake without rewriting history
+Ruling: Validate live review totals against actual rows while preserving the historical import summary and identifying post-import rows separately. Require direct intake popularity dates and render their own observation dates.
+Why: Fixed historical totals blocked legitimate growth, while a global observation date misdated new star counts.
+Source: Operator-directed local repair of the daily intake validator; current invariant and catalog tests.
+
+## D-55 · 2026-10-12 · Keep appraisal ranking and retained leads distinct
+Ruling: Rerank every existing paper and repository in a source-bound appraisal routing projection, retaining ties and separate evidence states. Retain all unselected discovery leads with reason and next check in the next-round pool.
+Why: Priority is not validity, popularity or adoption, and unselected leads should not disappear.
+Source: Operator-requested 10-paper/20-repository expansion and explicit next-round-pool instruction.
+
+## D-56 · 2026-10-12 · Promote the validated StaleToast intake through the main gate
+Ruling: Publish the validated growth/provenance infrastructure and cumulative source intake through separate PRs and the repository merge workflow. Findings retain their existing appraisal limits; publication does not grant adoption or runtime authority.
+Why: The operator approved promotion to main after reviewing today's growth.
+Source: Operator instruction, "Lets promote to main."
+
+## D-57 · 2026-10-12 · Dated charts and practical workflow articles
+Ruling: Publish separate dated Research and Repository Hot 100 editions from the source-bound appraisal projection, preserving priority ties, candidate states and the uncapped archive. Publish practical workflow articles from the existing public registry with source evidence, synthetic examples and completion checks.
+Why: Readers need an ordered discovery surface and usable workflow instructions without confusing editorial attention with evidence strength or adoption permission.
+Source: Operator's chart and workflow-guide direction and renewed instruction to promote to main; implementation and content are reviewed through separate PRs.
+
+## D-58 · 2026-10-13 · Reproducible chart priorities
+Ruling: Ship a standard-library priority builder that regenerates the source-bound JSON and Markdown views from the owning ledgers, retaining the existing editorial method and evidence states. Check both projections in CI before building charts, without editing prior chart editions.
+Why: A task-local generator cannot support repeatable daily intake or detect an incomplete source/appraisal update.
+Source: Chart and workflow-guide implementation audit following main promotion.
+
+## D-59 · 2026-10-13 · Version primary workflow sources explicitly
+Ruling: Add an explicit workflow registry 1.1 contract for pinned primary documentation and research sources, while preserving 1.0 community records and routing compatibility. Require source identity, version, retrieval date, content digest and license status for new primary sources; preserve descriptive authority and require evidence records for reproduced and adopted states.
+Why: A workflow guide needs sources beyond community posts without silently relaxing its source or adoption boundary.
+Source: Workflow discovery implementation audit against the operator's guide and best-practice feedback goal.
+
+## D-60 · 2026-10-13 · First primary workflow article
+Ruling: Migrate the public workflow registry explicitly to 1.1 and add WF-006 from pinned primary approval-and-resume documentation, retaining screened status and all legacy records. Route its public proposal through JR-006 and retain the unselected recovery lead in the existing next-round pool.
+Why: The workflow guide should grow through source review and usable procedures while keeping observed documentation, proposed safeguards, reproduction and consumer adoption distinct.
+Source: Primary-source intake and overlap review for the operator's workflow discovery and best-practice feedback goal.
+
+## D-61 · 2026-10-13 · Reader-facing evidence topics
+Ruling: Present plain-English topic labels in charts, catalog filters, links and claim pages. Preserve stable claim IDs in data and URLs, with an optional evidence-reference disclosure for traceability.
+Why: Readers should understand the subject without learning internal claim codes first.
+Source: Operator instruction to replace reader-facing CI-006, CI-012 and related coding with human terms.
+
+## D-62 · 2026-10-13 · Publish after the approved merge gate
+Ruling: Resolve Pages releases from current main after direct main triggers or a successful merge-gate run with a matching main PR merged in its observation window. Build the exact revision, recheck main before upload and leave existing deployment alone when no new merge qualifies.
+Why: Token-authored merges did not produce the push-triggered Pages runs, so approved catalog updates stayed unpublished until a manual dispatch.
+Source: Observed releases for PR169 through PR176, GitHub workflow-event documentation and release-gate tests.
+
+## D-63 · 2026-10-13 · Prompts as reviewed reusable resources
+Ruling: Extend Breadcrumbs with a public prompt catalog for workflows, data stacks and systems, using original templates, named inputs, synthetic examples, expected output and concrete checks. Keep editorial selection separate from model-output evaluation, installed instructions and consumer adoption.
+Why: A reusable prompt needs a clear task and a way to judge its result; calling it best does not establish measured model performance.
+Source: Operator's expanded objective to include prompts for workflows, data stacks and systems.
+
+## D-64 · 2026-10-13 · Preserve complete source links and frozen chart history
+Ruling: Use one quoted-link and escaped-cell parser for research catalogs and editorial priorities. Restore the complete DOI for source 059 through an explicit, source-bound link erratum in derived chart data, preserving frozen editions, rankings and evidence states.
+Why: A regex stopped at an inner URL parenthesis, breaking a live source link; archive corrections must not silently rewrite history.
+Source: Live-source audit of the chart and research catalog, pinned ledger readback and parser/correction tests.
+
+## D-65 · 2026-10-13 · Complete a bounded daily intake and second chart edition
+Ruling: Add one abstract-screened candidate and one pinned README-screened repository through the existing canonical ledgers, retain counterevidence and deferred leads, and freeze a second dated chart edition from the reviewed all-source priorities. Preserve prior rows, import metadata and chart files unchanged.
+Why: A real intake and rank-history transition verify the growth path without mistaking documentation screens for runtime or finding validation.
+Source: October 13 source collection, native validator results and comparison against the October 12 edition.
+
+## D-66 · 2026-10-13 · Verify an on-demand daily scout without duplicate growth
+Ruling: An owner-requested immediate scout may execute the existing discovery and ranking workflow directly, counting each dated ingestion once and retaining additional leads for later appraisal. Record on-demand execution separately from the recurring timer trigger, and rerun frozen chart generation without rewriting an existing edition.
+Why: Waiting for the timer does not verify the requested immediate execution, while counting the same sources again would invent growth.
+Source: Owner request to run the daily scout now and verify the full ingestion and ranking workflow, primary-source screens and idempotent native rerun.
+
+## D-67 · 2026-10-13 · Separate StaleToast catalog ownership from Breadcrumbs
+Ruling: The-825/staletoast owns public research and repository intake, appraisals, rankings, chart history and retained leads. Breadcrumbs owns workflow guides, prompts and implementation patterns, consumes a revision/digest-pinned evidence-only export and preserves legacy records and URLs as compatibility routes.
+Why: Readers and maintainers need distinct product responsibilities and one authoritative research ledger without losing existing source IDs, links or history.
+Source: Owner instruction to create a standalone StaleToast repository and GitHub Pages site, followed by migration history, source-hash and immutable-export checks.

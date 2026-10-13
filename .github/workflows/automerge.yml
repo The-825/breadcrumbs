@@ -45,6 +45,9 @@ permissions:
   contents: write
   pull-requests: write
   checks: read
+  # Freshness reads workflow runs and the PR timeline (server timestamps).
+  actions: read
+  issues: read
 
 jobs:
   automerge:
@@ -115,6 +118,62 @@ jobs:
               return true;
             };
 
+            // A greenlight approves the head it was applied to, never a later
+            // push. Clearing the label on synchronize is not enough (the clear
+            // can be cancelled, slow, or dropped), so freshness is re-derived
+            // here from GitHub server timestamps only. Commit dates are set by
+            // the pusher and are never consulted. The head time is the
+            // earliest pull_request workflow run GitHub created for this head
+            // SHA on this PR, moved later by any force-push event. The latest
+            // APPROVAL_LABEL `labeled` event must be strictly newer. Any gap
+            // (no qualifying run, an unparseable timestamp, a tie) is stale.
+            const greenlightIsFresh = async (pr) => {
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+              const at = (t) => {
+                const v = Date.parse(t || "");
+                return Number.isFinite(v) ? v : null;
+              };
+              const runs = await github.paginate(
+                github.rest.actions.listWorkflowRunsForRepo,
+                { owner, repo, head_sha: pr.head.sha, per_page: 100 }
+              );
+              const runTimes = runs
+                .filter((r) =>
+                  r.head_sha === pr.head.sha &&
+                  ["pull_request", "pull_request_target"].includes(r.event) &&
+                  (r.pull_requests || []).some((p) => p.number === pr.number))
+                .map((r) => at(r.created_at));
+              if (runTimes.length === 0 || runTimes.includes(null)) {
+                core.info(`PR #${pr.number}: no server-timestamped run for ${pr.head.sha}; greenlight treated as stale.`);
+                return false;
+              }
+              let headAt = Math.min(...runTimes);
+              const events = await github.paginate(
+                github.rest.issues.listEventsForTimeline,
+                { owner, repo, issue_number: pr.number, per_page: 100 }
+              );
+              const labeled = [];
+              for (const e of events) {
+                if (e.event === "head_ref_force_pushed") {
+                  const t = at(e.created_at);
+                  if (t === null) return false;
+                  headAt = Math.max(headAt, t);
+                } else if (e.event === "labeled" && e.label && e.label.name === APPROVAL_LABEL) {
+                  labeled.push(at(e.created_at));
+                }
+              }
+              if (labeled.length === 0 || labeled.includes(null)) {
+                core.info(`PR #${pr.number}: no server-timestamped "${APPROVAL_LABEL}" event; treated as stale.`);
+                return false;
+              }
+              const fresh = Math.max(...labeled) > headAt;
+              if (!fresh) {
+                core.info(`PR #${pr.number}: "${APPROVAL_LABEL}" predates head ${pr.head.sha}; re-apply it to approve this head.`);
+              }
+              return fresh;
+            };
+
             // Apply the same guards (non-draft, open, agent branch, operator
             // label when required, all required checks green on head SHA)
             // and merge. Shared by both event paths so the gate stays
@@ -140,8 +199,11 @@ jobs:
               }
               if (REQUIRE_LABEL) {
                 // A missing labels array counts as unlabeled: fail closed.
+                // A label that predates the current head counts as absent.
                 const labels = (pr.labels || []).map((l) => l.name);
-                if (!labels.includes(APPROVAL_LABEL)) {
+                const approved = labels.includes(APPROVAL_LABEL)
+                  && (await greenlightIsFresh(pr));
+                if (!approved) {
                   // Tiered gate: an unlabeled PR may still merge when EVERY
                   // changed file sits in the safe set defined by the base
                   // branch's ci-kit/workflows/greenlight_tiers.py (docs,
@@ -179,7 +241,7 @@ jobs:
                   }
                   if (verdict !== "AUTO") {
                     core.info(
-                      `PR #${pr.number} lacks the "${APPROVAL_LABEL}" label and is not tier-safe; skipping.`
+                      `PR #${pr.number} lacks a current "${APPROVAL_LABEL}" label and is not tier-safe; skipping.`
                     );
                     return;
                   }

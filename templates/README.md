@@ -26,6 +26,7 @@ Copy-paste starting points for the working files an agent-assisted repo needs. T
 | [standing-agents/](standing-agents/README.md) | The fleet-of-one kit: specialist registry, boot packs, summon protocol, desk lifecycle, task bus, wake routing, skills registry |
 | [hooks/](hooks/README.md) | Harness-side hooks: the window-aware batch-cadence stop hook plus the pre/post-compaction pair |
 | [memory-desk/](memory-desk/README.md) | The one-door memory kit: a flat fact index queried by a tiny CLI (exact match first, misses print the next command), a raw-capture journal, a weekly gardener contract, and hooks that push rows at session start, prompt time, and first edit |
+| [workflow-worksheets/](workflow-worksheets/README.md) | Copy-and-adapt worksheets for estimating workflow capacity, requesting a bounded change, and handing routine maintenance between owners |
 
 The templates reference each other (the rules file points at the state file, the ledger, and the conclusions store). They work fine alone, but they were designed as a set.
 

@@ -5,9 +5,10 @@
 **Start with one useful file:** [build your first handoff](https://the-825.github.io/breadcrumbs/start.html)
 with the free templates, then check whether a fresh session can find its next step.
 
-**New to repositories?** The [StaleToast web guide](https://the-825.github.io/breadcrumbs/) provides a visual
-Trail Map plus searchable Research and Repository catalogs. GitHub remains the source of
-truth for every claim and implementation pattern.
+**Find a workflow or prompt:** [Breadcrumbs](https://the-825.github.io/breadcrumbs/workflows.html) is the practical field guide.
+[StaleToast](https://the-825.github.io/staletoast/) separately owns research, repository
+appraisal and Hot100 charts. [Migration and ownership](docs/staletoast-separation.md)
+explain the pinned export and compatibility routes.
 
 *One person's working answer to a specific problem: how do I get the most out of AI
 coding models without re-explaining everything at the start of every session? Not a
@@ -204,13 +205,13 @@ half is proven. Do these in order and stop when you have had enough for the day:
    fail-closed automerge: merges happen only when every required check is green on the
    exact head commit, and only after a human applies an approval label. Read
    [`AUTOMERGE_GOTCHAS.md`](ci-kit/workflows/AUTOMERGE_GOTCHAS.md) first; the naive
-   version has fourteen non-obvious ways to fail.
+   version has fifteen non-obvious ways to fail.
 
 ## What is in here
 
 | Directory | What it gives you |
 |---|---|
-| [`templates/`](templates/) | Copy-and-adapt working files: rules file, session handoff, decision and authority ledgers, incident and ADR templates, slash commands, hooks, a test-harness skeleton, and the memory desk, a tool-queried fact index the cheapest model can navigate |
+| [`templates/`](templates/) | Copy-and-adapt working files: rules file, session handoff, decision and authority ledgers, incident and ADR templates, slash commands, hooks, a test-harness skeleton, the memory desk, and [workflow worksheets](templates/workflow-worksheets/README.md) for capacity, small changes, and maintenance handoffs |
 | [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, a preflight that catches branch collisions before you push, and the fail-closed merge gate |
 | [`skills/`](skills/) | Paste-able rule sets for your own rules file |
 | [`checklists/`](checklists/) | Two-minute operational checklists |
@@ -256,6 +257,6 @@ here first if you want to see the shape of the output; this repo's own run is in
 Everything is MIT licensed. See [LICENSE](LICENSE). Take it, adapt it, ship it.
 
 *The longer story of the system this came from is now available in
-[*From Archivist to Architect*](https://www.amazon.com/dp/B0HHZS6K32). The repo stands
+[*From Archivist to Architect*](https://www.amazon.com/dp/B0HM4FSCBH). The repo stands
 on its own, and the book explains the path from maintaining records to designing the
 system beneath them.*

@@ -1,5 +1,18 @@
 [
   {
+    "id": "supersession-current-preference-query-variations",
+    "facts": [
+      {"category": "preference", "key": "theme", "value": "dark mode", "scope": "public", "asserted_by": "human:synthetic-owner", "assertion_authority": "human"},
+      {"category": "preference", "key": "theme", "value": "light mode", "scope": "public", "asserted_by": "human:synthetic-owner", "assertion_authority": "human"}
+    ],
+    "queries": ["What theme do I prefer now?", "Current display preference", "Do I still want dark mode?", "Which appearance should you use today?"],
+    "params": {"audience": "public"},
+    "expect": ["fact.preference.theme: light mode"],
+    "forbid": ["dark mode", "episode:"],
+    "history_expect": ["SUPERSEDED", "dark mode", "light mode"],
+    "repeat": 2
+  },
+  {
     "id": "fusion-prefers-relevant-older-event",
     "episodes": [
       {"action": "MIGRATION", "outcome": "schema flight completed", "tags": ["database"]},

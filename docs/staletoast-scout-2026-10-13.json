@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-13",
+  "execution_mode": "human-owned bounded intake, not a scheduled-heartbeat receipt",
+  "question": "Does replaced work lose publication authority while useful completed state remains recoverable?",
+  "paper_additions": [
+    {
+      "id": "C-025",
+      "queue_id": "Q-NEXT-018",
+      "intake_queue_id": "Q-P-005",
+      "primary_url": "https://arxiv.org/abs/2610.01160v1",
+      "version": "v1",
+      "publication_date": "2026-10-01",
+      "retrieved_date": "2026-10-13",
+      "depth": "primary-abstract",
+      "state": "candidate-not-promoted"
+    }
+  ],
+  "repository_additions": [
+    {
+      "id": "R-336",
+      "intake_queue_id": "Q-R-003",
+      "canonical_identity": "hatchet-dev/hatchet",
+      "snapshot_commit": "4a02006a40cff43180ca2f56c59113a1b12eca76",
+      "commit_date": "2026-10-12T21:24:15Z",
+      "retrieved_date": "2026-10-13",
+      "readme_path": "README.md",
+      "readme_sha256": "556bd5fb646095bbaf9dfb0c91fbaefa52a9d0fd6739fe82b15b71708c56d8a9",
+      "license_path": "LICENSE",
+      "license_sha256": "7388b34bd1ad4b9db3c72dcb73f434ea27c88e5ca8f02a24d4f970c906d79be3",
+      "license_status": "MIT; pinned root license inspected",
+      "stars_observed": 8107,
+      "stars_observed_date": "2026-10-13",
+      "depth": "readme-screened",
+      "runtime_test": "not-run",
+      "counterevidence_url": "https://github.com/hatchet-dev/hatchet/issues/4900",
+      "counterevidence_state": "open when checked; reported earlier-release behavior, current snapshot unverified"
+    }
+  ],
+  "unselected": [
+    {"pool_id": "Q-NEXT-026", "reason": "Canonical identity rechecked, license remains unresolved", "next_check": "Establish code-use licensing and compare existing equivalents"},
+    {"pool_id": "Q-NEXT-027", "reason": "Prior examples lead retained at its earlier evidence depth", "next_check": "Verify license and distinct mechanism before selection"}
+  ],
+  "counts": {"new_paper_candidates": 1, "new_repositories": 1, "duplicate_additions": 0},
+  "independence": "Related IDs express a shared question; no paper/repository corroboration is inferred",
+  "measurements": {"model_calls": 0, "upstream_runtime_tests": 0, "search_cost": "unknown", "screening_elapsed_time": "not measured"},
+  "adoption": "none"
+}

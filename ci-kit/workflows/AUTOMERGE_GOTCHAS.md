@@ -1,4 +1,4 @@
-# Automerge gotchas: fourteen failure modes a naive automerge hits
+# Automerge gotchas: fifteen failure modes a naive automerge hits
 
 `automerge.yml` squash-merges an agent PR only when every required check is green on the PR
 head SHA, fail-closed. It stands in for GitHub's paid auto-merge feature on Free-plan private
@@ -8,7 +8,7 @@ hit in production use of this pattern. Gotchas 1 through 6 are encoded in the sh
 operator label, the extracted decision script, the label-free lanes, and the
 staging-promotion model, documented in
 [docs/staging-promotion.md](../../docs/staging-promotion.md)) and bind any variant that
-grows those parts. Gotchas 13 and 14 are later additions from continued production use and
+grows those parts. Gotchas 13 through 15 are later additions from continued production use and
 bind any variant, first generation included. Read
 this before adapting the template, and re-read it before "simplifying" it.
 
@@ -228,6 +228,38 @@ missing word in the `types:` list.
 Add `edited` to the trigger list, and be aware it also fires on title and body edits, so
 the gate will run more often than before. That is fine if the gate is cheap and idempotent,
 which it should already be for Gotcha 11's reasons.
+
+## Gotcha 15: a greenlight outlives the head it approved, and commit dates cannot tell you when
+
+The approval label is applied to a PR, not to a commit. Push after the label and the PR still
+carries it, so a gate that only asks "is the label present?" merges code nobody looked at.
+
+The obvious fix is a workflow that removes the label on `synchronize`. It is not enough. With
+`cancel-in-progress` concurrency, a later reopen, ready-for-review, or dispatch can cancel
+the clearing run. Without concurrency, the clear can still be slow, fail, or never be
+delivered. The label then survives, and the merge gate trusts it.
+
+The next obvious fix is to compare the label time against the PR timeline's `committed`
+items. That is a trap. Those items are ordered by committer date, which whoever pushes sets
+freely, and their `created_at` is null. A commit made before the greenlight but pushed after
+it reads as older than the label and passes.
+
+What works is deciding freshness inside the merge gate, from server timestamps only:
+
+- the head time is the earliest `pull_request` workflow run GitHub created for the head SHA
+  on this PR (not a run from another PR, and not a `push` run for the same SHA), moved later
+  by any `head_ref_force_pushed` event, which covers a force push back to an old SHA;
+- the latest `labeled` event for the exact approval label name must be strictly newer, and
+  the label must still be present on a fresh read;
+- anything missing or unparseable, or a tie, counts as stale, and a stale label counts as no
+  label (a tier-safe PR can still merge label-free);
+- page through the whole timeline, since a busy PR passes 100 events.
+
+The cost is small: applying the label within the same second GitHub creates the head's run
+reads as a tie, and the operator re-applies it. The shipped `automerge.yml` implements this as
+`greenlightIsFresh()`, and `tests/test_automerge_contract.py` covers an early-dated commit
+pushed late, a force push, a remove and re-add, a tie, and a 150-event timeline. It needs
+`actions: read` and `issues: read` on top of Gotcha 1's scopes.
 
 ## Design trade-offs from two generations of this workflow
 
