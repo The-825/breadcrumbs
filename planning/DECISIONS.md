@@ -607,3 +607,32 @@ Why: readers should see a usable way to improve their own work without starting
 with tool mechanics or a complicated memory process.
 
 Source: Jovan's series naming and principles instruction, 2026-10-07.
+
+## D-53 · 2026-10-11 · Daily research intake targets
+
+Ruling: Daily StaleToast scouting targets one or two new research articles and
+one or two public repositories through identity verification, deduplication,
+bounded appraisal, ledger ingestion, and recorded editorial reassessment. Quality
+gates take precedence over the count target; record shortfalls rather than filler.
+The cumulative ledgers remain uncapped, and public sharing requires the normal
+review boundary. This kit does not implement the external daily scheduler.
+
+Why: discovery should produce reviewable ledger growth while preserving source
+depth, historical evidence, and the difference between priority and adoption.
+
+Source: maintainer instruction, 2026-10-11.
+
+## D-54 · 2026-10-12 · Validate cumulative intake without rewriting history
+Ruling: Validate live review totals against actual rows while preserving the historical import summary and identifying post-import rows separately. Require direct intake popularity dates and render their own observation dates.
+Why: Fixed historical totals blocked legitimate growth, while a global observation date misdated new star counts.
+Source: Operator-directed local repair of the daily intake validator; current invariant and catalog tests.
+
+## D-55 · 2026-10-12 · Keep appraisal ranking and retained leads distinct
+Ruling: Rerank every existing paper and repository in a source-bound appraisal routing projection, retaining ties and separate evidence states. Retain all unselected discovery leads with reason and next check in the next-round pool.
+Why: Priority is not validity, popularity or adoption, and unselected leads should not disappear.
+Source: Operator-requested 10-paper/20-repository expansion and explicit next-round-pool instruction.
+
+## D-56 · 2026-10-12 · Promote the validated StaleToast intake through the main gate
+Ruling: Publish the validated growth/provenance infrastructure and cumulative source intake through separate PRs and the repository merge workflow. Findings retain their existing appraisal limits; publication does not grant adoption or runtime authority.
+Why: The operator approved promotion to main after reviewing today's growth.
+Source: Operator instruction, "Lets promote to main."

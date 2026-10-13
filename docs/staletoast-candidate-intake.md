@@ -52,7 +52,7 @@ second findings ledger.
 For a paper promotion, add its identity and bounded finding to the source ledger,
 its depth and risk flags to source appraisals, then update the claim register
 only if claim-specific evidence warrants it. For a repository, first reconcile
-identity and lineage against the 311-entry public landscape and its collection
+identity and lineage against the cumulative public landscape and its collection
 log. Portable identity intake may expand; a detailed appraisal requires a named
 mechanism gap, pinned snapshot, and the repository method's evidence procedure.
 The detailed-appraisal saturation rule does not cap portable intake.
@@ -103,3 +103,20 @@ Both records are `screened` only at the abstract level. They are distinct from
 the existing paper records by arXiv ID and title. Their findings are reported
 claims, not adopted findings. A later pass must record its own search and
 screening counts rather than treating this bounded lead check as exhaustive.
+
+## Daily source ingestion, 2026-10-11
+
+The [dated search record](staletoast-scout-2026-10-11.md) promotes Q-P-003 and
+Q-P-004 into screened candidate records C-011 and C-012, and Q-R-001 and
+Q-R-002 into README-screened repository records R-313 and R-314. This is
+ledger ingestion at stated depth, not full-text promotion or adoption. Current
+editorial priority is local to the named scouting question; no global chart
+rank or historical chart movement is asserted.
+
+## Daily intake, 2026-10-12
+
+C-013 and C-014 are primary-abstract screened candidates; R-315 is README screened. Local appraisal order: STAR first for typed inter-agent recovery, Farag second for staged embodied recovery. Global ranks remain unchanged. All are backlog, not adoption. See the [dated scout record](staletoast-scout-2026-10-12.md).
+
+## Requested expansion, 2026-10-12
+
+The requested expansion added C-015 through C-024 and R-316 through R-335 at their recorded review depth. All remaining discovery leads are retained in the next-round pool, including reason and next verification step. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
