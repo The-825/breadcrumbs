@@ -70,3 +70,12 @@ Its unselected leads remain in the
 and changes to a consumer's operating practices are not activated by this site.
 Consumers can inspect an article and propose a bounded experiment under their
 own authority and review process.
+
+## Reusable prompts
+
+The [prompt library](prompt-library.md) and its [machine catalog](prompt-library.json)
+cover workflows, data stacks and systems. The discovery builder validates named
+inputs, matching synthetic examples, evidence boundaries and source links before
+generating the site's searchable prompt data. The site lets a reader copy the
+template or fill it with a synthetic example; it makes no model call and stores
+no entered context. Editorial review is distinct from model-output evaluation.

@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
@@ -135,6 +136,35 @@ def workflow_catalog(registry):
     return output
 
 
+def prompt_catalog(catalog):
+    if catalog.get('schema_version') != '1.0':
+        raise ValueError('unsupported prompt catalog version')
+    rows = catalog['prompts']
+    if len({row['id'] for row in rows}) != len(rows):
+        raise ValueError('duplicate prompt IDs')
+    for row in rows:
+        for field in ('title', 'purpose', 'template', 'version'):
+            if not isinstance(row.get(field), str) or not row[field].strip():
+                raise ValueError('prompt description or template is incomplete')
+        if date.fromisoformat(row['reviewed_date']).isoformat() != row['reviewed_date']:
+            raise ValueError('prompt review date must use YYYY-MM-DD')
+        if row['category'] not in {'workflows', 'data-stacks', 'systems'}:
+            raise ValueError('unknown prompt category')
+        if row['authority'] != 'descriptive-only' or row['model_evaluation'] != 'not-run':
+            raise ValueError('prompt authority or evaluation needs a reviewed contract change')
+        fields = row['required_inputs']
+        placeholders = set(re.findall(r'\{\{([A-Z_]+)\}\}', row['template']))
+        if not fields or len(set(fields)) != len(fields) or placeholders != set(fields) or set(row['sample_inputs']) != set(fields):
+            raise ValueError('prompt input and example fields do not match')
+        if not all(isinstance(value, str) and value.strip() for value in row['sample_inputs'].values()):
+            raise ValueError('prompt examples need explicit text inputs')
+        if not row['output_checks'] or not row['limitations'] or not row['source_urls']:
+            raise ValueError('prompt evidence boundaries are incomplete')
+        for url in row['source_urls']:
+            public_url(url)
+    return rows
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--edition-date")
@@ -162,7 +192,8 @@ def main():
         raise ValueError("no frozen chart edition; supply --edition-date")
     charts = dict(latest=previous[-1], history=[dict(edition_date=row["edition_date"], method_version=row["method_version"], charts=row["charts"]) for row in previous])
     workflows = workflow_catalog(read(DOCS / "workflow-registry.json"))
-    for name, payload in (("charts.json", charts), ("workflows.json", workflows)):
+    prompts = prompt_catalog(read(DOCS / 'prompt-library.json'))
+    for name, payload in (("charts.json", charts), ("workflows.json", workflows), ("prompts.json", prompts)):
         path = SITE / "data" / name
         text = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
         if args.check:
@@ -171,7 +202,7 @@ def main():
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8")
-    print(f"discovery: research={len(charts['latest']['charts']['research']['entries'])} repositories={len(charts['latest']['charts']['repositories']['entries'])} workflows={len(workflows)} editions={len(previous)}")
+    print(f"discovery: research={len(charts['latest']['charts']['research']['entries'])} repositories={len(charts['latest']['charts']['repositories']['entries'])} workflows={len(workflows)} prompts={len(prompts)} editions={len(previous)}")
 
 
 if __name__ == "__main__":
