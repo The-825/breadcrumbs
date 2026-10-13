@@ -646,3 +646,8 @@ Source: Operator's chart and workflow-guide direction and renewed instruction to
 Ruling: Ship a standard-library priority builder that regenerates the source-bound JSON and Markdown views from the owning ledgers, retaining the existing editorial method and evidence states. Check both projections in CI before building charts, without editing prior chart editions.
 Why: A task-local generator cannot support repeatable daily intake or detect an incomplete source/appraisal update.
 Source: Chart and workflow-guide implementation audit following main promotion.
+
+## D-59 · 2026-10-13 · Version primary workflow sources explicitly
+Ruling: Add an explicit workflow registry 1.1 contract for pinned primary documentation and research sources, while preserving 1.0 community records and routing compatibility. Require source identity, version, retrieval date, content digest and license status for new primary sources; preserve descriptive authority and require evidence records for reproduced and adopted states.
+Why: A workflow guide needs sources beyond community posts without silently relaxing its source or adoption boundary.
+Source: Workflow discovery implementation audit against the operator's guide and best-practice feedback goal.
