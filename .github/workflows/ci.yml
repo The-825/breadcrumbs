@@ -52,7 +52,9 @@ jobs:
       - name: Catalog build and tests
         run: |
           python3 site/build_catalogs.py
-          python3 site/test_catalogs.py
+          python3 site/build_discovery.py
+          python3 site/build_discovery.py --check
+          python3 -m unittest discover -s site -p 'test_*.py'
 
       - name: Memory-desk tests and integrity gate
         run: |

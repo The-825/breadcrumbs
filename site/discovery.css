@@ -1,0 +1,20 @@
+.chart-hero { align-items: center; }
+.chart-cover { display: grid; justify-items: center; align-content: center; gap: 1rem; aspect-ratio: 1; max-width: 360px; padding: 2rem; color: var(--forest); background: var(--gold); transform: rotate(-3deg); box-shadow: 14px 14px 0 rgba(0,0,0,.2); }
+.chart-cover strong { font: 900 clamp(5rem,12vw,9rem)/1 Georgia,serif; letter-spacing: -.08em; }
+.chart-cover span { font-size: .8rem; font-weight: 800; letter-spacing: .12em; text-align: center; }
+.chart-list { list-style: none; padding: 0; }
+.chart-list > li { display: grid; grid-template-columns: 4rem minmax(0,1fr) 9rem; gap: 1.2rem; align-items: start; padding: 1.3rem 0; border-top: 1px solid rgba(199,154,63,.35); }
+.chart-position { font: 700 2.5rem/1 Georgia,serif; color: var(--gold); }
+.chart-list h2 { margin: 0 0 .5rem; font-size: 1.25rem; }
+.chart-list p { margin: .35rem 0; }
+.chart-list aside { display: grid; gap: .35rem; font-size: .85rem; text-align: right; }
+.evidence-badge { display: inline-block; padding: .2rem .5rem; border: 1px solid rgba(199,154,63,.6); border-radius: 2px; margin: 0 .4rem .4rem 0; font-size: .8rem; }
+.movement { color: var(--gold); font-weight: 700; }
+.workflow-card { display: flex; flex-direction: column; align-items: start; }
+.workflow-card .button { margin-top: auto; }
+.workflow-article { max-width: 900px; margin: 3rem auto; padding: 2rem; border: 1px solid rgba(199,154,63,.5); scroll-margin-top: 1rem; }
+.workflow-article h2 { font-size: 2rem; }
+.workflow-article h3 { margin-top: 1.8rem; }
+.workflow-article li { margin: .65rem 0; }
+.workflow-example { padding: 1rem; border-left: 3px solid var(--gold); background: rgba(199,154,63,.08); }
+@media(max-width:700px) { .chart-cover { display:none; } .chart-list > li { grid-template-columns: 2.5rem minmax(0,1fr); gap: .8rem; } .chart-list aside { grid-column: 2; text-align:left; display:flex; flex-wrap:wrap; gap:1rem; } .chart-position { font-size:2rem; } .workflow-article { padding:1rem; } }
