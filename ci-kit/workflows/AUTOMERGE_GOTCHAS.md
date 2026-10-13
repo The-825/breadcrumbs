@@ -1,4 +1,4 @@
-# Automerge gotchas: fifteen failure modes a naive automerge hits
+# Automerge gotchas: sixteen failure modes a naive automerge hits
 
 `automerge.yml` squash-merges an agent PR only when every required check is green on the PR
 head SHA, fail-closed. It stands in for GitHub's paid auto-merge feature on Free-plan private
@@ -8,7 +8,7 @@ hit in production use of this pattern. Gotchas 1 through 6 are encoded in the sh
 operator label, the extracted decision script, the label-free lanes, and the
 staging-promotion model, documented in
 [docs/staging-promotion.md](../../docs/staging-promotion.md)) and bind any variant that
-grows those parts. Gotchas 13 through 15 are later additions from continued production use and
+grows those parts. Gotchas 13 through 16 are later additions from continued production use and
 bind any variant, first generation included. Read
 this before adapting the template, and re-read it before "simplifying" it.
 
@@ -30,7 +30,7 @@ PR's point of view: checks are green, the PR just sits there.
 
 Flipping a draft PR to ready-for-review fires no new check run. A PR whose checks went green
 during the draft window never re-evaluates, so it sits unmerged until someone hand-merges it.
-Fix: a second trigger, `pull_request: [ready_for_review]`, running the identical gate.
+Fix: a second trigger, `pull_request_target: [ready_for_review]`, running the identical gate.
 
 ## Gotcha 3: verify required checks on the head SHA, never the workflow_run conclusion
 
@@ -261,6 +261,22 @@ reads as a tie, and the operator re-applies it. The shipped `automerge.yml` impl
 pushed late, a force push, a remove and re-add, a tie, and a 150-event timeline. It needs
 `actions: read` and `issues: read` on top of Gotcha 1's scopes.
 
+## Gotcha 16: a privileged PR event can run the PR's own workflow code
+
+With `contents: write` and `pull-requests: write`, a `pull_request` trigger can
+run the merge ref's version of this workflow. A same-repository PR that edits
+the workflow can therefore change its inline script before any label or check
+guard executes. Checking out the base branch protects files read after checkout,
+but does not change the workflow definition that GitHub already loaded.
+
+Use `pull_request_target` for the ready and labeled events so GitHub loads the
+base branch's workflow. Keep all executable code on the base branch, and never
+check out the PR head in this privileged job. Read the PR fresh, then reject an
+unexpected base or a head from another repository before considering its label
+or checks. `pull_request_target` gives fork events a write token, so the same-repo
+guard is part of the fix. See GitHub's
+[event context reference](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+
 ## Design trade-offs from two generations of this workflow
 
 The shipped file is the simplified distillation. An earlier, more elaborate production
@@ -277,7 +293,7 @@ on green checks alone. The file shipped here has that gate on by default: `REQUI
 and `APPROVAL_LABEL` sit in automerge.yml's EDIT ME block, the label is read from a fresh API
 fetch inside the gate (never from the triggering event's frozen payload, so a stale payload
 cannot vouch for it), a missing labels array counts as unlabeled (fail closed), and
-`pull_request: [labeled]` is wired as a trigger so applying the label to an already-green PR
+`pull_request_target: [labeled]` is wired as a trigger so applying the label to an already-green PR
 merges it without waiting for another checks run.
 
 The label gate buys a human in the loop before production at the cost of one manual action

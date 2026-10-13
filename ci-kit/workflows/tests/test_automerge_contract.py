@@ -28,13 +28,15 @@ const T = (s) => `2026-09-29T10:00:${String(s).padStart(2, '0')}Z`;
 const DEFAULT_TIMELINE = { runs: [T(10)], labeledAt: [T(20)], forcePushes: [], filler: 0 };
 
 async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
-                        timeline = DEFAULT_TIMELINE) {
+                        timeline = DEFAULT_TIMELINE, headRepo = 'The-825/breadcrumbs', baseRef = 'main') {
   let currentHead = 'sha-checked';
   let merged = false;
   let attemptedSha = null;
   let warnings = 0;
   const pr = {
-    number: 12, draft, state: 'open', head: { ref, sha: currentHead },
+    number: 12, draft, state: 'open',
+    base: { ref: baseRef, repo: { full_name: 'The-825/breadcrumbs' } },
+    head: { ref, sha: currentHead, repo: { full_name: headRepo } },
     labels: labeled ? [{ name: 'greenlight' }] : [],
   };
   const github = {
@@ -88,7 +90,7 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
     },
   };
   const context = { repo: { owner: 'The-825', repo: 'breadcrumbs' },
-    eventName: 'pull_request', payload: { pull_request: { number: 12 } } };
+    eventName: 'pull_request_target', payload: { pull_request: { number: 12 } } };
   const runtimeRequire = name => {
     if (name === 'child_process') return { execFileSync: () => {
       throw new Error('GATED');
@@ -133,6 +135,15 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
     if (skipped.merged || skipped.attemptedSha !== null)
       throw new Error(ref + ' bypassed branch, draft, or label gate');
   }
+  for (const [headRepo, baseRef] of [
+    ['outside/breadcrumbs', 'main'],
+    ['The-825/breadcrumbs', 'staging'],
+  ]) {
+    const skipped = await scenario('codex/example', false, true, false,
+      null, DEFAULT_TIMELINE, headRepo, baseRef);
+    if (skipped.merged || skipped.attemptedSha !== null)
+      throw new Error('fork or unexpected base bypassed provenance gate');
+  }
   // Greenlight must postdate the head, judged on server timestamps only.
   const freshness = [
     ['label after the head run', { runs: [T(10)], labeledAt: [T(20)] }, true],
@@ -157,6 +168,14 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
 
 
 class AutoMergeContractTests(unittest.TestCase):
+    def test_privileged_workflow_uses_base_revision(self):
+        for workflow in WORKFLOWS:
+            with self.subTest(workflow=workflow):
+                source = workflow.read_text(encoding="utf-8")
+                self.assertIn("  pull_request_target:", source)
+                self.assertNotIn("  pull_request:\n", source)
+                self.assertIn('context.eventName === "pull_request_target"', source)
+
     def test_merge_paths_bind_checked_sha(self):
         for workflow in WORKFLOWS:
             with self.subTest(workflow=workflow):
