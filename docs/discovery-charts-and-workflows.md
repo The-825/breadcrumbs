@@ -41,6 +41,14 @@ source hashes and changes to an existing dated edition. It does not scout source
 schedule releases. The priority builder rejects unmatched source/appraisal IDs,
 duplicate IDs, malformed rows and unknown claim or appraisal dimensions.
 
+The existing Pages workflow publishes main after direct pushes or a successful
+merge-gate run with a current-main PR merged during that run. A skipped merge
+does not republish an older release. The resolver uses GitHub.com server records,
+checks out the exact main revision and rechecks it before artifact upload. It
+does not execute PR code or consume PR build artifacts. Manual main dispatch
+remains the recovery path. A successful deployment still needs feature readback
+before claiming that a reader's journey works.
+
 ## Workflow articles
 
 The canonical [`workflow registry`](workflow-registry.json) carries article

@@ -661,3 +661,8 @@ Source: Primary-source intake and overlap review for the operator's workflow dis
 Ruling: Present plain-English topic labels in charts, catalog filters, links and claim pages. Preserve stable claim IDs in data and URLs, with an optional evidence-reference disclosure for traceability.
 Why: Readers should understand the subject without learning internal claim codes first.
 Source: Operator instruction to replace reader-facing CI-006, CI-012 and related coding with human terms.
+
+## D-62 · 2026-10-13 · Publish after the approved merge gate
+Ruling: Resolve Pages releases from current main after direct main triggers or a successful merge-gate run with a matching main PR merged in its observation window. Build the exact revision, recheck main before upload and leave existing deployment alone when no new merge qualifies.
+Why: Token-authored merges did not produce the push-triggered Pages runs, so approved catalog updates stayed unpublished until a manual dispatch.
+Source: Observed releases for PR169 through PR176, GitHub workflow-event documentation and release-gate tests.
