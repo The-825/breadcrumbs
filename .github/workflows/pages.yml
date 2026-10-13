@@ -2,7 +2,7 @@ name: Publish Breadcrumbs site
 on:
   push:
     branches: [main]
-    paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", "docs/collaborative-intelligence-claim-register.md", "docs/workflow-registry.json", "docs/prompt-library.json", "docs/staletoast-chart-history/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", "docs/collaborative-intelligence-claim-register.md", "docs/workflow-registry.json", "docs/prompt-library.json", "docs/staletoast-chart-link-corrections.json", "docs/staletoast-chart-history/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
   workflow_run:
     workflows: ["Auto-merge agent PRs"]

@@ -23,6 +23,31 @@ def inputs(count=125):
 
 
 class DiscoveryTests(unittest.TestCase):
+    def test_source_link_correction_preserves_frozen_ranks_and_evidence(self):
+        edition = discovery.editions()[0]
+        before = copy.deepcopy(edition)
+        records = discovery.read(discovery.DOCS / 'staletoast-chart-link-corrections.json')['records']
+        corrected = discovery.correct_source_links(edition, records)
+        self.assertEqual(before, edition)
+        row = next(item for item in corrected['charts']['research']['entries'] if item['id'] == '059')
+        original = next(item for item in before['charts']['research']['entries'] if item['id'] == '059')
+        self.assertEqual('https://doi.org/10.1016/0005-1098(83)90046-8', row['url'])
+        for field in original:
+            if field != 'url':
+                self.assertEqual(original[field], row[field], field)
+        self.assertEqual(original['url'], row['source_link_correction']['original_url'])
+
+    def test_source_link_corrections_reject_wrong_sources_or_duplicate_records(self):
+        edition = discovery.editions()[0]
+        records = discovery.read(discovery.DOCS / 'staletoast-chart-link-corrections.json')['records']
+        for field, value in [('ledger_sha256', '0' * 64), ('corrected_url', 'https://example.org/other'), ('id', 'missing')]:
+            changed = copy.deepcopy(records)
+            changed[0][field] = value
+            with self.assertRaises(ValueError):
+                discovery.correct_source_links(edition, changed)
+        with self.assertRaisesRegex(ValueError, 'duplicate'):
+            discovery.correct_source_links(edition, records + records)
+
     def test_first_edition_has_100_positions_without_invented_history(self):
         priorities, landscape = inputs()
         edition = discovery.make_edition("2026-10-12", priorities, landscape, [])

@@ -5,18 +5,47 @@ Standard library only. No network, execution of upstream code, or adoption write
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
 from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
+from ledger_markdown import source_link
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITE = ROOT / "site"
 HISTORY = DOCS / "staletoast-chart-history"
 METHOD = "editorial-routing-v1"
+
+
+def correct_source_links(edition, records):
+    result = copy.deepcopy(edition)
+    seen = set()
+    for record in records:
+        if record['edition_date'] != edition['edition_date']:
+            continue
+        if record['id'] in seen:
+            raise ValueError('duplicate chart source-link correction')
+        seen.add(record['id'])
+        rows = result['charts']['research']['entries']
+        target = next((row for row in rows if row['id'] == record['id']), None)
+        if target is None or target['url'] not in {record['original_url'], record['corrected_url']}:
+            raise ValueError('chart correction does not match its source record')
+        if record['ledger_sha256'] != edition.get('source_hashes', {}).get('research_source_sha256'):
+            raise ValueError('chart correction is not bound to the frozen source ledger')
+        title, url = source_link(record['source_excerpt'])
+        if title != target['title'] or url != record['corrected_url']:
+            raise ValueError('chart correction differs from its cited source excerpt')
+        if date.fromisoformat(record['recorded_date']).isoformat() != record['recorded_date']:
+            raise ValueError('chart correction date must use YYYY-MM-DD')
+        target['url'] = public_url(url)
+        target['source_link_correction'] = dict(recorded_date=record['recorded_date'],
+                                               reason=record['reason'], original_url=record['original_url'],
+                                               evidence_url=public_url(record['evidence_url']))
+    return result
 
 
 def read(path):
@@ -171,6 +200,11 @@ def main():
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     previous = editions()
+    correction_path = DOCS / 'staletoast-chart-link-corrections.json'
+    correction_catalog = read(correction_path) if correction_path.exists() else {'schema_version': '1.0', 'records': []}
+    if correction_catalog.get('schema_version') != '1.0':
+        raise ValueError('unsupported chart source-link correction version')
+    corrections = correction_catalog['records']
     if args.edition_date:
         priorities = read(DOCS / "staletoast-appraisal-priorities.json")
         sources = {"research_source_sha256": "collaborative-intelligence-research-ledger.md",
@@ -183,13 +217,21 @@ def main():
         edition["source_hashes"] = {field: priorities[field] for field in sources}
         path = HISTORY / f"{args.edition_date}.json"
         if args.check:
-            if not path.exists() or read(path) != edition:
+            if not path.exists() or correct_source_links(read(path), corrections) != correct_source_links(edition, corrections):
                 raise ValueError("frozen edition is missing or differs; check mode does not write")
         else:
-            freeze(path, edition)
+            if path.exists():
+                if correct_source_links(read(path), corrections) != correct_source_links(edition, corrections):
+                    raise ValueError('a frozen chart edition cannot be overwritten')
+            else:
+                freeze(path, edition)
         previous = editions()
     if not previous:
         raise ValueError("no frozen chart edition; supply --edition-date")
+    for record in corrections:
+        if record['edition_date'] not in {edition['edition_date'] for edition in previous}:
+            raise ValueError('correction targets an unknown chart edition')
+    previous = [correct_source_links(edition, corrections) for edition in previous]
     charts = dict(latest=previous[-1], history=[dict(edition_date=row["edition_date"], method_version=row["method_version"], charts=row["charts"]) for row in previous])
     workflows = workflow_catalog(read(DOCS / "workflow-registry.json"))
     prompts = prompt_catalog(read(DOCS / 'prompt-library.json'))
