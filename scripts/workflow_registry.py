@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,13 +16,55 @@ ROUTING = ROOT / "docs" / "jarvis-workflow-routing.json"
 VIEW = ROOT / "docs" / "workflow-registry.md"
 
 
+def source_errors(workflow: dict, version: str) -> list[str]:
+    identity = workflow.get('id')
+    errors = []
+    try:
+        parsed = urlparse(workflow.get('source_url', ''))
+        safe = parsed.scheme == 'https' and bool(parsed.hostname) and not parsed.username and not parsed.password
+    except ValueError:
+        safe = False
+    if not safe:
+        return [f'{identity}: a public HTTPS source URL without credentials is required']
+    if version == '1.0':
+        if parsed.hostname != 'www.reddit.com':
+            errors.append(f'{identity}: schema 1.0 requires public Reddit evidence')
+        return errors
+    source_type = workflow.get('source_type')
+    if source_type not in {'community-post', 'repository-documentation', 'official-documentation', 'research-publication'}:
+        errors.append(f'{identity}: unsupported primary source type')
+    if source_type == 'community-post' and parsed.hostname != 'www.reddit.com':
+        errors.append(f'{identity}: community posts retain the Reddit source contract')
+    if source_type == 'community-post' and not workflow.get('source_pin'):
+        return errors
+    pin = workflow.get('source_pin') or {}
+    if not isinstance(pin, dict):
+        return errors + [f'{identity}: source pin must be an object']
+    if not re.fullmatch(r'[0-9a-f]{64}', str(pin.get('content_sha256', ''))):
+        errors.append(f'{identity}: source pin needs a SHA-256 content digest')
+    if not isinstance(pin.get('version'), str) or not pin['version'].strip():
+        errors.append(f'{identity}: source version or commit is required')
+    try:
+        observed = pin['retrieved_date']
+        if date.fromisoformat(observed).isoformat() != observed:
+            raise ValueError('noncanonical date')
+    except (KeyError, TypeError, ValueError):
+        errors.append(f'{identity}: source retrieval date must use YYYY-MM-DD')
+    if not isinstance(pin.get('license_status'), str) or not pin['license_status'].strip():
+        errors.append(f'{identity}: source license status is required; unknown stays explicit')
+    if pin.get('canonical_url') != workflow.get('source_url'):
+        errors.append(f'{identity}: pinned canonical URL must match the source URL')
+    return errors
+
+
 def validate(registry: dict, routing: dict) -> list[str]:
     errors = []
     workflows = registry.get("workflows", [])
     routes = routing.get("routes", [])
     workflow_ids = {row.get("id") for row in workflows}
     route_ids = {row.get("id") for row in routes}
-    if registry.get("schema_version") != "1.0" or routing.get("schema_version") != "1.0":
+    version = registry.get('schema_version')
+    if version not in {'1.0', '1.1'} or routing.get("schema_version") != "1.0":
         errors.append("unsupported schema version")
     if len(workflow_ids) != len(workflows) or None in workflow_ids:
         errors.append("workflow IDs are not unique")
@@ -31,8 +76,15 @@ def validate(registry: dict, routing: dict) -> list[str]:
             errors.append(f"{workflow.get('id')}: workflow grants authority")
         if workflow.get("adoption_state") not in allowed:
             errors.append(f"{workflow.get('id')}: invalid adoption state")
-        if not workflow.get("source_url", "").startswith("https://www.reddit.com/"):
-            errors.append(f"{workflow.get('id')}: source is not public Reddit evidence")
+        errors.extend(source_errors(workflow, version))
+        if version == '1.1' and workflow.get('adoption_state') == 'reproduced':
+            reproduction = workflow.get('reproduction') or {}
+            if not all(reproduction.get(field) for field in ('command', 'date', 'claim_boundary')) or reproduction.get('result') != 'passed':
+                errors.append(f"{workflow.get('id')}: reproduced state needs a bounded passing check")
+        if version == '1.1' and workflow.get('adoption_state') == 'adopted':
+            adoption = workflow.get('adoption') or {}
+            if not all(adoption.get(field) for field in ('owner', 'completion_test', 'evidence_url', 'correction_path')):
+                errors.append(f"{workflow.get('id')}: adoption needs owner, result evidence and correction path")
         if not workflow.get("limitations") or not workflow.get("validation_signals"):
             errors.append(f"{workflow.get('id')}: evidence boundaries are incomplete")
         if not set(workflow.get("jarvis_routes", [])) <= route_ids:
