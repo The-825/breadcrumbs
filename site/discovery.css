@@ -17,4 +17,5 @@
 .workflow-article h3 { margin-top: 1.8rem; }
 .workflow-article li { margin: .65rem 0; }
 .workflow-example { padding: 1rem; border-left: 3px solid var(--gold); background: rgba(199,154,63,.08); }
+.prompt-text { width: 100%; min-height: 24rem; padding: 1rem; font: .95rem/1.5 monospace; color: var(--cream); background: var(--forest); border: 1px solid rgba(199,154,63,.5); resize: vertical; }
 @media(max-width:700px) { .chart-cover { display:none; } .chart-list > li { grid-template-columns: 2.5rem minmax(0,1fr); gap: .8rem; } .chart-list aside { grid-column: 2; text-align:left; display:flex; flex-wrap:wrap; gap:1rem; } .chart-position { font-size:2rem; } .workflow-article { padding:1rem; } }
