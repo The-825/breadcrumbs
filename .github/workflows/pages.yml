@@ -2,7 +2,7 @@ name: Publish Breadcrumbs site
 on:
   push:
     branches: [main]
-    paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", ".github/workflows/pages.yml"]
+    paths: ["site/**", "docs/collaborative-intelligence-research-ledger.md", "docs/collaborative-intelligence-source-appraisals.md", "docs/collaborative-intelligence-repository-landscape.json", "docs/collaborative-intelligence-claim-register.md", "docs/workflow-registry.json", "docs/staletoast-chart-history/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,7 +23,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python site/build_catalogs.py
-      - run: python site/test_catalogs.py
+      - run: python site/build_discovery.py
+      - run: python site/build_discovery.py --check
+      - run: python -m unittest discover -s site -p 'test_*.py'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

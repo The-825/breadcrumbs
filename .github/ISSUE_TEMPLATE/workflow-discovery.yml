@@ -1,0 +1,36 @@
+name: Workflow discovery
+description: Suggest a source-backed workflow for the Breadcrumbs guide.
+title: "Workflow discovery: "
+labels: ["evaluation-request", "queue: submitted"]
+body:
+  - type: markdown
+    attributes:
+      value: "Use public sources and synthetic examples only. Do not submit account details, personal records, private work material or credentials. A submission enters review; it does not authorize execution or adoption."
+  - type: input
+    id: source
+    attributes:
+      label: Public source URL
+      description: Link the primary workflow description, paper or repository.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this workflow solve?
+      description: Name the task and the situation where it helps.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and requirements
+      description: Describe a small usable sequence and the tools or permissions it assumes.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and limits
+      description: State what was actually checked, where it fails and what remains unverified.
+    validations:
+      required: true
