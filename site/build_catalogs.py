@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+from ledger_markdown import cells, source_link
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -33,15 +34,10 @@ def table_rows(path: Path, width: int) -> list[list[str]]:
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.startswith("|") or line.startswith("|---"):
             continue
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-        if len(cells) == width and cells[0] not in {"ID", "---"}:
-            found.append(cells)
+        row = cells(line)
+        if len(row) == width and row[0] not in {"ID", "---"}:
+            found.append(row)
     return found
-
-
-def source_link(value: str) -> tuple[str, str]:
-    match = re.search(r'\["([^"]+)"\]\((https?://[^)]+)\)', value)
-    return (match.group(1), match.group(2)) if match else (value, "")
 
 
 def research_catalog() -> list[dict[str, object]]:

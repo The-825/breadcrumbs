@@ -49,6 +49,13 @@ does not execute PR code or consume PR build artifacts. Manual main dispatch
 remains the recovery path. A successful deployment still needs feature readback
 before claiming that a reader's journey works.
 
+Source-link errata live in `staletoast-chart-link-corrections.json`. A correction
+binds its dated edition, stable source ID, original URL, corrected URL and pinned
+ledger evidence. The builder changes only the derived link and displays a dated
+correction note. Frozen edition files, chart positions and evidence states remain
+unchanged. The registry checks consistency; the cited source revision provides
+the review evidence.
+
 ## Workflow articles
 
 The canonical [`workflow registry`](workflow-registry.json) carries article

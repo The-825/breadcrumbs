@@ -7,6 +7,7 @@ import json
 import re
 from datetime import date
 from pathlib import Path
+from ledger_markdown import cells, source_link
 
 DOCS = Path(__file__).resolve().parents[1] / "docs"
 SOURCES = {
@@ -19,21 +20,6 @@ GAPS = ['CI-006', 'CI-007', 'CI-008', 'CI-009', 'CI-004', 'CI-017', 'CI-001',
         'CI-005', 'CI-013', 'CI-014']
 QUESTION = "Which evidence reduces uncertainty about handoff recovery, authority, revision-sensitive memory, and total evaluation burden?"
 IDENTITY = re.compile(r"(?:\d{3}|C-\d{3})")
-
-
-def cells(line):
-    # An escaped pipe belongs to its cell, including inside a source title.
-    output, cell = [], []
-    escaped = False
-    for char in line.strip()[1:-1]:
-        if char == "|" and not escaped:
-            output.append("".join(cell).strip())
-            cell = []
-        else:
-            cell.append(char)
-        escaped = char == "\\" and not escaped
-    output.append("".join(cell).strip())
-    return output
 
 
 def identified_rows(text, widths):
@@ -89,8 +75,8 @@ def build(docs, as_of):
                 'retrospective': 4, 'not observed': 5, 'short sequence': 6}
     for identity, row in sources.items():
         appraisal = appraisals[identity]
-        source = re.search(r'\["([^\"]+)"\]\((https://[^)]+)\)', row[1])
-        if not source:
+        title, url = source_link(row[1])
+        if not url.startswith('https://'):
             raise ValueError(f"{identity}: primary source link is missing")
         if appraisal[2][:2] not in directness or appraisal[4] not in horizons:
             raise ValueError(f"{identity}: unknown directness or horizon")
@@ -98,7 +84,7 @@ def build(docs, as_of):
         explicit = re.match(r'(selected-full-text|abstract-only):', appraisal[5])
         if explicit:
             depth = explicit[1]
-        research.append(dict(id=identity, title=source[1].replace('\\|', '|'), url=source[2],
+        research.append(dict(id=identity, title=title, url=url,
                              claims=[value.strip() for value in appraisal[6].split(',') if value.strip()],
                              directness=appraisal[2], family=appraisal[3], horizon=appraisal[4],
                              review_depth=depth, record_state='reviewed-catalog' if identity.isdigit() else 'candidate-not-promoted'))

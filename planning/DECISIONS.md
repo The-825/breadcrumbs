@@ -671,3 +671,8 @@ Source: Observed releases for PR169 through PR176, GitHub workflow-event documen
 Ruling: Extend Breadcrumbs with a public prompt catalog for workflows, data stacks and systems, using original templates, named inputs, synthetic examples, expected output and concrete checks. Keep editorial selection separate from model-output evaluation, installed instructions and consumer adoption.
 Why: A reusable prompt needs a clear task and a way to judge its result; calling it best does not establish measured model performance.
 Source: Operator's expanded objective to include prompts for workflows, data stacks and systems.
+
+## D-64 · 2026-10-13 · Preserve complete source links and frozen chart history
+Ruling: Use one quoted-link and escaped-cell parser for research catalogs and editorial priorities. Restore the complete DOI for source 059 through an explicit, source-bound link erratum in derived chart data, preserving frozen editions, rankings and evidence states.
+Why: A regex stopped at an inner URL parenthesis, breaking a live source link; archive corrections must not silently rewrite history.
+Source: Live-source audit of the chart and research catalog, pinned ledger readback and parser/correction tests.

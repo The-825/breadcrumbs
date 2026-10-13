@@ -104,7 +104,7 @@ The original research evidence-order chart and dated repository popularity order
 | 37 | 055 | [Measuring Team Knowledge](https://doi.org/10.1518/001872000779656561) | reviewed-catalog; screened-structural | D1 analog / not observed | CI-010 |
 | 38 | 060 | [The Out-of-the-Loop Performance Problem and Level of Control in Automation](https://doi.org/10.1518/001872095779064555) | reviewed-catalog; screened-structural | D1 analog / repeated | CI-011 |
 | 39 | 035 | [Trusting Automation: Designing for Responsivity and Resilience](https://pubmed.ncbi.nlm.nih.gov/33906505/) | reviewed-catalog; screened-structural | D1 analog / not observed | CI-011 |
-| 39 | 059 | [Ironies of Automation](https://doi.org/10.1016/0005-1098(83) | reviewed-catalog; screened-structural | D1 analog / not observed | CI-011 |
+| 39 | 059 | [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8) | reviewed-catalog; screened-structural | D1 analog / not observed | CI-011 |
 | 40 | 008 | [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://www.microsoft.com/en-us/research/publication/autogen-enabling-next-gen-llm-applications-via-multi-agent-conversation-framework/) | reviewed-catalog; screened-structural | D2 adjacent / technical | CI-016 |
 | 40 | 024 | [Towards a Science of Scaling Agent Systems](https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/) | reviewed-catalog; screened-structural | D2 adjacent / technical | CI-016 |
 | 40 | 093 | [A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration](https://openreview.net/forum?id=XII0Wp1XA9) | reviewed-catalog; screened-structural | D2 adjacent / technical | CI-016 |
