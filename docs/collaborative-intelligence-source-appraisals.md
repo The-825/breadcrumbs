@@ -148,3 +148,46 @@ The backfill changes the interpretation of the collection in four ways.
 
 No source was promoted to `full-text` or `replicated` during this structural
 backfill. No original finding was silently rewritten.
+
+## Daily intake, 2026-10-11
+
+These candidate appraisals use Method v2.0 and remain outside the historical
+001-100 reviewed catalog. See the [search and ingestion record](staletoast-scout-2026-10-11.md).
+
+| ID | Design and publication state | Directness | Evidence family | Horizon | Visible risk or transfer flags | Linked claims |
+|---|---|---|---|---|---|---|
+| C-011 | Journal methodology paper; related preprint abstract screened | D2 adjacent | ASREVIEW | technical | Simulation and stopping-rule transfer; journal full text inaccessible in this pass; R-313 is the same family | CI-004, CI-012 |
+| C-012 | Journal builder-authored comparative evaluation; abstract and selected methods screened | D2 adjacent | ASYSD | technical | Biomedical metadata; consensus gold standard; current code differs from evaluated release; R-314 is the same family | CI-004, CI-012 |
+
+Both have `watch` dispositions. Validity is not fully appraised, transfer is
+bounded, durability is technical-only, and no claim-register confidence is upgraded.
+
+## Daily intake, 2026-10-12
+
+Method v2.0; screened candidates outside the historical 001-100 reviewed catalog.
+
+| ID | Publication and depth | Directness | Evidence family | Horizon | Limits | Claims |
+|---|---|---|---|---|---|---|
+| C-013 | REALM 2025 workshop, July 2025; DOI 10.18653/v1/2025.realm-1.15; primary abstract only | D2 adjacent | FARAG-RECOVERY | technical | The primary abstract describes conditional error-handling stages and evaluation on TEACH. Embodied-task results do not establish software handoff reliability or net review savings. | CI-006, CI-008 |
+| C-014 | Preprint v3, revised 2026-05-15; first submitted 2026-05-11; primary abstract only | D2 adjacent | STAR-ROUTING | technical | The primary abstract describes typed failure-conditioned routing, shared intermediate state, and recovery transitions learned from unsuccessful traces. Benchmark claims remain author-reported; no independent replay or production transfer is established. | CI-006, CI-008 |
+
+Both remain watch/backlog; no claim confidence upgrade. See [search record](staletoast-scout-2026-10-12.md).
+
+## Requested expansion, 2026-10-12
+
+Method v2.0; 10 new screened candidates. Nine received selected full-text review and one an abstract-only review with an access limitation. None is a complete full-text validity audit or independent replication.
+
+| ID | Design and publication state | Directness | Evidence family | Horizon | Limits and reviewed depth | Linked claims |
+|---|---|---|---|---|---|---|
+| C-015 | arXiv v3, revised 2025-10-26 | D2 adjacent | MAST | technical | selected-full-text: Purposive framework/task sample and model-assisted annotation; framework failure rates use different benchmarks and are not directly comparable. Not a universal production failure estimate. | CI-001, CI-002, CI-006 |
+| C-016 | ACL 2026; published PDF inspected | D2 adjacent | AGENTASK | technical | selected-full-text: Builder benchmarks and learned gating do not establish real human clarification burden or repair of internal agent errors. Published cost claims differ from the earlier preprint; do not combine their effect sizes. | CI-004, CI-006, CI-010 |
+| C-017 | arXiv v2, revised 2026-05-19; earlier title LongMINT | D2 adjacent | MINTEVAL | technical | selected-full-text: Generated questions and selected revision histories need independent label checks; benchmark correctness does not validate stored permissions or retention policy. | CI-008, CI-009 |
+| C-018 | arXiv v4, revised 2026-06-28; MemoryAgentBench | D2 adjacent | MEMAGENT-UCSD | technical | selected-full-text: Some tasks repackage existing datasets, including LongMemEval; these are not independent corroboration. Budget-limited system coverage and assumed context caching bound cost comparisons. | CI-004, CI-009 |
+| C-019 | arXiv v2, revised 2026-09-17 | D2 adjacent | MEMAGENT-UCSD | technical | selected-full-text: Human-crafted benchmark tasks are not longitudinal workplace evidence. Authors overlap MemoryAgentBench; shared research lineage and model judges limit independence. | CI-002, CI-009 |
+| C-020 | ICLR 2025 accepted; arXiv v3, revised 2025-04-18 | D2 adjacent | AGENTHARM | technical | selected-full-text: English prompts, no multi-turn attacker follow-up, custom-tool dependence and grading-path misses bound transfer; refusal is not evidence of safe owner-authorized behavior. | CI-005, CI-007, CI-017 |
+| C-021 | arXiv v1, submitted 2024-06-17 | D2 adjacent | TAU-BENCH | technical | selected-full-text: Model-simulated users are not human participants; goal-state matching does not capture every valid interaction. Current tau2 repository contains newer grading and domains, not this paper's exact evaluated release. | CI-002, CI-007, CI-017 |
+| C-022 | arXiv v2, revised 2026-02-21; BEAM and LIGHT | D2 adjacent | BEAM-LIGHT | technical | selected-full-text: Synthetic narrative generation and its judge setup are not real long-term user behavior. The authors' memory method and benchmark form one evidence family. | CI-008, CI-009 |
+| C-023 | ECIS 2026 proceedings, ECIS2026-2319; 2026-06-14 | D2 adjacent | STRATEGIC-INTELLIGENCE | single | abstract-only: Primary abstract only; full-text download returned an error. A conceptual model from one case is not a causal demonstration or general effect estimate. | CI-001, CI-002, CI-004 |
+| C-024 | arXiv v2, revised 2025-05-27 | D2 adjacent | RE-BENCH | technical | selected-full-text: Small, selected engineering environments, noisy rare successes, test feedback and costly GPU access limit generalization. Reported token/labor comparisons exclude GPU cost in the cited figure. | CI-001, CI-004, CI-005 |
+
+MemoryAgentBench and MemoryArena share authors and a research lineage; reused LongMemEval data is not new independent support. Paper/repository pairs retain shared families. See [the expansion receipt](staletoast-expansion-2026-10-12.md).

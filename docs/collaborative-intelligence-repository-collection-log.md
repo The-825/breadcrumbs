@@ -183,3 +183,21 @@ failure mode, and independent verifier.
 | [Argilla](https://github.com/argilla-io/argilla) | human-evidence overlap | Label Studio was retained as the higher-starred human labeling and review surface for this breadth pass. |
 
 These exclusions are scope and deduplication decisions, not quality judgments.
+
+## Daily gap-directed intake, 2026-10-11
+
+Question: which discovery and deduplication mechanisms improve qualified unique
+finds while reducing screening burden? The [scout record](staletoast-scout-2026-10-11.md)
+holds queries, counts, exclusions, access failures, exact pins, and dispositions.
+Three repository identities were checked, two were ingested as R-313 and R-314,
+and citationchaser was deferred for an unresolved license boundary. No code was
+installed or run. Paper/repository pairs retain shared evidence-family labels.
+All 311 prior rows and the historical import summary are preserved unchanged.
+
+## Daily intake, 2026-10-12
+
+Three canonical Restate repository identities were screened. sdk-python was included; agent and ai-examples were deferred because GitHub license metadata was null. They form one vendor family and are not independent confirmations. See the [dated scout record](staletoast-scout-2026-10-12.md).
+
+## Requested expansion, 2026-10-12
+
+The requested expansion appraises 20 new repository snapshots, with license and maintenance boundaries. Archived and superseded predecessors and inaccessible identities remain in the next-round pool. All 314 previous rows remain unchanged. See [the expansion receipt](staletoast-expansion-2026-10-12.md) and [all-source appraisal priorities](staletoast-appraisal-priorities.md).
