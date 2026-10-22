@@ -19,13 +19,22 @@ Checkpoint status: <verified | partly verified | unverified>
 Owning repository and directory: <owner/repo and bounded path>
 Source revisions: <base commit, branch HEAD, PR head if any>
 
+## Recovery pointer
+
+- Current owner: <named writer or role; bounded responsibility>
+- Owning record: <existing issue, PR or handoff with detailed evidence>
+- Next action or blocker: <one executable step, or missing evidence>
+
 ## Current state
 
 - Active branch: <branch name>
 - Open PR: <number + title, or "none">
 - PR head and checks: <head SHA + pending/passing/failing/unknown>
-- Review and merge: <pending/approved/merged/unknown, with evidence>
-- Deployment: <separate deployed/pending/not applicable/unknown state>
+- Implementation and tests: <separate states, exact source revisions, dates and evidence pointers or unknown>
+- Review: <reviewed revision, verdict, date and applicability to current source or unknown>
+- Merge: <target, revision and dated receipt or pending/unknown>
+- Deployment: <destination, revision and dated receipt or pending/not applicable/unknown>
+- Live verification: <dated behavior readback and revision, or unknown; deployment alone is not verification>
 - In-flight, uncommitted edits:
   - `<file path>`: <what is half-done in it, one line>
   - `<file path>`: <what is half-done in it, one line>
@@ -38,8 +47,8 @@ Source revisions: <base commit, branch HEAD, PR head if any>
 
 ## Decisions, corrections, and supersession
 
-- <decision or correction>: <source and observed time>; supersedes <prior claim
-  or "nothing">
+- <decision or correction>: <owning-record pointer and observed time>; supersedes
+  <prior requirement, decision or "nothing">; reason=<source or unknown>
 
 ## Failures and workarounds
 
@@ -77,13 +86,36 @@ Source revisions: <base commit, branch HEAD, PR head if any>
 
 ## Unfinished work
 
-- <item>: owner=<person or agent>; state=<pending or blocked>; next=<executable
-  action>; evidence needed=<completion proof>
+- <item>: owner=<person or agent>; custody=<bounded responsibility>; receiver
+  acknowledgment=<dated evidence or pending>; next=<executable action>;
+  acceptance=<observable result and owning evidence pointer>; missing=<unknowns>
 ```
 
 ## Adoption notes
 
 Name the trigger word with your operator and treat it as a contract: "checkpoint" means rewrite the current projection, not append to it. Preserve prior decisions by linking their source and marking supersession. Checkpoint before any model or agent switch so the next one boots from written state instead of a summary. A changed PR head invalidates old checks, and pending CI or review stays in the checkpoint. The irreplaceable-values section earns its place the first time a compaction eats a job ID you needed; naming the section lets you tell any summarizer to keep it word for word.
+
+Keep startup context to the recovery pointer. Retrieve detail from the existing owning
+record when needed; do not create another ledger or enlarge the startup budget.
+That record must preserve the original requirement and source revision, the current
+decision and reason, bounded writer custody and receiver acknowledgment, the next
+action and observable acceptance, and explicit missing evidence. Missing origin
+stays unknown; it does not prove that a record was lost. Record observed failures
+separately from suspected causes. Keep implementation, tests, review, merge,
+deployment and live verification as separate dated states with exact revisions.
+
+Preserve superseded requirement and decision pointers and immutable artifacts.
+A changed source cannot inherit an old review without checking and recording its
+applicability. A merged slice does not close its parent unless the parent's
+acceptance is met. Recoverable chat archival is different from disposing of its
+runtime; neither a checkpoint nor an archive review authorizes deletion or release.
+
+For a records-only recovery check, give a reader the filled handoff and permitted
+owning-record pointers. Ask for the requirement and version, current decision and
+reason, owner and acknowledgment, next action and acceptance, and missing evidence
+at every stage. Include changed-source and unknown-origin cases. Record answers
+and limits in that same issue or PR. An author checking their own fixture is a
+same-steward check, not independent validation or cross-runtime activation.
 
 Keep it current and short. A fresh session still verifies the repository, branch,
 worktree, sources, and PR before trusting it. Old memory is context, not authority.
