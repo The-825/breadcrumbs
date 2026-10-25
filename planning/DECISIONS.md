@@ -692,7 +692,14 @@ Ruling: The-825/staletoast owns public research and repository intake, appraisal
 Why: Readers and maintainers need distinct product responsibilities and one authoritative research ledger without losing existing source IDs, links or history.
 Source: Owner instruction to create a standalone StaleToast repository and GitHub Pages site, followed by migration history, source-hash and immutable-export checks.
 
-## D-68 · 2026-10-21 · Keep recovery pointers small and evidence source-bound
+
+## D-68 · 2026-10-25 · Task outcomes before coordination details
+Ruling: Reusable task views lead with intended outcome, actionable steps, performed versus validated work, remaining blocker, next action and completion acceptance. Ownership and interrupted-work recovery support that flow; runtime status and partial child completion do not establish parent completion.
+Why: A reader needs to know what result remains and what evidence will close it before learning coordination mechanics.
+Source: Operator direction to simplify human/agent collaboration around tasks, steps, validation and parent-project contribution.
+
+## D-69 · 2026-10-25 · Keep recovery pointers small and evidence source-bound
 Ruling: The living handoff starts with owner, owning-record pointer and next action. Detailed requirement, decision, custody, acknowledgment and separate evidence stages stay in the existing owning record; unknown origins and superseded snapshots remain explicit.
 Why: A reader must recover the next safe action without turning a summary or completed slice into authority or parent completion.
 Source: Owner-authorized October 21 workflow correction; templates/SESSION_STATE_TEMPLATE.md and templates/commands/checkpoint.md. This is a local behavioral template change, not runtime activation.
+Identity: First drafted on 2026-10-21 as D-68 in commit 05b689938397e1bd56b3c7857e77d2ab37bb3f6c. Assigned D-69 during draft/main reconciliation; the published task-outcome D-68 and its text remain unchanged.

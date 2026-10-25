@@ -169,6 +169,10 @@
       "docs/jarvis-workflow-routing.json",
       "scripts/workflow_registry.py",
       "scripts/workflow_reproduction.py"
+    ],
+    "I need to see task outcomes, checked steps, blockers and parent contributions": [
+      "templates/workflow-worksheets/task-outcome.md",
+      "templates/workflow-worksheets/task-outcome.html"
     ]
   },
   "artifacts": [
@@ -381,6 +385,20 @@
       "what": "Public synthetic matched evaluation of unstructured history versus Breadcrumbs cue packets, scored by exact orientation fields with accuracy, token use, latency, and errors reported separately.",
       "assumes": "Python 3.9+ standard library only; optional Hugging Face inference uses the sibling runner, a local HF_TOKEN, current model IDs, and execution-time confirmation for potentially billable calls.",
       "selftest": "python3 benchmarks/orientation/benchmark.py selftest"
+    },
+    {
+      "path": "templates/workflow-worksheets/task-outcome.md",
+      "kind": "pattern",
+      "what": "Task-first worksheet with separate work and validation, dependencies, remaining work, recovery and parent acceptance.",
+      "assumes": "Text editor and existing task list; pattern-only, no execution or automatic board update.",
+      "selftest": null
+    },
+    {
+      "path": "templates/workflow-worksheets/task-outcome.html",
+      "kind": "example",
+      "what": "Read-only task-first view using a recorded public reading-guide release.",
+      "assumes": "Modern browser; no scripts, service, task storage or authenticated validation.",
+      "selftest": null
     }
   ]
 }
