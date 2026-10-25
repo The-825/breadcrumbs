@@ -1,0 +1,17 @@
+[
+  {
+    "key": "request",
+    "label": "What needs doing?",
+    "required": true
+  },
+  {
+    "key": "owner",
+    "label": "Responsible role",
+    "required": true
+  },
+  {
+    "key": "due",
+    "label": "Follow-up date",
+    "required": true
+  }
+]
