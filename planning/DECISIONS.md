@@ -691,3 +691,9 @@ Source: Owner request to run the daily scout now and verify the full ingestion a
 Ruling: The-825/staletoast owns public research and repository intake, appraisals, rankings, chart history and retained leads. Breadcrumbs owns workflow guides, prompts and implementation patterns, consumes a revision/digest-pinned evidence-only export and preserves legacy records and URLs as compatibility routes.
 Why: Readers and maintainers need distinct product responsibilities and one authoritative research ledger without losing existing source IDs, links or history.
 Source: Owner instruction to create a standalone StaleToast repository and GitHub Pages site, followed by migration history, source-hash and immutable-export checks.
+
+
+## D-68 · 2026-10-25 · Task outcomes before coordination details
+Ruling: Reusable task views lead with intended outcome, actionable steps, performed versus validated work, remaining blocker, next action and completion acceptance. Ownership and interrupted-work recovery support that flow; runtime status and partial child completion do not establish parent completion.
+Why: A reader needs to know what result remains and what evidence will close it before learning coordination mechanics.
+Source: Operator direction to simplify human/agent collaboration around tasks, steps, validation and parent-project contribution.

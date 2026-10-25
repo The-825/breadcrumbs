@@ -22,6 +22,7 @@ are separate evidence classes.
 - [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
   selftest commands, for programmatic adoption.
 - [templates/workflow-worksheets/](templates/workflow-worksheets/README.md): capacity, change, and handoff worksheets.
+- [Task outcome](templates/workflow-worksheets/task-outcome.md): intended result, actionable steps, distinct work/validation, recovery and parent acceptance; pattern-only, with a read-only HTML example.
 - [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
 - [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
 
