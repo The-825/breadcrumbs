@@ -21,8 +21,7 @@ are separate evidence classes.
   skeleton everything else hangs off. Copy this, not this repo's own CLAUDE.md.
 - [kit.json](kit.json): the full inventory, problem-to-artifact routing, and
   selftest commands, for programmatic adoption.
-- [templates/workflow-worksheets/](templates/workflow-worksheets/README.md): capacity, change, and handoff worksheets.
-- [Task outcome](templates/workflow-worksheets/task-outcome.md): intended result, actionable steps, distinct work/validation, recovery and parent acceptance; pattern-only, with a read-only HTML example.
+- [Workflow worksheets](templates/workflow-worksheets/README.md): [task outcome and validation](templates/workflow-worksheets/task-outcome.md), capacity, change and handoff; pattern-only, with a read-only task example.
 - [docs/workflow-registry.json](docs/workflow-registry.json): versioned, evidence-bounded public workflow discovery records.
 - [docs/jarvis-workflow-routing.json](docs/jarvis-workflow-routing.json): model-neutral public routing patterns for Jarvis consumers.
 
