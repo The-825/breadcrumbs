@@ -22,7 +22,7 @@
   "version": {"keys": ["kind", "value", "reason"], "kinds": {"git": "value is 40 lowercase hex, reason null", "publication": "value is a bounded nonempty string, reason null", "unknown": "value null, reason one of not_captured, source_unavailable, identity_unresolved, consumer_unavailable"}},
   "envelope": {"schema_version": "concept-lineage/1", "data_class": "string", "sources": "array", "concepts": "array", "consumers": "array", "uses": "array", "evidence": "array", "refinements": "array"},
   "rows": {
-    "source": {"id": "source ID", "owner": "string", "record_kind": "repository|research|candidate|pool|advisory, equals the ID kind", "record_id": "string", "title": "string", "url": "approved URL", "upstream_version": "tagged version", "catalog_revision": "string", "aliases": "array of source-kind IDs", "evidence_depth": "unverified|readme-screened|source-assessment"},
+    "source": {"id": "source ID", "owner": "string", "record_kind": "repository|research|candidate|pool|advisory, equals the ID kind", "record_id": "string", "title": "string", "url": "approved URL", "upstream_version": "tagged version", "catalog_revision": "tagged version", "aliases": "array of source-kind IDs", "evidence_depth": "unverified|readme-screened|source-assessment"},
     "concept": {"id": "concept ID", "owner": "string", "title": "string", "summary": "string", "source_ids": "nonempty unique array of source IDs", "relationship": "appraised_mechanism|conceptual_similarity|documented_origin", "origin_evidence_id": "evidence ID or null"},
     "consumer": {"id": "consumer ID", "owner": "string", "title": "string", "visibility": "public|synthetic|private"},
     "use": {"id": "use ID", "concept_id": "concept ID", "consumer_id": "consumer ID", "decision": "proposed|accepted|rejected|deferred", "adaptation": "string, empty means not recorded", "refinement": "string, empty means not recorded", "source_versions_used": "object mapping exactly the concept's source IDs to tagged versions", "evidence_ids": "unique array equal to the complete set of non-origin evidence rows naming this use"},
@@ -37,6 +37,16 @@
   },
   "buckets": ["proposed", "accepted_without_observed_change", "accepted_with_observed_change", "rejected", "deferred"],
   "projection": {"schema_version": "concept-lineage-projection/1", "input_manifest_sha256": "64 hex", "packet_sha256": "64 hex of the canonical packet bytes", "packet": "graph envelope", "independent_authenticity_verified": false, "authority_granted": false},
+  "identity_binding": "source, concept and consumer owner equals the qualified ID owner prefix; source record_id equals the ID local part. Consistency only, not authenticated ownership.",
+  "refinement_rules": "different endpoints, at most one refinement per (from, to) pair, acyclic",
+  "envelopes": {
+    "mapping": {"schema_version": "concept-lineage-mappings/1", "mappings": {"concepts": "array", "consumers": "array", "uses": "array", "evidence": "array", "refinements": "array"}, "admission": "admission envelope"},
+    "admission": {"schema_version": "concept-lineage-admission/1", "packet_sha256": "64 hex of the canonical mappings bytes", "policy_sha256": "64 hex of the contract bytes", "classification": "public|synthetic_public", "review_record_ref": "full ID grammar"},
+    "input_manifest": {"schema_version": "concept-lineage-input/1", "catalog_revision": "tagged git version", "builder_revision": "tagged git version", "supplier_revision": "tagged git version", "contract_sha256": "64 hex", "runtime_sha256": "64 hex", "builder_sha256": "64 hex", "mapping_sha256": "64 hex", "inputs": "nonempty sorted unique list of input items from a fixed code-owned file list"},
+    "input_item": {"path": "relative path without empty, dot or dot-dot segments", "sha256": "64 hex", "revision": "tagged git version"},
+    "pin": {"schema_version": "concept-lineage-pin/1", "owner_repository": "owner/repository", "catalog_revision": "tagged git version", "builder_revision": "tagged git version", "supplier_revision": "tagged git version", "projection_revision": "tagged git version", "contract_sha256": "64 hex", "runtime_sha256": "64 hex", "builder_sha256": "64 hex", "mapping_sha256": "64 hex", "input_manifest_sha256": "64 hex", "projection_sha256": "64 hex"},
+    "rules": "Unknown keys, other schema versions, string revisions and mismatched digests fail. No mutable latest fallback. Consistency is not independent publisher authentication."
+  },
   "canonical_encoding": "sorted keys, compact separators, UTF-8 without escapes, one trailing LF, no timestamp",
   "labels": {
     "documented_origin": "Documented source (supplied evidence)",

@@ -101,6 +101,27 @@ PROJECTION_KEYS = {
     "schema_version", "input_manifest_sha256", "packet_sha256", "packet",
     "independent_authenticity_verified", "authority_granted",
 }
+MAPPING_SCHEMA = "concept-lineage-mappings/1"
+ADMISSION_SCHEMA = "concept-lineage-admission/1"
+INPUT_SCHEMA = "concept-lineage-input/1"
+PIN_SCHEMA = "concept-lineage-pin/1"
+MAPPING_ARRAYS = ("concepts", "consumers", "uses", "evidence", "refinements")
+MAPPING_DOC_KEYS = {"schema_version", "mappings", "admission"}
+ADMISSION_KEYS = {"schema_version", "packet_sha256", "policy_sha256", "classification", "review_record_ref"}
+INPUT_MANIFEST_KEYS = {
+    "schema_version", "catalog_revision", "builder_revision", "supplier_revision", "contract_sha256",
+    "runtime_sha256", "builder_sha256", "mapping_sha256", "inputs",
+}
+INPUT_ITEM_KEYS = {"path", "sha256", "revision"}
+PIN_KEYS = {
+    "schema_version", "owner_repository", "catalog_revision", "builder_revision", "supplier_revision",
+    "projection_revision", "contract_sha256", "runtime_sha256", "builder_sha256", "mapping_sha256",
+    "input_manifest_sha256", "projection_sha256",
+}
+MAX_INPUT_FILES = 32
+ALL_KINDS = SOURCE_KINDS + ("concept", "consumer", "use", "evidence", "refinement")
+_OWNER_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}")
+_REL_PATH = re.compile(r"[A-Za-z0-9][A-Za-z0-9_./-]{0,199}")
 
 BUCKETS = (
     "proposed",
@@ -296,6 +317,16 @@ def _prefix_of(identifier):
     return identifier.split(":", 2)[0]
 
 
+def _local_of(identifier):
+    return identifier.split(":", 2)[2]
+
+
+def _owner(row, identifier):
+    """The owner field must name the same owner as the qualified ID prefix."""
+    if _text(row["owner"], nonempty=True) != _prefix_of(identifier):
+        fail("owner_mismatch")
+
+
 def _sha(value, nullable=False):
     if value is None and nullable:
         return None
@@ -419,12 +450,13 @@ def validate_graph(env, allow_private=False):
         sid = _id(row["id"], SOURCE_KINDS)
         if _enum(row["record_kind"], SOURCE_KINDS) != _kind_of(sid):
             fail("source_kind")
-        _text(row["owner"], nonempty=True)
-        _text(row["record_id"], nonempty=True)
+        _owner(row, sid)
+        if _text(row["record_id"], nonempty=True) != _local_of(sid):
+            fail("record_id_mismatch")
         _text(row["title"], nonempty=True)
         _url(row["url"])
         _version(row["upstream_version"])
-        _text(row["catalog_revision"], nonempty=True, limit=128)
+        _version(row["catalog_revision"])
         _enum(row["evidence_depth"], EVIDENCE_DEPTHS)
         claim(sid)
         sources[sid] = row
@@ -435,14 +467,15 @@ def validate_graph(env, allow_private=False):
     for row in arrays["concepts"]:
         _obj(row, CONCEPT_KEYS)
         cid = _id(row["id"], ("concept",))
-        _text(row["owner"], nonempty=True)
+        _owner(row, cid)
         _text(row["title"], nonempty=True)
         _text(row["summary"], nonempty=True)
         ids = _arr(row["source_ids"], LIMITS["sources"])
+        for sid in ids:
+            _id(sid, SOURCE_KINDS)
         if not ids or len(set(ids)) != len(ids):
             fail("bad_source_ids")
         for sid in ids:
-            _id(sid, SOURCE_KINDS)
             if sid not in sources:
                 fail("unresolved_reference")
         _enum(row["relationship"], RELATIONSHIPS)
@@ -454,7 +487,7 @@ def validate_graph(env, allow_private=False):
     for row in arrays["consumers"]:
         _obj(row, CONSUMER_KEYS)
         kid = _id(row["id"], ("consumer",))
-        _text(row["owner"], nonempty=True)
+        _owner(row, kid)
         _text(row["title"], nonempty=True)
         visibility = _enum(row["visibility"], VISIBILITIES)
         if visibility == "private" and data_class in PUBLIC_CLASSES:
@@ -576,12 +609,16 @@ def validate_graph(env, allow_private=False):
             fail("origin_source_mismatch")
 
     edges = {}
+    edge_seen = set()
     for row in refinements.values():
         src, dst = row["from_concept_id"], row["to_concept_id"]
         if src not in concepts or dst not in concepts:
             fail("unresolved_reference")
         if src == dst:
             fail("self_refinement")
+        if (src, dst) in edge_seen:
+            fail("duplicate_refinement_edge")
+        edge_seen.add((src, dst))
         for eid in row["evidence_ids"]:
             ev = evidence.get(eid)
             if ev is None:
@@ -744,10 +781,16 @@ def derive(env, allow_private=False):
     concept_uses = {}
     for uid in sorted(idx["uses"]):
         concept_uses.setdefault(idx["uses"][uid]["concept_id"], []).append(idx["uses"][uid])
-    refined_from, refines = {}, {}
-    for row in idx["refinements"].values():
-        refines.setdefault(row["from_concept_id"], []).append(row["to_concept_id"])
-        refined_from.setdefault(row["to_concept_id"], []).append(row["from_concept_id"])
+    refined_from, refines, derivations = {}, {}, {}
+    for rid in sorted(idx["refinements"]):
+        row = idx["refinements"][rid]
+        src, dst = row["from_concept_id"], row["to_concept_id"]
+        refines.setdefault(src, []).append(dst)
+        refined_from.setdefault(dst, []).append(src)
+        derivations.setdefault(src, []).append(
+            {"direction": "Refines into", "concept_title": idx["concepts"][dst]["title"], "summary": row["summary"]})
+        derivations.setdefault(dst, []).append(
+            {"direction": "Refined from", "concept_title": idx["concepts"][src]["title"], "summary": row["summary"]})
     concept_views = []
     totals = {name: 0 for name in BUCKETS}
     for cid in sorted(idx["concepts"]):
@@ -796,6 +839,7 @@ def derive(env, allow_private=False):
             "uses": use_views,
             "refines": sorted(refines.get(cid, [])),
             "refined_from": sorted(refined_from.get(cid, [])),
+            "derivations": derivations.get(cid, []),
         })
     return {
         "data_class": idx["data_class"],
@@ -838,6 +882,95 @@ def validate_projection(projection):
     return projection
 
 
+# ---------------------------------------------------------------- supplier envelopes
+
+
+def _git_version(value):
+    if _version(value)[0] != "git":
+        fail("bad_version")
+    return value["value"]
+
+
+def _schema(doc, keys, schema):
+    _obj(doc, keys)
+    if doc["schema_version"] != schema:
+        fail("schema_version")
+    return doc
+
+
+def validate_mapping_document(doc, policy_sha256):
+    """Exact mapping wrapper plus admission; digests bind the mappings and contract bytes."""
+    _schema(doc, MAPPING_DOC_KEYS, MAPPING_SCHEMA)
+    mappings = _obj(doc["mappings"], set(MAPPING_ARRAYS))
+    for name in MAPPING_ARRAYS:
+        _arr(mappings[name], LIMITS[name])
+    admission = _schema(doc["admission"], ADMISSION_KEYS, ADMISSION_SCHEMA)
+    _enum(admission["classification"], PUBLIC_CLASSES)
+    _id(admission["review_record_ref"], ALL_KINDS)
+    if _sha(admission["packet_sha256"]) != canonical_sha256(mappings):
+        fail("mapping_digest")
+    if _sha(admission["policy_sha256"]) != _sha(policy_sha256):
+        fail("policy_digest")
+    return mappings, admission
+
+
+def validate_input_manifest(doc):
+    _schema(doc, INPUT_MANIFEST_KEYS, INPUT_SCHEMA)
+    for name in ("catalog_revision", "builder_revision", "supplier_revision"):
+        _git_version(doc[name])
+    for name in ("contract_sha256", "runtime_sha256", "builder_sha256", "mapping_sha256"):
+        _sha(doc[name])
+    paths = []
+    for item in _arr(doc["inputs"], MAX_INPUT_FILES):
+        _obj(item, INPUT_ITEM_KEYS)
+        path = item["path"]
+        if type(path) is not str or not _REL_PATH.fullmatch(path) or any(
+                seg in ("", ".", "..") for seg in path.split("/")):
+            fail("bad_path")
+        _sha(item["sha256"])
+        _git_version(item["revision"])
+        paths.append(path)
+    if not paths or paths != sorted(set(paths)):
+        fail("bad_inputs")
+    return doc
+
+
+def validate_pin(doc):
+    _schema(doc, PIN_KEYS, PIN_SCHEMA)
+    if type(doc["owner_repository"]) is not str or not _OWNER_RE.fullmatch(doc["owner_repository"]):
+        fail("bad_owner_repository")
+    for name in ("catalog_revision", "builder_revision", "supplier_revision", "projection_revision"):
+        _git_version(doc[name])
+    for name in ("contract_sha256", "runtime_sha256", "builder_sha256", "mapping_sha256",
+                 "input_manifest_sha256", "projection_sha256"):
+        _sha(doc[name])
+    return doc
+
+
+def verify_pin_chain(pin, manifest_bytes, projection_bytes):
+    """Check one pin against exact canonical manifest and projection bytes.
+
+    Consistency only; this is not independent publisher authentication.
+    Returns (manifest, projection).
+    """
+    validate_pin(pin)
+    manifest = validate_input_manifest(parse_json_bytes(manifest_bytes))
+    projection = validate_projection(parse_json_bytes(projection_bytes))
+    if canonical_bytes(manifest) != bytes(manifest_bytes) or canonical_bytes(projection) != bytes(projection_bytes):
+        fail("not_canonical")
+    if sha256_hex(bytes(manifest_bytes)) != pin["input_manifest_sha256"]:
+        fail("manifest_digest")
+    if sha256_hex(bytes(projection_bytes)) != pin["projection_sha256"]:
+        fail("projection_digest")
+    if projection["input_manifest_sha256"] != pin["input_manifest_sha256"]:
+        fail("manifest_digest")
+    for name in ("catalog_revision", "builder_revision", "supplier_revision", "contract_sha256",
+                 "runtime_sha256", "builder_sha256", "mapping_sha256"):
+        if manifest[name] != pin[name]:
+            fail("pin_mismatch")
+    return manifest, projection
+
+
 # ---------------------------------------------------------------- rendering
 
 _CSS = (
@@ -850,28 +983,63 @@ _CSS = (
     "a:focus-visible,button:focus-visible,input:focus-visible,.scroll:focus-visible,summary:focus-visible"
     "{outline:3px solid #0050c8;outline-offset:2px}"
     ".note{border-left:4px solid #555;padding-left:.75rem}"
-    "[hidden]{display:none}"
+    "[hidden]{display:none!important}"
+    ".card{border:1px solid #555;padding:.5rem .75rem;margin:.75rem 0}"
+    ".rel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.4fr);gap:.5rem;align-items:start}"
+    ".col{list-style:none;margin:0;padding:0}.col>li{margin-bottom:.5rem}"
+    ".node{border:1px solid #888;border-radius:4px;padding:.4rem .5rem;background:#f7f7f7;overflow-wrap:anywhere}"
+    ".node p{margin:.2rem 0}.node ul{margin:.25rem 0 0;padding-left:1.1rem}"
+    ".arrow{align-self:center;font-weight:bold}"
+    "@media (max-width:48rem){.rel{grid-template-columns:1fr}.arrow{justify-self:center}}"
     "@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}"
 )
 
+# Graph mode: one card per concept laid out source -> concept -> consumers, built with
+# textContent and property-assigned links only. The filter applies to both modes.
 _JS = (
     "(function(){"
     "var d=JSON.parse(document.getElementById('lineage-data').textContent);"
     "var q=document.getElementById('filter'),tb=document.getElementById('use-table');"
     "var gv=document.getElementById('graph-view'),tv=document.getElementById('table-view');"
-    "var btn=document.getElementById('toggle');"
-    "function el(t,x){var e=document.createElement(t);if(x!==undefined){e.textContent=x}return e}"
+    "var btn=document.getElementById('toggle'),st=document.getElementById('status');"
+    "function el(t,x,c){var e=document.createElement(t);if(x!==undefined){e.textContent=x}if(c){e.className=c}return e}"
+    "function link(u,x){var a=el('a',x);a.href=u;a.rel='noopener noreferrer';return a}"
+    "function arrow(){var a=el('span','\\u2192','arrow');a.setAttribute('aria-hidden','true');return a}"
+    "function useNode(u){var b=el('li',undefined,'node use');b.appendChild(el('strong','Consumer: '+u.consumer_title));"
+    "var l=el('ul');function add(x){l.appendChild(el('li',x))}"
+    "add('Decision: '+u.decision+'; bucket: '+u.bucket.split('_').join(' '));"
+    "add('Adaptation: '+(u.adaptation||'not recorded'));add('Consumer refinement: '+(u.refinement||'not recorded'));"
+    "add('Observed change: '+(u.changes.map(function(c){return 'git:'+c.revision.slice(0,12)}).join(', ')||'none supplied'));"
+    "if(u.incomplete_change_receipts){add('Incomplete change receipts: '+u.incomplete_change_receipts)}"
+    "u.tests.forEach(function(t){add('Test '+t.revision+': '+t.status)});if(!u.tests.length){add('No test receipt')}"
+    "add('Matched test pairs: '+u.matched_test_pairs+'; changes without matching validation: '+u.changes_without_matching_validation);"
+    "if(u.validation_mixed){add('Mixed pass and fail receipts')}"
+    "u.releases.forEach(function(r){add(r.kind+' '+r.revision+': '+r.relation)});"
+    "u.freshness.forEach(function(f){add('Source '+f.source_id.split(':').pop()+': used '+f.used+', current '+f.current+', '+f.status)});"
+    "b.appendChild(l);return b}"
     "function build(){gv.textContent='';if(!d.concepts.length){gv.appendChild(el('p','No concepts recorded.'));return}"
-    "var ul=el('ul');d.concepts.forEach(function(c){var li=el('li',c.title+' ('+c.origin_label+')');"
-    "var s=el('ul');c.sources.forEach(function(x){s.appendChild(el('li','Source: '+x.title+' ['+x.version+']'))});"
-    "c.uses.forEach(function(u){s.appendChild(el('li','Consumer: '+u.consumer_title+', decision '+u.decision+', '+u.bucket.split('_').join(' ')))});"
-    "c.refines.forEach(function(r){s.appendChild(el('li','Refines into: '+r))});"
-    "li.appendChild(s);ul.appendChild(li)});gv.appendChild(ul)}"
-    "build();"
-    "q.addEventListener('input',function(){var v=q.value.toLowerCase();"
-    "Array.prototype.forEach.call(tb.tBodies[0].rows,function(r){r.hidden=v&&r.textContent.toLowerCase().indexOf(v)<0})});"
+    "d.concepts.forEach(function(c){var card=el('section',undefined,'card');card.appendChild(el('h3',c.title));"
+    "var rel=el('div',undefined,'rel'),s=el('ul',undefined,'col head');s.setAttribute('aria-label','Sources');"
+    "c.sources.forEach(function(x){var li=el('li',undefined,'node');li.appendChild(el('strong','Source: '));"
+    "li.appendChild(link(x.url,x.title));li.appendChild(el('p','Version '+x.version+'; evidence depth '+x.evidence_depth));s.appendChild(li)});"
+    "var m=el('div',undefined,'node head');m.appendChild(el('strong','Concept: '+c.title));m.appendChild(el('p',c.origin_label));m.appendChild(el('p',c.summary));"
+    "if(c.origin){var p=el('p','Origin evidence '+c.origin.revision+': ');p.appendChild(link(c.origin.url,'supplied link'));m.appendChild(p)}"
+    "c.derivations.forEach(function(r){m.appendChild(el('p',r.direction+' '+r.concept_title+': '+r.summary))});"
+    "var k=el('ul',undefined,'col');k.setAttribute('aria-label','Consumers');c.uses.forEach(function(u){k.appendChild(useNode(u))});"
+    "if(!c.uses.length){k.appendChild(el('li','No consumer use recorded','node use'))}"
+    "rel.appendChild(s);rel.appendChild(arrow());rel.appendChild(m);rel.appendChild(arrow());rel.appendChild(k);"
+    "card.appendChild(rel);gv.appendChild(card)})}"
+    "function has(n,v){return n.textContent.toLowerCase().indexOf(v)>=0}"
+    "function apply(){var v=q.value.toLowerCase(),shown=0,rows=tb.tBodies[0].rows;"
+    "Array.prototype.forEach.call(rows,function(r){r.hidden=!!v&&!has(r,v);if(!r.hidden){shown++}});"
+    "Array.prototype.forEach.call(gv.querySelectorAll('.card'),function(c){"
+    "var hm=!v||Array.prototype.some.call(c.querySelectorAll('h3,.head'),function(h){return has(h,v)}),any=false;"
+    "Array.prototype.forEach.call(c.querySelectorAll('.use'),function(u){u.hidden=!(hm||has(u,v));if(!u.hidden){any=true}});"
+    "c.hidden=!(hm||any)});"
+    "st.textContent='Showing '+shown+' of '+rows.length+' concept and consumer rows'}"
+    "build();apply();q.addEventListener('input',apply);"
     "btn.addEventListener('click',function(){var g=gv.hidden;gv.hidden=!g;tv.hidden=g;"
-    "btn.textContent=g?'Show list view':'Show graph view'});"
+    "btn.textContent=g?'Show table view':'Show graph view'});"
     "})();"
 )
 
@@ -897,9 +1065,12 @@ def _use_cells(concept, use):
     if use["validation_mixed"]:
         validation += "; mixed pass and fail receipts"
     releases = "; ".join("%s %s (%s)" % (r["kind"], r["revision"], r["relation"]) for r in use["releases"]) or "none supplied"
-    fresh = "; ".join("%s: %s" % (f["source_id"].rsplit(":", 1)[-1], f["status"]) for f in use["freshness"])
+    fresh = "; ".join("%s: used %s, current %s, %s" % (
+        f["source_id"].rsplit(":", 1)[-1], f["used"], f["current"], f["status"]) for f in use["freshness"])
+    narrative = "Adaptation: %s; consumer refinement: %s" % (
+        use["adaptation"] or "not recorded", use["refinement"] or "not recorded")
     return [_esc(use["consumer_title"]), _esc(use["decision"]), _esc(use["bucket"].replace("_", " ")),
-            _esc(changes), _esc(validation), _esc(releases), _esc(fresh)]
+            _esc(narrative), _esc(changes), _esc(validation), _esc(releases), _esc(fresh)]
 
 
 def render_html(projection):
@@ -908,17 +1079,25 @@ def render_html(projection):
     view = derive(projection["packet"])
     rows = []
     for concept in view["concepts"]:
-        head = [_esc(concept["title"]), _esc(concept["origin_label"]),
-                ", ".join(_link(s["url"], s["title"]) + " " + _esc(s["version"]) for s in concept["sources"])]
+        origin = concept["origin_label"]
+        if concept["origin"] is not None:
+            origin = _esc(origin + " " + concept["origin"]["revision"] + " ") + _link(concept["origin"]["url"], "supplied link")
+        else:
+            origin = _esc(origin)
+        derivation = "; ".join("%s %s: %s" % (r["direction"], r["concept_title"], r["summary"])
+                               for r in concept["derivations"]) or "none recorded"
+        head = [_esc(concept["title"]), origin,
+                ", ".join(_link(s["url"], s["title"]) + " " + _esc(s["version"]) for s in concept["sources"]),
+                _esc(derivation)]
         if concept["uses"]:
             for use in concept["uses"]:
                 rows.append(head + _use_cells(concept, use))
         else:
-            rows.append(head + ["No consumer use recorded", "", "", "", "", "", ""])
+            rows.append(head + ["No consumer use recorded", "", "", "", "", "", "", ""])
     if rows:
         body_rows = "".join("<tr>" + "".join("<td>%s</td>" % c for c in r) + "</tr>" for r in rows)
     else:
-        body_rows = '<tr><td colspan="10">No concepts recorded.</td></tr>'
+        body_rows = '<tr><td colspan="12">No concepts recorded.</td></tr>'
     count_rows = "".join(
         "<tr><td>%s</td>%s</tr>" % (_esc(c["title"]), "".join("<td>%d</td>" % c["buckets"][b] for b in BUCKETS))
         for c in view["concepts"]
@@ -932,8 +1111,8 @@ def render_html(projection):
     js_hash = base64.b64encode(hashlib.sha256(_JS.encode("utf-8")).digest()).decode("ascii")
     csp = ("default-src 'none'; script-src 'sha256-%s'; style-src 'sha256-%s'; connect-src 'none'; "
            "base-uri 'none'; form-action 'none'" % (js_hash, css_hash))
-    head_cols = ["Concept", "Origin", "Sources", "Consumer", "Decision", "Bucket", "Observed change",
-                 "Validation", "Release receipts", "Source freshness"]
+    head_cols = ["Concept", "Origin", "Sources", "Concept derivation", "Consumer", "Decision", "Bucket",
+                 "Adaptation and refinement", "Observed change", "Validation", "Release receipts", "Source freshness"]
     page = "".join([
         "<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\">",
         "<meta http-equiv=\"Content-Security-Policy\" content=\"%s\">" % _esc(csp),
@@ -944,7 +1123,8 @@ def render_html(projection):
         "authenticity, release authority or adoption. Source quality, local fit, decision, validation and observed "
         "benefit stay separate; there is no blended score. Packet digest: %s.</p>" % _esc(projection["packet_sha256"]),
         "<p><button id=\"toggle\" type=\"button\">Show graph view</button> ",
-        "<label>Filter rows <input id=\"filter\" type=\"search\"></label></p>",
+        "<label>Filter both views <input id=\"filter\" type=\"search\"></label> ",
+        "<span id=\"status\" role=\"status\" aria-live=\"polite\"></span></p>",
         "<div id=\"table-view\"><h2>Concept uses</h2><div class=\"scroll\" tabindex=\"0\" role=\"region\" aria-label=\"Concept uses\">",
         "<table id=\"use-table\"><thead><tr>", "".join("<th scope=\"col\">%s</th>" % h for h in head_cols),
         "</tr></thead><tbody>", body_rows, "</tbody></table></div></div>",
@@ -1016,6 +1196,10 @@ def main(argv):
         return 2
     except (OSError, IndexError):
         sys.stderr.write("invalid: io_error\n")
+        return 2
+    except (TypeError, KeyError, AttributeError, RecursionError):
+        # Defensive: an unexpected shape still fails content-free, never as a traceback.
+        sys.stderr.write("invalid: type\n")
         return 2
     sys.stderr.write(__doc__ or "")
     return 64

@@ -4,9 +4,9 @@
   "sources": [
     {
       "id": "example/lineage-demo:repository:alpha",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "record_kind": "repository",
-      "record_id": "example-org/alpha-tool",
+      "record_id": "alpha",
       "title": "Alpha Tool (fictional)",
       "url": "https://github.com/example-org/alpha-tool",
       "upstream_version": {
@@ -14,13 +14,17 @@
         "value": "1111111111111111111111111111111111111111",
         "reason": null
       },
-      "catalog_revision": "catalog-demo-1",
+      "catalog_revision": {
+        "kind": "git",
+        "value": "cccccccccccccccccccccccccccccccccccccccc",
+        "reason": null
+      },
       "aliases": [],
       "evidence_depth": "readme-screened"
     },
     {
       "id": "example/lineage-demo:research:paper1",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "record_kind": "research",
       "record_id": "paper1",
       "title": "Example Paper (fictional)",
@@ -30,7 +34,11 @@
         "value": "v2",
         "reason": null
       },
-      "catalog_revision": "catalog-demo-1",
+      "catalog_revision": {
+        "kind": "git",
+        "value": "cccccccccccccccccccccccccccccccccccccccc",
+        "reason": null
+      },
       "aliases": [
         "example/lineage-demo:research:paper-one"
       ],
@@ -38,9 +46,9 @@
     },
     {
       "id": "example/lineage-demo:repository:beta",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "record_kind": "repository",
-      "record_id": "example-org/beta-tool",
+      "record_id": "beta",
       "title": "Beta Tool (fictional)",
       "url": "https://github.com/example-org/beta-tool",
       "upstream_version": {
@@ -48,7 +56,11 @@
         "value": null,
         "reason": "identity_unresolved"
       },
-      "catalog_revision": "catalog-demo-1",
+      "catalog_revision": {
+        "kind": "git",
+        "value": "cccccccccccccccccccccccccccccccccccccccc",
+        "reason": null
+      },
       "aliases": [],
       "evidence_depth": "unverified"
     }
@@ -56,7 +68,7 @@
   "concepts": [
     {
       "id": "example/lineage-demo:concept:retry-ledger",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "title": "Retry ledger",
       "summary": "Fictional concept: record each retry in an append-only ledger.",
       "source_ids": [
@@ -67,7 +79,7 @@
     },
     {
       "id": "example/lineage-demo:concept:citation-gate",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "title": "Citation gate",
       "summary": "Fictional concept: block claims that lack a cited source.",
       "source_ids": [
@@ -78,7 +90,7 @@
     },
     {
       "id": "example/lineage-demo:concept:parallel-review",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "title": "Parallel review",
       "summary": "Fictional concept: native equivalent with unresolved origin.",
       "source_ids": [
@@ -89,7 +101,7 @@
     },
     {
       "id": "example/lineage-demo:concept:handoff-notes",
-      "owner": "example-org",
+      "owner": "example/lineage-demo",
       "title": "Handoff notes",
       "summary": "Fictional concept refined from the retry ledger.",
       "source_ids": [
@@ -102,25 +114,25 @@
   "consumers": [
     {
       "id": "example/consumer-one:consumer:one",
-      "owner": "example",
+      "owner": "example/consumer-one",
       "title": "Consumer one (fictional)",
       "visibility": "synthetic"
     },
     {
       "id": "example/consumer-two:consumer:two",
-      "owner": "example",
+      "owner": "example/consumer-two",
       "title": "Consumer two (fictional)",
       "visibility": "synthetic"
     },
     {
       "id": "example/consumer-three:consumer:three",
-      "owner": "example",
+      "owner": "example/consumer-three",
       "title": "Consumer three (fictional)",
       "visibility": "synthetic"
     },
     {
       "id": "example/consumer-four:consumer:four",
-      "owner": "example",
+      "owner": "example/consumer-four",
       "title": "Consumer four (fictional)",
       "visibility": "synthetic"
     }

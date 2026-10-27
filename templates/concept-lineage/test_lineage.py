@@ -169,12 +169,12 @@ class FixtureTests(unittest.TestCase):
         for n in range(80):
             sid = "%sadvisory:adv-%03d" % (P, n)
             env["sources"].append({
-                "id": sid, "owner": "example-org", "record_kind": "advisory", "record_id": "adv-%03d" % n,
+                "id": sid, "owner": "example/lineage-demo", "record_kind": "advisory", "record_id": "adv-%03d" % n,
                 "title": "Advisory %d" % n, "url": "https://arxiv.org/abs/0000.%05d" % n,
                 "upstream_version": {"kind": "unknown", "value": None, "reason": "not_captured"},
-                "catalog_revision": "demo", "aliases": [], "evidence_depth": "unverified"})
+                "catalog_revision": git("c"), "aliases": [], "evidence_depth": "unverified"})
             env["concepts"].append({
-                "id": "%sconcept:adv-%03d" % (P, n), "owner": "example-org", "title": "Proposal %d" % n,
+                "id": "%sconcept:adv-%03d" % (P, n), "owner": "example/lineage-demo", "title": "Proposal %d" % n,
                 "summary": "Advisory proposal, not adopted.", "source_ids": [sid],
                 "relationship": "conceptual_similarity", "origin_evidence_id": None})
         view = lineage.derive(env)
@@ -198,12 +198,14 @@ class IdentityTests(unittest.TestCase):
         env = load()
         env["sources"][2]["id"] = A.upper().replace("REPOSITORY", "repository").replace("EXAMPLE/LINEAGE-DEMO", "example/lineage-demo")
         env["sources"][2]["id"] = P + "repository:ALPHA"
+        env["sources"][2]["record_id"] = "ALPHA"
         self.assertEqual(code(env), "duplicate_id")
 
     def test_cross_array_duplicate_id(self):
         env = load()
         env["consumers"][0]["id"] = "example/consumer-one:consumer:one"
         env["consumers"][1]["id"] = env["consumers"][0]["id"]
+        env["consumers"][1]["owner"] = env["consumers"][0]["owner"]
         self.assertEqual(code(env), "duplicate_id")
 
     def test_aliases(self):
@@ -531,9 +533,133 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(tuple(contract["enums"]["decision"]), lineage.DECISIONS)
         self.assertEqual(tuple(contract["approved_hosts"]), lineage.APPROVED_HOSTS)
         self.assertEqual(tuple(contract["buckets"]), lineage.BUCKETS)
+        envelopes = contract["envelopes"]
+        self.assertEqual(envelopes["mapping"]["schema_version"], lineage.MAPPING_SCHEMA)
+        self.assertEqual(set(envelopes["mapping"]), lineage.MAPPING_DOC_KEYS)
+        self.assertEqual(set(envelopes["mapping"]["mappings"]), set(lineage.MAPPING_ARRAYS))
+        self.assertEqual(envelopes["admission"]["schema_version"], lineage.ADMISSION_SCHEMA)
+        self.assertEqual(set(envelopes["admission"]), lineage.ADMISSION_KEYS)
+        self.assertEqual(envelopes["input_manifest"]["schema_version"], lineage.INPUT_SCHEMA)
+        self.assertEqual(set(envelopes["input_manifest"]), lineage.INPUT_MANIFEST_KEYS)
+        self.assertEqual(set(envelopes["input_item"]), lineage.INPUT_ITEM_KEYS)
+        self.assertEqual(envelopes["pin"]["schema_version"], lineage.PIN_SCHEMA)
+        self.assertEqual(set(envelopes["pin"]), lineage.PIN_KEYS)
+        self.assertIn("tagged", rows["source"]["catalog_revision"])
+
+
+class CorrectionRegressionTests(unittest.TestCase):
+    def test_catalog_revision_is_tagged_version(self):
+        env = load()
+        env["sources"][0]["catalog_revision"] = "c" * 40
+        self.assertEqual(code(env), "type")
+        env["sources"][0]["catalog_revision"] = {"kind": "git", "value": "C" * 40, "reason": None}
+        self.assertEqual(code(env), "bad_version")
+
+    def test_unhashable_source_id_members_fail_content_free(self):
+        for member in ({}, [], None, 7):
+            env = load()
+            env["concepts"][0]["source_ids"] = [member]
+            self.assertEqual(code(env), "bad_id")
+
+    def test_duplicate_refinement_edge(self):
+        env = load()
+        extra = copy.deepcopy(env["refinements"][0])
+        extra["id"] = P + "refinement:duplicate-edge"
+        env["refinements"].append(extra)
+        self.assertEqual(code(env), "duplicate_refinement_edge")
+
+    def test_owner_and_record_id_bind_to_qualified_id(self):
+        for key, field, value, expected in (
+                ("sources", "owner", "example/other", "owner_mismatch"),
+                ("sources", "record_id", "other", "record_id_mismatch"),
+                ("concepts", "owner", "example-org", "owner_mismatch"),
+                ("consumers", "owner", "example", "owner_mismatch")):
+            env = load()
+            env[key][0][field] = value
+            self.assertEqual(code(env), expected)
+
+    def envelope_code(self, func, *args):
+        try:
+            func(*args)
+        except lineage.LineageError as exc:
+            return exc.code
+        return None
+
+    def mapping_doc(self):
+        mappings = {name: [] for name in lineage.MAPPING_ARRAYS}
+        return {"schema_version": lineage.MAPPING_SCHEMA, "mappings": mappings, "admission": {
+            "schema_version": lineage.ADMISSION_SCHEMA, "packet_sha256": lineage.canonical_sha256(mappings),
+            "policy_sha256": "a" * 64, "classification": "public",
+            "review_record_ref": "example/catalog:evidence:review-1"}}
+
+    def test_mapping_document_exact(self):
+        check = lambda doc: self.envelope_code(lineage.validate_mapping_document, doc, "a" * 64)
+        self.assertIsNone(check(self.mapping_doc()))
+        doc = self.mapping_doc(); doc["extra"] = 1
+        self.assertEqual(check(doc), "unknown_field")
+        doc = self.mapping_doc(); doc["admission"]["schema_version"] = "concept-lineage-admission/2"
+        self.assertEqual(check(doc), "schema_version")
+        doc = self.mapping_doc(); doc["admission"]["policy_sha256"] = "b" * 64
+        self.assertEqual(check(doc), "policy_digest")
+        doc = self.mapping_doc(); doc["mappings"]["concepts"] = {}
+        self.assertEqual(check(doc), "type")
+        for ref in ("example/catalog:evidence:a/../b", "example/catalog:evidence:./a", "example/catalog::x", 5):
+            doc = self.mapping_doc(); doc["admission"]["review_record_ref"] = ref
+            self.assertEqual(check(doc), "bad_id")
+
+    def manifest(self):
+        return {"schema_version": lineage.INPUT_SCHEMA, "catalog_revision": git("a"), "builder_revision": git("b"),
+                "supplier_revision": git("c"), "contract_sha256": "1" * 64, "runtime_sha256": "2" * 64,
+                "builder_sha256": "3" * 64, "mapping_sha256": "4" * 64,
+                "inputs": [{"path": "docs/a.json", "sha256": "5" * 64, "revision": git("b")}]}
+
+    def test_input_manifest_exact(self):
+        check = lambda doc: self.envelope_code(lineage.validate_input_manifest, doc)
+        self.assertIsNone(check(self.manifest()))
+        for field, value, expected in (("catalog_revision", "a" * 40, "type"),
+                                       ("builder_revision", {"kind": "unknown", "value": None, "reason": "not_captured"}, "bad_version"),
+                                       ("supplier_revision", "c" * 40, "type"), ("mapping_sha256", None, "bad_digest"),
+                                       ("schema_version", "concept-lineage-input/2", "schema_version")):
+            doc = self.manifest(); doc[field] = value
+            self.assertEqual(check(doc), expected)
+        doc = self.manifest(); doc["inputs"][0]["path"] = "../secret"
+        self.assertEqual(check(doc), "bad_path")
+        doc = self.manifest(); doc["inputs"][0]["extra"] = True
+        self.assertEqual(check(doc), "unknown_field")
+
+    def test_pin_chain(self):
+        packet = load()
+        manifest_bytes = lineage.canonical_bytes(self.manifest())
+        projection_bytes = lineage.canonical_bytes(lineage.build_projection(packet, lineage.sha256_hex(manifest_bytes)))
+        pin = {"schema_version": lineage.PIN_SCHEMA, "owner_repository": "example/catalog"}
+        for name in ("catalog_revision", "builder_revision", "supplier_revision", "contract_sha256",
+                     "runtime_sha256", "builder_sha256", "mapping_sha256"):
+            pin[name] = self.manifest()[name]
+        pin.update(projection_revision=git("d"), input_manifest_sha256=lineage.sha256_hex(manifest_bytes),
+                   projection_sha256=lineage.sha256_hex(projection_bytes))
+        check = lambda doc, m=manifest_bytes, p=projection_bytes: self.envelope_code(lineage.verify_pin_chain, doc, m, p)
+        self.assertIsNone(check(pin))
+        self.assertEqual(check(dict(pin, supplier_revision="c" * 40)), "type")
+        self.assertEqual(check(dict(pin, latest=True)), "unknown_field")
+        self.assertEqual(check(dict(pin, mapping_sha256="9" * 64)), "pin_mismatch")
+        self.assertEqual(check(dict(pin, projection_sha256="9" * 64)), "projection_digest")
+        self.assertEqual(check(pin, manifest_bytes + b" "), "not_canonical")
 
 
 class CliTests(unittest.TestCase):
+    def test_unhashable_member_exits_two_without_traceback(self):
+        env = load()
+        env["concepts"][0]["source_ids"] = [{}]
+        path = HERE / "_probe_unhashable.json"
+        try:
+            path.write_text(json.dumps(env), encoding="utf-8")
+            result = self.run_cli("validate", path.name)
+        finally:
+            path.unlink()
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stderr.strip(), b"invalid: bad_id")
+        self.assertNotIn(b"Traceback", result.stderr)
+
     def run_cli(self, *args):
         return subprocess.run([sys.executable, "-I", str(HERE / "lineage.py")] + list(args),
                               capture_output=True, cwd=str(HERE))
