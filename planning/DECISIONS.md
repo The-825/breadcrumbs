@@ -697,3 +697,8 @@ Source: Owner instruction to create a standalone StaleToast repository and GitHu
 Ruling: Reusable task views lead with intended outcome, actionable steps, performed versus validated work, remaining blocker, next action and completion acceptance. Ownership and interrupted-work recovery support that flow; runtime status and partial child completion do not establish parent completion.
 Why: A reader needs to know what result remains and what evidence will close it before learning coordination mechanics.
 Source: Operator direction to simplify human/agent collaboration around tasks, steps, validation and parent-project contribution.
+
+## D-69 · 2026-10-27 · Concept lineage is a read-only evidence view
+Ruling: Concept lineage ships as a portable standard-library validator and renderer with a fixed contract. Origin evidence is concept-scoped and separate from consumer use receipts. Labels describe supplied evidence and grant no authority, authenticity or adoption claim.
+Why: A reader needs to see where an idea came from and which consumers decided what without a blended score or an inferred release state.
+Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.

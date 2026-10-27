@@ -1,0 +1,376 @@
+{
+  "schema_version": "concept-lineage/1",
+  "data_class": "synthetic_public",
+  "sources": [
+    {
+      "id": "example/lineage-demo:repository:alpha",
+      "owner": "example-org",
+      "record_kind": "repository",
+      "record_id": "example-org/alpha-tool",
+      "title": "Alpha Tool (fictional)",
+      "url": "https://github.com/example-org/alpha-tool",
+      "upstream_version": {
+        "kind": "git",
+        "value": "1111111111111111111111111111111111111111",
+        "reason": null
+      },
+      "catalog_revision": "catalog-demo-1",
+      "aliases": [],
+      "evidence_depth": "readme-screened"
+    },
+    {
+      "id": "example/lineage-demo:research:paper1",
+      "owner": "example-org",
+      "record_kind": "research",
+      "record_id": "paper1",
+      "title": "Example Paper (fictional)",
+      "url": "https://doi.org/10.0000/example.paper",
+      "upstream_version": {
+        "kind": "publication",
+        "value": "v2",
+        "reason": null
+      },
+      "catalog_revision": "catalog-demo-1",
+      "aliases": [
+        "example/lineage-demo:research:paper-one"
+      ],
+      "evidence_depth": "source-assessment"
+    },
+    {
+      "id": "example/lineage-demo:repository:beta",
+      "owner": "example-org",
+      "record_kind": "repository",
+      "record_id": "example-org/beta-tool",
+      "title": "Beta Tool (fictional)",
+      "url": "https://github.com/example-org/beta-tool",
+      "upstream_version": {
+        "kind": "unknown",
+        "value": null,
+        "reason": "identity_unresolved"
+      },
+      "catalog_revision": "catalog-demo-1",
+      "aliases": [],
+      "evidence_depth": "unverified"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "example/lineage-demo:concept:retry-ledger",
+      "owner": "example-org",
+      "title": "Retry ledger",
+      "summary": "Fictional concept: record each retry in an append-only ledger.",
+      "source_ids": [
+        "example/lineage-demo:repository:alpha"
+      ],
+      "relationship": "documented_origin",
+      "origin_evidence_id": "example/lineage-demo:evidence:origin-retry"
+    },
+    {
+      "id": "example/lineage-demo:concept:citation-gate",
+      "owner": "example-org",
+      "title": "Citation gate",
+      "summary": "Fictional concept: block claims that lack a cited source.",
+      "source_ids": [
+        "example/lineage-demo:research:paper1"
+      ],
+      "relationship": "documented_origin",
+      "origin_evidence_id": "example/lineage-demo:evidence:origin-citation"
+    },
+    {
+      "id": "example/lineage-demo:concept:parallel-review",
+      "owner": "example-org",
+      "title": "Parallel review",
+      "summary": "Fictional concept: native equivalent with unresolved origin.",
+      "source_ids": [
+        "example/lineage-demo:repository:beta"
+      ],
+      "relationship": "conceptual_similarity",
+      "origin_evidence_id": null
+    },
+    {
+      "id": "example/lineage-demo:concept:handoff-notes",
+      "owner": "example-org",
+      "title": "Handoff notes",
+      "summary": "Fictional concept refined from the retry ledger.",
+      "source_ids": [
+        "example/lineage-demo:repository:alpha"
+      ],
+      "relationship": "appraised_mechanism",
+      "origin_evidence_id": null
+    }
+  ],
+  "consumers": [
+    {
+      "id": "example/consumer-one:consumer:one",
+      "owner": "example",
+      "title": "Consumer one (fictional)",
+      "visibility": "synthetic"
+    },
+    {
+      "id": "example/consumer-two:consumer:two",
+      "owner": "example",
+      "title": "Consumer two (fictional)",
+      "visibility": "synthetic"
+    },
+    {
+      "id": "example/consumer-three:consumer:three",
+      "owner": "example",
+      "title": "Consumer three (fictional)",
+      "visibility": "synthetic"
+    },
+    {
+      "id": "example/consumer-four:consumer:four",
+      "owner": "example",
+      "title": "Consumer four (fictional)",
+      "visibility": "synthetic"
+    }
+  ],
+  "uses": [
+    {
+      "id": "example/lineage-demo:use:retry-one",
+      "concept_id": "example/lineage-demo:concept:retry-ledger",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "decision": "accepted",
+      "adaptation": "Wrapped in a small helper.",
+      "refinement": "Added a backoff cap.",
+      "source_versions_used": {
+        "example/lineage-demo:repository:alpha": {
+          "kind": "git",
+          "value": "9999999999999999999999999999999999999999",
+          "reason": null
+        }
+      },
+      "evidence_ids": [
+        "example/lineage-demo:evidence:c1",
+        "example/lineage-demo:evidence:t1",
+        "example/lineage-demo:evidence:c2",
+        "example/lineage-demo:evidence:m1"
+      ]
+    },
+    {
+      "id": "example/lineage-demo:use:retry-two",
+      "concept_id": "example/lineage-demo:concept:retry-ledger",
+      "consumer_id": "example/consumer-two:consumer:two",
+      "decision": "accepted",
+      "adaptation": "Copied the idea only.",
+      "refinement": "",
+      "source_versions_used": {
+        "example/lineage-demo:repository:alpha": {
+          "kind": "git",
+          "value": "1111111111111111111111111111111111111111",
+          "reason": null
+        }
+      },
+      "evidence_ids": [
+        "example/lineage-demo:evidence:c3"
+      ]
+    },
+    {
+      "id": "example/lineage-demo:use:retry-three",
+      "concept_id": "example/lineage-demo:concept:retry-ledger",
+      "consumer_id": "example/consumer-three:consumer:three",
+      "decision": "proposed",
+      "adaptation": "",
+      "refinement": "",
+      "source_versions_used": {
+        "example/lineage-demo:repository:alpha": {
+          "kind": "git",
+          "value": "1111111111111111111111111111111111111111",
+          "reason": null
+        }
+      },
+      "evidence_ids": [
+        "example/lineage-demo:evidence:c4"
+      ]
+    },
+    {
+      "id": "example/lineage-demo:use:retry-four",
+      "concept_id": "example/lineage-demo:concept:retry-ledger",
+      "consumer_id": "example/consumer-four:consumer:four",
+      "decision": "accepted",
+      "adaptation": "",
+      "refinement": "",
+      "source_versions_used": {
+        "example/lineage-demo:repository:alpha": {
+          "kind": "git",
+          "value": "1111111111111111111111111111111111111111",
+          "reason": null
+        }
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "example/lineage-demo:use:cite-one",
+      "concept_id": "example/lineage-demo:concept:citation-gate",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "decision": "deferred",
+      "adaptation": "",
+      "refinement": "",
+      "source_versions_used": {
+        "example/lineage-demo:research:paper1": {
+          "kind": "publication",
+          "value": "v2",
+          "reason": null
+        }
+      },
+      "evidence_ids": []
+    },
+    {
+      "id": "example/lineage-demo:use:cite-two",
+      "concept_id": "example/lineage-demo:concept:citation-gate",
+      "consumer_id": "example/consumer-two:consumer:two",
+      "decision": "rejected",
+      "adaptation": "",
+      "refinement": "",
+      "source_versions_used": {
+        "example/lineage-demo:research:paper1": {
+          "kind": "publication",
+          "value": "v2",
+          "reason": null
+        }
+      },
+      "evidence_ids": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "example/lineage-demo:evidence:origin-retry",
+      "kind": "origin",
+      "concept_id": "example/lineage-demo:concept:retry-ledger",
+      "source_id": "example/lineage-demo:repository:alpha",
+      "source_revision": {
+        "kind": "git",
+        "value": "3333333333333333333333333333333333333333",
+        "reason": null
+      },
+      "artifact_sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+      "result": "observed",
+      "url": "https://github.com/example-org/alpha-tool/commit/3333333333333333333333333333333333333333",
+      "observed_at": "2026-01-01T00:00:00Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:origin-citation",
+      "kind": "origin",
+      "concept_id": "example/lineage-demo:concept:citation-gate",
+      "source_id": "example/lineage-demo:research:paper1",
+      "source_revision": {
+        "kind": "publication",
+        "value": "v2",
+        "reason": null
+      },
+      "artifact_sha256": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef",
+      "result": "observed",
+      "url": "https://doi.org/10.0000/example.paper",
+      "observed_at": null,
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:c1",
+      "use_id": "example/lineage-demo:use:retry-one",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "kind": "change",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "4444444444444444444444444444444444444444",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "observed",
+      "url": "https://github.com/example/consumer-one/commit/4444444444444444444444444444444444444444",
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:t1",
+      "use_id": "example/lineage-demo:use:retry-one",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "kind": "synthetic_test",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "4444444444444444444444444444444444444444",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "pass",
+      "url": null,
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:c2",
+      "use_id": "example/lineage-demo:use:retry-one",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "kind": "change",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "5555555555555555555555555555555555555555",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "observed",
+      "url": null,
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:m1",
+      "use_id": "example/lineage-demo:use:retry-one",
+      "consumer_id": "example/consumer-one:consumer:one",
+      "kind": "merge",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "6666666666666666666666666666666666666666",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "observed",
+      "url": null,
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:c3",
+      "use_id": "example/lineage-demo:use:retry-two",
+      "consumer_id": "example/consumer-two:consumer:two",
+      "kind": "change",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "7777777777777777777777777777777777777777",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "observed",
+      "url": null,
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    },
+    {
+      "id": "example/lineage-demo:evidence:c4",
+      "use_id": "example/lineage-demo:use:retry-three",
+      "consumer_id": "example/consumer-three:consumer:three",
+      "kind": "change",
+      "consumer_revision": {
+        "kind": "git",
+        "value": "8888888888888888888888888888888888888888",
+        "reason": null
+      },
+      "artifact_sha256": "abababababababababababababababababababababababababababababababab",
+      "result": "observed",
+      "url": null,
+      "observed_at": "2026-01-02T03:04:05Z",
+      "missing_reason": null
+    }
+  ],
+  "refinements": [
+    {
+      "id": "example/lineage-demo:refinement:notes-from-retry",
+      "from_concept_id": "example/lineage-demo:concept:retry-ledger",
+      "to_concept_id": "example/lineage-demo:concept:handoff-notes",
+      "summary": "Fictional refinement: notes extend the ledger.",
+      "evidence_ids": [
+        "example/lineage-demo:evidence:origin-retry"
+      ]
+    }
+  ]
+}

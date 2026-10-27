@@ -155,6 +155,13 @@
       "templates/a2a-score-export/README.md",
       "templates/a2a-score-export/a2a_score_export.py"
     ],
+    "I need to trace where a concept came from and which consumers used it": [
+      "templates/concept-lineage/README.md",
+      "templates/concept-lineage/contract.json",
+      "templates/concept-lineage/lineage.py",
+      "templates/concept-lineage/fixture.json",
+      "docs/concept-lineage.md"
+    ],
     "I need to compare repositories that codify collaborative intelligence": [
       "docs/collaborative-intelligence-repository-landscape-method.md",
       "docs/collaborative-intelligence-repository-landscape.md",
@@ -378,6 +385,13 @@
       "what": "Attaches a publication-approved Breadcrumb Score pointer to an A2A Agent Card as a non-required extension while refusing private endpoints, unknown public fields, stale evidence, and mutation of signed cards.",
       "assumes": "A2A 1.0 public Agent Card and a published Breadcrumb Score assessment; Python 3.9+ standard library only.",
       "selftest": "python3 -m unittest discover -s templates/a2a-score-export/tests"
+    },
+    {
+      "path": "templates/concept-lineage/lineage.py",
+      "kind": "tool",
+      "what": "Read-only concept lineage validator and renderer: strict graph shapes, concept-scoped origin evidence kept apart from consumer use receipts, exact test and change pairing, distinct decision counts and a script-contained standalone page, with no authority or authenticity claim.",
+      "assumes": "A JSON graph assembled from public or synthetic records; Python 3.9+ standard library only; no network, clock or source execution.",
+      "selftest": "python3 -m unittest discover -s templates/concept-lineage"
     },
     {
       "path": "benchmarks/orientation/benchmark.py",

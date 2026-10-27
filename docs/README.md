@@ -55,6 +55,7 @@ the piece.
 | [enforcement-manifest.md](enforcement-manifest.md) | One JSON object per floor rule, bound to its honest enforcement point, with a coverage gate that makes downgrades tamper-evident. |
 | [catalog-routing.md](catalog-routing.md) | Three narrow hops, kernel to catalog to file, that keep a large doc corpus reachable without loading it all. |
 | [issue-backed-task-bus.md](issue-backed-task-bus.md) | GitHub issues as a lightweight, lockable task queue for multiple agents: labels as state machine, expiring claims, comments as audit trail. |
+| [concept-lineage.md](concept-lineage.md) | Read-only view of where a concept came from and which consumers decided what, with origin evidence kept apart from consumer receipts and no authority claim. |
 | [report-catalog-pattern.md](report-catalog-pattern.md) | Safe self-service data access: a catalog of pre-approved parameterized queries behind one endpoint, a hard row cap, and a role-gated escape hatch. |
 
 Requested source expansion: [dated receipt](staletoast-expansion-2026-10-12.md), [all-source appraisal priorities](staletoast-appraisal-priorities.md), and [next-round pool](staletoast-next-round-pool.md).

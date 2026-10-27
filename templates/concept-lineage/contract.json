@@ -1,0 +1,48 @@
+{
+  "schema_version": "concept-lineage/1",
+  "purpose": "Read-only graph linking public source records to concepts and to consumer uses. Labels describe supplied evidence, not independent authenticity, release authority or adoption.",
+  "data_classes": {"public_paths": ["public", "synthetic_public"], "explicit_private_adapter_only": ["private_metadata"]},
+  "limits": {
+    "input_bytes": 2097152,
+    "depth": 12,
+    "string_chars": 2048,
+    "identifier_chars": 180,
+    "html_bytes": 8388608,
+    "sources": 500,
+    "concepts": 500,
+    "consumers": 100,
+    "uses": 2000,
+    "evidence": 2000,
+    "refinements": 1000
+  },
+  "id_pattern": "[A-Za-z0-9][A-Za-z0-9_.-]{0,63}/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}:(repository|research|candidate|pool|advisory|concept|consumer|use|evidence|refinement):[A-Za-z0-9][A-Za-z0-9_.@/-]{0,95}",
+  "id_rules": "re.fullmatch, ASCII only, total length at most 180, no empty, dot or dot-dot path segments in the local part, case-insensitive uniqueness across record IDs and aliases.",
+  "approved_hosts": ["github.com", "doi.org", "arxiv.org"],
+  "url_rules": "HTTPS, exact lowercase approved host, no userinfo, port, query, fragment, whitespace, backslash, control characters or decoded dot segments. Links are never dereferenced.",
+  "version": {"keys": ["kind", "value", "reason"], "kinds": {"git": "value is 40 lowercase hex, reason null", "publication": "value is a bounded nonempty string, reason null", "unknown": "value null, reason one of not_captured, source_unavailable, identity_unresolved, consumer_unavailable"}},
+  "envelope": {"schema_version": "concept-lineage/1", "data_class": "string", "sources": "array", "concepts": "array", "consumers": "array", "uses": "array", "evidence": "array", "refinements": "array"},
+  "rows": {
+    "source": {"id": "source ID", "owner": "string", "record_kind": "repository|research|candidate|pool|advisory, equals the ID kind", "record_id": "string", "title": "string", "url": "approved URL", "upstream_version": "tagged version", "catalog_revision": "string", "aliases": "array of source-kind IDs", "evidence_depth": "unverified|readme-screened|source-assessment"},
+    "concept": {"id": "concept ID", "owner": "string", "title": "string", "summary": "string", "source_ids": "nonempty unique array of source IDs", "relationship": "appraised_mechanism|conceptual_similarity|documented_origin", "origin_evidence_id": "evidence ID or null"},
+    "consumer": {"id": "consumer ID", "owner": "string", "title": "string", "visibility": "public|synthetic|private"},
+    "use": {"id": "use ID", "concept_id": "concept ID", "consumer_id": "consumer ID", "decision": "proposed|accepted|rejected|deferred", "adaptation": "string, empty means not recorded", "refinement": "string, empty means not recorded", "source_versions_used": "object mapping exactly the concept's source IDs to tagged versions", "evidence_ids": "unique array equal to the complete set of non-origin evidence rows naming this use"},
+    "use_evidence": {"id": "evidence ID", "use_id": "use ID", "consumer_id": "consumer ID", "kind": "change|synthetic_test|merge|deployment|runtime", "consumer_revision": "tagged version", "artifact_sha256": "64 lowercase hex or null", "result": "synthetic_test: pass|fail|unknown; others: observed|unknown", "url": "consumer commit URL or null", "observed_at": "timezone-aware ISO 8601 or null", "missing_reason": "reason code, required exactly when the digest is null or the revision is unknown"},
+    "origin_evidence": {"id": "evidence ID", "kind": "origin", "concept_id": "concept ID", "source_id": "source ID", "source_revision": "tagged version", "artifact_sha256": "64 lowercase hex or null", "result": "observed|unknown", "url": "source commit URL or publication URL, or null", "observed_at": "timezone-aware ISO 8601 or null", "missing_reason": "reason code"},
+    "refinement": {"id": "refinement ID", "from_concept_id": "concept ID", "to_concept_id": "different concept ID", "summary": "string", "evidence_ids": "unique array of evidence IDs concerning one endpoint"}
+  },
+  "enums": {
+    "relationship": ["appraised_mechanism", "conceptual_similarity", "documented_origin"],
+    "decision": ["proposed", "accepted", "rejected", "deferred"],
+    "missing_reason": ["not_captured", "receipt_absent", "consumer_unavailable", "source_unavailable", "identity_unresolved", "not_applicable"]
+  },
+  "buckets": ["proposed", "accepted_without_observed_change", "accepted_with_observed_change", "rejected", "deferred"],
+  "projection": {"schema_version": "concept-lineage-projection/1", "input_manifest_sha256": "64 hex", "packet_sha256": "64 hex of the canonical packet bytes", "packet": "graph envelope", "independent_authenticity_verified": false, "authority_granted": false},
+  "canonical_encoding": "sorted keys, compact separators, UTF-8 without escapes, one trailing LF, no timestamp",
+  "labels": {
+    "documented_origin": "Documented source (supplied evidence)",
+    "conceptual_similarity_without_origin": "Origin unresolved; not borrowed",
+    "test_pairing": ["matched test pair", "unmatched test revision", "reported pass, receipt absent"],
+    "release_relation": ["revision match only", "relation to change revision unverified"],
+    "freshness": ["revision_match", "revision_changed_scope_unknown", "unverified"]
+  }
+}
