@@ -78,6 +78,52 @@ class FixtureTests(unittest.TestCase):
         self.assertEqual(lineage.derive(env), lineage.derive(copy.deepcopy(env)))
         self.assertEqual(lineage.canonical_bytes(env), lineage.canonical_bytes(copy.deepcopy(env)))
 
+    def assert_equivalent_artifacts(self, first, second):
+        self.assertEqual(lineage.derive(first), lineage.derive(second))
+        left = lineage.build_projection(first, "1" * 64)
+        right = lineage.build_projection(second, "1" * 64)
+        self.assertEqual(left["packet_sha256"], right["packet_sha256"])
+        self.assertEqual(lineage.canonical_bytes(left), lineage.canonical_bytes(right))
+        self.assertEqual(lineage.render_html(left), lineage.render_html(right))
+
+    def test_permuted_records_have_identical_artifacts(self):
+        env = load()
+        permuted = copy.deepcopy(env)
+        for name in lineage.LIMITS:
+            permuted[name].reverse()
+        self.assert_equivalent_artifacts(env, permuted)
+
+    def test_permuted_references_have_identical_artifacts(self):
+        env = load()
+        row(env, "sources", A)["aliases"] = [P + "repository:old-z", P + "repository:old-a"]
+        row(env, "concepts", RETRY)["source_ids"].append(PAPER)
+        for use in env["uses"]:
+            if use["concept_id"] == RETRY:
+                use["source_versions_used"][PAPER] = copy.deepcopy(row(env, "sources", PAPER)["upstream_version"])
+        retry_use = next(use for use in env["uses"] if use["concept_id"] == RETRY and len(use["evidence_ids"]) > 1)
+        env["refinements"].append({"id": P + "refinement:retry-citation", "from_concept_id": RETRY,
+                                   "to_concept_id": CITE, "summary": "Fictional derivation",
+                                   "evidence_ids": list(retry_use["evidence_ids"])})
+        permuted = copy.deepcopy(env)
+        for name, field in (("sources", "aliases"), ("concepts", "source_ids"),
+                            ("uses", "evidence_ids"), ("refinements", "evidence_ids")):
+            for record in permuted[name]:
+                record[field].reverse()
+        self.assert_equivalent_artifacts(env, permuted)
+
+    def test_normalization_preserves_input_and_ordered_text(self):
+        env = load()
+        use = env["uses"][0]
+        use["adaptation"] = "First step, then second step."
+        before = copy.deepcopy(env)
+        normalized = lineage.normalize_packet(env)
+        self.assertEqual(env, before)
+        self.assertEqual(row(normalized, "uses", use["id"])["adaptation"], use["adaptation"])
+        invalid = copy.deepcopy(env)
+        invalid["concepts"][0]["source_ids"] *= 2
+        with self.assertRaises(lineage.LineageError):
+            lineage.normalize_packet(invalid)
+
     def test_distinct_bucket_counts(self):
         view = lineage.derive(load())
         retry = next(c for c in view["concepts"] if c["id"] == RETRY)

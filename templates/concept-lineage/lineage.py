@@ -770,8 +770,27 @@ def _derive_use(use, rows, concept, consumer, sources):
     }
 
 
+def normalize_packet(packet, allow_private=False):
+    """Copy a validated graph, ordering only record and reference sets."""
+    validate_graph(packet, allow_private=allow_private)
+    normalized = dict(packet)
+    references = {"sources": "aliases", "concepts": "source_ids",
+                  "uses": "evidence_ids", "refinements": "evidence_ids"}
+    for name in LIMITS:
+        rows = []
+        for original in sorted(packet[name], key=lambda row: row["id"]):
+            row = dict(original)
+            if name in references:
+                field = references[name]
+                row[field] = sorted(original[field])
+            rows.append(row)
+        normalized[name] = rows
+    return normalized
+
+
 def derive(env, allow_private=False):
     """Pure deterministic view of a graph; no clock, no network."""
+    env = normalize_packet(env, allow_private=allow_private)
     idx = validate_graph(env, allow_private=allow_private)
     use_rows = {}
     for eid in sorted(idx["evidence"]):
@@ -856,7 +875,7 @@ def derive(env, allow_private=False):
 
 
 def build_projection(packet, input_manifest_sha256):
-    validate_graph(packet)
+    packet = normalize_packet(packet)
     _sha(input_manifest_sha256)
     return {
         "schema_version": PROJECTION_SCHEMA,

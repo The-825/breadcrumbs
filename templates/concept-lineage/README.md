@@ -13,6 +13,8 @@ python3 -m unittest discover -s templates/concept-lineage
 
 ## Graph shape
 
+Packet normalization sorts records by ID and sorts alias, source-reference and evidence-reference sets. Equivalent permutations produce the same packet digest, projection and rendered page. Narrative text and version values keep their meaning and order. Validation runs before normalization, so duplicate or malformed input is rejected rather than repaired.
+
 Envelope keys are exactly `schema_version` (`concept-lineage/1`), `data_class`, `sources`, `concepts`, `consumers`, `uses`, `evidence`, `refinements`. Unknown or missing fields, duplicate JSON keys, a BOM, invalid UTF-8, non-finite or oversized numbers and nesting deeper than 12 fail with a content-free code. Input is capped at 2 MiB, strings at 2048 characters, identifiers at 180. `contract.json` lists every row key, enum and limit.
 
 - IDs are `owner/name:kind:local` (ASCII, matched with `fullmatch`, case-insensitively unique). Owner-qualified `research:001` and `repository:R-001` are distinct. Aliases come only from the owning source record, are one hop, and may not collide with any ID or alias.
