@@ -16,6 +16,18 @@
 
 The exercises put these principles into practice. Save each small reviewed result so the next exercise starts with something you can inspect. The person who owns the work checks facts and authorizes any action outside the exercise.
 
+## Complete workflow guides
+
+These draft guides add copyable prompts, worksheets, fictional examples and completion checks. They are written procedures, not connected automation.
+
+| Start here | Result to prepare |
+| --- | --- |
+| [Zoom meeting to action plan](zoom-to-action.md) | A source-supported plan with confirmed assignments and visible unknowns |
+| [Scout to implementation](scout-to-implementation.md) | A bounded change linked to its source and validation, or a documented hold or rejection |
+| [Five starter prompts and six-topic learning map](starter-prompts-and-learning-map.md) | One small exercise you can check before using a complete workflow |
+
+## Small practice exercises
+
 | Practice | Keep | Check |
 |---|---|---|
 | [Keep it simple: note what matters](00-working-memory-card.md) | A short note | Check the original messages, then ask what changed |
