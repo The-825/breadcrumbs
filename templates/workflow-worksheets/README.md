@@ -6,6 +6,8 @@ Use role names instead of personal details where possible. Keep credentials and 
 
 | Worksheet | Use it to |
 |---|---|
+| [Meeting action plan](meeting-action-plan.md) | Preserve source coverage, conditional actions, clarification and separate task-entry or send evidence. |
+| [Source appraisal to adoption](source-to-adoption.md) | Connect a source and practical need to a bounded application, actual-use check and recorded disposition. |
 | [Task outcome and validation](task-outcome.md), with a [read-only example](task-outcome.html) | Keep the intended result, steps, validation, blocker and parent contribution clear. |
 | [Workflow capacity estimator](workflow-capacity-estimator.md) | Compare available time with recurring work and planned demand. |
 | [Small-change request](small-change-request.md) | Define a limited process or tool change, its owner, review, and recovery plan. |
