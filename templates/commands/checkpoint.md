@@ -22,6 +22,8 @@ The file follows the session-state template (see `templates/SESSION_STATE_TEMPLA
 
 Read the current `SESSION_STATE.md`. Repopulate these sections from Step 1 plus what this session knows, REPLACING stale content rather than appending:
 
+- **Recovery pointer:** current owner, existing owning-record pointer, and one
+  next action or blocker. Retrieve detailed history only when needed.
 - **Current state:** observed time, verification status, owning repository and
   directory, source revisions, branch, open PR, current-head checks and review,
   merge, deployment, and in-flight edits. Keep deployment separate from merge.
@@ -34,7 +36,12 @@ Read the current `SESSION_STATE.md`. Repopulate these sections from Step 1 plus 
   checks, and residual limits. Attempted recovery is not verified recovery.
 - **Assumptions and evidence validity:** say what source or assumption change
   invalidates reused evidence.
-- **Unfinished work:** keep its owner, state, next action, and needed proof visible.
+- **Unfinished work:** keep bounded custody, receiver acknowledgment, next action,
+  observable acceptance and missing evidence visible in the owning record.
+- **Evidence stages:** separate implementation, tests, review, merge, deployment
+  and live verification by revision and date. Check old review applicability when
+  source changes. Preserve original requirement, decision reason and supersession;
+  missing origin stays unknown.
 - **Recently landed:** trim to the last handful; move anything genuinely done out to the changelog and delete it here.
 
 ## Step 3: Preserve the irreplaceable-values section verbatim
