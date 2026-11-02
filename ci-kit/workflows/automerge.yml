@@ -195,6 +195,56 @@ jobs:
               return fresh;
             };
 
+            // Merge-error reconciliation. Two events for one PR (ready_for_review
+            // and labeled) can race; the loser gets 405 "Merge already in
+            // progress" while a sibling run merges the same checked head. The
+            // merge is never retried. Success is only a fresh read showing the
+            // PR merged on the exact checked head with a merge commit. Only the
+            // documented 405 message while the PR is still open on that head is
+            // polled (read-only, bounded). Every other outcome rethrows.
+            const MERGE_CONFIRM_ATTEMPTS = 5;
+            const MERGE_CONFIRM_DELAY_MS = 3000;
+
+            const mergedOnHead = (p, sha) =>
+              p.merged === true && p.head?.sha === sha &&
+              typeof p.merge_commit_sha === "string" && p.merge_commit_sha !== "";
+
+            const reconcileMergeError = async (pr, error) => {
+              if (error.status !== 405 && error.status !== 409) throw error;
+              const fetchLatest = async () => (await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+              })).data;
+              let latest = await fetchLatest();
+              if (mergedOnHead(latest, pr.head.sha)) {
+                core.info(`PR #${pr.number} already merged on checked head ${pr.head.sha}; treating as success.`);
+                return;
+              }
+              // Merged on another head, or closed unmerged: never success.
+              if (latest.merged === true || latest.state !== "open") throw error;
+              if (latest.head.sha !== pr.head.sha) {
+                if (error.status !== 409) throw error;
+                core.warning(`PR #${pr.number} head changed after checks; retry on the new head.`);
+                return;
+              }
+              const inProgress = error.status === 405 &&
+                /merge already in progress/i.test(String(error.message || ""));
+              if (!inProgress) throw error;
+              const { setTimeout: sleep } = require("timers/promises");
+              for (let i = 0; i < MERGE_CONFIRM_ATTEMPTS; i++) {
+                await sleep(MERGE_CONFIRM_DELAY_MS);
+                latest = await fetchLatest();
+                if (mergedOnHead(latest, pr.head.sha)) {
+                  core.info(`PR #${pr.number} merge confirmed on checked head ${pr.head.sha} after a concurrent merge.`);
+                  return;
+                }
+                if (latest.merged === true || latest.state !== "open" ||
+                    latest.head.sha !== pr.head.sha) throw error;
+              }
+              throw error;
+            };
+
             // Apply the same guards (non-draft, open, agent branch, operator
             // label when required, all required checks green on head SHA)
             // and merge. Shared by both event paths so the gate stays
@@ -257,16 +307,7 @@ jobs:
                   sha: pr.head.sha,
                 });
               } catch (error) {
-                // A 409 with a changed head is a benign race. Other merge
-                // failures must stay visible and fail the job.
-                if (error.status !== 409) throw error;
-                const { data: latest } = await github.rest.pulls.get({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: pr.number,
-                });
-                if (latest.head.sha === pr.head.sha) throw error;
-                core.warning(`PR #${pr.number} head changed after checks; retry on the new head.`);
+                await reconcileMergeError(pr, error);
               }
             };
 

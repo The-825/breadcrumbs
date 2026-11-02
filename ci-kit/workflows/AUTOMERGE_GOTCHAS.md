@@ -32,6 +32,15 @@ Flipping a draft PR to ready-for-review fires no new check run. A PR whose check
 during the draft window never re-evaluates, so it sits unmerged until someone hand-merges it.
 Fix: a second trigger, `pull_request_target: [ready_for_review]`, running the identical gate.
 
+Ready and label events can race. The shipped workflows now reconcile a 405 or
+409 against a fresh PR read: success requires the exact checked head to be
+merged with a merge commit. The specific 405 "Merge already in progress" can
+wait for bounded read-only confirmation; it never retries the merge. Unconfirmed
+or unrelated errors still fail. The executable contract tests cover these cases
+for both the installed workflow and portable template. See the public
+[failure investigation](https://github.com/The-825/staletoast/blob/main/docs/pr-pipeline-failure-investigation.md)
+for observed run links and the limits of mocked verification.
+
 ## Gotcha 3: verify required checks on the head SHA, never the workflow_run conclusion
 
 The gate calls `checks.listForRef({ ref: pr.head.sha })` and requires every named check to be
