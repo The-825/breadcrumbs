@@ -1,6 +1,6 @@
-# Intake and follow-up, draft local prototype
+# Intake and follow-up, local synthetic prototype
 
-Draft, not a released workflow or connected service. This copy-and-adapt browser prototype uses invented requests only. You need a modern browser; checks use Node.js 24.22 with no packages. No sender, account connection, background worker, persistent database or authenticated permissions are implemented. Do not enter personal or sensitive data.
+This public copy-and-adapt browser prototype uses invented requests only. It is a local example, not a connected service or production workflow. You need a modern browser; checks use Node.js 24.22 with no packages. No sender, account connection, background worker, persistent database or authenticated permissions are implemented. Do not enter personal or sensitive data.
 
 ## Try the minimum path
 
@@ -36,8 +36,8 @@ schema.sql is a proposed SQLite shape, not an enabled storage layer or productio
 
 ## Evidence and unfinished work
 
-Local logic checks have been exercised on Node24.22. Browser/mobile usability for the current draft remains unverified. No connected Trust Plane adapter, authenticated approval, external receipt verification, automatic parent rollup or production delivery has been established. Keep task/step validation and runtime status separate; use the existing [task-outcome worksheet](../workflow-worksheets/task-outcome.md) for acceptance and parent contribution.
+Local logic checks have been exercised on Node24.22. November 4, 2026 browser checks used invented records at 1280px desktop and 390px mobile widths: intake, keyboard completion, duplicate handling, failed-action recovery, held-date resolution, simulated permission holds and clearing page memory on reload passed. These are bounded UI checks, not a full accessibility audit or independent effectiveness study. No connected Trust Plane adapter, authenticated approval, external receipt verification, automatic parent rollup or production delivery has been established. Keep task/step validation and runtime status separate; use the existing [task-outcome worksheet](../workflow-worksheets/task-outcome.md) for acceptance and parent contribution.
 
 Potential work removed is repeated intake setup and reconstructing follow-up history. Work transferred includes maintaining fields, reviewing flags and checking outputs. Compare the same task with an existing checklist or spreadsheet, including setup, corrections, maintenance and service costs. No matched comparison, measured time/token savings or recurring service-cost result is claimed.
 
-This directory is preserved for review and further consumer checks. Its presence on a draft branch is not installation, adoption, merge or deployment approval.
+This directory is published as source for local evaluation. Copying it is not installation of a connected system or evidence of adoption. Any real consumer must separately validate its permissions, data handling, delivery and storage boundaries.
