@@ -7,7 +7,7 @@
 # Static/E2E split (this repo has no backend or browser suite to gate).
 #
 # Squash-merges a claude/* or codex/* PR once "Kit self-tests" is green on the PR head
-# SHA and a human has applied the "greenlight" label. Gated hard on
+# SHA and a authorized operator has applied the ship-it label (greenlight remains compatible). Gated hard on
 # draft == false, so a PR opened as a DRAFT never self-merges.
 #
 # Three trigger paths, one gate. The workflow_run trigger fires when the CI
@@ -80,7 +80,8 @@ jobs:
             // label gate"). With REQUIRE_LABEL true, a PR merges only when a
             // human has applied APPROVAL_LABEL on top of green checks.
             const REQUIRE_LABEL = true;
-            const APPROVAL_LABEL = "greenlight";
+            const APPROVAL_LABEL = "greenlight"; // Historical compatibility identifier.
+            const APPROVAL_LABELS = ["ship-it", APPROVAL_LABEL];
 
             const eligible = (ref) =>
               ELIGIBLE_PREFIXES.some((p) => ref.startsWith(p));
@@ -128,7 +129,7 @@ jobs:
             // SHA on this PR, moved later by any force-push event. The latest
             // APPROVAL_LABEL `labeled` event must be strictly newer. Any gap
             // (no qualifying run, an unparseable timestamp, a tie) is stale.
-            const greenlightIsFresh = async (pr) => {
+            const greenlightIsFresh = async (pr, approvalLabel = APPROVAL_LABEL) => {
               const owner = context.repo.owner;
               const repo = context.repo.repo;
               const at = (t) => {
@@ -146,7 +147,7 @@ jobs:
                   (r.pull_requests || []).some((p) => p.number === pr.number))
                 .map((r) => at(r.created_at));
               if (runTimes.length === 0 || runTimes.includes(null)) {
-                core.info(`PR #${pr.number}: no server-timestamped run for ${pr.head.sha}; greenlight treated as stale.`);
+                core.info(`PR #${pr.number}: no server-timestamped run for ${pr.head.sha}; shipping approval treated as stale.`);
                 return false;
               }
               let headAt = Math.min(...runTimes);
@@ -160,17 +161,17 @@ jobs:
                   const t = at(e.created_at);
                   if (t === null) return false;
                   headAt = Math.max(headAt, t);
-                } else if (e.event === "labeled" && e.label && e.label.name === APPROVAL_LABEL) {
+                } else if (e.event === "labeled" && e.label && e.label.name === approvalLabel) {
                   labeled.push(at(e.created_at));
                 }
               }
               if (labeled.length === 0 || labeled.includes(null)) {
-                core.info(`PR #${pr.number}: no server-timestamped "${APPROVAL_LABEL}" event; treated as stale.`);
+                core.info(`PR #${pr.number}: no server-timestamped "${approvalLabel}" event; treated as stale.`);
                 return false;
               }
               const fresh = Math.max(...labeled) > headAt;
               if (!fresh) {
-                core.info(`PR #${pr.number}: "${APPROVAL_LABEL}" predates head ${pr.head.sha}; re-apply it to approve this head.`);
+                core.info(`PR #${pr.number}: "${approvalLabel}" predates head ${pr.head.sha}; re-apply it to approve this head.`);
               }
               return fresh;
             };
@@ -258,8 +259,13 @@ jobs:
                 // A missing labels array counts as unlabeled: fail closed.
                 // A label that predates the current head counts as absent.
                 const labels = (pr.labels || []).map((l) => l.name);
-                const approved = labels.includes(APPROVAL_LABEL)
-                  && (await greenlightIsFresh(pr));
+                let approved = false;
+                for (const approvalLabel of APPROVAL_LABELS) {
+                  if (labels.includes(approvalLabel) && await greenlightIsFresh(pr, approvalLabel)) {
+                    approved = true;
+                    break;
+                  }
+                }
                 if (!approved) {
                   // Tiered gate: an unlabeled PR may still merge when EVERY
                   // changed file sits in the safe set defined by the base
@@ -298,7 +304,7 @@ jobs:
                   }
                   if (verdict !== "AUTO") {
                     core.info(
-                      `PR #${pr.number} lacks a current "${APPROVAL_LABEL}" label and is not tier-safe; skipping.`
+                      `PR #${pr.number} lacks a current ship-it (or compatible greenlight) label and is not tier-safe; skipping.`
                     );
                     return;
                   }

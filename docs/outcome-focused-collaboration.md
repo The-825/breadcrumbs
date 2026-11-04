@@ -37,3 +37,5 @@ benefit without a baseline. Reuse the existing owning record rather than a new t
 Record source adoption with the instruction path and revision. Record first
 observed use separately, with the real task, behavior and evidence. Reading this
 file, passing a syntax check or receiving an assignment is not observed use.
+
+For an existing PR queue, follow the [shared delivery pattern](delivery-pattern.md).

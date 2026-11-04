@@ -1,12 +1,12 @@
 # =============================================================
-# Greenlight command: apply the approval label from a PR comment
+# Ship it command: apply the approval label from a PR comment
 # =============================================================
 # TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
 # Companion to the operator-label gate described in AUTOMERGE_GOTCHAS.md
 # ("The operator-label gate"). How the set fits together: MERGE_LANE_COMPANIONS.md.
 #
-# What it does: the operator comments the approval word ("greenlight", or the
-# short form "gl") on a PR, from any device, and this workflow applies the
+# What it does: the operator comments the approval phrase ("ship it", with historical
+# aliases "greenlight" and "gl") on a PR, from any device, and this workflow applies the
 # approval label, then asks your merge gate to re-evaluate immediately.
 # Useful when the operator is reviewing from a phone, where the label UI
 # takes four taps and a comment takes one line.
@@ -37,7 +37,7 @@
 # still lands, and the gate picks it up on the PR's next event (a new
 # commit, ready_for_review, or a manual label toggle in the UI).
 
-name: Greenlight comment command
+name: Ship it comment command
 
 on:
   issue_comment:
@@ -74,7 +74,7 @@ jobs:
           TRIMMED=$(printf '%s' "$BODY" | tr -d '\r' \
             | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
           # EDIT ME: the command words, if your approval label differs.
-          if [ "$TRIMMED" = "greenlight" ] || [ "$TRIMMED" = "gl" ]; then
+          if [ "$TRIMMED" = "ship it" ] || [ "$TRIMMED" = "greenlight" ] || [ "$TRIMMED" = "gl" ]; then
             echo "match=true" >> "$GITHUB_OUTPUT"
           else
             echo "Not an approval command; done."
@@ -95,7 +95,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           N: ${{ github.event.issue.number }}
-          APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
+          APPROVAL_LABEL: ship-it   # EDIT ME: your operator approval label
         run: |
           set -euo pipefail
           # Remove-then-add so a stale label is refreshed cleanly.

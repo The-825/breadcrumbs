@@ -723,3 +723,8 @@ Source: Jovan approved the wording correction and publication of the reviewed vi
 Ruling: CLAUDE.md routes exploration, directives, check-ins, user-surface verification and the next real transfer of work to docs/outcome-focused-collaboration.md. Reuse the existing continuity and retrospective rules; record source adoption separately from first observed use.
 Why: Candidate ideas must not silently become commitments, and an implementation receipt must not substitute for a usable outcome or repeated manual repair.
 Source: Maintainer direction to apply portable collaboration refinements across repositories. Existing privacy, ownership, review and release boundaries remain binding.
+
+## D-74 · 2026-11-04 · Carry ship-it authority through one delivery pattern
+Ruling: Use ship it as the human release instruction, retain historical technical aliases, and require fresh final-head checks, intended-target integration and merge-bound deployment receipts. Inventory all open PRs, including drafts, and refresh the target before each sibling integration.
+Why: Per-PR fixes and stale approval wording hide shared delivery failures and repeat settled permission requests.
+Source: Maintainer direction to reconcile, ship and deploy ready open work while preserving existing security, scope and funding boundaries.

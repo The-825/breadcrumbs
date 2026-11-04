@@ -36,7 +36,7 @@ on:
         description: The operator approval label.
         required: false
         type: string
-        default: greenlight
+        default: ship-it
       agent_prefix:
         description: Comma-separated branch namespaces the greenlight-all sweep filters on.
         required: false

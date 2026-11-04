@@ -93,10 +93,10 @@ the maintainer first.
 - PR body template: **Summary / Test plan / What's NOT in scope.** The last section is
   what keeps scope honest.
 - One concern per PR: a content addition OR repo infrastructure, not both.
-- **The approval label is the merge instruction, tiered by diff.** A PR whose changed
+- **"Ship it" is the release instruction, tiered by diff.** A PR whose changed
   files are ALL in the safe set (`docs/`, `checklists/`, `README.md`, the decisions
-  ledger, `SESSION_STATE.md`; no deletions or renames) merges on green with no label. Everything else waits
-  for the label, no matter how green. The policy is
+  ledger, `SESSION_STATE.md`; no deletions or renames) merges on green with no label. Other changes require current "ship it" authority, carried through in-scope repairs
+  using the ship-it label (historical greenlight stays compatible). The policy is
   `ci-kit/workflows/greenlight_tiers.py` (the gate runs the base branch's copy). Never
   merge by hand; the gate in `.github/workflows/` does the merging.
 - **Verify before you push.** Re-read the full diff, run the cheapest check that covers
