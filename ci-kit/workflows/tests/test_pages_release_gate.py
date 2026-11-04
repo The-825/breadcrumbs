@@ -9,6 +9,13 @@ SPEC.loader.exec_module(gate)
 
 
 class PagesReleaseTests(unittest.TestCase):
+    def test_publisher_serializes_without_interrupting_active_release(self):
+        root = Path(__file__).resolve().parents[3]
+        workflow = (root / '.github/workflows/pages.yml').read_text(encoding='utf-8')
+        self.assertIn('cancel-in-progress: false', workflow)
+        self.assertNotIn('cancel-in-progress: true', workflow)
+        self.assertLess(workflow.index('pages_release_gate.py --verify-sha'), workflow.index('actions/upload-pages-artifact@'))
+
     def setUp(self):
         self.repo = 'The-825/breadcrumbs'
         self.sha = 'a' * 40
