@@ -282,7 +282,7 @@ class BehaviorTests(unittest.TestCase):
     def test_workflow_filters_count_empty_state_and_reset(self):
         data = self.result["workflows"]
         self.check_filters("workflows", data["total"], data["topicCount"])
-        self.assertIn(data["topic"], data["selected"]["filters"])
+        self.assertIn(data["topic"].replace("-", " "), data["selected"]["filters"])
         self.assertEqual("#workflow-search", data["afterEmptyReset"]["focus"])
 
     def test_prompt_filters_count_empty_state_and_reset(self):

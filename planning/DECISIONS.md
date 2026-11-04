@@ -713,3 +713,8 @@ Source: arXiv 2610.01491v1 as assessed in the pinned StaleToast review (https://
 Ruling: Breadcrumbs presents two connected paths: apply From Archivist to Architect with the free companion, or explore the scoped memory method through a small handoff, workflows and prompts. Governing Agents That Act remains one operational essay. Jarvis is a historical case study. StaleToast remains the separate canonical catalog, with no consumer-pin or archive change from this presentation work.
 Why: Visitors need to understand the relationship and their next useful action without learning internal record codes or treating a source screen as validated practice.
 Source: Jovan's November 3 visitor UX request and book/companion clarification; bounded Fable design review and local Codex resolution. Candidate pages require their own release gate.
+
+## D-72 · 2026-11-03 · Describe continuity in everyday words
+Ruling: Visitor headings and actions describe picking up where you left off, clear notes for next time, and helping the next person get started. Technical filenames, source titles, registry identities and original prompt instructions remain intact.
+Why: Readers need the familiar idea of carrying work across a shift or session, without learning internal terminology first.
+Source: Jovan approved the wording correction and publication of the reviewed visitor UX candidates in this task.
