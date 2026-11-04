@@ -135,17 +135,14 @@ class CatalogTests(unittest.TestCase):
         self.assertTrue(all(item["detailedReviewCount"] == len(detailed) for item in self.repositories))
         self.assertGreater(len(detailed), 100)
 
-    def test_home_catalog_counts_load_from_data(self):
+    def test_home_routes_to_canonical_catalog_without_stale_counts(self):
         home = (SITE / "index.html").read_text(encoding="utf-8")
-        script = (SITE / "home.js").read_text(encoding="utf-8")
         llms = (SITE.parent / "llms.txt").read_text(encoding="utf-8")
-        self.assertIn('id="research-total">Loading</div>', home)
-        self.assertIn('id="repository-total">Loading</div>', home)
-        self.assertIn('src="home.js?v=', home)
-        self.assertIn('readCatalog("research")', script)
-        self.assertIn('readCatalog("repositories")', script)
-        self.assertIn('item.evidence_depth === "readme-screened"', script)
-        self.assertIn('item.evidence_depth === "source-assessment"', script)
+        self.assertNotIn('id="research-total"', home)
+        self.assertNotIn('id="repository-total"', home)
+        self.assertNotIn('src="home.js', home)
+        self.assertIn('href="https://the-825.github.io/staletoast/"', home)
+        self.assertIn("From Archivist to Architect", home)
         self.assertNotIn("311-repository ledger", llms)
 
     def test_table_headers_do_not_float_over_rows(self):
@@ -190,14 +187,11 @@ class CatalogTests(unittest.TestCase):
         self.assertIn('href="https://the-825.github.io/staletoast/claims.html#ci-017"', synthesis)
         self.assertIn("Evidence boundary", synthesis)
         for page in (index, research, papers, synthesis):
-            self.assertIn("Community</a>", page)
-        repositories = (SITE / "repositories.html").read_text(encoding="utf-8")
-        for page in (index, research, repositories, papers, synthesis):
-            for trail in ("Research", "Synthesis", "Repositories", "Claims", "Papers", "Method", "Jarvis", "Community"):
-                self.assertIn(f">{trail}</a>", page)
+            self.assertIn('href="papers.html"', page)
+            self.assertIn('href="https://the-825.github.io/staletoast/"', page)
 
-    def test_every_page_exposes_the_complete_trail_set(self):
-        trails = ("Research", "Synthesis", "Repositories", "Claims", "Papers", "Method", "Jarvis", "Community")
+    def test_every_page_exposes_visitor_navigation(self):
+        trails = ("Home", "Start here", "Workflows", "Prompts", "Book and essays", "StaleToast", "The 825")
         for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             for trail in trails:

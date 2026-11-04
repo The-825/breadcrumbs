@@ -708,3 +708,13 @@ Identity: First drafted on 2026-10-21 as D-68 in commit 05b689938397e1bd56b3c785
 Ruling: Add one public, synthetic, offline experiment in benchmarks/outcome-evidence/ that preserves each raw verdict, audits twelve invented outcomes against a separate typed observation registry with an allowlisted synthetic observer, and keeps unsupported or missing evidence at unknown. The shipped shared_work_checkpoint.py, its fixture and schema are unmodified; the experiment only calls the store as a baseline and reports acceptance as recording behavior, not outcome. Observer trust is a caller-supplied fixture assumption, not authentication or production enforcement, and no accuracy or efficiency claim follows.
 Why: The StaleToast C-125 assessment found free-text completion evidence cannot separate a self-report from an observation; a bounded fixture checks that distinction without changing a production contract.
 Source: arXiv 2610.01491v1 as assessed in the pinned StaleToast review (https://github.com/The-825/staletoast/blob/3d4715691857f8cf8d171377bdf1681236d25e0f/docs/staletoast-system-fit-appraisals-2026-11-03.md, entry C-125); benchmarks/outcome-evidence/README.md.
+
+## D-71 · 2026-11-03 · Explain the book companion and memory method at the visitor entry point
+Ruling: Breadcrumbs presents two connected paths: apply From Archivist to Architect with the free companion, or explore the scoped memory method through a small handoff, workflows and prompts. Governing Agents That Act remains one operational essay. Jarvis is a historical case study. StaleToast remains the separate canonical catalog, with no consumer-pin or archive change from this presentation work.
+Why: Visitors need to understand the relationship and their next useful action without learning internal record codes or treating a source screen as validated practice.
+Source: Jovan's November 3 visitor UX request and book/companion clarification; bounded Fable design review and local Codex resolution. Candidate pages require their own release gate.
+
+## D-72 · 2026-11-03 · Describe continuity in everyday words
+Ruling: Visitor headings and actions describe picking up where you left off, clear notes for next time, and helping the next person get started. Technical filenames, source titles, registry identities and original prompt instructions remain intact.
+Why: Readers need the familiar idea of carrying work across a shift or session, without learning internal terminology first.
+Source: Jovan approved the wording correction and publication of the reviewed visitor UX candidates in this task.
