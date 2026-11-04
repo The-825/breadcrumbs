@@ -1,0 +1,118 @@
+# =============================================================
+# Ship it command: apply the approval label from a PR comment
+# =============================================================
+# TEMPLATE. Copy to .github/workflows/ and adapt the constants marked EDIT ME.
+# Companion to the operator-label gate described in AUTOMERGE_GOTCHAS.md
+# ("The operator-label gate"). How the set fits together: MERGE_LANE_COMPANIONS.md.
+#
+# What it does: the operator comments the approval phrase ("ship it", with historical
+# aliases "greenlight" and "gl") on a PR, from any device, and this workflow applies the
+# approval label, then asks your merge gate to re-evaluate immediately.
+# Useful when the operator is reviewing from a phone, where the label UI
+# takes four taps and a comment takes one line.
+#
+# Human in the loop: this workflow only APPLIES the label and REQUESTS
+# re-evaluation. It never merges. The merge gate evaluates separately, with
+# its own fail-closed guards. The comment is the operator's approval action,
+# so authorization is the whole point of this file:
+#
+#   * Authorization is checked against the VERIFIED event payload
+#     (github.event.comment.user.login), never against anything written in
+#     the comment text. Only logins on the allowlist in the job-level `if:`
+#     pass; every other commenter is ignored before any step runs. Comment
+#     text is attacker-controlled on a public repo; the payload login is
+#     GitHub's word for who really commented.
+#   * The comment body never reaches a run: block via ${{ }} interpolation
+#     (a classic script-injection vector). It flows through env, where the
+#     shell treats it as data, not code.
+#
+# LIMITATION (read before adopting): labels added with the default
+# GITHUB_TOKEN emit no run-starting events (GitHub's recursion guard), so a
+# merge gate with a pull_request(labeled) trigger will NOT fire from this
+# workflow's label-add on its own. The re-evaluation step below closes that
+# gap IF your merge gate accepts a workflow_dispatch `pr_number` input and
+# resolves PR state (including labels) live rather than from a frozen event
+# payload; see MERGE_LANE_COMPANIONS.md, "The no-event label-add gotcha". If
+# your gate does not support that, delete the re-evaluation step: the label
+# still lands, and the gate picks it up on the PR's next event (a new
+# commit, ready_for_review, or a manual label toggle in the UI).
+
+name: Ship it comment command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+  actions: write   # required only for the re-evaluation step; drop it if you delete that step
+
+jobs:
+  greenlight:
+    name: Apply approval label from comment
+    runs-on: ubuntu-latest
+    # EDIT ME: replace the allowlist with the GitHub logins allowed to approve
+    # merges (typically the operator's account or two). Keep it an explicit
+    # list checked against the verified payload login; do not authorize from
+    # comment text, and be careful with author_association shortcuts
+    # (CONTRIBUTOR is earned by any merged PR).
+    if: |
+      github.event.issue.pull_request &&
+      contains(fromJSON('["mrjvnsmth"]'), github.event.comment.user.login)
+    steps:
+      - name: Parse command
+        id: cmd
+        env:
+          BODY: ${{ github.event.comment.body }}
+        run: |
+          set -euo pipefail
+          # Exact-match the whole trimmed comment. A comment that merely
+          # mentions the word ("looks close to greenlight-able") must not
+          # trigger; the command is the entire body.
+          TRIMMED=$(printf '%s' "$BODY" | tr -d '\r' \
+            | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          # EDIT ME: the command words, if your approval label differs.
+          if [ "$TRIMMED" = "ship it" ] || [ "$TRIMMED" = "greenlight" ] || [ "$TRIMMED" = "gl" ]; then
+            echo "match=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Not an approval command; done."
+            echo "match=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Acknowledge with +1 reaction
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          CID: ${{ github.event.comment.id }}
+        run: gh api -X POST "repos/$REPO/issues/comments/$CID/reactions" -f content=+1
+
+      - name: Apply approval label
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          N: ${{ github.event.issue.number }}
+          APPROVAL_LABEL: ship-it   # EDIT ME: your operator approval label
+        run: |
+          set -euo pipefail
+          # Remove-then-add so a stale label is refreshed cleanly.
+          gh pr edit "$N" --repo "$REPO" --remove-label "$APPROVAL_LABEL" 2>/dev/null || true
+          gh pr edit "$N" --repo "$REPO" --add-label "$APPROVAL_LABEL"
+
+      - name: Request re-evaluation
+        if: steps.cmd.outputs.match == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          N: ${{ github.event.issue.number }}
+          MERGE_GATE_WORKFLOW: automerge.yml   # EDIT ME: your merge gate's filename, or delete this step
+        run: |
+          set -uo pipefail
+          # Re-evaluate now instead of waiting for the PR's next event.
+          # Requires your merge gate to accept a `pr_number` dispatch input
+          # and resolve PR state (including the label just added) live.
+          # Harmless no-op (via || true) if your gate lacks that input.
+          gh workflow run "$MERGE_GATE_WORKFLOW" --repo "$REPO" -f pr_number="$N" || true

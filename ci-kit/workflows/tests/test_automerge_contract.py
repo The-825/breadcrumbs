@@ -42,7 +42,7 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
     number: 12, draft, state: 'open',
     base: { ref: baseRef, repo: { full_name: 'The-825/breadcrumbs' } },
     head: { ref, sha: currentHead, repo: { full_name: headRepo } },
-    labels: labeled ? [{ name: 'greenlight' }] : [],
+    labels: labeled ? [{ name: opts.label || 'greenlight' }] : [],
   };
   const github = {
     paginate: async (fn, params) => {
@@ -64,7 +64,7 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
         { event: 'committed', committer: { date: '2020-01-01T00:00:00Z' } },
         { event: 'labeled', label: { name: 'not-greenlight-yet' }, created_at: T(59) },
         ...timeline.labeledAt.map(created_at => ({ event: 'labeled',
-          label: { name: 'greenlight' }, created_at })),
+          label: { name: timeline.eventLabel || opts.label || 'greenlight' }, created_at })),
         ...timeline.forcePushes.map(created_at => ({ event: 'head_ref_force_pushed',
           created_at })),
       ];
@@ -96,8 +96,8 @@ async function scenario(ref, draft, labeled, moveHead, mergeErrorStatus = null,
       checks: { listForRef: async ({ ref, check_name }) => {
         if (ref !== 'sha-checked') throw new Error('wrong check SHA');
         if (moveHead) currentHead = 'sha-new';
-        return { data: { check_runs: [{ id: 1, name: check_name,
-          status: 'completed', conclusion: 'success' }] } };
+        return { data: { check_runs: opts.missingCheck ? [] : [{ id: 1, name: check_name,
+          status: opts.checkStatus || 'completed', conclusion: opts.checkConclusion || 'success' }] } };
       } },
     },
   };
@@ -195,6 +195,21 @@ async function reconciliation() {
 
 (async () => {
   await reconciliation();
+  for (const opts of [
+    {label:'ship-it', missingCheck:true},
+    {label:'ship-it', checkStatus:'in_progress'},
+    {label:'ship-it', checkConclusion:'failure'},
+  ]) {
+    const result = await scenario('claude/example',false,true,false,null,
+      DEFAULT_TIMELINE,'The-825/breadcrumbs','main',opts);
+    if (result.merged) throw new Error('ship-it bypassed a missing or failed check');
+  }
+  const crossLabel = await scenario('claude/example',false,true,false,null,
+    {...DEFAULT_TIMELINE,eventLabel:'greenlight'},'The-825/breadcrumbs','main',{label:'ship-it'});
+  if (crossLabel.merged) throw new Error('another label refreshed ship-it');
+  const draftShip = await scenario('claude/example',true,true,false,null,
+    DEFAULT_TIMELINE,'The-825/breadcrumbs','main',{label:'ship-it'});
+  if (draftShip.merged) throw new Error('ship-it bypassed draft reconciliation');
   for (const ref of ['claude/example', 'codex/example']) {
     const ready = await scenario(ref, false, true, false);
     if (!ready.merged || ready.attemptedSha !== 'sha-checked')
@@ -249,10 +264,12 @@ async function reconciliation() {
     ['more than 100 timeline events', { runs: [T(10)], labeledAt: [T(20)], filler: 150 }, true],
   ];
   for (const [name, spec, expected] of freshness) {
-    const result = await scenario('claude/example', false, true, false, null,
-      { forcePushes: [], filler: 0, ...spec });
-    if (result.merged !== expected)
-      throw new Error(`freshness: ${name}: expected merged=${expected}`);
+    for (const label of ['ship-it', 'greenlight']) {
+      const result = await scenario('claude/example', false, true, false, null,
+        { forcePushes: [], filler: 0, ...spec }, 'The-825/breadcrumbs', 'main', {label});
+      if (result.merged !== expected)
+        throw new Error(`freshness ${label}: ${name}: expected merged=${expected}`);
+    }
   }
 })().catch(e => { console.error(e); process.exitCode = 1; });
 """
