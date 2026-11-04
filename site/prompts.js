@@ -23,12 +23,35 @@ function renderPromptArticle() {
   });
   article.focus({preventScroll:true}); article.scrollIntoView({block:"start"});
 }
+function filterPrompts(rows, query, category) {
+  const needle = String(query || "").trim().toLowerCase();
+  return rows.filter(row => (!category || row.category === category) && JSON.stringify([row.title, row.purpose, row.category, row.template]).toLowerCase().includes(needle));
+}
+function describePromptFilters(query, category) {
+  const parts = [];
+  const needle = String(query || "").trim();
+  if (needle) parts.push(`words "${needle}"`);
+  if (category) parts.push(`category "${promptCategories[category] || category}"`);
+  return parts.length ? `Filtered by ${parts.join(" and ")}.` : "";
+}
 function renderPrompts() {
-  const query = document.querySelector("#prompt-search").value.trim().toLowerCase();
+  const query = document.querySelector("#prompt-search").value;
   const category = document.querySelector("#prompt-category").value;
-  const rows = promptData.filter(row => (!category || row.category === category) && JSON.stringify([row.title, row.purpose, row.category, row.template]).toLowerCase().includes(query));
+  const rows = filterPrompts(promptData, query, category);
+  const active = describePromptFilters(query, category);
   document.querySelector("#prompt-summary").textContent = `${rows.length} of ${promptData.length} reviewed prompt templates.`;
+  const filters = document.querySelector("#prompt-filters");
+  filters.textContent = active;
+  filters.hidden = !active;
+  document.querySelector("#prompt-empty").hidden = rows.length > 0;
   document.querySelector("#prompt-cards").innerHTML = rows.map(row => `<article class="card workflow-card"><p class="eyebrow">${promptCategories[row.category]}</p><h2>${promptEscape(row.title)}</h2><p>${promptEscape(row.purpose)}</p><a class="button secondary" href="#prompt=${encodeURIComponent(row.id)}">Open prompt</a></article>`).join("");
+}
+function resetPromptFilters() {
+  const search = document.querySelector("#prompt-search");
+  search.value = "";
+  document.querySelector("#prompt-category").value = "";
+  renderPrompts();
+  search.focus();
 }
 async function loadPrompts() {
   try {
@@ -37,6 +60,8 @@ async function loadPrompts() {
     promptData = await response.json();
     document.querySelector("#prompt-search").addEventListener("input", renderPrompts);
     document.querySelector("#prompt-category").addEventListener("change", renderPrompts);
+    document.querySelector("#prompt-reset").addEventListener("click", resetPromptFilters);
+    document.querySelector("#prompt-empty-reset").addEventListener("click", resetPromptFilters);
     window.addEventListener("hashchange", renderPromptArticle);
     renderPrompts(); renderPromptArticle();
   } catch (error) {

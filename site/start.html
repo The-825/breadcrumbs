@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Start with one useful handoff | StaleToast</title>
-  <meta name="description" content="Copy free Breadcrumbs templates, preserve one task's state, and test whether a fresh agent session can find its next step.">
-  <link rel="stylesheet" href="app.css?v=20260828-5">
+  <title>Start with one useful handoff | Breadcrumbs</title>
+  <meta name="description" content="Copy a free Breadcrumbs template, preserve one task's state, and test whether a fresh agent session can find its next step. A hands-on start for readers of From Archivist to Architect.">
+  <link rel="stylesheet" href="app.css?v=20261103-1">
 </head>
 <body class="trail-bg">
   <a class="skip" href="#main">Skip to content</a>
-  <header><div class="nav"><a class="brand" href="index.html">Bread<span>crumbs</span></a><nav aria-label="Primary"><a href="prompts.html">Prompts</a><a href="https://the-825.github.io/staletoast/charts.html">Hot 100</a><a href="workflows.html">Workflows</a><a href="index.html">Trail Map</a><a aria-current="page" href="start.html">Start here</a><a href="https://the-825.github.io/staletoast/research.html">Research</a><a href="https://the-825.github.io/staletoast/repositories.html">Repositories</a><a href="https://the-825.github.io/staletoast/methodology.html">Method</a></nav></div></header>
+  <header><div class="nav"><a class="brand" href="index.html">Bread<span>crumbs</span></a><nav aria-label="Primary"><a href="index.html">Home</a><a aria-current="page" href="start.html">Start here</a><a href="workflows.html">Workflows</a><a href="prompts.html">Prompts</a><a href="papers.html">Book and essays</a><a href="https://the-825.github.io/staletoast/">StaleToast</a><a href="https://the825.co/">The 825</a></nav></div></header>
   <main id="main">
     <p class="eyebrow">Your first useful result</p>
     <h1>Leave a handoff the next session can use.</h1>
     <p class="lede">A new agent session should find your task, its current state, and the next action without making you repeat the whole conversation. Begin with a single task and a file you control.</p>
+    <p>This is the hands-on start for readers of <a href="https://the825.co/archivist-to-architect/"><em>From Archivist to Architect</em></a> by Mr. Jovan Smith, and for anyone who wants the method without the book. The book explains the architecture and the reasoning. This page applies one small piece of it: a short note that points to the decision, the source and the next step. Breadcrumbs is its <a href="https://the825.co/archivist-to-architect/#companion">free companion</a>, and no purchase is needed.</p>
     <p class="note">Ships: editable Markdown templates under the MIT license. Assumes: a text editor and a repository you own. No install, account, or API key required for this starter. Your agent must be told to read the file; copying it does not create automatic memory.</p>
+    <p>Two filenames below look technical but are just plain text files. <code>SESSION_STATE.md</code> is your handoff note, and the name is a convention your tools can find. <code>AGENTS.md</code> or <code>CLAUDE.md</code> is the file your coding tool reads for standing rules, and each tool expects its own name. A <code>.md</code> file opens in any text editor.</p>
     <section class="section" aria-labelledby="starter-title">
       <h2 id="starter-title">1. Copy one file into your project.</h2>
       <p><a class="button" href="https://github.com/The-825/breadcrumbs/blob/main/templates/SESSION_STATE_TEMPLATE.md">Open the handoff template</a></p>
@@ -51,13 +53,13 @@
     <section class="section" aria-labelledby="next-title">
       <h2 id="next-title">Choose your next trail.</h2>
       <div class="grid">
-        <article class="card"><h3>Understand the evidence</h3><p>StaleToast is the public research guide. Use it to inspect a claim's sources and limits before treating it as a design requirement.</p><a href="https://the-825.github.io/staletoast/claims.html">Explore bounded claims</a></article>
+        <article class="card"><h3>Browse workflows and prompts</h3><p>Pick a problem, read a worked example, and copy a prompt with named inputs and a result check.</p><a href="workflows.html">Find a workflow</a><br><a href="prompts.html">Open the prompt library</a></article>
         <article class="card"><h3>Add enforcement</h3><p>Breadcrumbs includes runnable guards and self-tests. Each file states its assumptions; adapt the checks to your project before enabling them.</p><a href="https://github.com/The-825/breadcrumbs/tree/main/ci-kit">Inspect the CI kit</a></article>
         <article class="card"><h3>Study the patterns</h3><p>The essays explain mechanisms, including patterns that are not shipped as software. Check each artifact's status before planning an integration.</p><a href="https://github.com/The-825/breadcrumbs/blob/main/docs/README.md">Read the pattern guide</a></article>
       </div>
     </section>
     <section class="section"><p class="note">The kit is public. Keep credentials, personal information, and private operational details out of public issues and contributions. Copying the templates does not require sending your task or handoff to this site.</p></section>
   </main>
-  <footer>StaleToast is the public evidence guide. Breadcrumbs is the free copy-and-adapt kit. <a href="https://github.com/The-825/breadcrumbs/blob/main/LICENSE">MIT license</a>.</footer>
+  <footer>Breadcrumbs is the free copy-and-adapt companion to the book. <a href="https://the-825.github.io/staletoast/">StaleToast</a> is the separate research and repository library. <a href="https://github.com/The-825/breadcrumbs/blob/main/LICENSE">MIT license</a>.</footer>
 </body>
 </html>
