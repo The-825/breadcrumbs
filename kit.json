@@ -387,6 +387,13 @@
       "selftest": "python3 benchmarks/orientation/benchmark.py selftest"
     },
     {
+      "path": "benchmarks/outcome-evidence/benchmark.py",
+      "kind": "benchmark",
+      "what": "Experimental synthetic check that keeps each raw verdict, audits twelve invented outcomes against a separate typed observation registry, and compares recording behavior of the shipped checkpoint store without treating acceptance as success.",
+      "assumes": "Python 3.9+ standard library only; synthetic fixtures with caller-supplied observer trust; not observer authentication or production enforcement.",
+      "selftest": "python3 benchmarks/outcome-evidence/benchmark.py --selftest"
+    },
+    {
       "path": "templates/workflow-worksheets/task-outcome.md",
       "kind": "pattern",
       "what": "Task-first worksheet with separate work and validation, dependencies, remaining work, recovery and parent acceptance.",

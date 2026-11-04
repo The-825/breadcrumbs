@@ -1,0 +1,230 @@
+{
+  "schema": "outcome-evidence-cases-v1",
+  "notice": "Twelve fictional records. required_value is the task condition, not a grader verdict. claimed_evidence_kind is an untrusted pasted label and is never used to decide an outcome.",
+  "cases": [
+    {
+      "case_id": "case-01",
+      "run_id": "run-01",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent reports the export file was written.",
+      "claimed_evidence_kind": "environment_state",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-01",
+          "condition": "export_written is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": ["obs-01"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-02",
+      "run_id": "run-02",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent reports the queue is drained.",
+      "claimed_evidence_kind": "environment_state",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-02",
+          "condition": "unread_queue_depth is the integer 0",
+          "value_type": "int",
+          "required_value": 0,
+          "observation_ids": ["obs-02"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-03",
+      "run_id": "run-03",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent reports the release label was set.",
+      "claimed_evidence_kind": "artifact",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-03",
+          "condition": "release_label equals v1-synthetic",
+          "value_type": "string",
+          "required_value": "v1-synthetic",
+          "observation_ids": ["obs-03"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-04",
+      "run_id": "run-04",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent reports the lock was released.",
+      "claimed_evidence_kind": "action_result",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-04",
+          "condition": "lock_owner is explicitly null",
+          "value_type": "null",
+          "required_value": null,
+          "observation_ids": ["obs-04"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-05",
+      "run_id": "run-05",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent says the report was sent and labels this environment state.",
+      "claimed_evidence_kind": "environment_state",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-05",
+          "condition": "report_sent is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": []
+        }
+      ]
+    },
+    {
+      "case_id": "case-06",
+      "run_id": "run-06",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent memory notes the migration finished.",
+      "claimed_evidence_kind": "agent_memory",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-06",
+          "condition": "migration_finished is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": ["obs-06"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-07",
+      "run_id": "run-07",
+      "raw_verdict": "passed",
+      "evidence_text": "A statement says the label matches.",
+      "claimed_evidence_kind": "statement",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-07",
+          "condition": "release_label equals v1-synthetic",
+          "value_type": "string",
+          "required_value": "v1-synthetic",
+          "observation_ids": ["obs-07"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-08",
+      "run_id": "run-08",
+      "raw_verdict": "failed",
+      "evidence_text": "Automated check failed on exact string comparison.",
+      "claimed_evidence_kind": "none",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-08",
+          "condition": "confirmation_text equals Done",
+          "value_type": "string",
+          "required_value": "Done",
+          "observation_ids": ["obs-08"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-09",
+      "run_id": "run-09",
+      "raw_verdict": "failed",
+      "evidence_text": "Automated check failed on answer format.",
+      "claimed_evidence_kind": "none",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-09",
+          "condition": "form_submitted is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": ["obs-09"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-10",
+      "run_id": "run-10",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent claims 100 percent complete.",
+      "claimed_evidence_kind": "final_answer",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-10",
+          "condition": "ticket_closed is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": []
+        }
+      ]
+    },
+    {
+      "case_id": "case-11",
+      "run_id": "run-11",
+      "raw_verdict": "passed",
+      "evidence_text": "Agent claims 100 percent complete and cites an observation.",
+      "claimed_evidence_kind": "environment_state",
+      "claimed_progress_percent": 100,
+      "requirements": [
+        {
+          "requirement_id": "req-11",
+          "condition": "ticket_closed is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": ["obs-11-missing"]
+        }
+      ]
+    },
+    {
+      "case_id": "case-12",
+      "run_id": "run-12",
+      "raw_verdict": "unknown",
+      "evidence_text": "",
+      "claimed_evidence_kind": "none",
+      "claimed_progress_percent": null,
+      "requirements": [
+        {
+          "requirement_id": "req-12",
+          "condition": "backup_created is true",
+          "value_type": "bool",
+          "required_value": true,
+          "observation_ids": []
+        }
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "correction_id": "corr-08",
+      "case_id": "case-08",
+      "run_id": "run-08",
+      "raw_verdict": "failed",
+      "corrected_verdict": "passed",
+      "code": "strict_string_mismatch",
+      "support_observation_ids": ["obs-08"]
+    },
+    {
+      "correction_id": "corr-09",
+      "case_id": "case-09",
+      "run_id": "run-09",
+      "raw_verdict": "failed",
+      "corrected_verdict": "passed",
+      "code": "format_mismatch",
+      "support_observation_ids": ["obs-09"]
+    }
+  ]
+}
