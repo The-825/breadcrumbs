@@ -718,3 +718,8 @@ Source: Jovan's November 3 visitor UX request and book/companion clarification; 
 Ruling: Visitor headings and actions describe picking up where you left off, clear notes for next time, and helping the next person get started. Technical filenames, source titles, registry identities and original prompt instructions remain intact.
 Why: Readers need the familiar idea of carrying work across a shift or session, without learning internal terminology first.
 Source: Jovan approved the wording correction and publication of the reviewed visitor UX candidates in this task.
+
+## D-73 · 2026-11-04 · Route outcome-focused collaboration through the loaded instructions
+Ruling: CLAUDE.md routes exploration, directives, check-ins, user-surface verification and the next real transfer of work to docs/outcome-focused-collaboration.md. Reuse the existing continuity and retrospective rules; record source adoption separately from first observed use.
+Why: Candidate ideas must not silently become commitments, and an implementation receipt must not substitute for a usable outcome or repeated manual repair.
+Source: Maintainer direction to apply portable collaboration refinements across repositories. Existing privacy, ownership, review and release boundaries remain binding.

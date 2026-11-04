@@ -177,6 +177,9 @@ Applies to docs, templates, code comments, PR bodies, and commit messages.
 
 ## SESSION EFFICIENCY
 
+Follow [outcome-focused collaboration](docs/outcome-focused-collaboration.md) when
+exploring, acting on a directive, checking in, verifying a result or passing work on.
+
 - Grep to locate, then read the narrow range. Do not read a whole file when 30 lines
   answer the question.
 - Reuse a prior read only while its source revision and dependent assumptions are
