@@ -39,3 +39,9 @@ the gate. Historical receipts and technical filenames are not rewritten.
 During the first installation, the existing gate may require its historical
 label to approve the policy change itself. Record that compatibility bootstrap;
 it is not a request for a different human phrase or a bypass of freshness.
+
+Serialize Pages publishing without canceling an active release. Keep the
+current-main check after the queue wait, before upload and deployment. A stale
+artifact must stop rather than overwrite a newer release. After a deployment
+failure, inspect its actual external state before one bounded recovery; do not
+blindly resubmit or interrupt another active job.

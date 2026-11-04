@@ -40,7 +40,7 @@ jobs:
     if: needs.resolve.outputs.publish == 'true'
     concurrency:
       group: pages
-      cancel-in-progress: true
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
