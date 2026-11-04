@@ -1,0 +1,79 @@
+{
+  "schema": "outcome-evidence-observations-v1",
+  "notice": "Synthetic registry. Observer trust is a caller-supplied fixture assumption, not authentication of a real observer.",
+  "observer_allowlist": ["synthetic-observer-a", "synthetic-observer-b"],
+  "observations": [
+    {
+      "observation_id": "obs-01",
+      "observer": "synthetic-observer-a",
+      "case_id": "case-01",
+      "run_id": "run-01",
+      "requirement_id": "req-01",
+      "category": "environment_state",
+      "observed_value": true
+    },
+    {
+      "observation_id": "obs-02",
+      "observer": "synthetic-observer-b",
+      "case_id": "case-02",
+      "run_id": "run-02",
+      "requirement_id": "req-02",
+      "category": "environment_state",
+      "observed_value": 0
+    },
+    {
+      "observation_id": "obs-03",
+      "observer": "synthetic-observer-a",
+      "case_id": "case-03",
+      "run_id": "run-03",
+      "requirement_id": "req-03",
+      "category": "artifact",
+      "observed_value": "v1-synthetic"
+    },
+    {
+      "observation_id": "obs-04",
+      "observer": "synthetic-observer-b",
+      "case_id": "case-04",
+      "run_id": "run-04",
+      "requirement_id": "req-04",
+      "category": "action_result",
+      "observed_value": null
+    },
+    {
+      "observation_id": "obs-06",
+      "observer": "synthetic-observer-a",
+      "case_id": "case-06",
+      "run_id": "run-06",
+      "requirement_id": "req-06",
+      "category": "agent_memory",
+      "observed_value": true
+    },
+    {
+      "observation_id": "obs-07",
+      "observer": "synthetic-observer-b",
+      "case_id": "case-07",
+      "run_id": "run-07",
+      "requirement_id": "req-07",
+      "category": "statement",
+      "observed_value": "v1-synthetic"
+    },
+    {
+      "observation_id": "obs-08",
+      "observer": "synthetic-observer-a",
+      "case_id": "case-08",
+      "run_id": "run-08",
+      "requirement_id": "req-08",
+      "category": "artifact",
+      "observed_value": "Done"
+    },
+    {
+      "observation_id": "obs-09",
+      "observer": "synthetic-observer-b",
+      "case_id": "case-09",
+      "run_id": "run-09",
+      "requirement_id": "req-09",
+      "category": "environment_state",
+      "observed_value": true
+    }
+  ]
+}

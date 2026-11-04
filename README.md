@@ -121,6 +121,11 @@ across model tiers, while reporting accuracy, token use, and latency separately.
 fixtures are synthetic, and live inference requires a separate execution-time cost
 confirmation.
 
+A second, smaller [outcome-evidence experiment](benchmarks/outcome-evidence/README.md)
+checks twelve invented records so that a claim of success stays `unknown` unless a
+separately supplied typed observation backs it. It is synthetic and experimental, not
+observer authentication or production enforcement.
+
 ## Two of my own sessions, colliding
 
 The forgetting that actually costs money is not a session forgetting me. It is my
