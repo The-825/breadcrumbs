@@ -728,3 +728,8 @@ Source: Maintainer direction to apply portable collaboration refinements across 
 Ruling: Use ship it as the human release instruction, retain historical technical aliases, and require fresh final-head checks, intended-target integration and merge-bound deployment receipts. Inventory all open PRs, including drafts, and refresh the target before each sibling integration.
 Why: Per-PR fixes and stale approval wording hide shared delivery failures and repeat settled permission requests.
 Source: Maintainer direction to reconcile, ship and deploy ready open work while preserving existing security, scope and funding boundaries.
+
+## D-75 · 2026-11-07 · Scope sync publishing to an explicit App
+Ruling: Template sync renders without writes by default. Publishing requires explicit opt-in and a repository-scoped GitHub App token with contents, pull requests and workflows write permissions. No built-in-token fallback. Existing human release gates remain.
+Why: Workflow-file updates need a credential capability that the built-in token does not supply; implicit publishing would repeat failures or broaden authority unnoticed.
+Source: Maintainer instruction to build the dedicated CI sync authentication path after inspecting the existing workflow. App installation, secrets and activation are separate from source preparation.
