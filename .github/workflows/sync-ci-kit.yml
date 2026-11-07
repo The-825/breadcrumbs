@@ -24,7 +24,21 @@ name: Sync CI kit templates (reusable)
 
 on:
   workflow_call:
+    secrets:
+      sync_app_private_key:
+        description: Private key for the explicitly configured sync App.
+        required: false
     inputs:
+      publish_pr:
+        description: Enable branch pushes and PR creation after App setup.
+        type: boolean
+        required: false
+        default: false
+      sync_app_client_id:
+        description: Client ID of the approved GitHub App.
+        type: string
+        required: false
+        default: ""
       approved_logins:
         description: >
           JSON array string of GitHub logins allowed to approve through the
@@ -59,24 +73,28 @@ on:
         default: chore/sync-ci-kit
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   sync:
     name: Render templates and sync
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: ci-kit-sync-${{ github.repository }}
+      cancel-in-progress: false
     steps:
       - name: Checkout caller repo
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Checkout breadcrumbs (template source)
         uses: actions/checkout@v4
         with:
           repository: The-825/breadcrumbs
           ref: ${{ inputs.source_ref }}
+          persist-credentials: false
           path: _cikit-src
           sparse-checkout: |
             ci-kit/workflows
@@ -183,16 +201,52 @@ jobs:
         id: diff
         run: |
           set -uo pipefail
-          if git diff --quiet -- .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml; then
+          if [[ -z "$(git status --porcelain -- .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml)" ]]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Open or update the sync PR
-        if: steps.diff.outputs.changed == 'true'
+      - name: Report preview mode
+        if: steps.diff.outputs.changed == 'true' && !inputs.publish_pr
+        run: |
+          echo "Templates differ. Preview only: configure the App and explicitly enable publish_pr to open a PR." >> "$GITHUB_STEP_SUMMARY"
+          git diff --stat -- .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml
+
+      - name: Validate publishing configuration
+        if: steps.diff.outputs.changed == 'true' && inputs.publish_pr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APP_CLIENT_ID: ${{ inputs.sync_app_client_id }}
+          APP_PRIVATE_KEY: ${{ secrets.sync_app_private_key }}
+          SYNC_BRANCH: ${{ inputs.sync_branch }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$APP_CLIENT_ID" || -z "$APP_PRIVATE_KEY" ]]; then
+            echo "::error::Publishing requires the configured sync App client ID and private key. No built-in token fallback."
+            exit 1
+          fi
+          if [[ "$SYNC_BRANCH" != chore/* ]] || ! git check-ref-format "refs/heads/$SYNC_BRANCH"; then
+            echo "::error::sync_branch must be a valid branch under chore/."
+            exit 1
+          fi
+
+      - name: Create repository-scoped App token
+        if: steps.diff.outputs.changed == 'true' && inputs.publish_pr
+        id: sync-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
+        with:
+          client-id: ${{ inputs.sync_app_client_id }}
+          private-key: ${{ secrets.sync_app_private_key }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-workflows: write
+
+      - name: Open or update the sync PR
+        if: steps.diff.outputs.changed == 'true' && inputs.publish_pr
+        env:
+          GH_TOKEN: ${{ steps.sync-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ inputs.sync_branch }}
         run: |
@@ -200,18 +254,19 @@ jobs:
           git config user.name "ci-kit-sync"
           git config user.email "actions@github.com"
 
+          # Capture the remote tip for an explicit lease; never overwrite a concurrent push.
+          expected=$(git -c credential.helper= -c 'credential.helper=!gh auth git-credential' ls-remote origin "refs/heads/$BRANCH" | cut -f1)
           git checkout -B "$BRANCH"
           git add .github/workflows/greenlight-all.yml .github/workflows/greenlight-command.yml
           git commit -m "ci: sync greenlight workflows from breadcrumbs ci-kit"
-          git push -u origin "$BRANCH" --force-with-lease
+          git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push -u origin "$BRANCH" --force-with-lease="refs/heads/$BRANCH:$expected"
 
-          if gh pr view "$BRANCH" --repo "$REPO" >/dev/null 2>&1; then
+          existing=$(gh pr list --repo "$REPO" --head "$BRANCH" --state open --json number --jq 'length')
+          if [[ "$existing" != 0 ]]; then
             echo "Existing sync PR updated (new commit pushed to $BRANCH)."
           else
-            gh pr create --repo "$REPO" \
-              --head "$BRANCH" \
-              --title "ci: sync CI kit templates from breadcrumbs" \
-              --body "$(cat <<'BODY'
+            body_file="$RUNNER_TEMP/ci-kit-sync-pr.md"
+            cat > "$body_file" <<'BODY'
           Rendered from The-825/breadcrumbs ci-kit/workflows/{greenlight-all,greenlight-command}.yml
           via .github/workflows/sync-ci-kit.yml. Diffs the canonical templates against this
           repo's copies and opens this PR only when they differ.
@@ -227,5 +282,8 @@ jobs:
           ## What's NOT in scope
           Any other workflow file. Only greenlight-all.yml and greenlight-command.yml are synced.
           BODY
-          )"
+            gh pr create --repo "$REPO" \
+              --head "$BRANCH" \
+              --title "ci: sync CI kit templates from breadcrumbs" \
+              --body-file "$body_file"
           fi
