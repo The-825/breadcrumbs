@@ -35,6 +35,13 @@ jobs:
         with:
           fetch-depth: 0   # the provenance guard reads a commit range
 
+      # kit.json promises Python 3.9+. Installing the floor first leaves
+      # python3.9 on PATH; the second setup makes 3.11 the default python3.
+      - name: Set up Python 3.9 (the kit's stated floor)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -46,6 +53,11 @@ jobs:
 
       - name: Guard self-tests
         run: python3 -m unittest discover -s ci-kit/guards/tests
+
+      # The self-tests prove each guard bites a fixture. This step is the
+      # guards actually scanning this repo, context budget included.
+      - name: Guards over the repo tree
+        run: bash ci-kit/run_guards.sh
 
       - name: Migration runner tests
         run: python3 -m unittest discover -s ci-kit/migrations/tests
@@ -98,7 +110,26 @@ jobs:
           python3 ci-kit/guards/guard_context_budget.py --selftest
           python3 benchmarks/orientation/benchmark.py selftest
           python3 benchmarks/outcome-evidence/benchmark.py --selftest
+          python3 benchmarks/outcome-evidence/test_benchmark.py
           python3 benchmarks/orientation/test_hf_runner.py
+
+      # The six-case runner writes its packet and results files into the
+      # working directory, so these run from inside the example.
+      - name: Intake and follow-up example checks
+        working-directory: templates/intake-follow-up
+        run: |
+          node test.js
+          node six-case-check.js
+          node recovery-test.js
+
+      # A floor nobody runs is a guess. One Path.write_text(newline=...) call,
+      # a 3.10 feature, sat behind the 3.9 claim until this step existed.
+      - name: Python 3.9 floor
+        run: |
+          python3.9 --version
+          python3.9 ci-kit/kit_manifest_check.py --run-selftests
+          python3.9 -m unittest discover -s site -p 'test_*.py'
+          python3.9 scripts/workflow_reproduction.py --check
 
       - name: PII guard over the repo tree
         run: git ls-files | grep -v 'bad_fixtures' | xargs python3 ci-kit/guards/guard_no_pii_in_fixtures.py

@@ -733,3 +733,8 @@ Source: Maintainer direction to reconcile, ship and deploy ready open work while
 Ruling: Template sync renders without writes by default. Publishing requires explicit opt-in and a repository-scoped GitHub App token with contents, pull requests and workflows write permissions. No built-in-token fallback. Existing human release gates remain.
 Why: Workflow-file updates need a credential capability that the built-in token does not supply; implicit publishing would repeat failures or broaden authority unnoticed.
 Source: Maintainer instruction to build the dedicated CI sync authentication path after inspecting the existing workflow. App installation, secrets and activation are separate from source preparation.
+
+## D-76 · 2026-11-10 · Enforce what the manifest claims
+Ruling: CI now runs the guards over this repo's own tree, runs every manifest selftest again on Python 3.9, and fails when a direct child of `templates/`, `ci-kit/` or `benchmarks/` has no `kit.json` row or problem route. A valid-UTF-8 guard joins the file-scan set. The 3.9 floor stays as stated.
+Why: Three claims had no check behind them. The context budget was documented as build-failing while CI only ran its selftest, a 3.10-only call sat behind the 3.9 claim, and fifteen shipped artifacts had no manifest row.
+Source: Maintainer go-ahead for the `ci:` follow-up to the 2026-11-10 codebase review.

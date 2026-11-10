@@ -15,7 +15,7 @@ each file is currently carrying.
 |---|---|---:|---|
 | `CLAUDE.md` | kernel | 220 | Binding rules plus the repo map. Reference detail routes to docs/. |
 | `SESSION_STATE.md` | handoff | 90 | Rolling handoff; refreshed on checkpoint, never accumulated. |
-| `llms.txt` | router | 130 | The agent-facing map. Route by problem, one line per destination. |
+| `llms.txt` | router | 140 | The agent-facing map. Route by problem, one line per destination. Raised from 130 to route the memory desk, the single-file templates, and the intake example, which had no route. |
 
 Not budgeted, deliberately: `README.md` (a reader lands on it by choice, it is
 not attached to every session) and `kit.json` (machine inventory, read by tools

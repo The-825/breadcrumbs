@@ -1,6 +1,6 @@
 """Guard self-tests: every guard bites a bad fixture.
 
-For each of the six CI lint guards, run it (as a subprocess, the same way CI
+For each file-scan CI lint guard, run it (as a subprocess, the same way CI
 does) against a deliberately-bad fixture and assert a non-zero exit, then
 against a clean fixture and assert exit 0. This is the proof the guards
 actually block. A guard that never fails is worse than no guard, so "every
@@ -25,6 +25,7 @@ CASES = {
     "guard_no_magic_limit.py": ("bad_limit.sql", "good_limit.sql"),
     "guard_no_raw_create_view.py": ("bad_create_view.sql", "good_select.sql"),
     "guard_no_pii_in_fixtures.py": ("bad_pii_fixture.json", "good_pii_fixture.json"),
+    "guard_valid_utf8.py": ("bad_encoding.md", "good_encoding.md"),
 }
 
 

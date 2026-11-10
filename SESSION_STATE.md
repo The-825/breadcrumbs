@@ -8,52 +8,45 @@
 Last refreshed: 2026-11-10 UTC by Claude Code
 Checkpoint status: partly verified (see "Carried forward" below)
 Owning repository: `The-825/breadcrumbs`
-Source revisions: `origin/main` `28749d5`
+Source revisions: `origin/main` `50d7a4b`
 
 ## Recovery pointer
 
-- Owning record: the open PR from `claude/focused-ramanujan-1g7m5g`.
-- Next action: ship that PR, then open the `ci:` follow-up listed under next steps.
+- Owning record: the open `ci:` PR from `claude/focused-ramanujan-1g7m5g`.
+- Next action: the PR changes `ci-kit/` and `.github/workflows/`, so it waits for
+  the maintainer's ship-it label after checks pass.
 
 ## Current state
 
-- Active branch: `claude/focused-ramanujan-1g7m5g`, cut from `origin/main` `28749d5`.
-- In flight: a docs-only refresh. This handoff, the D-75 header encoding in
-  `planning/DECISIONS.md`, two missing rows in `docs/README.md`, and the README's
-  description of the research archive.
-- Checks on `28749d5`, run locally 2026-11-10: guard, migration, workflow and site
-  unit tests, `ci-kit/run_guards.sh`, `kit_manifest_check.py`, the five `scripts/`
-  `--check` commands and the memory-desk check all pass.
+- Active branch: `claude/focused-ramanujan-1g7m5g`, cut from `origin/main` `50d7a4b`.
+- In flight (D-76): CI runs `ci-kit/run_guards.sh` over this repo, the intake and
+  follow-up Node checks, `benchmarks/outcome-evidence/test_benchmark.py`, and a
+  Python 3.9 pass of every manifest selftest. `kit_manifest_check.py` gains an
+  inventory coverage check and `--run-selftests`. `guard_valid_utf8.py` is new.
+  `kit.json` gains rows for the artifacts that had none.
+- Checks, run locally 2026-11-10 on the branch: every command in `ci.yml` passes
+  on Python 3.13, and the 3.9 floor step passes on Python 3.9.25. Not yet
+  observed on a GitHub runner.
 - Research and repository catalog ownership moved to `The-825/staletoast` (D-67).
-  The research files under `docs/` are a read-only archive. The archived landscape
-  holds 335 assessed repositories (`scripts/repository_landscape.py --check`).
-- Latest ruling: D-75, sync publishing scoped to an explicit GitHub App.
+  The research files under `docs/` are a read-only archive.
 
 ## What just landed
 
+- 2026-11-10: handoff refresh, D-75 header encoding fix and docs index rows, PR #197.
 - 2026-11-07: scoped App authentication for CI template sync, PR #196 (D-75).
-- 2026-11-04: Pages release serialization (#195), the local intake and follow-up
-  example (#189), unified ship-it delivery guidance (#194, D-74), the book
-  companion entry point (#193) and the outcome-evidence experiment (#192, D-70).
 
 ## Next steps (in order)
 
-1. Ship the docs refresh PR.
-2. Open one `ci:` PR from the 2026-11-10 codebase review:
-   - Make `kit_manifest_check.py` fail when a shipped artifact is not inventoried.
-     `templates/memory-desk/`, `templates/intake-follow-up/` and the ADR, incident,
-     blueprint and parity templates are absent from `kit.json` and `llms.txt`.
-   - Run the `templates/intake-follow-up/` JavaScript tests and
-     `benchmarks/outcome-evidence/test_benchmark.py` in CI.
-   - Add a UTF-8 guard to `ci-kit/run_guards.sh`. The D-75 header reached main
-     with invalid bytes and nothing caught it.
-   - Test Python 3.9, or change the "Python 3.9+" claims in `kit.json`. CI runs 3.11.
-3. `CLAUDE.md` (220 of 220) and `llms.txt` (130 of 130) have no budget headroom, and
-   the `CLAUDE.md` repo map omits `site/`, `scripts/`, `planning/` and `assets/`.
-   Trim or raise the budget in the PR that next touches either file.
-4. Triage open issues that look resolved on main: #148, #106, #110, #80, #82.
+1. Ship the `ci:` PR once checks pass and the label is applied.
+2. `CLAUDE.md` is at 220 of 220 lines and its repo map omits `site/`, `scripts/`,
+   `planning/` and `assets/`. Trim or raise the budget in the PR that next touches it.
+3. `templates/memory-desk/gardener/promote.py` has no test or selftest. Add one
+   or say so in its README.
+4. `templates/memory-desk/` states Python 3.8+ in its README and CLI docstring.
+   CI checks 3.9 and 3.11 only; align the claim or test 3.8.
+5. Triage open issues that look resolved on main: #148, #106, #110, #80, #82.
    Route #154, #164, #117 and #99 to StaleToast.
-5. Review the leftover `claude/*` remote branches. Issue #185 preserves four of
+6. Review the leftover `claude/*` remote branches. Issue #185 preserves four of
    them as frozen heads; confirm with the maintainer before deleting any.
 
 ## Carried forward, not re-verified this refresh
