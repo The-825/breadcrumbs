@@ -84,7 +84,7 @@
       "new_intake": "StaleToast only"
     }
   },
-  "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. CI runs the same set (.github/workflows/ci.yml).",
+  "verify_all": "Run every selftest below; each is offline, stdlib-only, and exits nonzero on failure. `python3 ci-kit/kit_manifest_check.py --run-selftests` runs the whole set under the interpreter you invoke it with. CI runs the same set on Python 3.11 and again on 3.9 (.github/workflows/ci.yml).",
   "problems": {
     "my agent forgets everything between sessions": [
       "templates/CLAUDE_TEMPLATE.md",
@@ -179,8 +179,8 @@
     {
       "path": "ci-kit/kit_manifest_check.py",
       "kind": "guard",
-      "what": "Validates artifact routes and the versioned portfolio ownership contract, including public-only intake, retained source authority, importer agreement, and distinct portable versus detailed evidence classes.",
-      "assumes": "kit.json, the repository landscape, and the canonical transfer importer remain in this repository.",
+      "what": "Validates artifact routes, that every shipped template, tool and benchmark has a manifest row, and the versioned portfolio ownership contract, including public-only intake, retained source authority, importer agreement, and distinct portable versus detailed evidence classes.",
+      "assumes": "kit.json, the repository landscape, and the canonical transfer importer remain in this repository. --run-selftests runs every manifest selftest under the invoking interpreter, which is how CI checks the Python 3.9 floor.",
       "selftest": "python3 ci-kit/kit_manifest_check.py --selftest"
     },
     {
@@ -256,7 +256,7 @@
     {
       "path": "ci-kit/guards",
       "kind": "guard-suite",
-      "what": "Lint guards (PII in fixtures, provenance narration, magic limits, raw view DDL, inline style/script, env vars outside config, unsourced authority citations, boot-set line budgets) each shipped with fixtures proving it bites.",
+      "what": "Lint guards (PII in fixtures, provenance narration, magic limits, raw view DDL, inline style/script, env vars outside config, unsourced authority citations, boot-set line budgets, invalid UTF-8) each shipped with fixtures proving it bites.",
       "assumes": "Python repo conventions vary per guard; each guard's docstring states its own.",
       "selftest": "python3 -m unittest discover -s ci-kit/guards/tests"
     },
@@ -405,6 +405,132 @@
       "kind": "example",
       "what": "Read-only task-first view using a recorded public reading-guide release.",
       "assumes": "Modern browser; no scripts, service, task storage or authenticated validation.",
+      "selftest": null
+    },
+    {
+      "path": "templates/SESSION_STATE_TEMPLATE.md",
+      "kind": "template",
+      "what": "The living handoff file, refreshed on \"checkpoint\", so a new session picks up mid-flight.",
+      "assumes": "Markdown at the repo root, filled by hand; an operator who says \"checkpoint\". No hook enforces the refresh.",
+      "selftest": null
+    },
+    {
+      "path": "templates/DECISIONS_TEMPLATE.md",
+      "kind": "template",
+      "what": "Append-only decisions ledger: durable rulings captured the turn they land.",
+      "assumes": "Markdown, filled by hand; no tooling required.",
+      "selftest": null
+    },
+    {
+      "path": "templates/ADR_TEMPLATE.md",
+      "kind": "template",
+      "what": "One-page architecture decision records with a filled example.",
+      "assumes": "Markdown, filled by hand. The example is framed for a data platform; the format is general.",
+      "selftest": null
+    },
+    {
+      "path": "templates/AGENT_PREAMBLE_TEMPLATE.md",
+      "kind": "template",
+      "what": "Numbered binding blocks that every skill, command, and spawned-agent prompt references instead of restating, so rule wording never forks.",
+      "assumes": "A harness with reusable prompts (skills, slash commands, or spawned agents) and more than a couple of them restating the same rules.",
+      "selftest": null
+    },
+    {
+      "path": "templates/AUTHORITY_LEDGER_TEMPLATE.md",
+      "kind": "template",
+      "what": "Append-only JSONL record of standing permission grants, with scope and expiry.",
+      "assumes": "JSONL kept in the repo; pairs with templates/authority_ledger.jsonl and ci-kit/guards/guard_authority_citations.py. The ledger records grants; it does not enforce them.",
+      "selftest": null
+    },
+    {
+      "path": "templates/authority_ledger.jsonl",
+      "kind": "example",
+      "what": "Ready-to-copy starter authority ledger with example grants to delete.",
+      "assumes": "JSONL; every row is a labeled example, not a real grant.",
+      "selftest": null
+    },
+    {
+      "path": "templates/conclusions.jsonl",
+      "kind": "example",
+      "what": "Ready-to-copy starter conclusions store with example rows to delete.",
+      "assumes": "JSONL; pairs with templates/CONCLUSIONS_TEMPLATE.md. Every row is a labeled example.",
+      "selftest": null
+    },
+    {
+      "path": "templates/BLUEPRINT_TEMPLATE.md",
+      "kind": "template",
+      "what": "Phased build order for a disciplined rebuild: floor before features, exit criteria per phase.",
+      "assumes": "Markdown, filled by hand; a rebuild or new build with CI and feature flags available. Ships with no domain content.",
+      "selftest": null
+    },
+    {
+      "path": "templates/PARITY_TEMPLATE.md",
+      "kind": "template",
+      "what": "Zero-regression parity inventory for a rebuild or migration, bucketed and checked with evidence.",
+      "assumes": "Markdown, filled by hand; an existing system whose capabilities you can enumerate.",
+      "selftest": null
+    },
+    {
+      "path": "templates/INCIDENT_TEMPLATE.md",
+      "kind": "template",
+      "what": "Incident postmortem format whose load-bearing section is misdiagnosis lessons.",
+      "assumes": "Markdown, filled by hand; no tooling required.",
+      "selftest": null
+    },
+    {
+      "path": "templates/FLAKE_LEDGER_TEMPLATE.md",
+      "kind": "template",
+      "what": "One row per flake sighting, pass-on-retry included.",
+      "assumes": "Markdown, filled by hand; a CI setup that retries flaky tests. Pairs with the deflake command in templates/commands.",
+      "selftest": null
+    },
+    {
+      "path": "templates/MECHANICAL_FACTS_TEMPLATE.md",
+      "kind": "template",
+      "what": "One regenerated home for rot-prone counts, so prose points at the numbers instead of restating them.",
+      "assumes": "Markdown plus a generator script you write; the template ships the format, not the generator.",
+      "selftest": null
+    },
+    {
+      "path": "templates/ENFORCEMENT_MANIFEST_TEMPLATE.json",
+      "kind": "template",
+      "what": "One JSON object per floor rule, bound to its honest enforcement point, with a non-delegable flag.",
+      "assumes": "JSON; pattern-only until paired with a CI coverage gate you write. See docs/enforcement-manifest.md.",
+      "selftest": null
+    },
+    {
+      "path": "templates/COOPERATIVE_INTELLIGENCE_EVALUATION_TEMPLATE.md",
+      "kind": "template",
+      "what": "Bounded evaluation record for work shared by people and AI: orientation, handoff, correction, ownership, recovery, and a best-baseline comparison.",
+      "assumes": "Markdown, filled by hand; pattern-only. It does not create a score or authorize an action.",
+      "selftest": null
+    },
+    {
+      "path": "templates/memory-desk",
+      "kind": "template-suite",
+      "what": "The one-door memory kit: a flat fact index queried by a small CLI, a raw-capture journal, a gardener contract, and hooks that push rows at session start, prompt submit, and file edit.",
+      "assumes": "A git repo, a POSIX shell, Python 3.9+ stdlib; hooks target Claude Code's settings.json contract; the gardener workflow template assumes GitHub Actions.",
+      "selftest": "python3 templates/memory-desk/tests/test_mem.py"
+    },
+    {
+      "path": "templates/intake-follow-up",
+      "kind": "example",
+      "what": "Local synthetic browser prototype of an intake and follow-up workflow: stable IDs, duplicate handling, held requests, failed-action recovery, ordered history.",
+      "assumes": "A modern browser and Node.js 24 for the checks, no packages. Invented records only; no sender, account connection, persistence, or access control is implemented.",
+      "selftest": "node templates/intake-follow-up/test.js"
+    },
+    {
+      "path": "ci-kit/pull_request_template.md",
+      "kind": "template",
+      "what": "Judgment-only PR template: Summary, Versions, Test plan, and scope, with no checkboxes a robot already covers.",
+      "assumes": "GitHub pull requests; copy to .github/pull_request_template.md and adapt the pre-flight lines to your own rules.",
+      "selftest": null
+    },
+    {
+      "path": "ci-kit/run_guards.sh",
+      "kind": "tool",
+      "what": "The aggregate gate: every file-scan guard in one pass, all violations reported, no short-circuit.",
+      "assumes": "Bash and Python 3.9+; guards configured for your repo layout.",
       "selftest": null
     }
   ]

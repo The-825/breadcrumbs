@@ -99,7 +99,9 @@ def main(argv=None, *, registry_path=REGISTRY, routing_path=ROUTING,
         print("\n".join(f"workflow_reproduction: {error}" for error in errors))
         return 1
     if args.write:
-        registry_path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
+        # Path.write_text(newline=...) needs Python 3.10; the kit's floor is 3.9.
+        with open(registry_path, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(registry, indent=2) + "\n")
     reproduced = sum(row["id"] in COMMANDS for row in registry["workflows"])
     print(f"workflow_reproduction: reproduced={reproduced} adopted=0 effectiveness_claims=0")
     return 0
