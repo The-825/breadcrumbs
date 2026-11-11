@@ -738,3 +738,9 @@ Source: Maintainer instruction to build the dedicated CI sync authentication pat
 Ruling: CI now runs the guards over this repo's own tree, runs every manifest selftest again on Python 3.9, and fails when a direct child of `templates/`, `ci-kit/` or `benchmarks/` has no `kit.json` row or problem route. A valid-UTF-8 guard joins the file-scan set. The 3.9 floor stays as stated.
 Why: Three claims had no check behind them. The context budget was documented as build-failing while CI only ran its selftest, a 3.10-only call sat behind the 3.9 claim, and fifteen shipped artifacts had no manifest row.
 Source: Maintainer go-ahead for the `ci:` follow-up to the 2026-11-10 codebase review.
+
+## D-77 · 2026-10-27 · Concept lineage is a read-only evidence view
+Ruling: Concept lineage ships as a portable standard-library validator and renderer with a fixed contract. Origin evidence is concept-scoped and separate from consumer use receipts. Labels describe supplied evidence and grant no authority, authenticity or adoption claim.
+Why: A reader needs to see where an idea came from and which consumers decided what without a blended score or an inferred release state.
+Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.
+Identity: First drafted on 2026-10-27 as D-69 in commit 9fd1ab3. Assigned D-77 during reconciliation with main on 2026-11-11; the published D-69 through D-76 and their text remain unchanged.

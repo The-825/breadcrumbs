@@ -1,0 +1,4 @@
+templates/concept-lineage/lineage.py text eol=lf
+templates/concept-lineage/contract.json text eol=lf
+templates/concept-lineage/fixture.json text eol=lf
+templates/concept-lineage/lineage.html text eol=lf

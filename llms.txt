@@ -128,6 +128,8 @@ are separate evidence classes.
   PII screen, batch cadence).
 - [templates/README.md](templates/README.md): the single-file templates (ADR,
   incident, blueprint, parity, flake ledger, authority ledger, and more).
+- [templates/concept-lineage/](templates/concept-lineage/): read-only lineage
+  validator and renderer for where a concept came from and who used it.
 - [templates/intake-follow-up/](templates/intake-follow-up/): a local synthetic
   intake and follow-up prototype with Node checks; nothing is connected.
 - [ci-kit/workflows/greenlight_tiers.py](ci-kit/workflows/greenlight_tiers.py):
