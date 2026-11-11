@@ -503,6 +503,38 @@ class PrivacyAndProjectionTests(unittest.TestCase):
             lineage.validate_projection(bad)
         self.assertFalse(proj["independent_authenticity_verified"])
 
+    def projection_code(self, projection):
+        try:
+            lineage.validate_projection(projection)
+        except lineage.LineageError as exc:
+            return exc.code
+        return None
+
+    def test_projection_rejects_reordered_records(self):
+        proj = lineage.build_projection(load(), "1" * 64)
+        for name in lineage.LIMITS:
+            if len(proj["packet"][name]) < 2:
+                continue
+            bad = copy.deepcopy(proj)
+            bad["packet"][name].reverse()
+            bad["packet_sha256"] = lineage.canonical_sha256(bad["packet"])
+            with self.subTest(records=name):
+                self.assertNotEqual(bad["packet_sha256"], proj["packet_sha256"])
+                self.assertEqual(self.projection_code(bad), "not_normalized")
+
+    def test_projection_rejects_reordered_reference_set(self):
+        env = load()
+        row(env, "concepts", RETRY)["source_ids"].append(PAPER)
+        for use in env["uses"]:
+            if use["concept_id"] == RETRY:
+                use["source_versions_used"][PAPER] = copy.deepcopy(row(env, "sources", PAPER)["upstream_version"])
+        proj = lineage.build_projection(env, "1" * 64)
+        self.assertIsNone(self.projection_code(proj))
+        bad = copy.deepcopy(proj)
+        row(bad["packet"], "concepts", RETRY)["source_ids"].reverse()
+        bad["packet_sha256"] = lineage.canonical_sha256(bad["packet"])
+        self.assertEqual(self.projection_code(bad), "not_normalized")
+
 
 class RenderTests(unittest.TestCase):
     def render(self, env):
@@ -690,6 +722,16 @@ class CorrectionRegressionTests(unittest.TestCase):
         self.assertEqual(check(dict(pin, mapping_sha256="9" * 64)), "pin_mismatch")
         self.assertEqual(check(dict(pin, projection_sha256="9" * 64)), "projection_digest")
         self.assertEqual(check(pin, manifest_bytes + b" "), "not_canonical")
+        # The same graph in another record order, with digests recomputed to
+        # agree, is a second identity for one graph and is refused.
+        reordered = lineage.build_projection(packet, lineage.sha256_hex(manifest_bytes))
+        name = next(n for n in lineage.LIMITS if len(reordered["packet"][n]) > 1)
+        reordered["packet"][name].reverse()
+        reordered["packet_sha256"] = lineage.canonical_sha256(reordered["packet"])
+        reordered_bytes = lineage.canonical_bytes(reordered)
+        self.assertNotEqual(reordered_bytes, projection_bytes)
+        self.assertEqual(check(dict(pin, projection_sha256=lineage.sha256_hex(reordered_bytes)), p=reordered_bytes),
+                         "not_normalized")
 
 
 class CliTests(unittest.TestCase):

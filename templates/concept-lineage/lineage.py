@@ -895,7 +895,11 @@ def validate_projection(projection):
     _sha(projection["packet_sha256"])
     if projection["independent_authenticity_verified"] is not False or projection["authority_granted"] is not False:
         fail("authority_flags")
-    validate_graph(projection["packet"])
+    # A packet digest only identifies a graph if the packet is in normalized
+    # order. Without this, the same graph in a different record order validates
+    # under a different digest.
+    if normalize_packet(projection["packet"]) != projection["packet"]:
+        fail("not_normalized")
     if canonical_sha256(projection["packet"]) != projection["packet_sha256"]:
         fail("packet_digest")
     return projection
