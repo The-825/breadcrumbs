@@ -11,14 +11,29 @@ every problem-routing path must resolve to a listed location, and every
 selftest command's script must exist. Runs in CI next to the selftests it
 indexes.
 
+The manifest also may not stay silent. A shipped artifact with no manifest row
+is invisible to anyone adopting through kit.json, and a check that only
+verifies the rows already written never notices the row nobody wrote. So every
+entry directly under the shipped roots (COVERED_ROOTS) must be named by an
+artifact path or a problem route, or contain one.
+
+Assumes: Python 3.9+, stdlib only. --run-selftests runs each manifest selftest
+under the interpreter that started this script, which is how CI proves the
+Python floor the manifest claims.
+
 Usage:
-    python3 ci-kit/kit_manifest_check.py            # check ./kit.json
+    python3 ci-kit/kit_manifest_check.py                  # check ./kit.json
     python3 ci-kit/kit_manifest_check.py --selftest
+    python3.9 ci-kit/kit_manifest_check.py --run-selftests
 """
 
+import contextlib
+import io
 import json
 import re
 import runpy
+import shlex
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -160,6 +175,59 @@ def check_portfolio_contract(manifest: dict, root: Path) -> list[str]:
     return failures
 
 
+# Roots whose direct children are shipped artifacts. docs/, skills/, checklists/
+# and playbook/ are inventoried as whole suites, so they need no child check.
+COVERED_ROOTS = ("templates", "ci-kit", "benchmarks")
+# Index files and interpreter caches are not artifacts.
+COVERAGE_EXEMPT = {"README.md", "__pycache__"}
+
+
+def check_coverage(manifest: dict, root: Path) -> list[str]:
+    """Every direct child of a shipped root is named in the manifest."""
+    named = {art.get("path", "") for art in manifest.get("artifacts", [])}
+    for paths in manifest.get("problems", {}).values():
+        named.update(paths)
+    failures = []
+    for top in COVERED_ROOTS:
+        base = root / top
+        if not base.is_dir():
+            continue
+        for child in sorted(base.iterdir()):
+            if child.name in COVERAGE_EXEMPT or child.name.startswith("."):
+                continue
+            rel = f"{top}/{child.name}"
+            if not any(n == rel or n.startswith(rel + "/") for n in named):
+                failures.append(
+                    f"shipped but not inventoried: {rel} "
+                    f"(add an artifact row or a problem route)")
+    return failures
+
+
+def run_selftests(manifest_path: Path, root: Path) -> int:
+    """Run every manifest selftest under this interpreter. Returns failures."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    commands = []
+    for art in manifest.get("artifacts", []):
+        selftest = art.get("selftest")
+        if selftest and selftest not in commands:
+            commands.append(selftest)
+    failed = 0
+    for command in commands:
+        argv = shlex.split(command)
+        if argv and argv[0] in ("python3", "python"):
+            argv[0] = sys.executable
+        result = subprocess.run(argv, cwd=root, capture_output=True, text=True)
+        print(f"  {'ok  ' if result.returncode == 0 else 'FAIL'}  {command}")
+        if result.returncode:
+            failed += 1
+            tail = (result.stdout + result.stderr).strip().splitlines()[-15:]
+            print("\n".join(f"        {line}" for line in tail))
+    version = ".".join(str(part) for part in sys.version_info[:3])
+    print(f"run-selftests: {len(commands) - failed}/{len(commands)} passed "
+          f"on Python {version}")
+    return failed
+
+
 def check(manifest_path: Path, root: Path):
     """Returns a list of failure strings; empty means clean."""
     failures = []
@@ -191,6 +259,7 @@ def check(manifest_path: Path, root: Path):
             failures.append(f"companion file missing: {name}")
 
     failures.extend(check_portfolio_contract(manifest, root))
+    failures.extend(check_coverage(manifest, root))
 
     # The manifest also may not lie about CI. kit.json tells adopters the
     # selftests run in this repo's own gate; without this check the manifest
@@ -333,6 +402,32 @@ def selftest() -> int:
         checks.append(("a manifest selftest present in ci.yml is clean",
                        check(root / "kit.json", root) == []))
 
+        (root / "templates").mkdir()
+        (root / "templates" / "README.md").write_text("# index\n")
+        (root / "templates" / "LISTED.md").write_text("# fixture\n")
+        (root / "templates" / "suite").mkdir()
+        (root / "templates" / "suite" / "tool.py").write_text("# fixture\n")
+        (root / "templates" / "ORPHAN.md").write_text("# fixture\n")
+        listed = {"artifacts": [{"path": "templates/suite/tool.py"}],
+                  "problems": {"p": ["templates/LISTED.md"]}}
+        fails = check_coverage(listed, root)
+        checks.append(("a shipped file with no manifest row fails",
+                       fails == ["shipped but not inventoried: templates/ORPHAN.md "
+                                 "(add an artifact row or a problem route)"]))
+        listed["artifacts"].append({"path": "templates/ORPHAN.md"})
+        checks.append(("a directory is covered by an artifact inside it, "
+                       "a file by a problem route, an index file by exemption",
+                       check_coverage(listed, root) == []))
+
+        (root / "pass.py").write_text("import sys\nsys.exit(0)\n")
+        (root / "fail.py").write_text("import sys\nsys.exit(3)\n")
+        runnable = {"artifacts": [{"path": "pass.py", "selftest": "python3 pass.py"},
+                                  {"path": "fail.py", "selftest": "python3 fail.py"}]}
+        (root / "run.json").write_text(json.dumps(runnable))
+        with contextlib.redirect_stdout(io.StringIO()):
+            ran = run_selftests(root / "run.json", root)
+        checks.append(("--run-selftests counts a failing selftest", ran == 1))
+
         (root / "kit.json").write_text("{not json")
         checks.append(("unreadable json fails loudly, never passes",
                        bool(check(root / "kit.json", root))))
@@ -347,13 +442,16 @@ def selftest() -> int:
 def main() -> int:
     if "--selftest" in sys.argv:
         return selftest()
+    if "--run-selftests" in sys.argv:
+        return 1 if run_selftests(ROOT / "kit.json", ROOT) else 0
     failures = check(ROOT / "kit.json", ROOT)
     if failures:
         print(f"kit_manifest_check: {len(failures)} failure(s)")
         for f in failures:
             print(f"  {f}")
         return 1
-    print("kit_manifest_check: clean (every path and selftest resolves)")
+    print("kit_manifest_check: clean (every path and selftest resolves, "
+          "every shipped artifact is inventoried)")
     return 0
 
 

@@ -5,68 +5,66 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-09-11 UTC by Codex
+Last refreshed: 2026-11-10 UTC by Claude Code
+Checkpoint status: partly verified (see "Carried forward" below)
+Owning repository: `The-825/breadcrumbs`
+Source revisions: `origin/main` `50d7a4b`
+
+## Recovery pointer
+
+- Owning record: the open `ci:` PR from `claude/focused-ramanujan-1g7m5g`.
+- Next action: the PR changes `ci-kit/` and `.github/workflows/`, so it waits for
+  the maintainer's ship-it label after checks pass.
+
 ## Current state
 
-- Active branch: `claude/shared-work-checkpoint-v1`, at `2ffb87c` from
-  `origin/main` `f5c7d5b`.
-- Open PR: none. Push, PR checks, approval, and merge are pending.
-- In-flight edits: none. The task-owned change is committed.
-- The public kit and 100-source research ledger remain authoritative. The repository
-  ledger holds 311 unique assessed public repositories, including 206 detailed
-  mechanism appraisals and 105 portable-only records.
-
-## In flight
-
-**Portable shared-work checkpoint v1 (D-49).** The committed change adds a strict
-copy-and-adapt ledger tool, schema, synthetic fixture, lifecycle load seam, and CI
-conformance tests. The configured implementation model is `gpt-5.6-sol`; the host
-does not expose a provider-observed model receipt, so that observation remains unknown.
+- Active branch: `claude/focused-ramanujan-1g7m5g`, cut from `origin/main` `50d7a4b`.
+- In flight (D-76): CI runs `ci-kit/run_guards.sh` over this repo, the intake and
+  follow-up Node checks, `benchmarks/outcome-evidence/test_benchmark.py`, and a
+  Python 3.9 pass of every manifest selftest. `kit_manifest_check.py` gains an
+  inventory coverage check and `--run-selftests`. `guard_valid_utf8.py` is new.
+  `kit.json` gains rows for the artifacts that had none.
+- Checks, run locally 2026-11-10 on the branch: every command in `ci.yml` passes
+  on Python 3.13, and the 3.9 floor step passes on Python 3.9.25. Not yet
+  observed on a GitHub runner.
+- Research and repository catalog ownership moved to `The-825/staletoast` (D-67).
+  The research files under `docs/` are a read-only archive.
 
 ## What just landed
 
-- 2026-09-11: planning and checkpoint guidance updates merged in PRs #131 and #132.
-- 2026-09-06: the Book 1 listing pointer merged in PR #129.
+- 2026-11-10: handoff refresh, D-75 header encoding fix and docs index rows, PR #197.
+- 2026-11-07: scoped App authentication for CI template sync, PR #196 (D-75).
 
-## Next steps / watch
+## Next steps (in order)
 
-- Push `2ffb87c`, open the PR, observe checks for its exact head, apply only an
-  already-authorized approval, and verify the merge on `main`.
+1. Ship the `ci:` PR once checks pass and the label is applied.
+2. `CLAUDE.md` is at 220 of 220 lines and its repo map omits `site/`, `scripts/`,
+   `planning/` and `assets/`. Trim or raise the budget in the PR that next touches it.
+3. `templates/memory-desk/gardener/promote.py` has no test or selftest. Add one
+   or say so in its README.
+4. `templates/memory-desk/` states Python 3.8+ in its README and CLI docstring.
+   CI checks 3.9 and 3.11 only; align the claim or test 3.8.
+5. Triage open issues that look resolved on main: #148, #106, #110, #80, #82.
+   Route #154, #164, #117 and #99 to StaleToast.
+6. Review the leftover `claude/*` remote branches. Issue #185 preserves four of
+   them as frozen heads; confirm with the maintainer before deleting any.
 
-- Run the evaluation template in an owning system with a safe, bounded work item, one
-  agent, a multi-agent variant only when the task is decomposable, and a no-AI baseline
-  where meaningful. Include an unseen holdout, observed time and cost, interleaving,
-  trace-based recovery evidence, and an adversarial-content case. Do not promote the
-  candidate work-allocation or multi-agent capabilities into shipped claims before that
-  comparison.
-- Complete claim-specific full-text appraisal before upgrading any Method v2.0
-  validity profile. Future source waves must begin with a target claim and retain
-  their query, inclusion, exclusion, duplicate, and evidence-family checks.
-- Code-trace Microsoft Agent Framework, A2A, Letta Code, Mem0, Promptfoo, and OpenHands
-  before changing any README-screened `N` or `P` observation.
-- Add a versioned material-change manifest to the next owning-system evaluation so model,
-  prompt, tool, policy, and data-distribution changes can invalidate stale delegation and
-  reliance evidence.
-- Extend the fresh-session memory exam with updates, abstention, temporal and causal
-  reasoning, participant-versus-observer roles, efficiency, and capacity. Keep source
-  precedence, correction survival, custody, and authority as separate governance checks.
-- Add privacy-minimal grounding, visible mode state, recovery rehearsal, behavior-level
-  explanation tests, expiring deferral calibration, portfolio diversity, and
-  query-specific retrieval comparisons to the next owning-system evaluation design.
-- Request an independent Atlas rerun when the maintainer is ready to contact Simon.
-- Keep the first repository self-assessment private until independent review
-  and a specific publication approval exist.
-- Atlas follow-up: contact Simon for an independent rerun only after the scope
-  gate is merged and publicly inspectable.
-  Keep the 2026-08-12 self-audit pinned as historical evidence rather than
-  silently rewriting it to match current main.
-- `docs/figure-citation.md` is labeled pattern-only. Building its checker
-  remains a separate feature decision.
-- Issue #39 dockets the codebase-flywheel port. The issue ledger also holds the
-  synthetic-fixtures limitation.
+## Carried forward, not re-verified this refresh
+
+These came from the 2026-09-11 handoff. Confirm each before acting on it.
+
+- Run the evaluation template in an owning system before promoting any
+  work-allocation or multi-agent capability into a shipped claim.
+- Keep the first repository self-assessment private until independent review and
+  a specific publication approval exist.
+- The Atlas independent rerun waits on the maintainer. Keep the 2026-08-12
+  self-audit pinned as historical evidence.
+- Research follow-ups (full-text appraisal, code traces, memory exam extensions)
+  now belong to StaleToast. Do not start them in this checkout.
 
 ## Pending decisions
 
-- The figure-citation checker: build or label. See above.
-- D-49 is the latest ruling: shared-work control evidence stays adopter-owned and
-  external uninstrumented sessions remain unknown.
+- `docs/figure-citation.md` is pattern-only: build its checker, or leave it labeled.
+- Whether the research archive moves to its own directory under `docs/`. It needs
+  redirect and script path updates, so it is its own PR.
+- Issue #39 dockets the codebase-flywheel port for the next standing-agents expansion.

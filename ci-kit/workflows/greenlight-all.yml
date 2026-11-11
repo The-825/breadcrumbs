@@ -65,7 +65,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          APPROVAL_LABEL: greenlight   # EDIT ME: your operator approval label
+          APPROVAL_LABEL: ship-it   # EDIT ME: your operator approval label
           AGENT_PREFIX: claude/,codex/ # EDIT ME: comma-separated agent branch namespaces
           MERGE_GATE_WORKFLOW: automerge.yml   # EDIT ME: your merge gate's filename, or delete this line and the re-evaluation step below
         run: |

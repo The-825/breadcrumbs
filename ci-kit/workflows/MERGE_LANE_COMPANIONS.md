@@ -1,3 +1,5 @@
+Human release wording is **ship it**. See [the delivery pattern](../../docs/delivery-pattern.md). Historical filenames remain compatible.
+
 # Merge-lane companions: operator conveniences around the approval label
 
 The automerge template in this directory ships label-gated by default (`REQUIRE_LABEL` in
@@ -35,7 +37,7 @@ review evidence, so confirm any required peer gate before dispatch.
 
 ### `greenlight-command.yml`: apply the label from a comment
 
-The operator comments the approval word (`greenlight` or `gl`, as the entire comment
+The operator comments the approval word (`ship it`, with compatible `greenlight` or `gl`, as the entire comment
 body) on a PR and the workflow applies the label, with a +1 reaction as the receipt.
 Built for the phone-review case: a comment is one line; the label UI is four taps.
 Authorization is an explicit allowlist of GitHub logins checked against the verified

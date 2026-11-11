@@ -121,6 +121,11 @@ across model tiers, while reporting accuracy, token use, and latency separately.
 fixtures are synthetic, and live inference requires a separate execution-time cost
 confirmation.
 
+A second, smaller [outcome-evidence experiment](benchmarks/outcome-evidence/README.md)
+checks twelve invented records so that a claim of success stays `unknown` unless a
+separately supplied typed observation backs it. It is synthetic and experimental, not
+observer authentication or production enforcement.
+
 ## Two of my own sessions, colliding
 
 The forgetting that actually costs money is not a session forgetting me. It is my
@@ -215,9 +220,9 @@ half is proven. Do these in order and stop when you have had enough for the day:
 | [`ci-kit/`](ci-kit/) | The runnable part: lint guards that ship with fixtures proving they bite, a migration runner with policy checks, a preflight that catches branch collisions before you push, and the fail-closed merge gate |
 | [`skills/`](skills/) | Paste-able rule sets for your own rules file |
 | [`checklists/`](checklists/) | Two-minute operational checklists |
-| [`docs/`](docs/) | The reasoning behind each piece, including [`cooperative-intelligence.md`](docs/cooperative-intelligence.md), [research Method v2.0](docs/collaborative-intelligence-method-v2.md), its [claim register](docs/collaborative-intelligence-claim-register.md), [100-source appraisals](docs/collaborative-intelligence-source-appraisals.md), and the [repository landscape](docs/collaborative-intelligence-repository-landscape.md), plus [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into |
+| [`docs/`](docs/) | The reasoning behind each piece, including [`cooperative-intelligence.md`](docs/cooperative-intelligence.md) and [`floating-memory.md`](docs/floating-memory.md), the fuller memory architecture the cues above grew into. The research ledgers and repository catalog now live in [StaleToast](https://github.com/The-825/staletoast); the copies under `docs/` are a read-only archive ([why](docs/staletoast-separation.md)) |
 | [`playbook/`](playbook/) | How the pieces fit together, and patterns for running more than one agent at a time |
-| [`kit.json`](kit.json) | Machine-readable inventory: problem-to-artifact routing, per-artifact assumptions, and selftest commands, so you or your agent can adopt programmatically. CI verifies every path in it resolves |
+| [`kit.json`](kit.json) | Machine-readable inventory: problem-to-artifact routing, per-artifact assumptions, and selftest commands, so you or your agent can adopt programmatically. CI verifies every path in it resolves and that every shipped template, tool, and benchmark has a row |
 | [`llms.txt`](llms.txt) | The same map for an agent reading this repo: route by problem, one line per artifact |
 
 ## What I have not proven

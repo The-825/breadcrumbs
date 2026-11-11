@@ -698,7 +698,49 @@ Ruling: Reusable task views lead with intended outcome, actionable steps, perfor
 Why: A reader needs to know what result remains and what evidence will close it before learning coordination mechanics.
 Source: Operator direction to simplify human/agent collaboration around tasks, steps, validation and parent-project contribution.
 
-## D-69 · 2026-10-27 · Concept lineage is a read-only evidence view
+## D-69 · 2026-10-25 · Keep recovery pointers small and evidence source-bound
+Ruling: The living handoff starts with owner, owning-record pointer and next action. Detailed requirement, decision, custody, acknowledgment and separate evidence stages stay in the existing owning record; unknown origins and superseded snapshots remain explicit.
+Why: A reader must recover the next safe action without turning a summary or completed slice into authority or parent completion.
+Source: Owner-authorized October 21 workflow correction; templates/SESSION_STATE_TEMPLATE.md and templates/commands/checkpoint.md. This is a local behavioral template change, not runtime activation.
+Identity: First drafted on 2026-10-21 as D-68 in commit 05b689938397e1bd56b3c7857e77d2ab37bb3f6c. Assigned D-69 during draft/main reconciliation; the published task-outcome D-68 and its text remain unchanged.
+
+## D-70 · 2026-11-03 · Bound the outcome-evidence experiment, leave the checkpoint contract unmodified
+Ruling: Add one public, synthetic, offline experiment in benchmarks/outcome-evidence/ that preserves each raw verdict, audits twelve invented outcomes against a separate typed observation registry with an allowlisted synthetic observer, and keeps unsupported or missing evidence at unknown. The shipped shared_work_checkpoint.py, its fixture and schema are unmodified; the experiment only calls the store as a baseline and reports acceptance as recording behavior, not outcome. Observer trust is a caller-supplied fixture assumption, not authentication or production enforcement, and no accuracy or efficiency claim follows.
+Why: The StaleToast C-125 assessment found free-text completion evidence cannot separate a self-report from an observation; a bounded fixture checks that distinction without changing a production contract.
+Source: arXiv 2610.01491v1 as assessed in the pinned StaleToast review (https://github.com/The-825/staletoast/blob/3d4715691857f8cf8d171377bdf1681236d25e0f/docs/staletoast-system-fit-appraisals-2026-11-03.md, entry C-125); benchmarks/outcome-evidence/README.md.
+
+## D-71 · 2026-11-03 · Explain the book companion and memory method at the visitor entry point
+Ruling: Breadcrumbs presents two connected paths: apply From Archivist to Architect with the free companion, or explore the scoped memory method through a small handoff, workflows and prompts. Governing Agents That Act remains one operational essay. Jarvis is a historical case study. StaleToast remains the separate canonical catalog, with no consumer-pin or archive change from this presentation work.
+Why: Visitors need to understand the relationship and their next useful action without learning internal record codes or treating a source screen as validated practice.
+Source: Jovan's November 3 visitor UX request and book/companion clarification; bounded Fable design review and local Codex resolution. Candidate pages require their own release gate.
+
+## D-72 · 2026-11-03 · Describe continuity in everyday words
+Ruling: Visitor headings and actions describe picking up where you left off, clear notes for next time, and helping the next person get started. Technical filenames, source titles, registry identities and original prompt instructions remain intact.
+Why: Readers need the familiar idea of carrying work across a shift or session, without learning internal terminology first.
+Source: Jovan approved the wording correction and publication of the reviewed visitor UX candidates in this task.
+
+## D-73 · 2026-11-04 · Route outcome-focused collaboration through the loaded instructions
+Ruling: CLAUDE.md routes exploration, directives, check-ins, user-surface verification and the next real transfer of work to docs/outcome-focused-collaboration.md. Reuse the existing continuity and retrospective rules; record source adoption separately from first observed use.
+Why: Candidate ideas must not silently become commitments, and an implementation receipt must not substitute for a usable outcome or repeated manual repair.
+Source: Maintainer direction to apply portable collaboration refinements across repositories. Existing privacy, ownership, review and release boundaries remain binding.
+
+## D-74 · 2026-11-04 · Carry ship-it authority through one delivery pattern
+Ruling: Use ship it as the human release instruction, retain historical technical aliases, and require fresh final-head checks, intended-target integration and merge-bound deployment receipts. Inventory all open PRs, including drafts, and refresh the target before each sibling integration.
+Why: Per-PR fixes and stale approval wording hide shared delivery failures and repeat settled permission requests.
+Source: Maintainer direction to reconcile, ship and deploy ready open work while preserving existing security, scope and funding boundaries.
+
+## D-75 · 2026-11-07 · Scope sync publishing to an explicit App
+Ruling: Template sync renders without writes by default. Publishing requires explicit opt-in and a repository-scoped GitHub App token with contents, pull requests and workflows write permissions. No built-in-token fallback. Existing human release gates remain.
+Why: Workflow-file updates need a credential capability that the built-in token does not supply; implicit publishing would repeat failures or broaden authority unnoticed.
+Source: Maintainer instruction to build the dedicated CI sync authentication path after inspecting the existing workflow. App installation, secrets and activation are separate from source preparation.
+
+## D-76 · 2026-11-10 · Enforce what the manifest claims
+Ruling: CI now runs the guards over this repo's own tree, runs every manifest selftest again on Python 3.9, and fails when a direct child of `templates/`, `ci-kit/` or `benchmarks/` has no `kit.json` row or problem route. A valid-UTF-8 guard joins the file-scan set. The 3.9 floor stays as stated.
+Why: Three claims had no check behind them. The context budget was documented as build-failing while CI only ran its selftest, a 3.10-only call sat behind the 3.9 claim, and fifteen shipped artifacts had no manifest row.
+Source: Maintainer go-ahead for the `ci:` follow-up to the 2026-11-10 codebase review.
+
+## D-77 · 2026-10-27 · Concept lineage is a read-only evidence view
 Ruling: Concept lineage ships as a portable standard-library validator and renderer with a fixed contract. Origin evidence is concept-scoped and separate from consumer use receipts. Labels describe supplied evidence and grant no authority, authenticity or adoption claim.
 Why: A reader needs to see where an idea came from and which consumers decided what without a blended score or an inferred release state.
 Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.
+Identity: First drafted on 2026-10-27 as D-69 in commit 9fd1ab3. Assigned D-77 during reconciliation with main on 2026-11-11; the published D-69 through D-76 and their text remain unchanged.

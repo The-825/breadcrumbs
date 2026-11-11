@@ -1,0 +1,18 @@
+{
+  "schema": "outcome-evidence-expected-v1",
+  "notice": "Used only to verify a finished report. The audit function never reads this file. baseline_recording describes the shipped checkpoint store's recording behavior, not task success.",
+  "cases": {
+    "case-01": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-02": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-03": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-04": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-05": {"audited_status": "unknown", "reason": "no_observation_pointer", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-06": {"audited_status": "unknown", "reason": "non_proof_category:obs-06", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-07": {"audited_status": "unknown", "reason": "non_proof_category:obs-07", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-08": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "authorized", "baseline_recording": "accepted"},
+    "case-09": {"audited_status": "passed", "reason": "all_requirements_matched", "correction_status": "authorized", "baseline_recording": "accepted"},
+    "case-10": {"audited_status": "unknown", "reason": "no_observation_pointer", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-11": {"audited_status": "unknown", "reason": "unresolved_observation_pointer:obs-11-missing", "correction_status": "none", "baseline_recording": "accepted"},
+    "case-12": {"audited_status": "unknown", "reason": "no_observation_pointer", "correction_status": "none", "baseline_recording": "rejected"}
+  }
+}

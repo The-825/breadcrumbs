@@ -21,6 +21,7 @@ GUARDS=(
   guard_no_raw_create_view.py
   guard_no_pii_in_fixtures.py
   guard_context_budget.py
+  guard_valid_utf8.py
 )
 
 # Deliberate exceptions: two guards on the shelf do not scan files, so they are

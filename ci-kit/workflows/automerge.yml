@@ -100,7 +100,8 @@ jobs:
             // only when a human has applied APPROVAL_LABEL on top of green
             // checks. Set false for hands-free merges on green alone.
             const REQUIRE_LABEL = true;
-            const APPROVAL_LABEL = "greenlight";
+            const APPROVAL_LABEL = "greenlight"; // Historical compatibility identifier.
+            const APPROVAL_LABELS = ["ship-it", APPROVAL_LABEL];
 
             const eligible = (ref) =>
               ELIGIBLE_PREFIXES.some((p) => ref.startsWith(p));
@@ -148,7 +149,7 @@ jobs:
             // SHA on this PR, moved later by any force-push event. The latest
             // APPROVAL_LABEL `labeled` event must be strictly newer. Any gap
             // (no qualifying run, an unparseable timestamp, a tie) is stale.
-            const greenlightIsFresh = async (pr) => {
+            const greenlightIsFresh = async (pr, approvalLabel = APPROVAL_LABEL) => {
               const owner = context.repo.owner;
               const repo = context.repo.repo;
               const at = (t) => {
@@ -166,7 +167,7 @@ jobs:
                   (r.pull_requests || []).some((p) => p.number === pr.number))
                 .map((r) => at(r.created_at));
               if (runTimes.length === 0 || runTimes.includes(null)) {
-                core.info(`PR #${pr.number}: no server-timestamped run for ${pr.head.sha}; greenlight treated as stale.`);
+                core.info(`PR #${pr.number}: no server-timestamped run for ${pr.head.sha}; shipping approval treated as stale.`);
                 return false;
               }
               let headAt = Math.min(...runTimes);
@@ -180,19 +181,69 @@ jobs:
                   const t = at(e.created_at);
                   if (t === null) return false;
                   headAt = Math.max(headAt, t);
-                } else if (e.event === "labeled" && e.label && e.label.name === APPROVAL_LABEL) {
+                } else if (e.event === "labeled" && e.label && e.label.name === approvalLabel) {
                   labeled.push(at(e.created_at));
                 }
               }
               if (labeled.length === 0 || labeled.includes(null)) {
-                core.info(`PR #${pr.number}: no server-timestamped "${APPROVAL_LABEL}" event; treated as stale.`);
+                core.info(`PR #${pr.number}: no server-timestamped "${approvalLabel}" event; treated as stale.`);
                 return false;
               }
               const fresh = Math.max(...labeled) > headAt;
               if (!fresh) {
-                core.info(`PR #${pr.number}: "${APPROVAL_LABEL}" predates head ${pr.head.sha}; re-apply it to approve this head.`);
+                core.info(`PR #${pr.number}: "${approvalLabel}" predates head ${pr.head.sha}; re-apply it to approve this head.`);
               }
               return fresh;
+            };
+
+            // Merge-error reconciliation. Two events for one PR (ready_for_review
+            // and labeled) can race; the loser gets 405 "Merge already in
+            // progress" while a sibling run merges the same checked head. The
+            // merge is never retried. Success is only a fresh read showing the
+            // PR merged on the exact checked head with a merge commit. Only the
+            // documented 405 message while the PR is still open on that head is
+            // polled (read-only, bounded). Every other outcome rethrows.
+            const MERGE_CONFIRM_ATTEMPTS = 5;
+            const MERGE_CONFIRM_DELAY_MS = 3000;
+
+            const mergedOnHead = (p, sha) =>
+              p.merged === true && p.head?.sha === sha &&
+              typeof p.merge_commit_sha === "string" && p.merge_commit_sha !== "";
+
+            const reconcileMergeError = async (pr, error) => {
+              if (error.status !== 405 && error.status !== 409) throw error;
+              const fetchLatest = async () => (await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+              })).data;
+              let latest = await fetchLatest();
+              if (mergedOnHead(latest, pr.head.sha)) {
+                core.info(`PR #${pr.number} already merged on checked head ${pr.head.sha}; treating as success.`);
+                return;
+              }
+              // Merged on another head, or closed unmerged: never success.
+              if (latest.merged === true || latest.state !== "open") throw error;
+              if (latest.head.sha !== pr.head.sha) {
+                if (error.status !== 409) throw error;
+                core.warning(`PR #${pr.number} head changed after checks; retry on the new head.`);
+                return;
+              }
+              const inProgress = error.status === 405 &&
+                /merge already in progress/i.test(String(error.message || ""));
+              if (!inProgress) throw error;
+              const { setTimeout: sleep } = require("timers/promises");
+              for (let i = 0; i < MERGE_CONFIRM_ATTEMPTS; i++) {
+                await sleep(MERGE_CONFIRM_DELAY_MS);
+                latest = await fetchLatest();
+                if (mergedOnHead(latest, pr.head.sha)) {
+                  core.info(`PR #${pr.number} merge confirmed on checked head ${pr.head.sha} after a concurrent merge.`);
+                  return;
+                }
+                if (latest.merged === true || latest.state !== "open" ||
+                    latest.head.sha !== pr.head.sha) throw error;
+              }
+              throw error;
             };
 
             // Apply the same guards (non-draft, open, agent branch, operator
@@ -231,11 +282,16 @@ jobs:
                 // A missing labels array counts as unlabeled: fail closed.
                 // A label that predates the current head counts as absent.
                 const labels = (pr.labels || []).map((l) => l.name);
-                const approved = labels.includes(APPROVAL_LABEL)
-                  && (await greenlightIsFresh(pr));
+                let approved = false;
+                for (const approvalLabel of APPROVAL_LABELS) {
+                  if (labels.includes(approvalLabel) && await greenlightIsFresh(pr, approvalLabel)) {
+                    approved = true;
+                    break;
+                  }
+                }
                 if (!approved) {
                   core.info(
-                    `PR #${pr.number} lacks a current "${APPROVAL_LABEL}" label; skipping.`
+                    `PR #${pr.number} lacks a current ship-it (or compatible greenlight) label; skipping.`
                   );
                   return;
                 }
@@ -257,16 +313,7 @@ jobs:
                   sha: pr.head.sha,
                 });
               } catch (error) {
-                // A 409 with a changed head is a benign race. Other merge
-                // failures must stay visible and fail the job.
-                if (error.status !== 409) throw error;
-                const { data: latest } = await github.rest.pulls.get({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: pr.number,
-                });
-                if (latest.head.sha === pr.head.sha) throw error;
-                core.warning(`PR #${pr.number} head changed after checks; retry on the new head.`);
+                await reconcileMergeError(pr, error);
               }
             };
 
