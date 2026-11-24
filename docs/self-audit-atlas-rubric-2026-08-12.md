@@ -90,7 +90,7 @@ automated re-verification, no tombstone equivalent.
 lines"). `memory_engine.py` has real deletion paths: `reject_fact()`
 removes a live entry from `facts.json` (keeping the tombstone and an
 episode as the record of why), and the sibling `memory_gardener.py` (in
-the ucr-honors consuming repo, not this one) implements the
+a consuming repository, not this one) implements the
 mechanically-dead-only auto-archive class this kit's docs describe but
 don't ship code for here. Separating claim from code again: `mem`'s
 "nothing forgotten" is fully implemented; `memory_engine.py`'s "verified
