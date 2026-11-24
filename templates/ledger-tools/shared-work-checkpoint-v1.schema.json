@@ -69,7 +69,7 @@
       "type": "object",
       "required": ["principal", "role", "evidence"],
       "properties": {
-        "principal": {"enum": ["jovan", "claude", "codex"]},
+        "principal": {"type": "string", "minLength": 1},
         "role": {"enum": ["owner", "planner", "reviewer", "worker", "subagent"]},
         "evidence": {
           "oneOf": [
