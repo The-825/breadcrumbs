@@ -93,6 +93,39 @@ class SharedWorkCheckpointConformanceTests(unittest.TestCase):
             self.assertFalse(definitions[record]["additionalProperties"])
         self.assertFalse(definitions["plan"]["additionalProperties"])
 
+    def test_an_adopter_team_replaces_the_example_policy(self):
+        def evidence(model):
+            item = {"state": "verified", "model": model, "source": "provider:test"}
+            return {"requested": dict(item), "configured": dict(item), "observed": dict(item)}
+
+        team = {
+            "planning": {
+                "lead": ("owner", None),
+                "agent-a": ("planner", "model-a"),
+                "agent-b": ("reviewer", "model-b"),
+            },
+            "implementation": {"agent-a": ("worker", "model-a")},
+        }
+        planning = [
+            {"principal": "lead", "role": "owner", "evidence": None},
+            {"principal": "agent-a", "role": "planner", "evidence": evidence("model-a")},
+            {"principal": "agent-b", "role": "reviewer", "evidence": evidence("model-b")},
+        ]
+        implementation = [
+            {"principal": "agent-a", "role": "worker", "evidence": evidence("model-a")},
+        ]
+        original = checkpoint.STAGE_POLICY
+        checkpoint.STAGE_POLICY = team
+        try:
+            contracts = checkpoint.stage_contracts(planning, implementation)
+            self.assertEqual("lead", contracts["planning"]["members"][0]["principal"])
+            with self.assertRaises(PermissionError):
+                checkpoint.stage_policy_contract("implementation", planning[:1])
+            with self.assertRaises(PermissionError):
+                checkpoint.stage_contracts(self.fixture["planning_members"], implementation)
+        finally:
+            checkpoint.STAGE_POLICY = original
+
     def test_model_receipts_are_exact_and_cannot_be_inferred(self):
         self.assertEqual("gpt-6-astra", self.contracts["planning"]["members"][2]["evidence"]["observed"]["model"])
         self.assertEqual("gpt-5.6-sol", self.contracts["implementation"]["members"][1]["evidence"]["observed"]["model"])

@@ -744,3 +744,8 @@ Ruling: Concept lineage ships as a portable standard-library validator and rende
 Why: A reader needs to see where an idea came from and which consumers decided what without a blended score or an inferred release state.
 Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.
 Identity: First drafted on 2026-10-27 as D-69 in commit 9fd1ab3. Assigned D-77 during reconciliation with main on 2026-11-11; the published D-69 through D-76 and their text remain unchanged.
+
+## D-78 · 2026-11-24 · The shared-work checkpoint team is adopter configuration
+Ruling: `shared_work_checkpoint.py` reads its planning and implementation teams from one `STAGE_POLICY` table at the top of the file instead of hardcoded principals and models. The shipped values are an example with a generic `owner` principal, and the fixture and schema follow it.
+Why: The tool was listed as portable, but any team other than the example one failed every contract with a PermissionError until the code was edited.
+Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
