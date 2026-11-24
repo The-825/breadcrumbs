@@ -32,6 +32,25 @@ POLICY_ID = "shared-work-stage-policy-v1"
 MAX_EVENTS_PER_SCOPE = 500
 MAX_RETRIES = 3
 MAX_ITEMS = 24
+
+# Adapt this table to your team before using the tool; the values below are an
+# example, and the shipped fixture and tests use them. Each stage maps a principal
+# to (role, exact model). A model of None marks a human principal, who carries no
+# model evidence. Planning requires exactly the listed principals. Implementation
+# accepts one or more of its listed agents, each in a worker or subagent role, and
+# never a human principal.
+STAGE_POLICY: dict[str, dict[str, tuple[str, Optional[str]]]] = {
+    "planning": {
+        "owner": ("owner", None),
+        "claude": ("planner", "claude-fable-5-1"),
+        "codex": ("reviewer", "gpt-6-astra"),
+    },
+    "implementation": {
+        "claude": ("worker", "claude-sonnet-5"),
+        "codex": ("worker", "gpt-5.6-sol"),
+    },
+}
+IMPLEMENTATION_ROLES = frozenset({"worker", "subagent"})
 EVENT_KINDS = frozenset({
     "plan", "decision", "correction", "material_progress", "milestone",
     "blocker", "failure", "workaround", "recovery", "completion",
@@ -63,20 +82,17 @@ def stage_policy_contract(stage: str, members: list[Mapping[str, Any]]) -> dict[
     """Validate exact team membership and requested, configured, observed evidence."""
     if stage not in {"planning", "implementation"}:
         raise ValueError("stage must be planning or implementation")
-    normalized = [_model_member(member) for member in members]
+    humans = _human_principals()
+    normalized = [_model_member(member, humans) for member in members]
     principals = [member["principal"] for member in normalized]
     if len(principals) != len(set(principals)):
         raise ValueError("stage team principals must be unique")
 
+    expected = STAGE_POLICY[stage]
     if stage == "planning":
-        expected = {
-            "jovan": ("owner", None),
-            "claude": ("planner", "claude-fable-5-1"),
-            "codex": ("reviewer", "gpt-6-astra"),
-        }
         if set(principals) != set(expected):
             raise PermissionError(
-                "planning requires exactly Jovan, claude-fable-5-1, and gpt-6-astra"
+                "planning requires exactly these principals: " + ", ".join(sorted(expected))
             )
         for member in normalized:
             role, model = expected[member["principal"]]
@@ -85,14 +101,15 @@ def stage_policy_contract(stage: str, members: list[Mapping[str, Any]]) -> dict[
             if model:
                 _require_exact_model(member, model)
     else:
-        if not normalized or "jovan" in principals:
+        if not normalized or humans.intersection(principals):
             raise PermissionError("implementation requires one or more agent workers")
-        expected = {"claude": "claude-sonnet-5", "codex": "gpt-5.6-sol"}
         for member in normalized:
-            model = expected.get(member["principal"])
-            if model is None or member["role"] not in {"worker", "subagent"}:
-                raise PermissionError("implementation members must be Claude or Codex workers")
-            _require_exact_model(member, model)
+            entry = expected.get(member["principal"])
+            if entry is None or entry[1] is None or member["role"] not in IMPLEMENTATION_ROLES:
+                raise PermissionError(
+                    "implementation members must be listed agents in a worker or subagent role"
+                )
+            _require_exact_model(member, entry[1])
     return {"policy_id": POLICY_ID, "stage": stage, "members": normalized}
 
 
@@ -621,12 +638,21 @@ def _contracts(value: Mapping[str, Any]) -> dict[str, Any]:
     )
 
 
-def _model_member(value: Mapping[str, Any]) -> dict[str, Any]:
+def _human_principals() -> set[str]:
+    return {
+        principal
+        for stage in STAGE_POLICY.values()
+        for principal, (_, model) in stage.items()
+        if model is None
+    }
+
+
+def _model_member(value: Mapping[str, Any], humans: set[str]) -> dict[str, Any]:
     if not isinstance(value, Mapping) or set(value) != {"principal", "role", "evidence"}:
         raise ValueError("stage team member has unknown or missing fields")
     principal = _text(value.get("principal"), "principal")
     role = _text(value.get("role"), "role")
-    if principal == "jovan":
+    if principal in humans:
         if value.get("evidence") is not None:
             raise ValueError("owner model evidence must be null")
         return {"principal": principal, "role": role, "evidence": None}

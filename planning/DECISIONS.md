@@ -745,6 +745,9 @@ Why: A reader needs to see where an idea came from and which consumers decided w
 Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.
 Identity: First drafted on 2026-10-27 as D-69 in commit 9fd1ab3. Assigned D-77 during reconciliation with main on 2026-11-11; the published D-69 through D-76 and their text remain unchanged.
 
+## D-78 · 2026-11-24 · The shared-work checkpoint team is adopter configuration
+Ruling: `shared_work_checkpoint.py` reads its planning and implementation teams from one `STAGE_POLICY` table at the top of the file instead of hardcoded principals and models. The shipped values are an example with a generic `owner` principal, and the fixture and schema follow it.
+Why: The tool was listed as portable, but any team other than the example one failed every contract with a PermissionError until the code was edited.
 ## D-79 · 2026-11-24 · Security reports go through private reporting
 Ruling: `SECURITY.md` routes vulnerability reports to GitHub private vulnerability reporting on this repo, scoped to the merge gates, guards, workflows and hooks people copy. No email address and no response-time promise.
 Why: A flaw in a copied gate spreads to every adopter, so it needs a private path to the maintainer before it is described in public.
