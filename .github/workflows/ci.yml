@@ -29,7 +29,10 @@ on:
 jobs:
   self-tests:
     name: Kit self-tests
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: the 26.04 image has no Python 3.9 build for
+    # setup-python, and 3.9 is the floor kit.json promises. Move this only
+    # together with a decision to raise that floor.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
