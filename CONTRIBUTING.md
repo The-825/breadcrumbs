@@ -7,6 +7,8 @@ help depends on the size of what you found.
 Small stuff, straight to a PR: typos, broken links, dead anchors, a command that
 does not run as written. These land fast.
 
+Security problems, privately: see [SECURITY.md](SECURITY.md), not a public issue.
+
 Substantive stuff, issue first: new templates, guard changes, restructuring,
 whole new docs. Pitch it in an issue before writing it, so the work does not die
 in review over a direction call.
