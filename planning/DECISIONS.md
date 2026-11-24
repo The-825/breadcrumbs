@@ -744,3 +744,8 @@ Ruling: Concept lineage ships as a portable standard-library validator and rende
 Why: A reader needs to see where an idea came from and which consumers decided what without a blended score or an inferred release state.
 Source: Approved concept lineage design with owner-resolved origin and receipt-binding rules.
 Identity: First drafted on 2026-10-27 as D-69 in commit 9fd1ab3. Assigned D-77 during reconciliation with main on 2026-11-11; the published D-69 through D-76 and their text remain unchanged.
+
+## D-79 · 2026-11-24 · Security reports go through private reporting
+Ruling: `SECURITY.md` routes vulnerability reports to GitHub private vulnerability reporting on this repo, scoped to the merge gates, guards, workflows and hooks people copy. No email address and no response-time promise.
+Why: A flaw in a copied gate spreads to every adopter, so it needs a private path to the maintainer before it is described in public.
+Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
