@@ -210,7 +210,7 @@ half is proven. Do these in order and stop when you have had enough for the day:
    fail-closed automerge: merges happen only when every required check is green on the
    exact head commit, and only after a human applies an approval label. Read
    [`AUTOMERGE_GOTCHAS.md`](ci-kit/workflows/AUTOMERGE_GOTCHAS.md) first; the naive
-   version has fifteen non-obvious ways to fail.
+   version has sixteen non-obvious ways to fail.
 
 ## What is in here
 
@@ -248,10 +248,11 @@ Want to send a fix rather than a report? [CONTRIBUTING.md](CONTRIBUTING.md) is s
 
 Curious what your own repo looks like from an agent's side before you change anything?
 [`templates/ledger-tools/retrieval_exam.py`](templates/ledger-tools/retrieval_exam.py)
-has a survey mode that needs nothing installed and no adoption first:
+has a survey mode that needs nothing installed and no adoption first. From a clone of
+this repo:
 
 ```
-python3 retrieval_exam.py --survey --root /path/to/your/repo
+python3 templates/ledger-tools/retrieval_exam.py --survey --root /path/to/your/repo
 ```
 
 It reports what your sessions are handed automatically, what they pay for it, and which

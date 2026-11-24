@@ -27,5 +27,12 @@ late launches with grandfathered violations to burn down.
 python3 -m unittest discover -s ci-kit/guards/tests   # the self-tests that prove each guard bites; same form for migrations/tests and workflows/tests
 ```
 
+In your own repo, `run_guards.sh` fails on its first run until you add a
+`CONTEXT_BUDGET.md` at the root: the context budget guard reads its line budgets from
+that file and fails closed when it is missing. Use [this repo's](../CONTEXT_BUDGET.md)
+as the shape, but keep only rows for files that exist in your repo: a row naming a
+missing file also fails. A table with just the header row passes. Or drop that guard
+from `run_guards.sh` if you do not want it.
+
 Each piece stands alone; the table rows point at the file that explains it. Nothing in
 this README is the source of truth for how a piece works.

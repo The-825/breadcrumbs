@@ -15,13 +15,16 @@ The bar for prose is the repo's own style: no em-dashes, no filler, intros that
 lead with the failure the piece prevents. Read a page or two of `docs/` first
 and match what you see.
 
-If your change touches the kit, run its self-tests before opening the PR:
+If your change touches the kit, run its checks before opening the PR. Python 3.9 or
+newer and the standard library are enough; Node is only needed for the intake
+example.
 
-    python3 -m unittest discover -s ci-kit/guards/tests
-    python3 -m unittest discover -s ci-kit/migrations/tests
-    python3 -m unittest discover -s ci-kit/workflows/tests
+    bash ci-kit/run_guards.sh
+    python3 ci-kit/kit_manifest_check.py --run-selftests
 
-Three green suites locally is the same bar CI holds.
+The first runs every guard over the tree. The second runs every selftest listed in
+`kit.json`. Both green locally covers most of what CI checks; the full list is in
+`.github/workflows/ci.yml`.
 
 Everything here is MIT licensed (see [LICENSE](LICENSE)); contributions land
 under the same terms.
