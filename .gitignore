@@ -8,3 +8,10 @@ site/data/
 /requests.jsonl
 /responses.jsonl
 /results.json
+
+# Agent-local settings and environment files (never commit)
+.claude/settings.local.json
+CLAUDE.local.md
+.env
+.env.*
+!.env.example
