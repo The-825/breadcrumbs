@@ -166,3 +166,7 @@ details.reference p { color: var(--muted); }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.clip { margin: 1.5rem 0 0; max-width: 960px; }
+.clip video { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--forest); }
+.clip figcaption { color: var(--muted); font-size: .9rem; margin-top: .5rem; }
