@@ -17,7 +17,7 @@ cost? It does not test whether the models produce equally strong final work.
 - `DATASET_CARD.md`: the public-safe scope, intended use, and limitations for a later
   Hugging Face dataset publication, which remains separately approval-gated.
 
-No private Jarvis memory, UCR data, production trace, personal record, or repository
+No private operator memory, institutional data, production trace, personal record, or repository
 secret belongs in this benchmark.
 
 ## Measures

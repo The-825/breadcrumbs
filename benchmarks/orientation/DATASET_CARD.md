@@ -27,7 +27,7 @@ and run date.
 
 ## Privacy and governance
 
-No UCR, Jarvis, personal, client, or production data is included. Raw model responses
+No institutional, private-operator, personal, client, or production data is included. Raw model responses
 remain local until separately reviewed and approved for publication.
 
 ## License

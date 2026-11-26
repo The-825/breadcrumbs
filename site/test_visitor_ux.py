@@ -193,7 +193,7 @@ class StaticTests(unittest.TestCase):
         for name in ("research.html", "repositories.html", "charts.html", "claims.html", "detail.html", "methodology.html", "synthesis.html"):
             self.assertNotIn("| StaleToast", parse(name).title, name)
 
-    def test_jarvis_is_a_historical_case_study_with_its_evidence_limits(self):
+    def test_coordination_case_study_is_historical_with_its_evidence_limits(self):
         page = text("jarvis.html")
         self.assertIn("historical case study", page)
         self.assertIn("not a currently operating service", page)

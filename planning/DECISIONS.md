@@ -770,7 +770,7 @@ Ruling: `docs/the-airport-model.md` is rewritten and renamed `docs/pointers-and-
 Why: D-81 moved the README and banner off the airport framing, and the essays it links to still opened with it.
 Source: Maintainer direction of 2026-11-26.
 
-## D-83 · 2026-11-26 · The white paper no longer names the retired coordination tool
-Ruling: The white paper's two mentions of a coordination layer by name are reworded to "other vendors' agents and a separate coordination layer". The paper's bound is unchanged: its evidence is Claude Code sessions, and cross-vendor and coordination claims stay outside it. The revision note covers the change. Other public mentions of the tool (the case-study page, the routing JSON, `llms.txt`, `docs/cooperative-intelligence.md`) are not part of this change and are tracked as a separate follow-up.
-Why: The tool is retired and the repo is public, so a stale name in the headline paper would ship with the launch.
-Source: Maintainer direction of 2026-11-26, relayed by the project coordinator.
+## D-83 · 2026-11-26 · Public pages stop naming the retired coordination tool
+Ruling: The white paper, the case-study page, the home-page card, `docs/cooperative-intelligence.md`, `docs/portfolio-coordination.md`, `llms.txt`, the orientation benchmark notes and the workflow registry column header describe "a coordination layer" in plain terms instead of naming the tool. The case-study page keeps its URL and its historical framing, and no longer lists a retired agent as an executor. The benchmark notes also stop naming the employer. File names and field keys (`jarvis-workflow-routing.json`, `jarvis_routes`) stay for now because renaming them touches scripts, tests and the manifest; that rename and the question of retiring the case-study page are left for a separate ruling. The white paper's bound is unchanged. Older ledger entries and the research archive are left as written.
+Why: The tool is retired and the repo is public, so stale names would ship with the launch.
+Source: Maintainer direction of 2026-11-26.

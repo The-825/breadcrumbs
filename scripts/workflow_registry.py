@@ -1,4 +1,4 @@
-"""Validate and render the public workflow registry and Jarvis routing projection."""
+"""Validate and render the public workflow registry and routing projection."""
 
 from __future__ import annotations
 
@@ -88,7 +88,7 @@ def validate(registry: dict, routing: dict) -> list[str]:
         if not workflow.get("limitations") or not workflow.get("validation_signals"):
             errors.append(f"{workflow.get('id')}: evidence boundaries are incomplete")
         if not set(workflow.get("jarvis_routes", [])) <= route_ids:
-            errors.append(f"{workflow.get('id')}: unknown Jarvis route")
+            errors.append(f"{workflow.get('id')}: unknown routing pattern")
     for route in routes:
         if not set(route.get("workflow_ids", [])) <= workflow_ids:
             errors.append(f"{route.get('id')}: unknown workflow")
@@ -103,7 +103,7 @@ def render(registry: dict) -> str:
         "",
         registry["evidence_boundary"],
         "",
-        "| ID | Workflow | State | Evidence | Jarvis route |",
+        "| ID | Workflow | State | Evidence | Routing pattern |",
         "|---|---|---|---|---|",
     ]
     for row in registry["workflows"]:
