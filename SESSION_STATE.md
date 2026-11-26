@@ -5,49 +5,49 @@
 > grows into a log. Durable rules belong in CLAUDE.md, durable rulings in
 > `planning/DECISIONS.md`; this file holds only the rolling state.
 
-Last refreshed: 2026-11-10 UTC by Claude Code
-Checkpoint status: partly verified (see "Carried forward" below)
+Last refreshed: 2026-11-26 UTC by Claude Code
+Checkpoint status: partly verified (PR states checked 2026-11-26; "Carried over" items were not re-checked)
 Owning repository: `The-825/breadcrumbs`
-Source revisions: `origin/main` `50d7a4b`
+Source revisions: `origin/main` after PR #207 (merged 2026-11-26)
 
 ## Recovery pointer
 
-- Owning record: the open `ci:` PR from `claude/focused-ramanujan-1g7m5g`.
-- Next action: the PR changes `ci-kit/` and `.github/workflows/`, so it waits for
-  the maintainer's ship-it label after checks pass.
+- Owning record: PR #208 (`claude/readme-plain-terms`), the README and banner rewrite in
+  plain terms (D-81).
+- Next action: it touches `assets/`, so it waits for the owner ship-it label after checks
+  pass. If it is still open, merge `origin/main` into the branch before labeling.
 
 ## Current state
 
-- Active branch: `claude/focused-ramanujan-1g7m5g`, cut from `origin/main` `50d7a4b`.
-- In flight (D-76): CI runs `ci-kit/run_guards.sh` over this repo, the intake and
-  follow-up Node checks, `benchmarks/outcome-evidence/test_benchmark.py`, and a
-  Python 3.9 pass of every manifest selftest. `kit_manifest_check.py` gains an
-  inventory coverage check and `--run-selftests`. `guard_valid_utf8.py` is new.
-  `kit.json` gains rows for the artifacts that had none.
-- Checks, run locally 2026-11-10 on the branch: every command in `ci.yml` passes
-  on Python 3.13, and the 3.9 floor step passes on Python 3.9.25. Not yet
-  observed on a GitHub runner.
+- Open PRs at last check: #208 (this one), #206 (handoff packet template), #205 (draft,
+  ignore agent-local settings and `.env` files). #205 and #206 are not mine; do not push
+  to them.
+- The front page now opens with a "Use it now" block (D-80, #207). #208 removes the
+  airport framing from the README and banner. The essays under `docs/`
+  (`the-airport-model.md`, `floating-memory.md`, the white paper and others) and the
+  essay name in `kit.json` still use it and need their own pass.
 - Research and repository catalog ownership moved to `The-825/staletoast` (D-67).
   The research files under `docs/` are a read-only archive.
 
 ## What just landed
 
-- 2026-11-10: handoff refresh, D-75 header encoding fix and docs index rows, PR #197.
-- 2026-11-07: scoped App authentication for CI template sync, PR #196 (D-75).
+- 2026-11-26: "Use it now" README block, #207 (D-80).
+- 2026-11-24: first-run docs #200, checkpoint team as adopter config #202 (D-78),
+  security policy #203 (D-79), archive separated in the docs index #204.
+- 2026-11-10: CI enforces what the manifest claims, #198 (D-76).
 
 ## Next steps (in order)
 
-1. Ship the `ci:` PR once checks pass and the label is applied.
-2. `CLAUDE.md` is at 220 of 220 lines and its repo map omits `site/`, `scripts/`,
-   `planning/` and `assets/`. Trim or raise the budget in the PR that next touches it.
-3. `templates/memory-desk/gardener/promote.py` has no test or selftest. Add one
-   or say so in its README.
-4. `templates/memory-desk/` states Python 3.8+ in its README and CLI docstring.
-   CI checks 3.9 and 3.11 only; align the claim or test 3.8.
-5. Triage open issues that look resolved on main: #148, #106, #110, #80, #82.
-   Route #154, #164, #117 and #99 to StaleToast.
-6. Review the leftover `claude/*` remote branches. Issue #185 preserves four of
-   them as frozen heads; confirm with the maintainer before deleting any.
+1. Ship #208 once checks pass and the label is applied.
+2. Decide whether the `docs/` essays and the `kit.json` essay name get the same
+   plain-terms rewrite as the README.
+3. Carried over from the 2026-11-10 refresh, not re-checked: `CLAUDE.md` may still be at
+   its 220 line budget with a repo map that omits `site/`, `scripts/`, `planning/` and
+   `assets/`; `templates/memory-desk/gardener/promote.py` has no test; the memory desk
+   states Python 3.8+ while CI checks 3.9 and 3.11; open issues #148, #106, #110, #80 and
+   #82 may be resolved, and #154, #164, #117 and #99 belong to StaleToast; issue #185
+   preserves four `claude/*` heads, so confirm with the maintainer before deleting any
+   remote branch.
 
 ## Carried forward, not re-verified this refresh
 
@@ -65,6 +65,4 @@ These came from the 2026-09-11 handoff. Confirm each before acting on it.
 ## Pending decisions
 
 - `docs/figure-citation.md` is pattern-only: build its checker, or leave it labeled.
-- Whether the research archive moves to its own directory under `docs/`. It needs
-  redirect and script path updates, so it is its own PR.
 - Issue #39 dockets the codebase-flywheel port for the next standing-agents expansion.
