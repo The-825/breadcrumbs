@@ -151,7 +151,7 @@ follow-ups. Retain active, protected, scheduled, or blocked work according to th
 owner's policy. Archive with an explicit disposition receipt; archiving does not
 resolve an obligation or authorize deletion.
 
-For an operational coordinator such as Jarvis, keep provider adapters, private
+For an operational coordinator, keep provider adapters, private
 project maps, credentials, access policy, live task records, and source memory in
 its owning deployment. Breadcrumbs carries reusable contracts and public or
 synthetic examples. A retrieval feed may carry approved pointers and evidence

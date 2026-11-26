@@ -769,3 +769,8 @@ Source: Maintainer direction of 2026-11-26.
 Ruling: `docs/the-airport-model.md` is rewritten and renamed `docs/pointers-and-trails.md`. The white paper, `floating-memory.md` and the smaller essays drop the airport and grocery-store framing. Mechanisms borrowed from aviation and logistics keep a parenthetical credit to their source. No claim, number or evidence changes, and the white paper keeps Version 1.5 with a dated revision note. The research archive under `docs/` and the older ledger entries are left as written.
 Why: D-81 moved the README and banner off the airport framing, and the essays it links to still opened with it.
 Source: Maintainer direction of 2026-11-26.
+
+## D-83 · 2026-11-26 · Public pages stop naming the retired coordination tool
+Ruling: The white paper, `docs/cooperative-intelligence.md`, `docs/portfolio-coordination.md`, `llms.txt`, the orientation benchmark notes and the workflow registry column header describe "a coordination layer" in plain terms instead of naming the tool. The case-study page (`site/jarvis.html`), its home-page card and its styles and tests are removed, so no public page presents the retired tool. The benchmark notes also stop naming the employer. File names and field keys (`jarvis-workflow-routing.json`, `jarvis_routes`) stay for now because renaming them touches scripts, tests and the manifest; that rename is left for a separate ruling. The white paper's bound is unchanged. Older ledger entries and the research archive are left as written.
+Why: The tool is retired and the repo is public, so stale names would ship with the launch.
+Source: Maintainer direction of 2026-11-26.

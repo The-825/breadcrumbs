@@ -13,7 +13,7 @@ check one another, learn, and improve without losing custody of the source recor
 
 ## The distinction that keeps the work honest
 
-Jarvis is an implementation context. It coordinates bounded work in its owning system.
+A coordination layer is an implementation context. It coordinates bounded work in its owning system.
 Breadcrumbs is the public pattern layer. It explains and packages the mechanisms that
 prove useful so another team can inspect, adapt, or reject them in its own environment.
 

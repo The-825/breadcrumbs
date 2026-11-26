@@ -16,7 +16,7 @@ SITE = Path(__file__).resolve().parent
 NAV = ["Home", "Start here", "Workflows", "Prompts", "Book and essays", "StaleToast", "The 825"]
 CURRENT = {"index.html": "Home", "start.html": "Start here", "workflows.html": "Workflows",
            "prompts.html": "Prompts", "papers.html": "Book and essays"}
-PRIMARY = ("index.html", "start.html", "papers.html", "jarvis.html", "workflows.html", "prompts.html")
+PRIMARY = ("index.html", "start.html", "papers.html", "workflows.html", "prompts.html")
 BOOK = "https://the825.co/archivist-to-architect/"
 HARNESS = r'''
 const fs = require("fs"), vm = require("vm"), path = require("path");
@@ -192,14 +192,6 @@ class StaticTests(unittest.TestCase):
             self.assertNotIn("StaleToast", refs.description, name)
         for name in ("research.html", "repositories.html", "charts.html", "claims.html", "detail.html", "methodology.html", "synthesis.html"):
             self.assertNotIn("| StaleToast", parse(name).title, name)
-
-    def test_jarvis_is_a_historical_case_study_with_its_evidence_limits(self):
-        page = text("jarvis.html")
-        self.assertIn("historical case study", page)
-        self.assertIn("not a currently operating service", page)
-        self.assertIn("does not expose private work or certify runtime performance", page)
-        self.assertIn('class="system-map"', page)
-        self.assertIn(BOOK, parse("jarvis.html").links)
 
     def test_papers_keeps_publication_types_distinct_and_names_the_book(self):
         page = text("papers.html")

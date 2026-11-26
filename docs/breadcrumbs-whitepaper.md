@@ -7,8 +7,9 @@ re-explaining context to my tools; it sits alongside the day job rather than bei
 part of it. It is not a product and there is nothing to buy; the companion artifacts
 are in this repository under MIT.*
 
-*Revised November 26, 2026: wording only. The airport and grocery-store framing is removed
-in favor of plain description; no claim, number or evidence changed.*
+*Revised November 26, 2026: wording only. The airport and grocery-store framing is removed,
+and two mentions of a retired coordination tool are reworded, in favor of plain
+description; no claim, number or evidence changed.*
 
 ## Abstract
 
@@ -386,7 +387,7 @@ real task begins. It is not a claim that different model tiers reason equally we
 The same protocol may transfer to other vendors, and my current workflow now includes
 them, but that is not the evidence base for this paper. The claim here remains bounded
 to the session-continuity problem that produced the system. Cross-vendor orchestration
-and Jarvis deciding when one or several agents should work belong to the broader
+and deciding when one or several agents should work belong to the broader
 cooperative-intelligence evaluation, not to this memory result.
 
 ## 6. Related work, briefly and honestly
@@ -537,8 +538,8 @@ comparable effort remains an evaluation question.
 
 **This is one continuity system, not evidence for cross-vendor orchestration.**
 Everything here describes multiple Claude Code sessions, over time, sharing memory for
-one repository environment. My current workflow now uses other systems and a Jarvis
-coordination layer, but that later architecture does not retroactively become evidence
+one repository environment. My current workflow now uses other vendors' agents and a
+separate coordination layer, but that later setup does not retroactively become evidence
 for the original memory result.
 
 **Nothing here internalizes anything, and that ceiling looks structural.** The whole

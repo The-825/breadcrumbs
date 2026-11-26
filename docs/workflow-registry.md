@@ -2,7 +2,7 @@
 
 Public community and primary-source workflows are discovery evidence, not authority, endorsements, installs, or proof of effectiveness.
 
-| ID | Workflow | State | Evidence | Jarvis route |
+| ID | Workflow | State | Evidence | Routing pattern |
 |---|---|---|---|---|
 | WF-001 | [Structured repository context pack](https://www.reddit.com/r/ClaudeWorkflows/comments/1uy1c2s/workflow_claude_code_workflow_structured/) | reproduced | public-synthetic-reproduction | JR-001 |
 | WF-002 | [Git-managed scoped agent memory](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtdsy9/workflow_gitmanaged_agent_memory_a_scalable/) | reproduced | public-synthetic-reproduction | JR-002 |

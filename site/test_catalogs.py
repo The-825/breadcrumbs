@@ -161,14 +161,12 @@ class CatalogTests(unittest.TestCase):
         self.assertNotIn('${item.id}. ${item.title}', script)
 
     def test_public_profiles_include_visual_explanations(self):
-        jarvis = (SITE / "jarvis.html").read_text(encoding="utf-8")
         detail = (SITE / "detail.js").read_text(encoding="utf-8")
-        self.assertIn('class="system-map"', jarvis)
         self.assertIn("Mechanism profile", detail)
         self.assertIn("Last reviewed", detail)
 
     def test_every_page_has_accessible_navigation(self):
-        for name in ("index.html", "start.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
+        for name in ("index.html", "start.html", "research.html", "repositories.html", "detail.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             self.assertIn('href="#main"', page)
             self.assertIn('aria-label="Primary"', page)
@@ -192,7 +190,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_every_page_exposes_visitor_navigation(self):
         trails = ("Home", "Start here", "Workflows", "Prompts", "Book and essays", "StaleToast", "The 825")
-        for name in ("index.html", "research.html", "repositories.html", "detail.html", "jarvis.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
+        for name in ("index.html", "research.html", "repositories.html", "detail.html", "claims.html", "methodology.html", "papers.html", "synthesis.html"):
             page = (SITE / name).read_text(encoding="utf-8")
             for trail in trails:
                 self.assertIn(f">{trail}</a>", page, f"{name} is missing {trail}")
