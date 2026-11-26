@@ -1,6 +1,6 @@
 # breadcrumbs
 
-![breadcrumbs: memory for agent sessions, built like airport wayfinding](assets/banner.svg)
+![breadcrumbs: memory and guardrails for coding agents](assets/banner.svg)
 
 **Use it now:**
 
@@ -20,47 +20,26 @@ product, not a framework launch. A pattern I built for my own work that I think 
 steal in an afternoon. I'm sharing it because the parts that worked surprised me and
 the part that failed surprised me more.*
 
-## The frequent flyer and the first-timer
+## Why a bigger memory is not the fix
 
-Drop a frequent flyer into an airport they have never set foot in and they still move
-through it almost as fast as their home airport. Drop a first-time flyer into that same
-building and they are anxious and slow, reading every sign twice, asking someone at
-every junction. Same building. Same signage. Wildly different experience. The frequent
-flyer is not fast because they memorized this particular airport, they have never been
-here. They are fast because they learned how airports work as a system: what a sign
-means, what to ignore, what to trust, where the pattern holds regardless of which
-building they are standing in.
-
-Here is the part that actually convinced me this was the right lens: even that anxious
-first-timer has a completely different experience by their second airport of the same
-trip. Nobody handed them a manual between layovers. They did it once, noticed the
-pattern underneath the specific signs, and carried it forward. The second airport is not
-easier because it is a simpler building. It is easier because they stopped treating the
-first one as a one-off and started treating it as an instance of a system they now
-understand.
-
-That gap, not the map, is what I think agent memory is missing. Agents used to forget
-everything between sessions, and the answer has mostly been bigger recall: vector
-stores, knowledge graphs, retrieval layers, and now assistants that quietly summarize
-your past conversations for you. Those answer "what should the agent remember?" My
-problem was different. I run many agent sessions a week against one
+Agents used to forget everything between sessions, and the answer has mostly been bigger
+recall: vector stores, knowledge graphs, retrieval layers, and now assistants that quietly
+summarize your past conversations for you. Those answer "what should the agent
+remember?" My problem was different. I run many agent sessions a week against one
 production system, and what kept breaking was not recall. It was that one session would
 claim something was done when it wasn't, or redo work a yesterday-session already did,
 or act on a fact that had changed underneath it. And every fresh session opened with me
 re-framing, re-contextualizing, re-explaining, paying the same tax again before any real
-work happened. I did not need a smarter archive. I needed the system itself to teach
-every session, cheap model or expensive one, first visit or hundredth, to move like the
-experienced traveler.
+work happened.
 
-And underneath the terminal, neither traveler ever has to think about how much
-complexity the building is actually running. Security only screens, they do not route
-luggage. Ground crew only turns planes around, they do not handle reservations. Someone
-is planning gate assignments hours before a plane lands; someone else is tracking a bag
-through three connections. Nobody up there needs the whole picture. The complexity does
-not disappear, it gets distributed, so the traveler on top only ever sees the one clean
-sign relevant to them right now. That is the actual design target here: not a bigger
-memory, but a structure that hands off just enough, at the moment it is needed, so
-competence lives in the system instead of in what any one session managed to remember.
+I did not need a smarter archive. I needed the repo itself to tell every session what it
+needs at the moment it needs it, so a cheap model on its first visit finds the right
+file, rule and threshold about as fast as an expensive model on its hundredth. The goal
+is not to make any one session remember more. It is to put competence in the
+structure: no session needs the whole picture, it only needs the one relevant note at
+the moment it acts. That is the actual design target here: not a bigger memory, but a
+structure that hands over just enough, when it is needed, so the work does not depend on
+what any one session managed to remember.
 
 ## The cues, at the moments they fire
 
@@ -76,8 +55,8 @@ behavior already happens:
 - **At the claim (finishing work).** A session cannot just say "done." It records what
   it finished, and the record is refused if obligations still dangle: an unshipped
   follow-up, a "part 2 of 3" left hanging. It can park work with the leftovers named,
-  or formally defer an item with a deadline, the way aircraft defer an inoperative part
-  under a minimum equipment list. What it cannot do is quietly drop the leftover.
+  or formally defer an item with a deadline. What it cannot do is quietly drop the
+  leftover.
 - **At the boast (claiming certainty).** An agent never marks its own claim "verified."
   Verified requires evidence plus a distinct tool or human verifier; agent authority
   and self-verification are refused. Everything else is stamped "asserted," and every
@@ -98,22 +77,20 @@ reminders.
 
 ## The token angle
 
-I am a heavy user paying for my own usage, so this is also an economics project. A
-well-signed airport lets a first-time traveler move like a frequent flyer; that is the
-designer's doing, not the traveler's. Same here: good cue placement is what lets a
-smaller, cheaper model navigate the repo as surely as the expensive one, and what
-stops the expensive one from burning its budget re-reading the building to find out
-where things are.
+I am a heavy user paying for my own usage, so this is also an economics project. Good
+cue placement is what lets a smaller, cheaper model navigate the repo as surely as the
+expensive one, and what stops the expensive one from burning its budget re-reading the
+repo to find out where things are.
 
 There is a second goal folded into that one: I want every model, from the lightest
 tier on low effort to the heaviest on max, spending its budget doing and using its
 tools, not thinking its way to information it could have been handed. Different
 tiers will produce different work, and that is expected. What should NOT differ is
 how fast any of them gets to the right file, the right threshold, the right
-predicate. Signage is what equalizes the trip; the model's horsepower then goes to
-the actual job. When I probe this with planted-trap questions, the light tier
+predicate. Good cues equalize the route to the answer; the model's horsepower then goes
+to the actual job. When I probe this with planted-trap questions, the light tier
 answers the traps the system carries as well as the heavy one does, and the misses
-that remain are routing misses, which is exactly where another sign goes. The boot packet is budgeted in bytes because injection is a tax
+that remain are routing misses, which is exactly where another cue goes. The boot packet is budgeted in bytes because injection is a tax
 every session pays. And instead of letting one long session silt up, I clear early
 and often: checkpoint the handoff file, wipe the context, boot clean off the cues. A
 clean sheet plus good breadcrumbs beats a full context window that is mostly
@@ -154,7 +131,7 @@ same files before a session starts building; a handoff file that says what is al
 in motion, so picking up a task starts with "read what your predecessors did," not with
 a blank slate; and a boot packet that leads with what changed since this session last
 acted. The pattern's test for all three is blunt: could a second session, started cold
-right now, avoid redoing or colliding with the first one? If not, a sign is missing.
+right now, avoid redoing or colliding with the first one? If not, a cue is missing.
 
 ## The day it caught itself
 
@@ -208,8 +185,8 @@ half is proven. Do these in order and stop when you have had enough for the day:
 3. **A settled-facts store.** Copy [`templates/CONCLUSIONS_TEMPLATE.md`](templates/CONCLUSIONS_TEMPLATE.md).
    One fact per line, read at session start, so nothing already known gets re-derived.
 4. **A rules file.** Copy [`templates/CLAUDE_TEMPLATE.md`](templates/CLAUDE_TEMPLATE.md)
-   and delete what does not apply. This is the file every session boots from, the
-   first sign every traveler reads.
+   and delete what does not apply. This is the file every session boots from, so it is the
+   first thing every session reads.
 5. **A merge gate with teeth.** [`ci-kit/workflows/`](ci-kit/workflows/) ships a
    fail-closed automerge: merges happen only when every required check is green on the
    exact head commit, and only after a human applies an approval label. Read
@@ -241,11 +218,11 @@ exactly the report I want.
 
 ## Try it
 
-Start with one sign, not the whole terminal: pick the single moment your agents most
+Start with one cue, not the whole system: pick the single moment your agents most
 often act on stale state, and place one cue there that fires automatically. For me that
 was session start. Add the refusal second; it is the piece with teeth. Then open an
 issue here and tell me what happened, what worked, what broke, what you changed. I am
-one investigator with one data point, and the pattern gets better the more airports it
+one investigator with one data point, and the pattern gets better the more repos it
 runs in.
 
 Want to send a fix rather than a report? [CONTRIBUTING.md](CONTRIBUTING.md) is short.

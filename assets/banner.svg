@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="breadcrumbs: agent memory as airport wayfinding">
-  <!-- Airport-signage motif: the repo's frequent-flyer thesis. Self-contained
-       colors so it reads the same on GitHub light and dark themes. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="breadcrumbs: memory and guardrails for coding agents">
+  <!-- Breadcrumb trail motif. Self-contained colors so it reads the same on
+       GitHub light and dark themes. -->
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#0e2a47"/>
@@ -23,19 +23,17 @@
     <circle cx="610" cy="230" r="5"/>
   </g>
 
-  <!-- overhead sign panel -->
+  <!-- next-step card -->
   <g>
     <rect x="640" y="196" width="560" height="84" rx="10" fill="#1b4d3e"/>
     <rect x="640" y="196" width="560" height="84" rx="10" fill="none" stroke="#f5c518" stroke-width="2"/>
     <text x="668" y="230" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff">Session start</text>
-    <text x="668" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff">Decisions ledger</text>
-    <text x="1172" y="230" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">gate A</text>
-    <text x="1172" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">gate D</text>
-    <!-- plane glyph, kept left of the right-aligned gate labels -->
-    <path d="M1040 218 l14 8 -14 8 3 -8 z" fill="#ffffff"/>
+    <text x="668" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff">A call is made</text>
+    <text x="1172" y="230" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">read the handoff</text>
+    <text x="1172" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#f5c518" text-anchor="end">write the ruling</text>
   </g>
 
   <!-- wordmark -->
   <text x="64" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="84" fill="#ffffff">breadcrumbs</text>
-  <text x="66" y="176" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#cfe3f5">memory for agent sessions, built like airport wayfinding</text>
+  <text x="66" y="176" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#cfe3f5">memory and guardrails for coding agents</text>
 </svg>
