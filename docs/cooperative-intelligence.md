@@ -42,8 +42,8 @@ concerns:
 6. **Resilience.** The system notices changed context, degraded connectors, and failed
    handoffs, then degrades safely instead of presenting stale confidence.
 
-The airport model remains the practical picture. A participant should receive the sign
-needed at the decision point, not the entire airport manual. The system does the hard
+The practical picture is unchanged. A participant should receive the cue
+needed at the decision point, not the entire manual. The system does the hard
 work of preserving boundaries and route truth underneath that simple surface.
 
 ## Research is an input, not an automatic feature request

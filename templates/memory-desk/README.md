@@ -22,9 +22,8 @@ lives where a strong model visits on a schedule: the gardener pass that
 promotes, dedupes, and re-verifies the index. The cheapest session executes;
 the curation carries the discipline.
 
-Like the information desk in a terminal: the first-time traveler does not
-learn the building, they ask the desk, and the desk is staffed by someone who
-does know the building.
+Like a help desk: a newcomer does not learn the whole system, they ask the
+desk, and the desk is staffed by someone who does know it.
 
 ## The pieces
 

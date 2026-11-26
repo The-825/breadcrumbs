@@ -26,7 +26,7 @@ This is the structural weakness of every memory system built the way this repo d
 **writing is instrumented and retrieval is not.** You can see how many entries you have.
 You cannot see whether a single one of them ever changed what a session did. Every
 addition after that point is faith-based, and the natural response to doubt (write more
-signage) makes the boot lane more crowded, which makes the problem worse.
+cues) makes the boot lane more crowded, which makes the problem worse.
 
 The fix is borrowed from how competitive spellers train. They do not re-read the word
 list. They practice retrieval, they drill their own misses, and they measure. A memory

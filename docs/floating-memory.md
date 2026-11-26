@@ -1,11 +1,11 @@
-# Floating memory: the airport model applied to agent memory
+# Floating memory: how agent sessions share what they know
 
-> Grows out of [the-airport-model.md](the-airport-model.md): that essay makes a
+> Grows out of [pointers-and-trails.md](pointers-and-trails.md): that essay makes a
 > system legible to a stranger; this one makes a fleet of agent sessions legible to each
 > other. Pairs with [multi-agent-hygiene.md](multi-agent-hygiene.md) and
 > [decision-capture.md](decision-capture.md).
 
-An agent session is a traveler with no memory of the building. It lands cold, does real
+An agent session arrives with no memory of the repo. It starts cold, does real
 work, and disappears when the container is reclaimed. Anything it learned that was not
 written somewhere durable dies with it, and the next session pays to re-derive it. The
 fix is not a bigger context window. It is a memory architecture: what gets written down,
@@ -13,10 +13,11 @@ in what shape, loaded when, by whom, and how a correction made once propagates t
 session after it.
 
 This essay describes a working design that has run in production for weeks across a
-multi-session fleet. Every mechanism below traces to a real failure it closed. The
-airport metaphor is not decoration here; it turned out that the operational disciplines
-airports and carriers invented for exactly this problem class (many independent actors,
-shared state, no one person watching everything) port to agent memory almost one for one.
+multi-session fleet. Every mechanism below traces to a real failure it closed. Several
+were borrowed from aviation and logistics, which solved the same problem class (many
+independent actors, shared state, no one person watching everything) long before agents
+existed. Where a mechanism came from there, the original name is noted in parentheses so
+you can find its source.
 
 **What this essay assumes, and what ships here.** This is a pattern essay, not a
 manual for code in this repository: the fleet machinery it describes (the memory
@@ -162,54 +163,54 @@ only acts on the read side hides the problem it was built to surface. Enforce
 the budget where the growth happens, at the write, and give the overage a
 surface that does not depend on any session choosing to look.
 
-## The airport waves
+## Disciplines borrowed from aviation and logistics
 
-The metaphor kept paying. Each of these is a discipline the aviation industry built for
-distributed operations, ported to memory in a wave once the corresponding failure
-showed up here.
+Each of these started as a discipline built for distributed operations, ported to memory
+once the corresponding failure showed up here.
 
-**NOTAMs: fleet-wide broadcasts with mandatory expiry.** A directive scoped to the whole
+**Fleet-wide broadcasts with mandatory expiry (aviation: NOTAMs).** A directive scoped to the whole
 fleet is broadcast into every session at boot. But a pilot's briefing is only useful if
 conditions are current, so every broadcast requires an `until:` date. When it passes,
 the boot hook silently drops the line; a genuinely permanent fact gets folded into the
 decisions ledger and the broadcast retired. `until: standing` exists as a deliberate
-escape valve, never a default. No open-ended NOTAMs: a stale broadcast is trusted advice
+escape valve, never a default. No open-ended broadcasts: a stale broadcast is trusted advice
 that has quietly gone wrong.
 
-**MEL: the minimum equipment list.** Aircraft fly with known-inoperative equipment
-because the MEL names it before takeoff. Every session boots with one line naming
-known-broken gear (a missing key, an unavailable CLI, a dead test harness), so it plans
+**A known-broken list (aviation: the minimum equipment list).** Aircraft fly with
+known-inoperative equipment because the list names it before takeoff. Every session boots
+with one line naming known-broken gear (a missing key, an unavailable CLI, a dead test harness), so it plans
 around inoperative items instead of rediscovering each one by failing at it.
 
-**One screening checkpoint, every lane out of the building.** Sensitive-data screening
+**One screening checkpoint, every outbound lane.** Sensitive-data screening
 runs as a single detector applied at every outbound lane: memory-branch writes, email
 drafts, file publishes, cloud writes. One pattern source, fail-closed on a hit. The gap
 this closed is worth naming: plumbing-level pushes had bypassed the push-hook lint, so
 the memory branch was unscreened until the screen moved into the write path itself.
 
-**BRS: reconcile the claim against the manifest.** Baggage systems scan a bag's tag
-against the aircraft manifest before loading rather than trusting the label. A
+**Reconcile the claim against the record (airline baggage reconciliation).** Baggage
+systems scan a bag's tag against the aircraft manifest before loading rather than
+trusting the label. A
 done-fold's "landed in PR N" pointer is a claim; the reaper greps the repo's own merged
 history for that PR's squash commit and quarantines the fold on a miss. Fails open: an
 unreachable lookup never manufactures a false quarantine.
 
-**WorldTracer: match orphaned work to its claim.** Two independently-created records
+**Match orphaned work to its claim (airline lost-baggage tracing).** Two independently-created records
 for the same thing (a quiet unmerged branch, and a thread someone opened in memory) get
 matched by a tiered algorithm instead of waiting for a human to notice one in `git
 status`: exact slug match, then majority token overlap, then an unmatched report that
 surfaces the branch's changed files so a human can read what is inside. Three buckets,
 never a write: a branch matched to an active thread is a resurrection candidate; one
 matched to a resolved thread is safe to flag for cleanup; unmatched needs a human look.
-And unclaimed baggage escalates on a clock: an unmatched branch past a longer window is
+And unclaimed work escalates on a clock: an unmatched branch past a longer window is
 broken out into its own section, so "just noticed" and "genuinely forgotten" read
 differently instead of piling into one undifferentiated list.
 
-**The mishandled rate: an SLA on claims, not just code.** Orphan matching catches
+**The abandoned-claim rate: an SLA on claims, not just code (airline mishandled-baggage rate).** Orphan matching catches
 abandoned code; nothing in it catches an abandoned *claim*, a thread opened in memory
 that never reaches done and sits in the layer indefinitely because nothing times it out.
-Carriers track this as the mishandled-baggage rate; the same sweep computes it over
+Carriers track the same thing for bags; the same sweep computes it over
 threads. Check-in is a thread's earliest fold; delivery is its latest fold when that
-fold is a done. A thread past its SLA is mishandled and the report says so.
+fold is a done. A thread past its SLA is abandoned and the report says so.
 
 **Single-threaded ownership and tiered promises.** Two logistics principles close the
 loop. Every parked thread requires exactly one named accountable owner, a person or a
@@ -222,7 +223,7 @@ custody handoff, rendered explicitly as "owner X, handed off from Y." No separat
 handoff mechanism exists on purpose; it would be the same fact recorded twice.
 
 **The push layer.** A report that exists only when someone remembers to run it is not a
-safeguard. The orphan sweep and the mishandled rate run inside the nightly scheduled
+safeguard. The orphan sweep and the abandoned-claim rate run inside the nightly scheduled
 agent, so the reports arrive instead of waiting to be asked for. Report-only remains the
 posture throughout: none of the sweeps writes a fold, retires a line, or deletes a
 branch. The machinery surfaces; a human (or the accountable session) decides.
@@ -236,7 +237,7 @@ future extension gets tested against them:
    session owns exactly one fold file; workers never write each other's files. Safety by
    construction, not by locking.
 2. **Derive, don't declare.** Anything a machine can compute from the durable record
-   (fleet state, the projection, staleness, the mishandled rate) is computed at read
+   (fleet state, the projection, staleness, the abandoned-claim rate) is computed at read
    time, never maintained by hand, so it cannot go stale and no session has to remember
    to describe itself.
 3. **Humans move the dials.** Ranks, horizons, SLA defaults, and quarantine thresholds
@@ -246,5 +247,5 @@ future extension gets tested against them:
 Start smaller than this. The first version was a single head file and a drain rule, and
 that alone beat compaction summaries. Add the fold protocol when a merged-but-not-done
 thread first burns you, decay when the head stops being skimmable, and the sweeps when
-the fleet grows past what one person can watch. The waves came in the order the failures
+the fleet grows past what one person can watch. The disciplines came in the order the failures
 did, and that is the right order for yours too.

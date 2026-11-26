@@ -32,13 +32,13 @@ Three conventions make the table enforceable rather than decorative:
 
 ## The routing shape: kernel, catalog, stamp
 
-A budget forces content out of the boot set. The routing shape is what keeps that content findable in a bounded number of cheap reads. Three hops, each carrying next-hop signage only, the way airport wayfinding names the next decision point rather than describing the whole building:
+A budget forces content out of the boot set. The routing shape is what keeps that content findable in a bounded number of cheap reads. Three hops, each carrying only the pointer to the next one, so no reader has to load the whole picture:
 
 1. **The kernel.** The rules file shrinks to binding rules plus a destination map. It names the *class* of destination ("data reference lives on the reference shelf"), never the detail. Rules stay in full; reference detail leaves.
 2. **The catalog.** A machine-first index file maps each destination to a concrete file and anchor: an id, a path, a one-line scope. A session that needs the detail resolves the class to a file here, in one short read of a small file.
-3. **The wayfinding stamp.** Every routed doc opens with a four-line comment: its catalog id, its scope in one line, its nearest neighbors, and the date it was last verified. The stamp means a wrong hop self-corrects in one cheap read: a session that lands on the wrong file learns, from the first four lines, what the file actually covers and where the neighbors are, instead of scrolling the whole thing to find out.
+3. **The routing stamp.** Every routed doc opens with a four-line comment: its catalog id, its scope in one line, its nearest neighbors, and the date it was last verified. The stamp means a wrong hop self-corrects in one cheap read: a session that lands on the wrong file learns, from the first four lines, what the file actually covers and where the neighbors are, instead of scrolling the whole thing to find out.
 
-That airport-wayfinding idea reaches past routing. The [airport model](the-airport-model.md) develops it into the full operating-model picture: one warehouse is a signed terminal, a whole institution is the airport.
+That pointer idea reaches past routing. [Pointers and trails](pointers-and-trails.md) develops it into the full operating-model picture: one warehouse is a set of pointers, a whole institution is an operation.
 
 The stamp also carries the freshness contract. A doc-sync pass refreshes the verified date when it confirms the path and scope still hold; a session bumps the date only when it actually re-checked the entry. Stale stamps surface as a list you can act on, instead of as silent rot.
 

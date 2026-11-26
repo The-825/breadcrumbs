@@ -340,7 +340,7 @@
     {
       "path": "docs",
       "kind": "doc-suite",
-      "what": "Pattern essays: the reasoning behind each artifact (memory measurement, floating memory, the chorus, context budgets, decision capture, the airport model, and more). Essays describe patterns; what ships is stated per essay.",
+      "what": "Pattern essays: the reasoning behind each artifact (memory measurement, floating memory, the chorus, context budgets, decision capture, pointers and trails, and more). Essays describe patterns; what ships is stated per essay.",
       "assumes": "Nothing.",
       "selftest": null
     },

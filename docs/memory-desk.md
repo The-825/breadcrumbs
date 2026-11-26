@@ -31,9 +31,8 @@ Retrieval becomes mechanical: one verb, exact match first, tiny payloads,
 misses that print the next command. Maintenance becomes intelligent: a strong
 model, on a schedule, curates what the mechanical layer serves. The cheap
 session executes; the expensive session, visiting weekly, does the thinking.
-An airport does this deliberately: the information desk exists so the
-first-time traveler never needs terminal knowledge, because the person behind
-the desk has it for them.
+A help desk does this deliberately: it exists so a newcomer never needs to
+learn the whole system, because the person behind the desk already has.
 
 ## The desk
 
@@ -155,7 +154,7 @@ schedule the gardener. The full steps are in the kit's
 [memory-measurement.md](memory-measurement.md) prescribes: every row is an
 address a probe can ask for, so reachability stops being a hope.
 
-Start even smaller if you want the one-sign version: a twenty-row index and
+Start even smaller if you want the one-cue version: a twenty-row index and
 the prompt-time hook, nothing else. That alone converts the most common
 weak-session failure, the confident stale answer, into an injected row with a
 source and a date.

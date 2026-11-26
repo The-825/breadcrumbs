@@ -7,6 +7,9 @@ re-explaining context to my tools; it sits alongside the day job rather than bei
 part of it. It is not a product and there is nothing to buy; the companion artifacts
 are in this repository under MIT.*
 
+*Revised November 26, 2026: wording only. The airport and grocery-store framing is removed
+in favor of plain description; no claim, number or evidence changed.*
+
 ## Abstract
 
 Not every coding-agent environment carries working context from one session into a
@@ -18,9 +21,9 @@ mode. My failures were governance failures: a session claiming work was done whe
 was not, redoing work a previous session had finished, or acting confidently on a fact
 that had changed underneath it. This paper describes a different approach: design the
 environment so participants do not have to reconstruct it. The system may carry
-airport-grade logistical complexity, but each model should experience the local
-familiarity of a neighborhood grocery store: the relevant aisle is recognizable, the
-labels are clear, and the next action is close at hand. Five mechanisms, all
+a great deal of logistical complexity, but each model should experience only the part
+that is local to its task: the relevant material is easy to recognize, the labels are
+clear, and the next action is close at hand. Five mechanisms, all
 implementable with git, shell hooks, and plain text files, support that experience:
 event-triggered context placement, refusal at consequential boundaries, oracle-gated
 verification, grounded versioned handoffs, and append-only supersession. The original
@@ -64,40 +67,40 @@ replaces.
 
 ## 2. The design stance: architect the environment
 
-Drop a frequent flyer into an airport they have never set foot in and they still move
-through it almost as fast as their home airport. Drop a first-time flyer into that same
-building and they are anxious and slow, reading every sign twice, asking someone at
-every junction. Same building, same signage, wildly different experience. The frequent
-flyer is not fast because they memorized this particular airport. They are fast because
-they learned how airports work as a system: what a sign means, what to ignore, what to
-trust, where the pattern holds regardless of which building they are standing in.
+Drop an experienced engineer into a repository they have never seen and they still move
+through it almost as fast as their own. Drop a newcomer into that same repository and
+they are anxious and slow, reading every file twice, asking someone at every junction.
+Same repository, same files, wildly different experience. The experienced engineer is
+not fast because they memorized this particular repo. They are fast because they learned
+how repositories work as a system: what a file header means, what to ignore, what to
+trust, where the pattern holds regardless of which repo they are in.
 
-The more useful observation is what happens to the first-timer by their second airport
-of the same trip. Nobody hands them a manual between layovers. They do it once, notice
-the pattern underneath the specific signs, and carry it forward. The second airport is
-not easier because it is a simpler building; it is easier because they stopped treating
-the first one as a one-off and started treating it as an instance of a system they now
-understand. That gap, not a bigger map, is the design target here: not "give the agent
+The more useful observation is what happens to the newcomer by their second project.
+Nobody hands them a manual between jobs. They do it once, notice the pattern underneath
+the specifics, and carry it forward. The second project is not easier because it is
+simpler; it is easier because they stopped treating the first one as a one-off and
+started treating it as an instance of a system they now understand. That gap, not a
+bigger archive, is the design target here: not "give the agent
 more to remember," but give the environment enough structure that a session on its
 first visit can move with less uncertainty.
 
-The airport is the system underneath: repositories, evidence, permissions, handoffs,
-verification, routing, and recovery all coordinated at once. The neighborhood grocery
-store is the experience at the point of work. A participant should recognize its aisle,
-see only the inventory relevant to its task, know what it may take or change, and find
-an obvious checkout path. Breadcrumbs is the architect of that environment. It does not
+Underneath, the system coordinates repositories, evidence, permissions, handoffs,
+verification, routing, and recovery all at once. At the point of work, a participant
+should recognize where it is, see only the material relevant to its task, know what it
+may take or change, and find an obvious path to finish. Breadcrumbs is the architect of
+that environment. It does not
 make every participant equally capable. It keeps them from spending their capability
 reconstructing the building.
 
 Applied to agents: instead of building a smarter archive the agent must remember to
-consult, place cues at the moments where agent behavior already happens, the way an
-airport signs the next decision at the exact spot the decision gets made. The moments
+consult, place cues at the moments where agent behavior already happens, at the
+exact spot the decision gets made. The moments
 are few and predictable: session start, a relevant prompt, first contact with a governed
 file, finishing work, claiming certainty, requesting authority, and handing off.
 Discipline is encoded as refusals rather than reminders where consequences justify it,
 because a reminder can be ignored and a refusal cannot.
 
-## 2.5 This is not folk wisdom: the science underneath the signage
+## 2.5 This is not folk wisdom: the science underneath the cues
 
 I arrived at cue placement by irritation, but the pattern has names, and I found them
 after the fact, which I take as a good sign: the design converged on things that are
@@ -105,8 +108,8 @@ known to be true about memory in general.
 
 **Cue-dependent memory.** The psychology of recall (Tulving's encoding specificity,
 decades old and well replicated) says retrieval works best when the context at recall
-matches the context at encoding. That is the literal mechanism behind the sign at the
-gate rather than the map at the entrance. Event-triggered placement works because it recreates the
+matches the context at encoding. That is the literal mechanism behind placing a cue at the
+point of decision rather than a general map up front. Event-triggered placement works because it recreates the
 working context, this repo, this branch, these open obligations, at the exact moment
 recall is needed, instead of asking the agent to fetch it cold from an archive it has
 to remember exists.
@@ -115,11 +118,8 @@ to remember exists.
 *Cognition in the Wild*) found that the cognition of a working system does not live in
 any one head; it lives in the ensemble of people and instruments. A pilot does not
 remember the altitude. The altimeter holds it, and the pilot's competence is knowing
-where to look. Underneath any terminal, the same distribution holds among the people
-who run it: security only screens, they do not route luggage; ground crew only turns
-planes around, they do not handle reservations; someone plans gate assignments hours
-before a plane lands while someone else tracks a bag through three connections, and
-none of them needs the whole picture to do their job well. That is the honest
+where to look. The same distribution holds in any large operation: each role
+handles its own part, and none of them needs the whole picture to do their job well. That is the honest
 description of what this system is: I am not giving an agent a better memory. I am
 building a small cognitive system in which the memory does not have to live in the
 agent at all, and a competent session is one that knows where to look.
@@ -128,8 +128,8 @@ agent at all, and a competent session is one that knows where to look.
 motivation, ability, and a prompt arriving together) explains why reminders fail and
 placed cues work. A reminder gambles that motivation will exist later, somewhere else.
 A cue at session start fires at the moment of maximum ability, before the agent has
-invested in any wrong path, which is why the door is the highest-leverage sign in the
-terminal. And a refusal removes motivation from the equation entirely.
+invested in any wrong path, which is why session start is the highest-leverage place for a
+cue. And a refusal removes motivation from the equation entirely.
 
 **Never trust, always verify.** Security engineering already has the vocabulary for
 my oracle rule: zero trust. No claim is trusted because of who makes it, including
@@ -375,7 +375,7 @@ The point is compression without flattening. The boot packet must be small enoug
 protect the context window, but vivid enough to preserve the identifiers, dependencies,
 decisions, and unfinished work that a generic summary tends to lose. Pointers keep the
 packet small. Placed cues make the referenced detail arrive only when the participant
-reaches the relevant aisle.
+reaches the relevant file.
 
 Model capability can change the quality of the final work without changing the route
 to it. A primary session or a lighter subagent should be able to reach the same
@@ -555,14 +555,14 @@ else.
 
 ## 8. Try it
 
-Start with one familiar aisle, not the whole airport. Pick the single moment your agents
+Start with one cue, not the whole system. Pick the single moment your agents
 most often act on stale state and place one cue there that fires automatically; for me
 that was session start. Add the refusal second, because it is the piece with teeth. The
 copy-and-adapt artifacts (a session handoff file, a decisions ledger, a settled-facts
 store, a bootable rules file, and a fail-closed merge gate) are in this repository,
 MIT licensed. If you try the pattern and it breaks somewhere, open an issue and tell
 me how: I am one investigator with one data point, and the pattern gets better the
-more airports it runs in.
+more repositories it runs in.
 
 ---
 
