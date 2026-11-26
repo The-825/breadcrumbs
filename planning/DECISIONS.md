@@ -769,3 +769,8 @@ Source: Maintainer direction of 2026-11-26.
 Ruling: `docs/the-airport-model.md` is rewritten and renamed `docs/pointers-and-trails.md`. The white paper, `floating-memory.md` and the smaller essays drop the airport and grocery-store framing. Mechanisms borrowed from aviation and logistics keep a parenthetical credit to their source. No claim, number or evidence changes, and the white paper keeps Version 1.5 with a dated revision note. The research archive under `docs/` and the older ledger entries are left as written.
 Why: D-81 moved the README and banner off the airport framing, and the essays it links to still opened with it.
 Source: Maintainer direction of 2026-11-26.
+
+## D-83 · 2026-11-26 · The white paper no longer names the retired coordination tool
+Ruling: The white paper's two mentions of a coordination layer by name are reworded to "other vendors' agents and a separate coordination layer". The paper's bound is unchanged: its evidence is Claude Code sessions, and cross-vendor and coordination claims stay outside it. The revision note covers the change. Other public mentions of the tool (the case-study page, the routing JSON, `llms.txt`, `docs/cooperative-intelligence.md`) are not part of this change and are tracked as a separate follow-up.
+Why: The tool is retired and the repo is public, so a stale name in the headline paper would ship with the launch.
+Source: Maintainer direction of 2026-11-26, relayed by the project coordinator.
