@@ -171,10 +171,10 @@ say what they ship and include checks where this kit can prove them; pattern-onl
 say so in their own headers. What you get here is the mechanism, stated generally enough
 to drop into whatever you work on. Nothing here depends *by design* on
 which model you use; a fleet member is anything that can read a file at start and append
-a line at the end. Models from other vendors already read and review this system, which
-works and is useful; what none of them has done yet is the write half, joining the
-memory as a participant rather than a visitor. The white paper is explicit about which
-half is proven. Do these in order and stop when you have had enough for the day:
+a line at the end. Codex already reads, reviews and opens pull requests against this system
+under the same merge gate, which works and is useful. The evidence for the memory
+pattern itself still comes from Claude Code sessions, and the white paper is explicit
+about which half is proven. Do these in order and stop when you have had enough for the day:
 
 1. **A handoff file.** Copy [`templates/SESSION_STATE_TEMPLATE.md`](templates/SESSION_STATE_TEMPLATE.md)
    to your repo root. Only what is in flight: branch, open PR, half-done edits, next
