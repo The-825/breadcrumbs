@@ -4,12 +4,12 @@ Public community and primary-source workflows are discovery evidence, not author
 
 | ID | Workflow | State | Evidence | Routing pattern |
 |---|---|---|---|---|
-| WF-001 | [Structured repository context pack](https://www.reddit.com/r/ClaudeWorkflows/comments/1uy1c2s/workflow_claude_code_workflow_structured/) | reproduced | public-synthetic-reproduction | JR-001 |
-| WF-002 | [Git-managed scoped agent memory](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtdsy9/workflow_gitmanaged_agent_memory_a_scalable/) | reproduced | public-synthetic-reproduction | JR-002 |
-| WF-003 | [Structured SDLC rules and skills](https://www.reddit.com/r/ClaudeWorkflows/comments/1uys8jg/workflow_structured_sdlc_workflows_with_claude/) | reproduced | public-synthetic-reproduction | JR-003 |
-| WF-004 | [Small-scope implementation and handoff](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtzhka/workflow_workflow_for_effective_claude_code/) | reproduced | public-synthetic-reproduction | JR-004 |
-| WF-005 | [Design-to-code cross-model bridge](https://www.reddit.com/r/ClaudeWorkflows/comments/1u8wozt/workflow_hybrid_claude_chat_code_workflow_for/) | reproduced | public-synthetic-reproduction | JR-005 |
-| WF-006 | [Pause work for approval, then resume the approved revision](https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx) | screened | pinned-primary-documentation-screen | JR-006 |
+| WF-001 | [Structured repository context pack](https://www.reddit.com/r/ClaudeWorkflows/comments/1uy1c2s/workflow_claude_code_workflow_structured/) | reproduced | public-synthetic-reproduction | RT-001 |
+| WF-002 | [Git-managed scoped agent memory](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtdsy9/workflow_gitmanaged_agent_memory_a_scalable/) | reproduced | public-synthetic-reproduction | RT-002 |
+| WF-003 | [Structured SDLC rules and skills](https://www.reddit.com/r/ClaudeWorkflows/comments/1uys8jg/workflow_structured_sdlc_workflows_with_claude/) | reproduced | public-synthetic-reproduction | RT-003 |
+| WF-004 | [Small-scope implementation and handoff](https://www.reddit.com/r/ClaudeWorkflows/comments/1vtzhka/workflow_workflow_for_effective_claude_code/) | reproduced | public-synthetic-reproduction | RT-004 |
+| WF-005 | [Design-to-code cross-model bridge](https://www.reddit.com/r/ClaudeWorkflows/comments/1u8wozt/workflow_hybrid_claude_chat_code_workflow_for/) | reproduced | public-synthetic-reproduction | RT-005 |
+| WF-006 | [Pause work for approval, then resume the approved revision](https://github.com/triggerdotdev/trigger.dev/blob/598fdf267005e5385fcdce0c663e6ff4ca07d68b/docs/wait-for-token.mdx) | screened | pinned-primary-documentation-screen | RT-006 |
 
 ## Promotion rule
 

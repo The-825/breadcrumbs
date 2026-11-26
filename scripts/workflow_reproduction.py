@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "docs" / "workflow-registry.json"
-ROUTING = ROOT / "docs" / "jarvis-workflow-routing.json"
+ROUTING = ROOT / "docs" / "workflow-routing.json"
 COMMANDS = {
     "WF-001": [sys.executable, "ci-kit/guards/guard_context_budget.py", "--selftest"],
     "WF-002": [sys.executable, "templates/ledger-tools/scoped_context.py", "--selftest"],
@@ -50,7 +50,7 @@ def reproduce(registry: dict, routing: dict, *, run_date: date, check: bool = Fa
         if workflow is None:
             errors.append(f"{workflow_id}: registry record is missing")
             continue
-        if not workflow.get("jarvis_routes") or any(route not in routes for route in workflow["jarvis_routes"]):
+        if not workflow.get("route_ids") or any(route not in routes for route in workflow["route_ids"]):
             errors.append(f"{workflow_id}: routable completion contract is missing")
             continue
         recorded_date = run_date.isoformat()

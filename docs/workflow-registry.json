@@ -41,8 +41,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "reproduced",
-      "jarvis_routes": [
-        "JR-001"
+      "route_ids": [
+        "RT-001"
       ],
       "authority": "descriptive-only",
       "reproduction": {
@@ -111,8 +111,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "reproduced",
-      "jarvis_routes": [
-        "JR-002"
+      "route_ids": [
+        "RT-002"
       ],
       "authority": "descriptive-only",
       "reproduction": {
@@ -186,8 +186,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "reproduced",
-      "jarvis_routes": [
-        "JR-003"
+      "route_ids": [
+        "RT-003"
       ],
       "authority": "descriptive-only",
       "reproduction": {
@@ -256,8 +256,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "reproduced",
-      "jarvis_routes": [
-        "JR-004"
+      "route_ids": [
+        "RT-004"
       ],
       "authority": "descriptive-only",
       "reproduction": {
@@ -327,8 +327,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "reproduced",
-      "jarvis_routes": [
-        "JR-005"
+      "route_ids": [
+        "RT-005"
       ],
       "authority": "descriptive-only",
       "reproduction": {
@@ -408,8 +408,8 @@
         "value": "not-used-as-quality-score"
       },
       "adoption_state": "screened",
-      "jarvis_routes": [
-        "JR-006"
+      "route_ids": [
+        "RT-006"
       ],
       "authority": "descriptive-only",
       "related_repository_ids": [

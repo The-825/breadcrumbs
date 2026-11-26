@@ -173,7 +173,7 @@
     "I need to discover and route reusable public agent workflows": [
       "docs/workflow-registry.json",
       "docs/workflow-registry.md",
-      "docs/jarvis-workflow-routing.json",
+      "docs/workflow-routing.json",
       "scripts/workflow_registry.py",
       "scripts/workflow_reproduction.py"
     ],

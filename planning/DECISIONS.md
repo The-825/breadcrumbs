@@ -774,3 +774,8 @@ Source: Maintainer direction of 2026-11-26.
 Ruling: The white paper, `docs/cooperative-intelligence.md`, `docs/portfolio-coordination.md`, `llms.txt`, the orientation benchmark notes and the workflow registry column header describe "a coordination layer" in plain terms instead of naming the tool. The case-study page (`site/jarvis.html`), its home-page card and its styles and tests are removed, so no public page presents the retired tool. The benchmark notes also stop naming the employer. File names and field keys (`jarvis-workflow-routing.json`, `jarvis_routes`) stay for now because renaming them touches scripts, tests and the manifest; that rename is left for a separate ruling. The white paper's bound is unchanged. Older ledger entries and the research archive are left as written.
 Why: The tool is retired and the repo is public, so stale names would ship with the launch.
 Source: Maintainer direction of 2026-11-26.
+
+## D-84 · 2026-11-26 · The workflow routing file and its key get neutral names
+Ruling: `docs/jarvis-workflow-routing.json` is now `docs/workflow-routing.json`, the registry key `jarvis_routes` is `route_ids`, and route IDs move from `JR-NNN` to `RT-NNN`. The routing text says "live runtime state" instead of naming the retired tool. Older ledger entries keep the old names on purpose.
+Why: The tool is retired and this repo is public with a launch on 2026-12-08, so the old names would ship in the file list, the manifest and the machine-readable registry. D-83 did the prose; this is the data contract.
+Source: Maintainer direction of 2026-11-26.

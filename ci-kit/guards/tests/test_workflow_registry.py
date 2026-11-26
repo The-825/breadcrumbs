@@ -14,14 +14,14 @@ SPEC.loader.exec_module(registry_tool)
 class TestWorkflowRegistry(unittest.TestCase):
     def test_registry_is_public_descriptive_and_machine_routable(self):
         registry = json.loads((ROOT / "docs" / "workflow-registry.json").read_text(encoding="utf-8"))
-        routing = json.loads((ROOT / "docs" / "jarvis-workflow-routing.json").read_text(encoding="utf-8"))
+        routing = json.loads((ROOT / "docs" / "workflow-routing.json").read_text(encoding="utf-8"))
         workflow_ids = {row["id"] for row in registry["workflows"]}
         route_ids = {row["id"] for row in routing["routes"]}
         self.assertEqual("descriptive-only", registry["authority"])
         self.assertEqual("descriptive-only", routing["authority"])
         self.assertEqual([], registry_tool.validate(registry, routing))
         self.assertTrue(all(row["authority"] == "descriptive-only" for row in registry["workflows"]))
-        self.assertTrue(all(set(row["jarvis_routes"]) <= route_ids for row in registry["workflows"]))
+        self.assertTrue(all(set(row["route_ids"]) <= route_ids for row in registry["workflows"]))
         self.assertTrue(all(set(row["workflow_ids"]) <= workflow_ids for row in routing["routes"]))
 
     def test_reproduced_is_not_adopted_or_claimed_effective(self):
@@ -37,7 +37,7 @@ class TestWorkflowRegistry(unittest.TestCase):
 
     def test_screened_primary_intake_does_not_need_a_fabricated_reproduction(self):
         registry = json.loads((ROOT / "docs/workflow-registry.json").read_text(encoding="utf-8"))
-        routing = json.loads((ROOT / "docs/jarvis-workflow-routing.json").read_text(encoding="utf-8"))
+        routing = json.loads((ROOT / "docs/workflow-routing.json").read_text(encoding="utf-8"))
         registry["schema_version"] = "1.1"
         candidate = copy.deepcopy(registry["workflows"][0])
         candidate.update(id="SYNTHETIC-WORKFLOW", source_type="official-documentation",
