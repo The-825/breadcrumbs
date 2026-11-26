@@ -754,3 +754,8 @@ Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
 Ruling: `SECURITY.md` routes vulnerability reports to GitHub private vulnerability reporting on this repo, scoped to the merge gates, guards, workflows and hooks people copy. No email address and no response-time promise.
 Why: A flaw in a copied gate spreads to every adopter, so it needs a private path to the maintainer before it is described in public.
 Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
+
+## D-81 · 2026-11-26 · The front page drops the airport metaphor
+Ruling: The README essay and the banner describe the pattern in plain terms. The airport framing is removed from the README and `assets/banner.svg`. The pattern, the five cues and every claim stay as they were. The deeper essays under `docs/` keep the framing until they get their own pass.
+Why: The maintainer moved past the metaphor, and a first-time reader should meet the problem and the fix directly, before any analogy.
+Source: Maintainer direction of 2026-11-26.
