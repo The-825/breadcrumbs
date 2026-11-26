@@ -492,6 +492,13 @@
       "selftest": null
     },
     {
+      "path": "templates/HANDOFF_PACKET_TEMPLATE.md",
+      "kind": "template",
+      "what": "One handoff packet shape: topic, decisions, dated sources, freshness, next action, and a status ladder that never skips from delivered to done.",
+      "assumes": "Markdown, filled by hand or posted as a pull request comment; no tooling required. Template only, no automation ships with it.",
+      "selftest": null
+    },
+    {
       "path": "templates/FLAKE_LEDGER_TEMPLATE.md",
       "kind": "template",
       "what": "One row per flake sighting, pass-on-retry included.",
