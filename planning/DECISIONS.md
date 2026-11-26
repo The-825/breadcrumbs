@@ -764,3 +764,8 @@ Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups, con
 Ruling: The README essay and the banner describe the pattern in plain terms. The airport framing is removed from the README and `assets/banner.svg`. The pattern, the five cues and every claim stay as they were. The deeper essays under `docs/` keep the framing until they get their own pass.
 Why: The maintainer moved past the metaphor, and a first-time reader should meet the problem and the fix directly, before any analogy.
 Source: Maintainer direction of 2026-11-26.
+
+## D-82 · 2026-11-26 · The kit essays follow the front page into plain terms
+Ruling: `docs/the-airport-model.md` is rewritten and renamed `docs/pointers-and-trails.md`. The white paper, `floating-memory.md` and the smaller essays drop the airport and grocery-store framing. Mechanisms borrowed from aviation and logistics keep a parenthetical credit to their source. No claim, number or evidence changes, and the white paper keeps Version 1.5 with a dated revision note. The research archive under `docs/` and the older ledger entries are left as written.
+Why: D-81 moved the README and banner off the airport framing, and the essays it links to still opened with it.
+Source: Maintainer direction of 2026-11-26.
