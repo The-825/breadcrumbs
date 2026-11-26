@@ -755,6 +755,11 @@ Ruling: `SECURITY.md` routes vulnerability reports to GitHub private vulnerabili
 Why: A flaw in a copied gate spreads to every adopter, so it needs a private path to the maintainer before it is described in public.
 Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
 
+## D-80 · 2026-11-26 · The README opens with a "Use it now" block
+Ruling: The README puts a two-step "Use it now" block directly under the banner. It points at the five starting files and the browser start page, so a new reader reaches the steps without reading the essay first.
+Why: The five steps sat about 200 lines down, after the essay, and the readiness check found a first-time reader had to work out what to copy.
+Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups, confirmed 2026-11-26.
+
 ## D-81 · 2026-11-26 · The front page drops the airport metaphor
 Ruling: The README essay and the banner describe the pattern in plain terms. The airport framing is removed from the README and `assets/banner.svg`. The pattern, the five cues and every claim stay as they were. The deeper essays under `docs/` keep the framing until they get their own pass.
 Why: The maintainer moved past the metaphor, and a first-time reader should meet the problem and the fix directly, before any analogy.
