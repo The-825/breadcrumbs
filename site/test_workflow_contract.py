@@ -13,7 +13,7 @@ SPEC.loader.exec_module(registry_tool)
 class WorkflowSourceTests(unittest.TestCase):
     def setUp(self):
         self.registry = json.loads((ROOT / 'docs/workflow-registry.json').read_text(encoding='utf-8'))
-        self.routing = json.loads((ROOT / 'docs/jarvis-workflow-routing.json').read_text(encoding='utf-8'))
+        self.routing = json.loads((ROOT / 'docs/workflow-routing.json').read_text(encoding='utf-8'))
         # Legacy compatibility uses legacy rows, independent of later primary intake.
         self.registry['schema_version'] = '1.0'
         self.registry['workflows'] = [row for row in self.registry['workflows'] if row['source_type'] == 'community-post']

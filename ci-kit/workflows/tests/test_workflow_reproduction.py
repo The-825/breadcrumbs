@@ -27,7 +27,7 @@ class ReproductionTests(unittest.TestCase):
         self.clock = Mock(side_effect=lambda: self.now)
         self.runner = Mock(return_value=Mock(returncode=0))
         self.data = {"workflows": [
-            {"id": key, "jarvis_routes": ["route"]} for key in MODULE.COMMANDS
+            {"id": key, "route_ids": ["route"]} for key in MODULE.COMMANDS
         ]}
         self.routing.write_text(json.dumps({"routes": [{"id": "route"}]}), encoding="utf-8")
         self.save()
@@ -126,7 +126,7 @@ class ReproductionTests(unittest.TestCase):
 
     def test_missing_records_and_routes_skip_only_their_runners(self):
         self.data["workflows"].pop(0)
-        self.data["workflows"][0]["jarvis_routes"] = ["missing"]
+        self.data["workflows"][0]["route_ids"] = ["missing"]
         self.save()
         before = self.registry.read_bytes()
         code, output = self.invoke("--write")

@@ -34,7 +34,7 @@ That workflow was not newly appraised in this round.
 
 ## Feedback to a consuming workflow
 
-JR-006 exposes a descriptive context capsule: reviewable result, exact revision,
+RT-006 exposes a descriptive context capsule: reviewable result, exact revision,
 decision owner, deadline and next action. A consumer can propose a synthetic
 rehearsal using the article's completion check. Revision binding, owner validation
 and duplicate-response handling are local proposed safeguards; the token API

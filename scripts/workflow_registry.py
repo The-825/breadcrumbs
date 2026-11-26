@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "docs" / "workflow-registry.json"
-ROUTING = ROOT / "docs" / "jarvis-workflow-routing.json"
+ROUTING = ROOT / "docs" / "workflow-routing.json"
 VIEW = ROOT / "docs" / "workflow-registry.md"
 
 
@@ -87,7 +87,7 @@ def validate(registry: dict, routing: dict) -> list[str]:
                 errors.append(f"{workflow.get('id')}: adoption needs owner, result evidence and correction path")
         if not workflow.get("limitations") or not workflow.get("validation_signals"):
             errors.append(f"{workflow.get('id')}: evidence boundaries are incomplete")
-        if not set(workflow.get("jarvis_routes", [])) <= route_ids:
+        if not set(workflow.get("route_ids", [])) <= route_ids:
             errors.append(f"{workflow.get('id')}: unknown routing pattern")
     for route in routes:
         if not set(route.get("workflow_ids", [])) <= workflow_ids:
@@ -109,7 +109,7 @@ def render(registry: dict) -> str:
     for row in registry["workflows"]:
         lines.append(
             f"| {row['id']} | [{row['title']}]({row['source_url']}) | {row['adoption_state']} | "
-            f"{row['evidence_level']} | {', '.join(row['jarvis_routes'])} |"
+            f"{row['evidence_level']} | {', '.join(row['route_ids'])} |"
         )
     lines.extend([
         "", "## Promotion rule", "",
