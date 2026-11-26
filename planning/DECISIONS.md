@@ -754,3 +754,8 @@ Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
 Ruling: `SECURITY.md` routes vulnerability reports to GitHub private vulnerability reporting on this repo, scoped to the merge gates, guards, workflows and hooks people copy. No email address and no response-time promise.
 Why: A flaw in a copied gate spreads to every adopter, so it needs a private path to the maintainer before it is described in public.
 Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups.
+
+## D-80 · 2026-11-26 · The README opens with a "Use it now" block
+Ruling: The README puts a two-step "Use it now" block directly under the banner. It points at the five starting files and the browser start page, so a new reader reaches the steps without reading the essay first.
+Why: The five steps sat about 200 lines down, after the essay, and the readiness check found a first-time reader had to work out what to copy.
+Source: Maintainer approval of the 2026-11-24 new-user readiness follow-ups, confirmed 2026-11-26.

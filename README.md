@@ -2,8 +2,12 @@
 
 ![breadcrumbs: memory for agent sessions, built like airport wayfinding](assets/banner.svg)
 
-**Start with one useful file:** [build your first handoff](https://the-825.github.io/breadcrumbs/start.html)
-with the free templates, then check whether a fresh session can find its next step.
+**Use it now:**
+
+1. Copy the [five starting files](#steal-this-start-in-one-afternoon): a handoff, a decisions ledger,
+   a settled-facts store, a rules file and a merge gate. About an afternoon.
+2. Or [build your first handoff in the browser](https://the-825.github.io/breadcrumbs/start.html)
+   with the free templates, then check whether a fresh session can find its next step.
 
 **Find a workflow or prompt:** [Breadcrumbs](https://the-825.github.io/breadcrumbs/workflows.html) is the practical field guide.
 [StaleToast](https://the-825.github.io/staletoast/) separately owns research, repository
